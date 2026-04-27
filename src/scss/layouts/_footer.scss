@@ -220,3 +220,55 @@
         }
     }
 }
+
+// ==========================================================================
+// SUB-FOOTER — franja al final con copyright + legal links
+// ==========================================================================
+.udp-subfooter {
+    background: $dark-1;
+    color: $white-70;
+    border-top: 1px solid $gray-medium;
+
+    &__inner {
+        max-width: 1360px;
+        margin-inline: auto;
+        padding: $space-md $space-3xl;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: $space-md;
+        flex-wrap: wrap;
+
+        @include media-down(md) {
+            padding-inline: $space-sm;
+            justify-content: center;
+            text-align: center;
+        }
+    }
+
+    &__copyright {
+        margin: 0;
+        @include eyebrow-sm($white-70);
+    }
+
+    &__links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        gap: $space-md;
+        flex-wrap: wrap;
+
+        a {
+            @include eyebrow-sm($white-70);
+            text-decoration: none;
+            transition: color $transition-base;
+
+            &:hover,
+            &:focus {
+                color: $white;
+            }
+        }
+    }
+}

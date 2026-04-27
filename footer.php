@@ -43,6 +43,38 @@
 	</div>
 </footer>
 
+<?php
+$legal_links = function_exists( 'get_field' ) ? get_field( 'legal_links', 'option' ) : array();
+$copyright   = function_exists( 'get_field' ) ? get_field( 'copyright', 'option' ) : '';
+
+if ( ! empty( $legal_links ) || ! empty( $copyright ) ) :
+?>
+<div class="udp-subfooter" role="contentinfo" aria-label="<?php esc_attr_e( 'Información legal', 'starter-theme' ); ?>">
+	<div class="udp-subfooter__inner">
+		<?php if ( ! empty( $copyright ) ) : ?>
+			<p class="udp-subfooter__copyright"><?php echo esc_html( $copyright ); ?></p>
+		<?php else : ?>
+			<p class="udp-subfooter__copyright">&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?></p>
+		<?php endif; ?>
+
+		<?php if ( ! empty( $legal_links ) && is_array( $legal_links ) ) : ?>
+			<ul class="udp-subfooter__links">
+				<?php foreach ( $legal_links as $link ) : ?>
+					<?php
+					$url   = isset( $link['url'] ) ? $link['url'] : '';
+					$label = isset( $link['label'] ) ? $link['label'] : '';
+					if ( empty( $url ) || empty( $label ) ) {
+						continue;
+					}
+					?>
+					<li><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		<?php endif; ?>
+	</div>
+</div>
+<?php endif; ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>
