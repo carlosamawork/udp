@@ -24,3 +24,6 @@ Thumbs.db
 
 CLAUDE.md
 .claude
+
+# Source OTF fonts (convertidas a WOFF2 antes de servir)
+src/scss/fonts/_otf-source/
