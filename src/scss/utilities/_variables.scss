@@ -7,6 +7,11 @@
 // --------------------------------------------------------------------------
 // 1. Paleta UDP
 // --------------------------------------------------------------------------
+// CONVENCIÓN DE USO:
+// - En componentes propios SCSS, usa $brand-red, $brand-blue, $brand-accent.
+// - $primary y $secondary (sección 2) existen SOLO para que Bootstrap genere
+//   bien las utility classes (.btn-primary, .text-primary, .bg-secondary, etc).
+//   NO los uses en componentes — su nombre genérico empobrece el grep.
 $brand-red:      #C81C0D;  // CTA principal, botón Accesibilidad
 $brand-accent:   #FF7064;  // Item activo, texto destacado sobre dark
 $brand-blue:     #4539F2;  // Hover de cards, acentos secundarios
@@ -78,6 +83,12 @@ $space-4xl: 64px;
 $space-5xl: 120px;
 
 // Inyectado al map de Bootstrap (extiende, no reemplaza).
+// ⚠️ Bootstrap default $spacers es 0-5. Aquí lo extendemos a 0-10 para tener
+// la escala UDP completa disponible como utility classes (.m-1 .. .m-10, etc).
+// CONSECUENCIA: las utility classes BS .m-N / .p-N / .gap-N NO mapean a los
+// valores canónicos de Bootstrap. Ej: .gap-5 = 20px (UDP $space-lg), NO 48px.
+// Si vienes de Bootstrap "muscle memory", usa $space-* en SCSS en vez de
+// utility classes para evitar sorpresas.
 $spacers: (
     0: 0,
     1: $space-2xs,
