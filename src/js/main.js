@@ -33,6 +33,7 @@ import { initNavbar } from '@modules/navbar';
 import { initSmoothScroll } from '@modules/smooth-scroll';
 import { initScrollAnimations } from '@modules/scroll-animations';
 import { initMobileMenu } from '@modules/mobile-menu';
+import { initSectionLandingSwiper } from '@modules/section-landing-swiper';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -51,6 +52,7 @@ domReady(() => {
     initSmoothScroll();
     initScrollAnimations();
     initMobileMenu();
+    initSectionLandingSwiper();
 
     console.log('[StarterBS5] Theme initialized');
 });

@@ -1,0 +1,258 @@
+// ==========================================================================
+// SECTION LANDING — page template (hero + cards grid o swiper)
+// Spec Figma: 4383:18979 (swiper Pregrado), 4401:22378 (grid Servicios)
+// Card común: 248×318 (grid), 285×365 (swiper); bg $dark-2; padding 18px
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// HERO
+// --------------------------------------------------------------------------
+.udp-section-hero {
+    background-color: $dark-2;
+    color: $white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    isolation: isolate;
+    padding: $space-4xl $space-3xl;  // 64px vertical, 40px horizontal
+    min-height: 348px;
+    display: flex;
+    align-items: flex-end;
+
+    @include media-down(md) {
+        padding: $space-2xl $space-sm;
+        min-height: 240px;
+    }
+
+    // Overlay sobre la imagen (si existe)
+    &--has-image::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(35, 35, 35, 0.78);
+        z-index: -1;
+    }
+
+    &__inner {
+        max-width: 1360px;
+        margin-inline: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: $space-md;
+    }
+
+    &__eyebrow {
+        margin: 0;
+        @include eyebrow($white-70);
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 64px;
+        line-height: 1.05;
+        color: $white;
+
+        @include media-down(md) {
+            font-size: 40px;
+        }
+    }
+
+    &__bajada {
+        margin: 0;
+        max-width: 696px;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: $font-size-body-lg;
+        line-height: 1.5;
+        color: $white-70;
+    }
+}
+
+// --------------------------------------------------------------------------
+// CARDS — container común
+// --------------------------------------------------------------------------
+.udp-section-cards {
+    background-color: $dark-1;
+    color: $white;
+    padding: $space-3xl 0;
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        display: block;
+    }
+}
+
+// --------------------------------------------------------------------------
+// MODO GRID — 5 columnas desktop, 3 tablet, scroll-snap mobile
+// --------------------------------------------------------------------------
+.udp-section-cards--grid {
+    .udp-section-cards__list {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 30px;
+        padding-inline: $space-3xl;  // 40px
+        max-width: 1440px;
+        margin-inline: auto;
+
+        @include media-down(xl) {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        @include media-down(md) {
+            // Mobile: scroll-snap horizontal
+            grid-template-columns: none;
+            grid-auto-flow: column;
+            grid-auto-columns: 80%;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-padding-inline: $space-sm;
+            padding-inline: $space-sm;
+            -webkit-overflow-scrolling: touch;
+
+            // Hide scrollbar (visual cleaner)
+            scrollbar-width: none;
+            &::-webkit-scrollbar { display: none; }
+
+            .udp-section-cards__item {
+                scroll-snap-align: start;
+            }
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// MODO SWIPER — carrusel horizontal con peek
+// --------------------------------------------------------------------------
+.udp-section-cards--swiper {
+    .udp-section-cards__viewport {
+        overflow: visible;  // Necesario para que las cards "peek" se vean
+        padding-inline: $space-3xl;
+        padding-right: 150px;  // Reveal de la siguiente card (Figma)
+
+        @include media-down(md) {
+            padding-inline: $space-sm;
+            padding-right: 60px;
+        }
+    }
+
+    .udp-section-cards__list {
+        display: flex;
+        gap: 33px;
+    }
+
+    .udp-section-cards__item.swiper-slide {
+        flex: 0 0 285px;  // Card swiper width del Figma
+
+        @include media-down(md) {
+            flex: 0 0 80%;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// CARD ÚNICO — mismo en grid y swiper, dimensiones según wrapper
+// --------------------------------------------------------------------------
+.udp-section-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: $dark-2;
+    color: $white;
+    padding: $space-md;  // 18px
+    text-decoration: none;
+    aspect-ratio: 248 / 318;  // Default grid ratio
+    transition: background-color $transition-base, transform $transition-base;
+    overflow: hidden;
+    height: 100%;
+
+    .udp-section-cards--swiper & {
+        aspect-ratio: 285 / 365;
+    }
+
+    &:hover,
+    &:focus-visible {
+        background-color: $brand-blue;
+        transform: translateY(-2px);
+        text-decoration: none;
+        color: $white;
+    }
+
+    &__image {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        z-index: 0;
+
+        // Si hay imagen, oscurecer un poco el bg para que el texto se lea
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+        }
+    }
+
+    &__content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+        margin-top: auto;  // Empuja el contenido al bottom
+    }
+
+    &__eyebrow {
+        margin: 0;
+        @include eyebrow($white-70);
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: $font-size-h4;  // 20px
+        line-height: $line-height-snug;
+        color: $white;
+    }
+
+    &__desc {
+        margin: 0;
+        font-family: $font-family-body;
+        font-size: $font-size-body-sm;
+        line-height: 1.4;
+        color: $white-70;
+    }
+
+    &__cta {
+        position: absolute;
+        top: $space-md;
+        right: $space-md;
+        z-index: 2;
+        width: 48px;
+        height: 48px;
+        border-radius: 9999px;
+        border: 1px solid $gray-medium;  // #4F4F4F
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+        transition: background-color $transition-base, color $transition-base;
+    }
+
+    &:hover .udp-section-card__cta,
+    &:focus-visible .udp-section-card__cta {
+        background-color: $white;
+        color: $dark-1;
+        border-color: $white;
+    }
+}

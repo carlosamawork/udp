@@ -116,3 +116,36 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Subir imagen `logo_acreditacion` real en options page General si todavía no está cargada.
 - Validar SVGs sociales contra los del Figma (paths actuales son monocromos genéricos — F10 polish).
 
+
+### 2026-04-27 — fix(acf): contact_blocks.enlace cambiado de url a text
+
+- Sub-field `enlace` del repeater `contact_blocks` (group_options_footer, ID 55199) cambiado de `type: "url"` a `type: "text"` con placeholder `tel:+56... | mailto:... | https://...`.
+- Razón: ACF `type:url` valida solo http/https y rechaza esquemas `tel:` y `mailto:` con "El valor debe ser una URL válida". El template `contact.php` ya escapa con `esc_url()` que sí acepta tel/mailto/http(s).
+- Re-sync vía script `/tmp/acf-resync-footer-upsert.php` con upsert por ID (acf_get_field_group + inyección de ID) — UPDATE confirmado, sin duplicados (count=1).
+- Verificación SQL: `post_content` ahora contiene `s:4:"type";s:4:"text"`.
+- HTTP 200, JSON válido. Commit f39fa0c.
+
+
+### 2026-04-27 — F3 Task 5: Swiper.js install + módulo JS + init
+
+- Instalado `swiper@12.1.3` como `dependency` (runtime, no devDep).
+- Creado `src/js/modules/section-landing-swiper.js`: usa `qsa('.udp-section-cards--swiper')` y hace **lazy import** de Swiper + `Navigation/Keyboard/FreeMode` + CSS solo si hay containers en la página. Config: `slidesPerView:'auto'`, `spaceBetween: 33` (16 en mobile), `freeMode + momentum`, `keyboard`, `grabCursor`.
+- Wire en `src/js/main.js`: añadido `import { initSectionLandingSwiper } from '@modules/section-landing-swiper'` y llamada en `domReady()` antes del `console.log`.
+- Build OK (`npm run build`, 652ms): Vite generó chunk separado `dist/js/chunks/swiper.0ByW75It.js` (62K) y `dist/css/swiper.vL0Q9Dr-.css` (4.69 kB) gracias al `await import()` dinámico. `main.js` quedó en 84K (sin crecer significativamente respecto al baseline ~83K — Swiper no entra en el bundle principal).
+- No commit (Task 6 los agrupa).
+
+### 2026-04-28 — F3 Section Landing Template completada
+
+**Hechos**:
+- Page template `templates/page-section-landing.php` con header `Template Name: Section Landing`. Asignable desde el dropdown del editor a cualquier página.
+- ACF group `group_template_section_landing` (ID 55208) con location `page_template == templates/page-section-landing.php`. Estructura: hero (eyebrow + titulo + bajada + imagen_fondo) + cards_display radio (grid|swiper, default grid) + cards repeater (eyebrow + titulo + descripcion + imagen + link).
+- Template-parts en `template-parts/sections/`: `section-landing-hero.php`, `section-landing-cards.php` (container condicional), `section-landing-card.php` (single reutilizable).
+- SCSS único `_section-landing.scss` con: hero responsivo, grid 5 cols desktop / 3 tablet / scroll-snap mobile, swiper con peek 150px y card 285×365 vs grid card 248×318, hover-invert dark→blue.
+- JS module `section-landing-swiper.js` con lazy import de Swiper.js (chunk separado 62K JS + 4.7K CSS, solo se carga si hay `.udp-section-cards--swiper` en la página).
+- Swiper.js 12.1.3 como dependencia npm.
+- Card maneja link interno (icono arrow→) y externo (icono arrow-up-right + target_blank automático).
+- Verificación end-to-end: page de prueba con template asignado renderizó HTTP 200 y emitió `udp-section-hero`, `udp-section-hero__inner`, `udp-section-hero__title`. Sección de cards correctamente omitida con repeater vacío (early return).
+
+**Pendientes**:
+- Páginas iniciales que el usuario puede asignar el template: Pregrado, Conoce UDP, Gobernanza y Reglamentos, Premios y distinciones, Servicios, Webmail UDP. El admin asigna manualmente desde el editor.
+- F4 en adelante: archivos/singles de CPT.

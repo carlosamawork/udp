@@ -1,0 +1,57 @@
+{
+    "key": "group_template_section_landing",
+    "title": "Template — Section Landing",
+    "fields": [
+        {
+            "key": "field_template_section_landing_hero",
+            "label": "Hero",
+            "name": "hero",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                { "key": "field_template_section_landing_hero_eyebrow", "label": "Eyebrow (etiqueta superior)", "name": "eyebrow", "type": "text" },
+                { "key": "field_template_section_landing_hero_titulo", "label": "Título", "name": "titulo", "type": "text", "required": 1 },
+                { "key": "field_template_section_landing_hero_bajada", "label": "Bajada", "name": "bajada", "type": "textarea", "rows": 3 },
+                { "key": "field_template_section_landing_hero_imagen", "label": "Imagen de fondo", "name": "imagen_fondo", "type": "image", "return_format": "url", "library": "all", "instructions": "Opcional. Si está vacío el hero se muestra solo con fondo dark." }
+            ]
+        },
+        {
+            "key": "field_template_section_landing_cards_display",
+            "label": "Modo de visualización de cards",
+            "name": "cards_display",
+            "type": "radio",
+            "required": 1,
+            "choices": { "grid": "Grid (5 columnas, scroll mobile)", "swiper": "Swiper (carrusel horizontal)" },
+            "default_value": "grid",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_template_section_landing_cards",
+            "label": "Cards",
+            "name": "cards",
+            "type": "repeater",
+            "min": 1,
+            "layout": "block",
+            "button_label": "Agregar card",
+            "sub_fields": [
+                { "key": "field_template_section_landing_card_eyebrow", "label": "Eyebrow (etiqueta)", "name": "eyebrow", "type": "text", "instructions": "Opcional. Ej. 'Charlas', 'Postgrado'." },
+                { "key": "field_template_section_landing_card_titulo", "label": "Título", "name": "titulo", "type": "text", "required": 1 },
+                { "key": "field_template_section_landing_card_descripcion", "label": "Descripción", "name": "descripcion", "type": "textarea", "rows": 2 },
+                { "key": "field_template_section_landing_card_imagen", "label": "Imagen", "name": "imagen", "type": "image", "return_format": "url" },
+                { "key": "field_template_section_landing_card_link", "label": "Link", "name": "link", "type": "link", "required": 1, "return_format": "array", "instructions": "Página interna o URL externa. Si es externa, marcar 'Open in a new window'." }
+            ]
+        }
+    ],
+    "location": [
+        [{ "param": "page_template", "operator": "==", "value": "templates/page-section-landing.php" }]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Hero + grid de cards (link interno/externo) en modo grid o swiper."
+}
