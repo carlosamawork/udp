@@ -1,46 +1,39 @@
 // ==========================================================================
-// SECTION LANDING — page template (hero + cards grid o swiper)
-// Spec Figma: 4383:18979 (swiper Pregrado), 4401:22378 (grid Servicios)
-// Card común: 248×318 (grid), 285×365 (swiper); bg $dark-2; padding 18px
+// SECTION LANDING — page template
+// Page header (breadcrumb + título + descripción) + cards grid o swiper.
+// Spec Figma:
+//   - 4383:18979 (swiper Pregrado)
+//   - 4401:22378 (grid Servicios)
+//   - 3706:21530 (Conoce la UDP — breadcrumb multinivel + back-card)
+// Card 248×318 (grid) o 285×365 (swiper); bg $dark-2; padding 18px;
+// hover: bg $brand-blue (#4539F2 ≈ lila).
 // ==========================================================================
 
 // --------------------------------------------------------------------------
-// HERO
+// PAGE HEADER (sin bg image, separador inferior, breadcrumb arriba)
 // --------------------------------------------------------------------------
-.udp-section-hero {
-    background-color: $dark-2;
+.udp-section-header {
+    background-color: $dark-1;
     color: $white;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    isolation: isolate;
-    padding: $space-4xl $space-3xl;  // 64px vertical, 40px horizontal
-    min-height: 348px;
-    display: flex;
-    align-items: flex-end;
-
-    @include media-down(md) {
-        padding: $space-2xl $space-sm;
-        min-height: 240px;
-    }
-
-    // Overlay sobre la imagen (si existe)
-    &--has-image::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(35, 35, 35, 0.78);
-        z-index: -1;
-    }
+    padding-top: $space-2xl;  // 32px
 
     &__inner {
-        max-width: 1360px;
+        max-width: 1440px;
         margin-inline: auto;
-        width: 100%;
+        padding-inline: $space-3xl;  // 40px
+        padding-bottom: $space-3xl;
+
+        @include media-down(md) {
+            padding-inline: $space-sm;
+            padding-bottom: $space-2xl;
+        }
+    }
+
+    &__content {
         display: flex;
         flex-direction: column;
-        gap: $space-md;
+        gap: $space-sm;  // 16px (Figma usa 16px entre título y bajada)
+        margin-top: $space-md;
     }
 
     &__eyebrow {
@@ -50,30 +43,92 @@
 
     &__title {
         margin: 0;
-        font-family: $font-family-body;
+        font-family: $font-family-display;  // Arizona Flare
         font-weight: 500;
         font-size: 64px;
-        line-height: 1.05;
+        line-height: 86px;
         color: $white;
 
         @include media-down(md) {
             font-size: 40px;
+            line-height: 1.1;
         }
     }
 
-    &__bajada {
-        margin: 0;
+    &__desc {
         max-width: 696px;
         font-family: $font-family-body;
+        font-weight: 400;
+        font-size: $font-size-body-lg;  // 16px
+        line-height: 24px;
+        color: $white-70;
+
+        p { margin: 0; }
+        p + p { margin-top: $space-sm; }
+        a { color: $brand-accent; text-decoration: underline; }
+        strong { font-weight: 600; }
+    }
+
+    &__separator {
+        margin: 0 auto;
+        border: 0;
+        height: 1px;
+        background-color: $gray-medium;
+        max-width: 1360px;
+    }
+}
+
+// --------------------------------------------------------------------------
+// BREADCRUMB (reutilizable, anida dentro de cualquier header dark)
+// --------------------------------------------------------------------------
+.udp-breadcrumb {
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;  // Spec Figma: 6px entre item y chevron
+        align-items: center;
+    }
+
+    &__item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: $font-family-body;
         font-weight: 500;
-        font-size: $font-size-body-lg;
-        line-height: 1.5;
+        font-size: 14px;
+        line-height: 20px;
+        color: $white;
+    }
+
+    &__link,
+    &__current {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+
+    &__link {
+        &:hover,
+        &:focus-visible {
+            color: $brand-accent;
+        }
+    }
+
+    &__current {
+        cursor: default;
+    }
+
+    &__sep {
+        display: inline-flex;
         color: $white-70;
     }
 }
 
 // --------------------------------------------------------------------------
-// CARDS — container común
+// CARDS — container
 // --------------------------------------------------------------------------
 .udp-section-cards {
     background-color: $dark-1;
@@ -118,7 +173,6 @@
             padding-inline: $space-sm;
             -webkit-overflow-scrolling: touch;
 
-            // Hide scrollbar (visual cleaner)
             scrollbar-width: none;
             &::-webkit-scrollbar { display: none; }
 
@@ -134,7 +188,7 @@
 // --------------------------------------------------------------------------
 .udp-section-cards--swiper {
     .udp-section-cards__viewport {
-        overflow: visible;  // Necesario para que las cards "peek" se vean
+        overflow: visible;  // Necesario para que la card peek se vea
         padding-inline: $space-3xl;
         padding-right: 150px;  // Reveal de la siguiente card (Figma)
 
@@ -150,7 +204,7 @@
     }
 
     .udp-section-cards__item.swiper-slide {
-        flex: 0 0 285px;  // Card swiper width del Figma
+        flex: 0 0 285px;
 
         @include media-down(md) {
             flex: 0 0 80%;
@@ -159,7 +213,7 @@
 }
 
 // --------------------------------------------------------------------------
-// CARD ÚNICO — mismo en grid y swiper, dimensiones según wrapper
+// CARD ÚNICO — sin imagen, gris ($dark-2) → lila ($brand-blue) en hover
 // --------------------------------------------------------------------------
 .udp-section-card {
     position: relative;
@@ -180,26 +234,10 @@
 
     &:hover,
     &:focus-visible {
-        background-color: $brand-blue;
+        background-color: $brand-blue;  // #4539F2 — el "lila"
         transform: translateY(-2px);
         text-decoration: none;
         color: $white;
-    }
-
-    &__image {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        z-index: 0;
-
-        // Si hay imagen, oscurecer un poco el bg para que el texto se lea
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
-        }
     }
 
     &__content {
@@ -207,7 +245,7 @@
         z-index: 1;
         display: flex;
         flex-direction: column;
-        gap: $space-2xs;
+        gap: $space-2xs;  // 8px
         margin-top: auto;  // Empuja el contenido al bottom
     }
 
@@ -228,7 +266,7 @@
     &__desc {
         margin: 0;
         font-family: $font-family-body;
-        font-size: $font-size-body-sm;
+        font-size: $font-size-body-sm;  // 14px
         line-height: 1.4;
         color: $white-70;
     }
@@ -246,13 +284,26 @@
         align-items: center;
         justify-content: center;
         color: $white;
-        transition: background-color $transition-base, color $transition-base;
+        transition:
+            background-color $transition-base,
+            color $transition-base,
+            border-color $transition-base;
     }
 
     &:hover .udp-section-card__cta,
     &:focus-visible .udp-section-card__cta {
         background-color: $white;
-        color: $dark-1;
+        color: $brand-blue;  // arrow se oscurece a lila para contraste con bg blanco
         border-color: $white;
+    }
+
+    // ------ VARIANTE BACK ------
+    // Mismo layout, solo título (sin eyebrow ni desc). El icono cambia a undo-2
+    // (lo gestiona el partial PHP).
+    &--back {
+        .udp-section-card__title {
+            font-size: $font-size-h4;
+            line-height: $line-height-snug;
+        }
     }
 }
