@@ -148,6 +148,7 @@ require_once STARTER_BS5_DIR . '/inc/acf-setup.php';
 // 6. HELPERS & UTILIDADES
 // =============================================================================
 require_once STARTER_BS5_DIR . '/inc/helpers.php';
+require_once STARTER_BS5_DIR . '/inc/template-helpers.php';
 
 
 // =============================================================================
