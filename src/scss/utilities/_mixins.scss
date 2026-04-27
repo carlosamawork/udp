@@ -78,3 +78,95 @@
         object-fit: cover;
     }
 }
+
+// ==========================================================================
+// MIXINS UDP — sección 4.7 del spec
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Eyebrow: etiqueta mono uppercase con tracking generoso.
+// Patrón usado en cards, headers de sección, metadatos.
+// --------------------------------------------------------------------------
+@mixin eyebrow($color: $white-70) {
+    font-family: $font-family-mono;
+    font-size: $font-size-label-md;
+    line-height: $line-height-tight;
+    letter-spacing: $letter-spacing-eyebrow;
+    text-transform: uppercase;
+    color: $color;
+    font-weight: 400;
+}
+
+// Variante pequeña (12px) para captions tight.
+@mixin eyebrow-sm($color: $white-70) {
+    @include eyebrow($color);
+    font-size: $font-size-label-sm;
+}
+
+// --------------------------------------------------------------------------
+// Card hover-invert: card que invierte de dark a light/blue al hover.
+// Usado en grids de eventos/noticias en home y archives.
+// --------------------------------------------------------------------------
+@mixin card-hover-invert($hover-bg: $brand-blue, $hover-color: $white) {
+    background: $dark-2;
+    color: $white;
+    transition: background $transition-base, color $transition-base;
+
+    &:hover,
+    &:focus-within {
+        background: $hover-bg;
+        color: $hover-color;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Huincha-list: lista vertical donde cada item combina título serif grande
+// + meta mono pequeño en línea (patrón header UDP).
+// --------------------------------------------------------------------------
+@mixin huincha-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: $space-sm 0;
+    border-bottom: 1px solid $gray-medium;
+
+    .huincha-item__title {
+        font-family: $font-family-display;
+        font-size: $font-size-display-1;
+        font-weight: 500;
+        line-height: $line-height-tight;
+    }
+
+    .huincha-item__meta {
+        @include eyebrow($white-70);
+    }
+}
+
+// --------------------------------------------------------------------------
+// Container con padding lateral UDP (40px en desktop).
+// --------------------------------------------------------------------------
+@mixin container-udp {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: $header-side-padding;
+
+    @include media-down(md) {
+        padding-inline: $space-sm;  // 16px en mobile
+    }
+}
+
+// --------------------------------------------------------------------------
+// Faculty color application: aplica --faculty-color a un elemento como
+// border accent + eyebrow color. El CSS var se inyecta vía PHP en el wrapper
+// (style="--faculty-color: #XXX") por udp_render_faculty_color_var().
+// --------------------------------------------------------------------------
+@mixin faculty-accent {
+    --faculty-color: #{$brand-red};  // Fallback si no hay color en ACF
+    border-top: 4px solid var(--faculty-color);
+
+    .eyebrow,
+    .faculty-card__eyebrow {
+        color: var(--faculty-color);
+    }
+}
