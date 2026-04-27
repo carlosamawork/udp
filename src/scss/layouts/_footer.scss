@@ -1,24 +1,123 @@
 // ==========================================================================
-// FOOTER
+// FOOTER UDP — siempre dark
 // ==========================================================================
 
-.site-footer {
-    a {
-        transition: opacity $transition-base;
+.udp-site-footer {
+    background: $dark-1;
+    color: $white;
+    padding-block: $space-4xl $space-xl;
+    margin-top: $space-5xl;
 
-        &:hover {
-            opacity: 0.8;
+    &__inner {
+        @include container-udp;
+    }
+
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: $space-xl;
+        padding-bottom: $space-2xl;
+        border-bottom: 1px solid $gray-medium;
+        flex-wrap: wrap;
+    }
+
+    &__logo {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        color: $white;
+
+        img {
+            height: 32px;
+            width: auto;
         }
     }
 
-    .widget-title {
-        font-size: 0.875rem;
-        letter-spacing: 0.05em;
+    &__bottom {
+        margin-top: $space-2xl;
+        padding-top: $space-md;
+        border-top: 1px solid $gray-medium;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: $space-md;
+        flex-wrap: wrap;
     }
 
-    // Menú inline del footer
-    .list-inline .menu-item {
-        display: inline-block;
-        margin-left: 1rem;
+    &__copyright {
+        margin: 0;
+        @include eyebrow-sm($white-70);
     }
+
+    &__legal {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: $space-md;
+
+        a {
+            @include eyebrow-sm($white-70);
+            text-decoration: none;
+
+            &:hover {
+                color: $white;
+            }
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Footer columns
+// --------------------------------------------------------------------------
+.udp-footer-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $space-xl;
+    padding-block: $space-2xl;
+
+    @include media-down(lg) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-down(md) {
+        grid-template-columns: 1fr;
+    }
+
+    &__title {
+        @include eyebrow($white-70);
+        margin: 0 0 $space-md;
+    }
+
+    &__links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+
+        a {
+            color: $white;
+            text-decoration: none;
+            font-size: $font-size-body-sm;
+            transition: opacity $transition-base;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Footer social
+// --------------------------------------------------------------------------
+.udp-footer-social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: $space-2xs;
 }
