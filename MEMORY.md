@@ -71,3 +71,31 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Los CPTs registrados duplicados (en theme + mu-plugin) NO causan errores: el segundo `register_post_type` con mismo slug sobrescribe args silenciosamente. PERO el ÚLTIMO en registrar gana (no el primero), por lo que mu-plugin debe ir a priority HIGHER que legacy theme.
 - Field keys son la única forma de preservar data — los names/labels se pueden cambiar sin pérdida.
 - Vite config tenía `base: starter-theme-bs5` (nombre antiguo) que rompía URLs de fonts en build — corregido en F0.
+
+### 2026-04-27 — F2 Sistema de diseño + chrome completada
+
+**Hechos**:
+- `_variables.scss` reescrito con paleta UDP (brand-red #C81C0D, brand-accent #FF7064, brand-blue #4539F2, dark-1/2, gray-high/medium, white-70).
+- Tipografía: Arizona Flare (display) + Work Sans (body) + Necto Mono (labels). Escala 12-48px.
+- Espaciado mixto UDP (8/12/16/18/20/24/32/40/64/120) inyectado al `$spacers` map de Bootstrap (extendido a indices 0-10 — warning en comentarios sobre que utility classes BS no mapean a defaults).
+- Overrides BS5: pill buttons (radius 9999px), flat cards (radius 0), container 1360px, grid 32px gutter.
+- Mixins UDP añadidos: eyebrow, eyebrow-sm, card-hover-invert, huincha-list-item, container-udp, faculty-accent.
+- 5 componentes nuevos: `_button.scss` (pill md/sm + icon-circle + primary + outline-light), `_cards.scss` (evento + tema, hover-invert), `_eyebrow.scss`, `_huincha.scss` (marquee + lista), `_faculty-card.scss`.
+- `inc/template-helpers.php` con 5 funciones: `udp_body_theme_class()`, `udp_get_logo_url()`, `udp_render_faculty_color_var()`, `udp_get_social_urls()`, `udp_get_footer_columns()`.
+- `header.php` reescrito: dark, top-bar (logo + search + Accesibilidad CTA + user) + mega-menu trigger stub.
+- `footer.php` reescrito: dark, top (logo + social) + 4 columnas (lee options Footer) + bottom (copyright + legal links).
+- Body class `is-dark`/`is-light` aplicado dinámicamente según contexto.
+- `?theme=new` muestra header/footer del nuevo diseño en cualquier página antigua.
+
+**Pendientes**:
+- Mega-menú real (panel multi-columna con links internos+externos): F8.
+- SVGs sociales reales en lugar de placeholder de 2 letras: F10 polish.
+- Bloques flexible content (`block_*`): F3 en adelante.
+- Templates de single/archive UDP-styled: F4-F7.
+
+**Cosas que descubrí**:
+- Bootstrap `$spacers` map se EXTIENDE inyectándolo antes de su `@import`. Los valores custom (8/12/16/18/...) están disponibles como `.p-1` ... `.p-10`, PERO no mapean a los valores canónicos de BS — añadido warning en comentario del archivo.
+- `udp_body_theme_class()` se pasa a `body_class()` como string adicional — WP lo añade al array de clases sin pisar las defaults.
+- `additionalData` en Vite inyecta variables ANTES de que se procese cualquier @use/@import en SCSS, por eso los componentes pueden usar `$brand-red` sin importar nada.
+- Las options pages General y Redes Sociales YA tenían data (logo + 6 redes) — el footer/header renderizan con valores reales.
+- Renombrar variables ($font-family-heading → $font-family-display, $section-spacing → $space-5xl) requirió ajustes colaterales en editor.scss y el mixin section-padding.
