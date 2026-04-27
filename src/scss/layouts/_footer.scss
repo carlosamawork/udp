@@ -66,7 +66,8 @@
 .udp-footer-contact {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    justify-content: space-between;
+    gap: $space-md;
     align-items: flex-start;
     color: $white;
 
@@ -74,12 +75,12 @@
         display: flex;
         flex-direction: column;
         gap: 2px;
-        flex: 0 0 auto;
-        width: var(--udp-footer-contact-w, 175px);
+        flex: 0 1 auto;
+        min-width: 0;
         max-width: 100%;
     }
 
-    &__label {
+    &__title {
         margin: 0;
         font-family: $font-family-body;
         font-weight: 600;
@@ -95,14 +96,29 @@
         font-size: 14px;
         line-height: 20px;
         color: $white;
+        text-decoration: none;
+
+        &--link:hover,
+        &--link:focus {
+            text-decoration: underline;
+        }
     }
 
     @include media-down(lg) {
+        justify-content: flex-start;
         gap: $space-lg;
 
         &__block {
+            flex: 1 1 calc(50% - #{$space-lg});
+        }
+    }
+
+    @include media-down(md) {
+        flex-direction: column;
+
+        &__block {
+            flex: 0 0 auto;
             width: 100%;
-            max-width: none;
         }
     }
 }
