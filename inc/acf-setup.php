@@ -2,9 +2,10 @@
 /**
  * ACF Pro - Configuración y campos
  *
- * - Options Page (Opciones del Tema)
- * - Sincronización JSON local
- * - Ejemplo de campos para páginas y opciones globales
+ * - Options Pages: 1 parent (Opciones del Sitio / udp-options) + 4 sub-pages
+ *   temáticas: General, Header, Footer, Redes Sociales.
+ * - ACF JSON local-load configurado para /acf-json/.
+ * - Ejemplo de campos para páginas y opciones globales.
  *
  * @package Starter_BS5
  */
@@ -103,6 +104,9 @@ add_action('acf/include_fields', function () {
     // -------------------------------------------------------------------------
     // OPCIONES GENERALES DEL TEMA
     // -------------------------------------------------------------------------
+    // TODO(F1-Task-11/12): location 'theme-options-general' es dead — replaced by
+    // 'udp-options-general' field groups created via ACF UI/JSON in /acf-json/.
+    // Este bloque PHP se elimina cuando Tasks 11-12 estén integrados.
     acf_add_local_field_group([
         'key'      => 'group_theme_general',
         'title'    => 'Opciones Generales',
@@ -154,6 +158,9 @@ add_action('acf/include_fields', function () {
     // -------------------------------------------------------------------------
     // REDES SOCIALES
     // -------------------------------------------------------------------------
+    // TODO(F1-Task-11/12): location 'theme-options-social' es dead — replaced by
+    // 'udp-options-redes-sociales' field groups created via ACF UI/JSON in /acf-json/.
+    // Este bloque PHP se elimina cuando Tasks 11-12 estén integrados.
     acf_add_local_field_group([
         'key'      => 'group_theme_social',
         'title'    => 'Redes Sociales',
