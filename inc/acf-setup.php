@@ -33,47 +33,60 @@ add_filter('acf/settings/load_json', function ($paths) {
 
 
 // =============================================================================
-// 2. ACF OPTIONS PAGE (Opciones del Tema)
+// 2. ACF OPTIONS PAGES (UDP — parent + 4 sub-páginas temáticas)
 // =============================================================================
 
-add_action('acf/init', function () {
-    if (!function_exists('acf_add_options_page')) {
-        return;
-    }
+add_action( 'acf/init', 'udp_register_options_pages' );
 
-    // Página principal de opciones
-    acf_add_options_page([
-        'page_title'  => __('Opciones del Tema', 'starter-bs5'),
-        'menu_title'  => __('Opciones Tema', 'starter-bs5'),
-        'menu_slug'   => 'theme-options',
-        'capability'  => 'edit_posts',
-        'redirect'    => true,
-        'icon_url'    => 'dashicons-admin-customizer',
-        'position'    => 59,
-    ]);
+function udp_register_options_pages() {
+	if ( ! function_exists( 'acf_add_options_page' ) ) {
+		return;
+	}
 
-    // Subpáginas
-    acf_add_options_sub_page([
-        'page_title'  => __('General', 'starter-bs5'),
-        'menu_title'  => __('General', 'starter-bs5'),
-        'parent_slug' => 'theme-options',
-        'menu_slug'   => 'theme-options-general',
-    ]);
+	// Página padre — solo navegación, sin campos propios.
+	acf_add_options_page( array(
+		'page_title' => __( 'Opciones del Sitio', 'starter-theme' ),
+		'menu_title' => __( 'Opciones del Sitio', 'starter-theme' ),
+		'menu_slug'  => 'udp-options',
+		'capability' => 'edit_posts',
+		'redirect'   => true,
+		'icon_url'   => 'dashicons-admin-generic',
+		'position'   => 2,
+	) );
 
-    acf_add_options_sub_page([
-        'page_title'  => __('Header & Footer', 'starter-bs5'),
-        'menu_title'  => __('Header & Footer', 'starter-bs5'),
-        'parent_slug' => 'theme-options',
-        'menu_slug'   => 'theme-options-header-footer',
-    ]);
+	// Sub-páginas temáticas.
+	acf_add_options_sub_page( array(
+		'page_title'  => __( 'General', 'starter-theme' ),
+		'menu_title'  => __( 'General', 'starter-theme' ),
+		'menu_slug'   => 'udp-options-general',
+		'parent_slug' => 'udp-options',
+		'capability'  => 'edit_posts',
+	) );
 
-    acf_add_options_sub_page([
-        'page_title'  => __('Redes Sociales', 'starter-bs5'),
-        'menu_title'  => __('Redes Sociales', 'starter-bs5'),
-        'parent_slug' => 'theme-options',
-        'menu_slug'   => 'theme-options-social',
-    ]);
-});
+	acf_add_options_sub_page( array(
+		'page_title'  => __( 'Header & Mega-menú', 'starter-theme' ),
+		'menu_title'  => __( 'Header', 'starter-theme' ),
+		'menu_slug'   => 'udp-options-header',
+		'parent_slug' => 'udp-options',
+		'capability'  => 'edit_posts',
+	) );
+
+	acf_add_options_sub_page( array(
+		'page_title'  => __( 'Footer', 'starter-theme' ),
+		'menu_title'  => __( 'Footer', 'starter-theme' ),
+		'menu_slug'   => 'udp-options-footer',
+		'parent_slug' => 'udp-options',
+		'capability'  => 'edit_posts',
+	) );
+
+	acf_add_options_sub_page( array(
+		'page_title'  => __( 'Redes Sociales', 'starter-theme' ),
+		'menu_title'  => __( 'Redes Sociales', 'starter-theme' ),
+		'menu_slug'   => 'udp-options-redes-sociales',
+		'parent_slug' => 'udp-options',
+		'capability'  => 'edit_posts',
+	) );
+}
 
 
 // =============================================================================
