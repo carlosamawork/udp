@@ -1,5 +1,6 @@
 // ==========================================================================
-// HEADER UDP — siempre dark, independiente del body theme
+// HEADER UDP — fila única 84px, siempre dark
+// Layout 3-columnas: trigger menú izq · logo centro · buscador der
 // ==========================================================================
 
 .udp-site-header {
@@ -10,17 +11,24 @@
 }
 
 .udp-top-bar {
-    border-bottom: 1px solid $gray-medium;
+    border-bottom: 1px solid $white;
 
     &__inner {
-        @include container-udp;
-        min-height: $navbar-height;
+        min-height: 84px;
+        padding-inline: $space-3xl;  // 40px (sin container max-width)
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: $space-xl;
+        gap: $space-sm;
+
+        @include media-down(md) {
+            padding-inline: $space-sm;
+        }
     }
 
+    // ----------------------------------------------------------------------
+    // Logo (centrado)
+    // ----------------------------------------------------------------------
     &__logo {
         display: inline-flex;
         align-items: center;
@@ -28,8 +36,9 @@
         color: $white;
 
         img {
-            height: 36px;
             width: auto;
+            height: 40px;       // Wordmark UDP altura del Figma
+            max-width: 220px;   // Cap para evitar logos enormes
             display: block;
         }
     }
@@ -40,58 +49,95 @@
         font-weight: 500;
     }
 
-    &__actions {
-        display: flex;
+    // ----------------------------------------------------------------------
+    // Trigger menú (izquierda)
+    // ----------------------------------------------------------------------
+    &__menu {
+        display: inline-flex;
         align-items: center;
-        gap: $space-sm;  // 16px
+        gap: $space-2xs;  // 8px entre círculo y label
+        background: transparent;
+        border: none;
+        color: $white;
+        cursor: pointer;
+        padding: 0;
+        transition: opacity $transition-base;
+
+        &:hover,
+        &:focus {
+            opacity: 0.7;
+        }
+    }
+
+    &__menu-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 9999px;
+        border: 1px solid $gray-high;  // #454545
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+    }
+
+    &__menu-label {
+        font-family: $font-family-body;  // Work Sans
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: $white;
 
         @include media-down(md) {
-            gap: $space-2xs;
+            display: none;  // Solo el círculo en mobile
         }
     }
-}
 
-// --------------------------------------------------------------------------
-// Mega-menu trigger (stub — F8 lo cablea)
-// --------------------------------------------------------------------------
-.udp-megamenu-trigger {
-    @include container-udp;
-    display: flex;
-    align-items: center;
-    gap: $space-sm;
-    padding-block: $space-md;
-    background: transparent;
-    border: none;
-    color: $white;
-    cursor: pointer;
-    @include eyebrow($white);
-    transition: opacity $transition-base;
-
-    &:hover,
-    &:focus {
-        opacity: 0.7;
-    }
-
-    &__icon {
+    // ----------------------------------------------------------------------
+    // Buscador (derecha)
+    // ----------------------------------------------------------------------
+    &__search {
         display: inline-flex;
-        flex-direction: column;
-        gap: 4px;
+        align-items: center;
+        gap: $space-2xs;
+        background: transparent;
+        border: none;
+        color: $white;
+        cursor: pointer;
+        padding: 0;
+        transition: opacity $transition-base;
 
-        > span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: currentColor;
+        &:hover,
+        &:focus {
+            opacity: 0.7;
         }
     }
 
-    &__label {
-        font-size: $font-size-label-md;
+    &__search-label {
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: $white;
+
+        @include media-down(md) {
+            display: none;  // Solo el círculo en mobile
+        }
+    }
+
+    &__search-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 9999px;
+        border: 1px solid $gray-high;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
     }
 }
 
 // --------------------------------------------------------------------------
-// Body theming hooks (sección 4.5 del spec)
+// Body theming hooks (sección 4.5 del spec) — preservado
 // --------------------------------------------------------------------------
 body.is-dark {
     background: $dark-1;
@@ -103,7 +149,9 @@ body.is-light {
     color: $dark-1;
 }
 
-// Skip link
+// --------------------------------------------------------------------------
+// Skip link (accesibilidad) — preservado
+// --------------------------------------------------------------------------
 .visually-hidden {
     position: absolute !important;
     width: 1px;
