@@ -13,6 +13,7 @@
     "bootstrap": "^5.3.3"
   },
   "devDependencies": {
+    "@fontsource/work-sans": "^5.2.8",
     "@popperjs/core": "^2.11.8",
     "autoprefixer": "^10.4.20",
     "glob": "^11.0.0",
