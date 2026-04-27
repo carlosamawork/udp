@@ -1,25 +1,42 @@
 // ==========================================================================
 // FOOTER UDP — siempre dark
+// Spec: Figma 4401:23290 (UDP Design System)
 // ==========================================================================
 
 .udp-site-footer {
-    background: $dark-1;
+    background: #000;
     color: $white;
-    padding-block: $space-4xl $space-xl;
+    padding: 70px 40px;
     margin-top: $space-5xl;
 
-    &__inner {
-        @include container-udp;
+    @include media-down(md) {
+        padding: $space-3xl $space-lg;
     }
 
-    &__top {
+    &__inner {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: $space-2xl; // 32px entre contact strip y bottom row
+        max-width: 1360px;
+        margin-inline: auto;
+    }
+
+    // ----------------------------------------------------------------------
+    // Bottom row: logo (left) + social (center) + acreditación (right)
+    // ----------------------------------------------------------------------
+    &__bottom {
+        display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: $space-xl;
-        padding-bottom: $space-2xl;
-        border-bottom: 1px solid $gray-medium;
-        flex-wrap: wrap;
+        padding-top: 30px;
+        border-top: 1px solid $white;
+
+        @include media-down(md) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: $space-xl;
+        }
     }
 
     &__logo {
@@ -27,49 +44,142 @@
         align-items: center;
         text-decoration: none;
         color: $white;
+        flex-shrink: 0;
 
         img {
-            height: 32px;
+            display: block;
+            height: 52px;
             width: auto;
+            max-width: 240px;
         }
-    }
 
-    &__bottom {
-        margin-top: $space-2xl;
-        padding-top: $space-md;
-        border-top: 1px solid $gray-medium;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: $space-md;
-        flex-wrap: wrap;
-    }
-
-    &__copyright {
-        margin: 0;
-        @include eyebrow-sm($white-70);
-    }
-
-    &__legal {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        gap: $space-md;
-
-        a {
-            @include eyebrow-sm($white-70);
-            text-decoration: none;
-
-            &:hover {
-                color: $white;
-            }
+        span {
+            font-family: $font-family-display;
+            font-size: $font-size-h4;
         }
     }
 }
 
 // --------------------------------------------------------------------------
-// Footer columns
+// Footer contact strip — 6 mini-bloques inline (Figma 3412:3154)
+// --------------------------------------------------------------------------
+.udp-footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: flex-start;
+    color: $white;
+
+    &__block {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 0 0 auto;
+        width: var(--udp-footer-contact-w, 175px);
+        max-width: 100%;
+    }
+
+    &__label {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        color: $white;
+    }
+
+    &__value {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: $white;
+    }
+
+    @include media-down(lg) {
+        gap: $space-lg;
+
+        &__block {
+            width: 100%;
+            max-width: none;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Footer social — circular icon buttons (Figma 3412:3151)
+// --------------------------------------------------------------------------
+.udp-footer-social {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: $space-xl; // 24px
+    flex-shrink: 0;
+
+    li {
+        display: inline-flex;
+    }
+
+    &__link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 1px solid $gray-high; // #454545
+        border-radius: 9999px;
+        color: $white;
+        background: transparent;
+        text-decoration: none;
+        transition: background-color $transition-base, color $transition-base, border-color $transition-base;
+
+        svg {
+            width: 16px;
+            height: auto;
+            display: block;
+        }
+
+        span {
+            font-size: $font-size-label-sm;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        &:hover,
+        &:focus-visible {
+            background: $white;
+            color: #000;
+            border-color: $white;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $brand-accent;
+            outline-offset: 2px;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// Footer acreditación — sello CNA (Figma 3412:2811)
+// --------------------------------------------------------------------------
+.udp-footer-acreditacion {
+    flex-shrink: 0;
+
+    img {
+        display: block;
+        height: 64px;
+        width: auto;
+        max-width: 240px;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Footer columns — DEPRECATED (no se usa en el footer Figma actual).
+// Se conserva el styling por si se reactivan las columnas vía
+// template-parts/footer/columns.php desde un layout futuro.
 // --------------------------------------------------------------------------
 .udp-footer-columns {
     display: grid;
@@ -109,15 +219,4 @@
             }
         }
     }
-}
-
-// --------------------------------------------------------------------------
-// Footer social
-// --------------------------------------------------------------------------
-.udp-footer-social {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: $space-2xs;
 }

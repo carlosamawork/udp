@@ -99,3 +99,20 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - `additionalData` en Vite inyecta variables ANTES de que se procese cualquier @use/@import en SCSS, por eso los componentes pueden usar `$brand-red` sin importar nada.
 - Las options pages General y Redes Sociales YA tenían data (logo + 6 redes) — el footer/header renderizan con valores reales.
 - Renombrar variables ($font-family-heading → $font-family-display, $section-spacing → $space-5xl) requirió ajustes colaterales en editor.scss y el mixin section-padding.
+
+### 2026-04-27 — Footer pixel-perfect F2 (Figma 4401:23290)
+
+**Hechos**:
+- Reescritos `footer.php`, `template-parts/footer/social.php` y `src/scss/layouts/_footer.scss` para matchear el frame Figma 4401:23290.
+- Nuevos template-parts: `template-parts/footer/contact.php` (6 mini-bloques de contacto) y `template-parts/footer/acreditacion.php` (sello CNA).
+- El footer Figma NO tiene columnas de links ni copyright/legal — esos quedan deprecated en render pero el template-part `columns.php`, los helpers `udp_get_footer_columns()` y los fields ACF (copyright, legal_links, columnas_footer) se conservan para uso futuro.
+- BG cambió de `$dark-1` a `#000` puro. Padding fijo `70px 40px` (Figma).
+- Iconos sociales: SVGs inline monocromos (LinkedIn, Instagram, YouTube priorizados según Figma; FB, Twitter/X, TikTok también con SVG si están configurados). Círculo 44px, border `#454545`, hover invierte a fondo blanco / icono negro.
+- Contact strip usa CSS variable `--udp-footer-contact-w` por bloque para anchos fijos (317px / 175px) — cae a 100% en `<lg`.
+- Acreditación se renderiza solo si está configurado `logo_acreditacion` en options General.
+
+**Pendientes / TODO**:
+- Crear field group ACF en `udp-options-footer` para los 6 bloques de contacto (`direccion_value`, `telefono_*`, `email_*`) — ahora hardcoded vía filter `udp_footer_contact_blocks`.
+- Subir imagen `logo_acreditacion` real en options page General si todavía no está cargada.
+- Validar SVGs sociales contra los del Figma (paths actuales son monocromos genéricos — F10 polish).
+
