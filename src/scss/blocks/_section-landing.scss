@@ -119,6 +119,7 @@
 
     &__current {
         cursor: default;
+        font-weight: 600;  // diferencia visual del item current vs los links
     }
 
     &__sep {
@@ -235,9 +236,15 @@
     &:hover,
     &:focus-visible {
         background-color: $brand-blue;  // #4539F2 — el "lila"
-        transform: translateY(-2px);
         text-decoration: none;
         color: $white;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        &:hover,
+        &:focus-visible {
+            transform: translateY(-2px);
+        }
     }
 
     &__content {
