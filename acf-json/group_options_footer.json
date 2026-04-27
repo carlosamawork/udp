@@ -32,8 +32,9 @@
                     "key": "field_options_footer_contact_enlace",
                     "label": "Enlace (opcional)",
                     "name": "enlace",
-                    "type": "url",
-                    "instructions": "Para teléfonos usar tel:+56... y para emails mailto:... Si vacío, el bloque no es clickable."
+                    "type": "text",
+                    "instructions": "Para teléfonos: tel:+56226762000 — Para emails: mailto:info@udp.cl — Para web: https://...  Si vacío, el bloque no es clickable.",
+                    "placeholder": "tel:+56... | mailto:... | https://..."
                 }
             ]
         },
