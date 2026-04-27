@@ -49,12 +49,12 @@
 }
 
 @mixin section-padding {
-    padding-top: $section-spacing;
-    padding-bottom: $section-spacing;
+    padding-top: $space-5xl;     // 120px — rhythm de secciones UDP
+    padding-bottom: $space-5xl;
 
     @include media-down(md) {
-        padding-top: $section-spacing-sm;
-        padding-bottom: $section-spacing-sm;
+        padding-top: $space-4xl;  // 64px en mobile
+        padding-bottom: $space-4xl;
     }
 }
 
