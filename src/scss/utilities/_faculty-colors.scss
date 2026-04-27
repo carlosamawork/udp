@@ -1,0 +1,28 @@
+// ==========================================================================
+// FACULTY COLORS — sistema de CSS custom properties
+// Cada facultad tiene un color en ACF (tax_facultad_meta.color, registrado
+// en F1). PHP inyecta `style="--faculty-color: #XXX"` en el wrapper de
+// elementos relacionados a una facultad (cards, badges, secciones).
+// SCSS solo declara el fallback y los hooks de uso.
+// ==========================================================================
+
+:root {
+    --faculty-color: #{$brand-red};  // Fallback global
+}
+
+// Utility class: aplica el color como acento (border + texto eyebrow).
+.has-faculty-color {
+    @include faculty-accent;
+}
+
+// Variante badge: chip pequeño con bg del color de facultad.
+.faculty-badge {
+    --faculty-color: #{$brand-red};
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    background: var(--faculty-color);
+    color: $white;
+    @include eyebrow-sm($white);
+    text-decoration: none;
+}
