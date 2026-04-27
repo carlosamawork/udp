@@ -1,0 +1,93 @@
+// ==========================================================================
+// BUTTONS — Sistema UDP (pill, sizes, icon-circle)
+// Bootstrap .btn ya viene con border-radius 9999px via _variables.scss.
+// Aquí extendemos con sizes específicos y variantes UDP.
+// ==========================================================================
+
+// Tamaño UDP "md" — alto 60px (CTA Accesibilidad típico)
+.btn-udp-md {
+    min-height: 60px;
+    padding-block: 0;
+    padding-inline: $space-xl;  // 24px
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2xs;            // 8px
+    font-family: $font-family-body;
+    font-weight: 600;
+    font-size: $font-size-body-lg;
+    line-height: 1;
+}
+
+// Tamaño UDP "sm" — alto 48px
+.btn-udp-sm {
+    min-height: 48px;
+    padding-block: 0;
+    padding-inline: $space-md;  // 18px
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $space-2xs;
+    font-family: $font-family-body;
+    font-weight: 600;
+    font-size: $font-size-body-sm;
+    line-height: 1;
+}
+
+// CTA primario (rojo UDP)
+.btn-udp-primary {
+    background: $brand-red;
+    color: $white;
+    border: none;
+    transition: background $transition-base;
+
+    &:hover,
+    &:focus {
+        background: darken($brand-red, 8%);
+        color: $white;
+    }
+}
+
+// CTA secundario sobre superficie dark — outline blanco
+.btn-udp-outline-light {
+    background: transparent;
+    color: $white;
+    border: 1px solid $gray-medium;
+    transition: background $transition-base, color $transition-base, border-color $transition-base;
+
+    &:hover,
+    &:focus {
+        background: $white;
+        color: $dark-1;
+        border-color: $white;
+    }
+}
+
+// --------------------------------------------------------------------------
+// Icon-circle: botón circular para iconos sueltos (search, RRSS, etc.)
+// Variantes: 48×48 (sm) y 60×60 (md). Sobre dark por defecto.
+// --------------------------------------------------------------------------
+.btn-icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 9999px;
+    background: transparent;
+    border: 1px solid $gray-medium;
+    color: $white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background $transition-base, color $transition-base;
+    padding: 0;
+
+    &:hover,
+    &:focus {
+        background: $white;
+        color: $dark-1;
+    }
+
+    &.btn-icon-circle--md {
+        width: 60px;
+        height: 60px;
+    }
+}
