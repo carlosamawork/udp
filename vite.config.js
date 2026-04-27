@@ -38,10 +38,11 @@ export default defineConfig(({ command }) => {
 
             rollupOptions: {
                 input: {
-                    // Entry principal (SCSS + JS)
-                    theme: path.resolve(__dirname, 'src/js/main.js'),
+                    // 'main' lo aporta el glob jsEntries (src/js/main.js).
+                    // NO añadir un alias 'theme' aquí: colisiona con jsEntries.main
+                    // y rompe el tracking del CSS en el manifest (queda sin campo `css`).
                     editor: path.resolve(__dirname, 'src/scss/editor.scss'),
-                    // Entries adicionales auto-detectados
+                    // Entries auto-detectados desde src/js/*.js
                     ...jsEntries,
                 },
                 output: {
