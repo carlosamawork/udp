@@ -1,0 +1,101 @@
+// ==========================================================================
+// TYPOGRAPHY — @font-face declarations
+// Self-hosted WOFF2 desde src/scss/fonts/
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// ABC Arizona Flare (display serif)
+// --------------------------------------------------------------------------
+@font-face {
+	font-family: 'Arizona Flare';
+	src: url('../../src/scss/fonts/ABCArizonaFlare-Light.woff2') format('woff2');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Arizona Flare';
+	src: url('../../src/scss/fonts/ABCArizonaFlare-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Arizona Flare';
+	src: url('../../src/scss/fonts/ABCArizonaFlare-RegularItalic.woff2') format('woff2');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Arizona Flare';
+	src: url('../../src/scss/fonts/ABCArizonaFlare-Medium.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Arizona Flare';
+	src: url('../../src/scss/fonts/ABCArizonaFlare-MediumItalic.woff2') format('woff2');
+	font-weight: 500;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Arizona Flare';
+	src: url('../../src/scss/fonts/ABCArizonaFlare-Bold.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Arizona Flare';
+	src: url('../../src/scss/fonts/ABCArizonaFlare-BoldItalic.woff2') format('woff2');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
+// --------------------------------------------------------------------------
+// Necto Mono (eyebrows / labels uppercase)
+// --------------------------------------------------------------------------
+@font-face {
+	font-family: 'Necto Mono';
+	src: url('../../src/scss/fonts/NectoMono-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+// --------------------------------------------------------------------------
+// Work Sans (UI / body)
+// --------------------------------------------------------------------------
+@font-face {
+	font-family: 'Work Sans';
+	src: url('../../src/scss/fonts/work-sans-latin-400-normal.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Work Sans';
+	src: url('../../src/scss/fonts/work-sans-latin-500-normal.woff2') format('woff2');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Work Sans';
+	src: url('../../src/scss/fonts/work-sans-latin-600-normal.woff2') format('woff2');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}

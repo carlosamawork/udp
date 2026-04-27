@@ -17,7 +17,7 @@ export default defineConfig(({ command }) => {
 
     return {
         // Base path para los assets compilados
-        base: isDev ? '/' : '/wp-content/themes/starter-theme-bs5/dist/',
+        base: isDev ? '/' : '/wp-content/themes/starter-theme/dist/',
 
         plugins: [
             // Recarga el navegador cuando cambien archivos PHP
