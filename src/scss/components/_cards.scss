@@ -1,13 +1,76 @@
 // ==========================================================================
-// CARDS (override Bootstrap + custom)
+// CARDS UDP
+// Bootstrap .card ya tiene border-radius 0 y border-width 0 vía _variables.
+// Aquí extendemos con variantes específicas: evento, tema, facultad.
 // ==========================================================================
 
-.card {
-    border-radius: $border-radius;
-    overflow: hidden;
-    @include hover-lift;
+// --------------------------------------------------------------------------
+// Card de evento / noticia (variante base usada en grids)
+// Tamaños típicos: 433×433 (cuadrada) o 800×668 (horizontal).
+// --------------------------------------------------------------------------
+.card-evento {
+    @include card-hover-invert($brand-blue, $white);
+    padding: $space-md;            // 18px base
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;                // 12px entre eyebrow/title/meta
+    text-decoration: none;
 
-    .card-img-top {
-        @include aspect-ratio(4, 3);
+    &:hover,
+    &:focus-within {
+        padding: $space-xl;        // 24px en hover (efecto "expand")
+        text-decoration: none;
+    }
+
+    .card-evento__eyebrow {
+        @include eyebrow($white-70);
+    }
+
+    .card-evento__title {
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: $font-size-h3;     // 24px en sm; 20px en mobile
+        line-height: $line-height-snug;
+
+        @include media-down(md) {
+            font-size: $font-size-h4;
+        }
+    }
+
+    .card-evento__meta {
+        margin-top: auto;
+        font-family: $font-family-body;
+        font-size: $font-size-body-sm;
+        font-weight: 600;
+    }
+}
+
+// Variante hover en blanco (en lugar de azul)
+.card-evento--hover-light {
+    @include card-hover-invert($white, $dark-1);
+}
+
+// --------------------------------------------------------------------------
+// Card de tema (más alta — 800×1300)
+// --------------------------------------------------------------------------
+.card-tema {
+    @include card-hover-invert($brand-blue, $white);
+    padding: $space-xl;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .card-tema__title {
+        font-family: $font-family-display;
+        font-size: $font-size-display-2;
+        font-weight: 500;
+        line-height: $line-height-tight;
+    }
+
+    .card-tema__cta {
+        align-self: flex-start;
+        @include eyebrow($white);
     }
 }
