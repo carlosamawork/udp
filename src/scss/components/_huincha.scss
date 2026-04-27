@@ -1,0 +1,46 @@
+// ==========================================================================
+// HUINCHA — banda horizontal de texto continuo (marquee) o lista vertical
+// ==========================================================================
+
+// Marquee horizontal: texto que se desplaza de derecha a izquierda en loop
+.huincha-marquee {
+    overflow: hidden;
+    white-space: nowrap;
+    background: $dark-1;
+    color: $white;
+    padding: $space-md 0;
+
+    .huincha-marquee__track {
+        display: inline-block;
+        animation: huincha-scroll 30s linear infinite;
+    }
+
+    .huincha-marquee__item {
+        display: inline-block;
+        padding-inline: $space-xl;
+        font-family: $font-family-display;
+        font-size: 60px;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    &:hover .huincha-marquee__track {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes huincha-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+// Lista vertical (huincha-list)
+.huincha-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+        @include huincha-list-item;
+    }
+}

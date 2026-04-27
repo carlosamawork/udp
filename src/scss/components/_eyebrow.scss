@@ -1,0 +1,34 @@
+// ==========================================================================
+// EYEBROW — etiqueta mono uppercase usada como label de sección/categoría
+// ==========================================================================
+
+.eyebrow {
+    @include eyebrow($white-70);
+
+    body.is-light & {
+        color: rgba(0, 0, 0, 0.6);  // En body light, eyebrow oscurece
+    }
+}
+
+.eyebrow-sm {
+    @include eyebrow-sm($white-70);
+
+    body.is-light & {
+        color: rgba(0, 0, 0, 0.6);
+    }
+}
+
+// Variante con dot decorativo a la izquierda
+.eyebrow--dotted {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2xs;
+
+    &::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+}

@@ -1,0 +1,43 @@
+// ==========================================================================
+// FACULTY CARD — card específica de facultad con --faculty-color aplicado
+// PHP inyecta style="--faculty-color: #XXX" en el wrapper (Task 7 helpers).
+// ==========================================================================
+
+.faculty-card {
+    @include faculty-accent;
+    background: $dark-2;
+    color: $white;
+    padding: $space-xl;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+    transition: transform $transition-base;
+
+    &:hover,
+    &:focus-within {
+        transform: translateY(-4px);
+        text-decoration: none;
+    }
+
+    .faculty-card__eyebrow {
+        @include eyebrow();  // El color lo override @include faculty-accent
+    }
+
+    .faculty-card__title {
+        font-family: $font-family-display;
+        font-size: $font-size-display-2;
+        font-weight: 500;
+        line-height: $line-height-tight;
+        color: $white;
+        margin: $space-md 0 0;
+    }
+
+    .faculty-card__meta {
+        margin-top: $space-xl;
+        font-family: $font-family-body;
+        font-size: $font-size-body-sm;
+        color: $white-70;
+    }
+}
