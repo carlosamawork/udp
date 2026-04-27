@@ -1,0 +1,83 @@
+{
+    "key": "group_cpt_post_meta",
+    "title": "Post — Metadatos",
+    "fields": [
+        {
+            "key": "field_60d0c20973bd5",
+            "label": "Tipo de noticia",
+            "name": "tipo",
+            "type": "radio",
+            "instructions": "Categoría editorial de la noticia (afecta visualización en listings).",
+            "required": 0,
+            "choices": {
+                "general": "General",
+                "destacado": "Destacado",
+                "pregrado": "Pregrado",
+                "postgrado": "Postgrado",
+                "investigacion": "Investigación",
+                "internacional": "Internacional",
+                "egresados": "Egresados"
+            },
+            "allow_null": 1,
+            "default_value": "general",
+            "layout": "vertical",
+            "return_format": "value"
+        },
+        {
+            "key": "field_60d0c22c73bd6",
+            "label": "Epígrafe",
+            "name": "epigrafe",
+            "type": "textarea",
+            "instructions": "Texto corto sobre el título.",
+            "rows": 2
+        },
+        {
+            "key": "field_60d0c32ad5da1",
+            "label": "Extracto",
+            "name": "extracto",
+            "type": "textarea",
+            "instructions": "Resumen para listings y meta description.",
+            "rows": 3
+        },
+        {
+            "key": "field_609e93a339cd1",
+            "label": "Bajada",
+            "name": "bajada",
+            "type": "textarea",
+            "rows": 3
+        },
+        {
+            "key": "field_609e93ae39cd2",
+            "label": "Link Externo",
+            "name": "link_externo",
+            "type": "url",
+            "instructions": "Si la noticia enlaza a un artículo externo, pega la URL aquí. Antes era tipo text — ahora url para validación."
+        },
+        {
+            "key": "field_6426d305918d2",
+            "label": "Galería de Imágenes",
+            "name": "galeria_de_imagenes",
+            "type": "gallery",
+            "return_format": "array",
+            "library": "all"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Metadatos editoriales del post. Fusiona los dos grupos viejos (Campos para Entradas + campos para noticias).",
+    "show_in_rest": 0
+}

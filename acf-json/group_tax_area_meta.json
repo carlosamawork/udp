@@ -1,0 +1,27 @@
+{
+    "key": "group_tax_area_meta",
+    "title": "Área — Metadatos",
+    "fields": [
+        {
+            "key": "field_tax_area_imagen",
+            "label": "Imagen del área",
+            "name": "imagen_taxonomia",
+            "type": "image",
+            "return_format": "url",
+            "library": "all"
+        }
+    ],
+    "location": [
+        [{ "param": "taxonomy", "operator": "==", "value": "area" }],
+        [{ "param": "taxonomy", "operator": "==", "value": "area-udp" }],
+        [{ "param": "taxonomy", "operator": "==", "value": "carrera" }]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Imagen para términos de las taxonomías 'area', 'area-udp' y 'carrera'. Field key NUEVO (el viejo estaba en taxonomy==all, mezclando facultad)."
+}

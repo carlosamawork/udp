@@ -1,0 +1,24 @@
+{
+    "key": "group_options_general",
+    "title": "Opciones — General",
+    "fields": [
+        { "key": "field_60b9db9ed07e9", "label": "Logo Color", "name": "logo_color", "type": "image", "return_format": "url" },
+        { "key": "field_60b9db38d07e8", "label": "Logo Blanco", "name": "logo_blanco", "type": "image", "return_format": "url" },
+        { "key": "field_60b9dc28d07ee", "label": "Logo UDP", "name": "logo_udp", "type": "image", "return_format": "url" },
+        { "key": "field_60b9dc50d07ef", "label": "Logo Acreditación", "name": "logo_acreditacion", "type": "image", "return_format": "url" },
+        { "key": "field_60b9dc5cd07f0", "label": "Link Acreditación", "name": "link_acreditacion", "type": "url" },
+        { "key": "field_60d44aa33f34e", "label": "Correo de contacto", "name": "correo", "type": "email" },
+        { "key": "field_658e6b8a82677", "label": "Mostrar popup", "name": "mostrar_popup", "type": "true_false", "ui": 1 },
+        { "key": "field_658e6b9982678", "label": "Popup link", "name": "popup_link", "type": "url" },
+        { "key": "field_658e6baa82679", "label": "Popup imagen desktop", "name": "popup_imagen_desktop", "type": "image", "return_format": "url" },
+        { "key": "field_658e6bbc8267a", "label": "Popup imagen mobile", "name": "popup_imagen_mobile", "type": "image", "return_format": "url" }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "udp-options-general" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true
+}

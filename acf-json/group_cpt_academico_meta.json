@@ -1,0 +1,24 @@
+{
+    "key": "group_cpt_academico_meta",
+    "title": "Académico — Metadatos",
+    "fields": [
+        { "key": "field_609e9892bae4c", "label": "Email", "name": "email", "type": "email" },
+        { "key": "field_609e98a4bae4e", "label": "Link más Información", "name": "link_mas_informacion", "type": "url" },
+        { "key": "field_60e2c9656b607", "label": "Texto Link Más Información", "name": "texto_link_mas_informacion", "type": "text" },
+        { "key": "field_60c72755a0e06", "label": "Rol", "name": "rol", "type": "text" },
+        { "key": "field_60c72766a0e07", "label": "Grado", "name": "grado", "type": "text" },
+        { "key": "field_60c7287ba0e0b", "label": "No es Académico", "name": "no_es_academico", "type": "true_false", "ui": 1 },
+        { "key": "field_60c9d3a27795d", "label": "Teléfono", "name": "telefono", "type": "text" },
+        { "key": "field_60d125f6138d4", "label": "Áreas de especialidad", "name": "areas", "type": "textarea" },
+        { "key": "field_60d1264656542", "label": "Contacto de prensa", "name": "contacto", "type": "text" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "academico" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Académicos están fuera del scope visual de la migración pero mantenemos el grupo para preservar 691 registros."
+}

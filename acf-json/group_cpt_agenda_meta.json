@@ -1,0 +1,24 @@
+{
+    "key": "group_cpt_agenda_meta",
+    "title": "Agenda — Metadatos",
+    "fields": [
+        { "key": "field_60e87749f3ea3", "label": "Subtítulo", "name": "subtitulo", "type": "text" },
+        { "key": "field_633de38779cd7", "label": "Invitados", "name": "invitados", "type": "text" },
+        { "key": "field_60e8925b4a39b", "label": "Link", "name": "link", "type": "url" },
+        { "key": "field_609e94af7113b", "label": "Fecha", "name": "fecha", "type": "date_picker", "display_format": "j F Y", "return_format": "j F Y", "first_day": 1 },
+        { "key": "field_60c9b7d66af81", "label": "Hora Inicio", "name": "hora_inicio", "type": "time_picker", "display_format": "H:i", "return_format": "H:i" },
+        { "key": "field_60c9b7e66af82", "label": "Hora Término", "name": "hora_termino", "type": "time_picker", "display_format": "H:i", "return_format": "H:i" },
+        { "key": "field_609e94c07113c", "label": "Lugar", "name": "lugar", "type": "text" },
+        { "key": "field_609e95280581c", "label": "Inscripciones", "name": "inscripciones", "type": "url" },
+        { "key": "field_60c9cc64afee3", "label": "Días repetitivos", "name": "dias_repetitivos", "type": "text", "instructions": "Para eventos recurrentes." }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "agenda" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Metadatos de evento de agenda. politicas_publicas se migra a tax tipo-contenido (Task 14)."
+}

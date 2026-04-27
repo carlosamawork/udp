@@ -1,0 +1,21 @@
+{
+    "key": "group_options_redes_sociales",
+    "title": "Opciones — Redes Sociales",
+    "fields": [
+        { "key": "field_60b9dbebd07ea", "label": "Facebook", "name": "facebook", "type": "url" },
+        { "key": "field_60b9dbf5d07eb", "label": "Twitter / X", "name": "twitter", "type": "url" },
+        { "key": "field_60b9dbfbd07ec", "label": "Instagram", "name": "instagram", "type": "url" },
+        { "key": "field_60b9dc04d07ed", "label": "YouTube", "name": "youtube", "type": "url" },
+        { "key": "field_60cc72f7b9a66", "label": "LinkedIn", "name": "linkedin", "type": "url" },
+        { "key": "field_62de32fb6f04f", "label": "TikTok", "name": "tiktok", "type": "url" },
+        { "key": "field_62de33026f050", "label": "TikTok logo", "name": "tiktok_logo", "type": "image", "return_format": "url" }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "udp-options-redes-sociales" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true
+}

@@ -1,0 +1,15 @@
+{
+    "key": "group_cpt_concurso_meta",
+    "title": "Concurso académico — Metadatos",
+    "fields": [
+        { "key": "field_60df305272ce6", "label": "Archivo del concurso", "name": "archivo_concurso", "type": "file", "return_format": "url", "library": "all" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "concurso-academico" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true
+}

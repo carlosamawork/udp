@@ -1,0 +1,39 @@
+{
+    "key": "group_cpt_carrera_meta",
+    "title": "Carrera — Metadatos",
+    "fields": [
+        {
+            "key": "field_60c9f2ee02662",
+            "label": "Atributos",
+            "name": "atributos",
+            "type": "repeater",
+            "layout": "table",
+            "sub_fields": [
+                { "key": "field_60c9f2f502663", "label": "Título", "name": "titulo", "type": "text" },
+                { "key": "field_60c9f2f902664", "label": "Valor", "name": "valor", "type": "text" }
+            ]
+        },
+        { "key": "field_60c9f20660b54", "label": "URL Admisión", "name": "url_admision", "type": "url" },
+        { "key": "field_60c9f20d60b55", "label": "URL Facultad", "name": "url_facultad", "type": "url" },
+        {
+            "key": "field_60d5f45806c90",
+            "label": "Links",
+            "name": "links",
+            "type": "repeater",
+            "layout": "table",
+            "sub_fields": [
+                { "key": "field_60d5f46306c91", "label": "Título del link", "name": "titulo_link", "type": "text" },
+                { "key": "field_60d5f46c06c92", "label": "Link", "name": "link", "type": "url" }
+            ]
+        },
+        { "key": "field_61250abf81d43", "label": "Link Directo", "name": "link_directo", "type": "url" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "carrera-udp" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true
+}

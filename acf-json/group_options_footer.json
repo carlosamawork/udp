@@ -1,0 +1,51 @@
+{
+    "key": "group_options_footer",
+    "title": "Opciones — Footer",
+    "fields": [
+        {
+            "key": "field_options_footer_columnas",
+            "label": "Columnas del footer",
+            "name": "columnas_footer",
+            "type": "repeater",
+            "min": 0,
+            "max": 5,
+            "layout": "block",
+            "button_label": "Agregar columna",
+            "sub_fields": [
+                { "key": "field_options_footer_col_titulo", "label": "Título", "name": "titulo", "type": "text" },
+                {
+                    "key": "field_options_footer_col_links",
+                    "label": "Links",
+                    "name": "links",
+                    "type": "repeater",
+                    "layout": "table",
+                    "sub_fields": [
+                        { "key": "field_options_footer_col_link_label", "label": "Label", "name": "label", "type": "text" },
+                        { "key": "field_options_footer_col_link_url", "label": "URL", "name": "url", "type": "url" }
+                    ]
+                }
+            ]
+        },
+        { "key": "field_options_footer_copyright", "label": "Copyright", "name": "copyright", "type": "text", "default_value": "© Universidad Diego Portales" },
+        {
+            "key": "field_options_footer_legal_links",
+            "label": "Links legales",
+            "name": "legal_links",
+            "type": "repeater",
+            "layout": "table",
+            "sub_fields": [
+                { "key": "field_options_footer_legal_label", "label": "Label", "name": "label", "type": "text" },
+                { "key": "field_options_footer_legal_url", "label": "URL", "name": "url", "type": "url" }
+            ]
+        }
+    ],
+    "location": [[{ "param": "options_page", "operator": "==", "value": "udp-options-footer" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Estructura del footer. Field keys NUEVOS — no había antes (footer del tema viejo era hardcoded)."
+}

@@ -1,0 +1,16 @@
+{
+    "key": "group_cpt_centro_meta",
+    "title": "Centro — Metadatos",
+    "fields": [
+        { "key": "field_60d2670a0feb4", "label": "Link Externo", "name": "link_externo", "type": "url" }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "centro-udp" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "politicas_publicas se migra a tax tipo-contenido (Task 14)."
+}

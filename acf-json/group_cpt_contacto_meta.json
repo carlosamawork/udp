@@ -1,0 +1,19 @@
+{
+    "key": "group_cpt_contacto_meta",
+    "title": "Contacto — Metadatos",
+    "fields": [
+        { "key": "field_60d44286187f3", "label": "Nombre", "name": "nombre", "type": "text" },
+        { "key": "field_60d44290187f4", "label": "Email", "name": "email", "type": "email" },
+        { "key": "field_60d44294187f5", "label": "Interés", "name": "interes", "type": "text" },
+        { "key": "field_60d4429a187f6", "label": "Mensaje", "name": "mensaje", "type": "textarea", "rows": 5 }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "contacto-udp" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "8.055 envíos de form preservados — fuera del scope visual."
+}

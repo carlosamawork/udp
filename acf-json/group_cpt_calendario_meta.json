@@ -1,0 +1,17 @@
+{
+    "key": "group_cpt_calendario_meta",
+    "title": "Calendario — Metadatos",
+    "fields": [
+        { "key": "field_63ce25719003c", "label": "Fecha", "name": "fecha", "type": "date_picker", "display_format": "d/m/Y", "return_format": "d/m/Y", "first_day": 1 },
+        { "key": "field_63ce2690b7118", "label": "Fecha legible", "name": "fecha_amistosa", "type": "text", "instructions": "Versión humana (ej. 'Lunes 27 de abril')." },
+        { "key": "field_63ce268ab7117", "label": "Destacado", "name": "destacado", "type": "true_false", "ui": 1 }
+    ],
+    "location": [[{ "param": "post_type", "operator": "==", "value": "calendario" }]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true
+}
