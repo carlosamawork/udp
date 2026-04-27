@@ -78,10 +78,15 @@ export default defineConfig(({ command }) => {
         css: {
             preprocessorOptions: {
                 scss: {
-                    // Inyecta automáticamente variables y mixins en todos los SCSS
+                    // loadPaths permite a Sass resolver paths relativos a src/scss
+                    loadPaths: [path.resolve(__dirname, 'src/scss')],
+                    // Inyecta automáticamente variables y mixins en todos los SCSS.
+                    // Usamos @import (legacy, scope global) en lugar de @use para que
+                    // las variables sean visibles dentro del scope de los mixins.
+                    // Modernizar a @use requiere refactor de todos los SCSS — fuera de F0.
                     additionalData: `
-                        @use "src/scss/utilities/variables" as *;
-                        @use "src/scss/utilities/mixins" as *;
+                        @import "utilities/variables";
+                        @import "utilities/mixins";
                     `,
                 },
             },
