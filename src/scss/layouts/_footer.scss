@@ -1,0 +1,24 @@
+// ==========================================================================
+// FOOTER
+// ==========================================================================
+
+.site-footer {
+    a {
+        transition: opacity $transition-base;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    .widget-title {
+        font-size: 0.875rem;
+        letter-spacing: 0.05em;
+    }
+
+    // Menú inline del footer
+    .list-inline .menu-item {
+        display: inline-block;
+        margin-left: 1rem;
+    }
+}

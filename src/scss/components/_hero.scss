@@ -1,0 +1,42 @@
+// ==========================================================================
+// HERO SECTION
+// ==========================================================================
+
+.hero-section {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        pointer-events: none;
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    h1 {
+        color: #fff;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    // Front page: más alto
+    &--full {
+        min-height: 80vh;
+    }
+
+    @include media-down(md) {
+        min-height: 60vh;
+
+        h1 {
+            font-size: 2rem;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+// ==========================================================================
+// ANIMACIONES Y UTILIDADES CSS
+// ==========================================================================
+
+// Fade in
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+
+    &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Fade in escalado (stagger con delay)
+@for $i from 1 through 12 {
+    .fade-in-delay-#{$i} {
+        transition-delay: #{$i * 0.1}s;
+    }
+}
+
+// Hover lift genérico
+.hover-lift {
+    @include hover-lift;
+}
+
+// Section spacing helper
+.section {
+    @include section-padding;
+}
+
+// Truncar texto
+.truncate-2 { @include truncate-lines(2); }
+.truncate-3 { @include truncate-lines(3); }

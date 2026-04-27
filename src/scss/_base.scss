@@ -1,0 +1,46 @@
+// ==========================================================================
+// ESTILOS BASE / GLOBALES
+// ==========================================================================
+
+body {
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    transition: color $transition-base, opacity $transition-base;
+}
+
+// Selección de texto
+::selection {
+    background-color: $primary;
+    color: #fff;
+}
+
+// Focus visible accesible
+:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+}
+
+// Skip link (accesibilidad)
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background: $primary;
+    color: #fff;
+    transition: top 0.2s;
+
+    &:focus {
+        top: 0;
+    }
+}

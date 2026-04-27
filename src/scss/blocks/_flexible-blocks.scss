@@ -1,0 +1,24 @@
+// ==========================================================================
+// ACF BLOCKS - Flexible Content
+// ==========================================================================
+
+// --- Text + Image ---
+.block-text-image {
+    @include section-padding;
+
+    .block-text-content {
+        line-height: 1.75;
+    }
+}
+
+// --- CTA Banner ---
+.block-cta-banner {
+    @include section-padding;
+    border-radius: $border-radius-lg;
+    transition: transform $transition-base;
+}
+
+// --- Cards Grid ---
+.block-cards-grid {
+    @include section-padding;
+}

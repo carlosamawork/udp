@@ -1,0 +1,60 @@
+// ==========================================================================
+// STARTER THEME BS5 - SCSS ENTRY POINT
+//
+// Orden de importación:
+// 1. Variables propias (sobreescriben Bootstrap)  → inyectadas vía Vite
+// 2. Mixins propios                               → inyectados vía Vite
+// 3. Bootstrap (usa nuestras variables)
+// 4. Base / Reset
+// 5. Layouts (header, footer)
+// 6. Componentes
+// 7. Bloques ACF
+// 8. Utilidades / Animaciones
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// 1-2. Variables y Mixins → se inyectan automáticamente por vite.config.js
+//       (additionalData), no hace falta importarlos aquí.
+// --------------------------------------------------------------------------
+
+// --------------------------------------------------------------------------
+// 3. BOOTSTRAP
+//    Importa todo Bootstrap. Si quieres optimizar, importa solo lo que uses:
+//    @import "bootstrap/scss/functions";
+//    @import "bootstrap/scss/variables";
+//    @import "bootstrap/scss/mixins";
+//    @import "bootstrap/scss/grid";
+//    @import "bootstrap/scss/utilities";
+//    @import "bootstrap/scss/utilities/api";
+//    etc.
+// --------------------------------------------------------------------------
+@import "bootstrap/scss/bootstrap";
+
+// --------------------------------------------------------------------------
+// 4. Base
+// --------------------------------------------------------------------------
+@import "base";
+
+// --------------------------------------------------------------------------
+// 5. Layouts
+// --------------------------------------------------------------------------
+@import "layouts/header";
+@import "layouts/footer";
+
+// --------------------------------------------------------------------------
+// 6. Componentes
+// --------------------------------------------------------------------------
+@import "components/hero";
+@import "components/cards";
+@import "components/entry-content";
+@import "components/widgets";
+
+// --------------------------------------------------------------------------
+// 7. Bloques ACF
+// --------------------------------------------------------------------------
+@import "blocks/flexible-blocks";
+
+// --------------------------------------------------------------------------
+// 8. Utilidades / Animaciones (siempre al final)
+// --------------------------------------------------------------------------
+@import "utilities/animations";

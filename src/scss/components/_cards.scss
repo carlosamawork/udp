@@ -1,0 +1,13 @@
+// ==========================================================================
+// CARDS (override Bootstrap + custom)
+// ==========================================================================
+
+.card {
+    border-radius: $border-radius;
+    overflow: hidden;
+    @include hover-lift;
+
+    .card-img-top {
+        @include aspect-ratio(4, 3);
+    }
+}

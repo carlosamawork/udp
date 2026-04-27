@@ -1,0 +1,29 @@
+{
+  "name": "starter-theme-bs5",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WordPress starter theme con Bootstrap 5, Vite, SCSS y Vanilla JS modular",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.8",
+    "autoprefixer": "^10.4.20",
+    "glob": "^11.0.0",
+    "postcss": "^8.4.47",
+    "sass-embedded": "^1.80.0",
+    "vite": "^6.0.0",
+    "vite-plugin-live-reload": "^3.0.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

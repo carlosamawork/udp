@@ -1,0 +1,46 @@
+// ==========================================================================
+// ENTRY CONTENT (contenido del editor WordPress / Gutenberg)
+// ==========================================================================
+
+.entry-content {
+    line-height: 1.8;
+
+    p {
+        margin-bottom: 1.25rem;
+    }
+
+    img {
+        border-radius: $border-radius-sm;
+    }
+
+    blockquote {
+        border-left: 4px solid $primary;
+        padding: 1rem 1.5rem;
+        margin: 2rem 0;
+        background: $light;
+        border-radius: 0 $border-radius-sm $border-radius-sm 0;
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    // Gutenberg alignments
+    .alignwide {
+        margin-left: -2rem;
+        margin-right: -2rem;
+        max-width: calc(100% + 4rem);
+    }
+
+    .alignfull {
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        max-width: 100vw;
+    }
+
+    // Tablas
+    table {
+        @extend .table; // usa clase Bootstrap
+        @extend .table-striped;
+    }
+}

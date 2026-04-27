@@ -1,0 +1,80 @@
+// ==========================================================================
+// MIXINS PERSONALIZADOS
+// Se inyectan automáticamente en todos los SCSS vía vite.config.js
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// Responsive
+// --------------------------------------------------------------------------
+@mixin media-up($breakpoint) {
+    @if $breakpoint == sm { @media (min-width: 576px)  { @content; } }
+    @if $breakpoint == md { @media (min-width: 768px)  { @content; } }
+    @if $breakpoint == lg { @media (min-width: 992px)  { @content; } }
+    @if $breakpoint == xl { @media (min-width: 1200px) { @content; } }
+    @if $breakpoint == xxl { @media (min-width: 1400px) { @content; } }
+}
+
+@mixin media-down($breakpoint) {
+    @if $breakpoint == sm { @media (max-width: 575.98px)  { @content; } }
+    @if $breakpoint == md { @media (max-width: 767.98px)  { @content; } }
+    @if $breakpoint == lg { @media (max-width: 991.98px)  { @content; } }
+    @if $breakpoint == xl { @media (max-width: 1199.98px) { @content; } }
+}
+
+// --------------------------------------------------------------------------
+// Utilidades visuales
+// --------------------------------------------------------------------------
+@mixin hover-lift($distance: -4px) {
+    transition: transform $transition-base, box-shadow $transition-base;
+    &:hover {
+        transform: translateY($distance);
+        box-shadow: $box-shadow-lg;
+    }
+}
+
+@mixin overlay($color: rgba(0, 0, 0, 0.5)) {
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: $color;
+        pointer-events: none;
+        z-index: 1;
+    }
+    > * {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+@mixin section-padding {
+    padding-top: $section-spacing;
+    padding-bottom: $section-spacing;
+
+    @include media-down(md) {
+        padding-top: $section-spacing-sm;
+        padding-bottom: $section-spacing-sm;
+    }
+}
+
+@mixin truncate-lines($lines: 3) {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+// --------------------------------------------------------------------------
+// Aspect ratio container
+// --------------------------------------------------------------------------
+@mixin aspect-ratio($width: 16, $height: 9) {
+    aspect-ratio: #{$width} / #{$height};
+    overflow: hidden;
+
+    img, video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}

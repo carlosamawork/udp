@@ -1,0 +1,21 @@
+/*
+Theme Name: UDP 2026 THEME
+Theme URI: https://magatzem.studio
+Author: MGTZM
+Author URI: https://magatzem.studio
+Description: Theme starter para WordPress con Bootstrap 5, Vanilla JS y soporte completo para ACF Pro. Listo para personalizar.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: starter-bs5
+Tags: bootstrap, custom-fields, acf, starter
+*/
+
+/* ==========================================================================
+   Este archivo solo contiene los metadatos del tema.
+   Los estilos personalizados van en assets/css/theme.css
+   Bootstrap se carga vía CDN en functions.php
+   ========================================================================== */

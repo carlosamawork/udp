@@ -1,0 +1,23 @@
+// ==========================================================================
+// HEADER & NAVBAR
+// ==========================================================================
+
+.site-header {
+    .navbar {
+        min-height: $navbar-height;
+        transition: box-shadow $transition-base, background-color $transition-base;
+    }
+
+    .navbar-brand {
+        img {
+            height: 40px;
+            width: auto;
+            transition: opacity $transition-base;
+        }
+    }
+
+    // Estado scrolled (se añade por JS)
+    &.is-scrolled .navbar {
+        box-shadow: $box-shadow;
+    }
+}

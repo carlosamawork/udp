@@ -1,0 +1,20 @@
+// ==========================================================================
+// Estilos para el editor Gutenberg
+// ==========================================================================
+@import "utilities/variables";
+
+.editor-styles-wrapper {
+    font-family: $font-family-body;
+    line-height: $line-height-base;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $font-family-heading;
+        font-weight: $headings-font-weight;
+    }
+
+    blockquote {
+        border-left: 4px solid $primary;
+        padding: 1rem 1.5rem;
+        background: $light;
+    }
+}
