@@ -3,26 +3,37 @@
     "title": "Opciones — Footer",
     "fields": [
         {
-            "key": "field_options_footer_columnas",
-            "label": "Columnas del footer",
-            "name": "columnas_footer",
+            "key": "field_options_footer_contact_blocks",
+            "label": "Bloques de contacto (footer)",
+            "name": "contact_blocks",
             "type": "repeater",
+            "instructions": "Hasta 6 bloques con dirección, teléfonos y emails. Aparecen en el strip superior del footer.",
             "min": 0,
-            "max": 5,
+            "max": 6,
             "layout": "block",
-            "button_label": "Agregar columna",
+            "button_label": "Agregar bloque de contacto",
             "sub_fields": [
-                { "key": "field_options_footer_col_titulo", "label": "Título", "name": "titulo", "type": "text" },
                 {
-                    "key": "field_options_footer_col_links",
-                    "label": "Links",
-                    "name": "links",
-                    "type": "repeater",
-                    "layout": "table",
-                    "sub_fields": [
-                        { "key": "field_options_footer_col_link_label", "label": "Label", "name": "label", "type": "text" },
-                        { "key": "field_options_footer_col_link_url", "label": "URL", "name": "url", "type": "url" }
-                    ]
+                    "key": "field_options_footer_contact_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "type": "text",
+                    "instructions": "Ej: Dirección, Mesa Central, Email Principal"
+                },
+                {
+                    "key": "field_options_footer_contact_valor",
+                    "label": "Valor",
+                    "name": "valor",
+                    "type": "textarea",
+                    "rows": 2,
+                    "instructions": "Texto del bloque (dirección completa, teléfono formateado, email, etc.)"
+                },
+                {
+                    "key": "field_options_footer_contact_enlace",
+                    "label": "Enlace (opcional)",
+                    "name": "enlace",
+                    "type": "url",
+                    "instructions": "Para teléfonos usar tel:+56... y para emails mailto:... Si vacío, el bloque no es clickable."
                 }
             ]
         },
