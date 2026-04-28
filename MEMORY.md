@@ -317,3 +317,81 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 **Pendientes**:
 - F4c: Agenda (toggle grid/list, single-evento, card-evento.php). Reusará paginación + exclude pattern.
 - F4 extras: image gallery del single (campo ACF gallery + carousel JS).
+
+---
+
+### 2026-04-28 — F4c Task 2: ICS calendar endpoint
+
+**Hechos**:
+- Creado `inc/udp-ics.php` con endpoint `?udp_ics={post_id}` que emite un VCALENDAR/VEVENT descargable para el CPT `agenda`.
+- Dos helpers: `udp_ics_parse_date_raw($raw)` (Ymd → Unix timestamp, fallback strtotime) y `udp_ics_parse_time_raw($raw)` (H:i:s/H:i/g:i a/g:i A → segundos desde medianoche).
+- Ambos helpers usan `get_post_meta()` directo (NO `get_field()`), mismo patrón que el bugfix de `udp_card_data_from_agenda()`.
+- Si no hay hora_termino o es 0, end_ts = start_ts + 3600 (una hora por defecto). Si end_ts <= start_ts, mismo fallback.
+- Headers: `Content-Type: text/calendar; charset=utf-8` + `Content-Disposition: attachment; filename="evento-{slug}.ics"` + `nocache_headers()`.
+- Wire en `functions.php` después de `require udp-cards.php`.
+
+**Verificación**:
+- `php -l` sin errores en ambos archivos.
+- Smoke test con EVENT_ID=54943: HTTP 200, `DTSTART:20260409T080454Z` (real timestamp, no epoch), `SUMMARY:Inauguración de año académico...`.
+
+**Decisiones**:
+- No commit (instrucción del plan).
+
+---
+
+### 2026-04-28 — Bugfix: udp_card_data_from_agenda fecha_display vacío
+
+**Hechos**:
+- `fecha_display` llegaba siempre vacío porque `get_field('fecha', $post->ID)` devuelve el valor de "Return Format" configurado en ACF (ej. `'3 Octubre 2017'`), no el valor raw de storage.
+- `strtotime('3 Octubre 2017')` falla en PHP 8.4, y aunque funcionara, ese string tampoco es `Ymd`.
+- Fix aplicado en `inc/udp-cards.php`, función `udp_card_data_from_agenda()`:
+  - Se reemplaza `get_field('fecha')` por `get_post_meta($post->ID, 'fecha', true)` para obtener el valor raw `Ymd` (`20171003`).
+  - Se usa `DateTime::createFromFormat('Ymd', ...)` como método primario de parseo (más robusto que `strtotime` para este formato).
+  - `strtotime` queda como fallback por si algún valor está en `Y-m-d`.
+- Diagnóstico adicional: muchos posts de agenda tienen `fecha` vacío en DB (datos legacy sin ese campo completado). El smoke test veía el primer post con imagen y fecha vacía — eso es un problema de datos, no de código.
+- Verificado con post ID 8731 (raw `20171003`): `fecha_iso = 2017-10-03`, `fecha_disp = 3 de Octubre de 2017`.
+- `php -l`: sin errores de sintaxis.
+
+---
+
+### 2026-04-28 — F4c Agenda archive (grid + list) + single-evento
+
+**Hechos**:
+- `templates/page-eventos.php` asignado a página "Agenda" (ID 91, slug `agenda-udp` → URL `/agenda-udp/`). Theme dark. 2 vistas: grid (6/page con cards image-left + CTA) y list (12/page con rows table-like). View toggle preserva filtros vía `add_query_arg`.
+- `single-agenda.php` enrutado para CPT `agenda`. Light theme. Layout 2-col sidebar (event-meta) + content. Reusa `post-share.php` partial de F4b1.
+- Helpers nuevos en `inc/udp-cards.php`:
+  - `udp_query_agenda($filters)` — WP_Query sobre post_type=agenda con `meta_key=fecha`, `orderby=meta_value`, `order=ASC`. Filtros: facultad (tax_query), year (meta_query LIKE 'YYYY%'), s, exclude.
+  - `udp_card_data_from_agenda($post)` — añade `fecha_display` ("3 de Octubre de 2017"), `hora_display` ("12:00 hrs") y `lugar` al shape Card. Eyebrow desde primer post_tag (no category).
+- Card primitive `card-evento.php` con 2 modes: grid (image-left 228×275 + body con title/eyebrow/datetime/lugar + CTA circular bottom-right) y list (grid 3-col 140/1fr/200, eyebrow + title + date, separador 1px abajo).
+- Filtros: facultad (taxonomía `facultad`, 84% coverage en eventos) + año + búsqueda (`udp_s`). Hidden input `view` preserva la vista al filtrar.
+- ICS endpoint `/?udp_ics={post_id}` registrado en `init` hook (`inc/udp-ics.php`). Genera VCALENDAR/VEVENT con DTSTART, DTEND, SUMMARY, LOCATION, URL, DESCRIPTION. Headers `text/calendar; charset=utf-8` + `Content-Disposition: attachment`.
+- Sidebar event-meta: eyebrow + Día + Hora (rango si hay hora_termino) + Dirección + Entrada (hardcoded) + Unidad Académica (primer término facultad) + 2 CTAs (outline ICS + primary inscripciones URL).
+- "Te podría interesar" en single: 3 eventos próximos por facultad primaria (orderby meta fecha ASC), fallback a más próximos globales si <3.
+- 3 SCSS nuevos: `_card-evento.scss`, `_eventos-archive.scss`, `_eventos-single.scss`. CSS sube ~17 kB (de 282 → 300 kB).
+
+**Decisiones clave**:
+- **Date parsing fix descubierto en Task 1**: `get_field('fecha')` devuelve el ACF Return Format (string locale español "3 Octubre 2017"), NO el raw `Ymd` storage. Switch a `get_post_meta($post_id, 'fecha', true)` + `DateTime::createFromFormat('Ymd', $val)`. Mismo pattern aplicado en `udp-ics.php` y `event-meta.php`. Documentar para futuros agentes — `get_field()` para fechas ACF NO sirve para parsing programático.
+- Eyebrow source = primer `post_tag`. La única taxonomía con valores de tipo evento ("Charla", "Cine"). `tipo-contenido` (18 terms) tiene cobertura insuficiente.
+- Order por meta `fecha` ASC. Eventos sin fecha caen al inicio por ordenación de meta vacío.
+- `posts_per_page` en list = 12 vs 6 en grid. List cards más compactas, caben más por scroll.
+- ICS endpoint inline en `init` hook en lugar de REST endpoint. Razón: zero overhead, no requiere registración de routes.
+- "Entrada" hardcoded "Entrada liberada para todo público" — TODO añadir campo ACF `entrada_info` si el cliente quiere control editorial.
+
+**Cosas que descubrí**:
+- ACF `get_field()` para campos `date_picker` aplica el "Return Format" del field (en este proyecto `'F j, Y'` o similar locale-dependent). Para parsear debes usar `get_post_meta()` directo y obtener el storage format crudo (`Ymd`).
+- `WP_Query` con `meta_key + orderby=meta_value` funciona con dates en `Ymd` porque ordena lexicográficamente y `Ymd` es lex-equivalente a cronológico.
+- Solo 45 de 3626 eventos tienen featured image (`_thumbnail_id`). Tanto `udp_card_data_from_agenda` como el related partial retornan null sin imagen. Esto produce 1 card visible en el archive (datos insuficientes en BD local, no un bug de código). En producción con más imágenes se verán los 6/12 esperados.
+
+**E2E verification (2026-04-28)**:
+- Grid archive: HTTP 200, clases `udp-eventos-archive--grid`, `udp-eventos-archive__toggle`, `udp-card-evento--grid` presentes. Cards visibles: 1 (limitado por cobertura de thumbnail = 45/3626).
+- List archive: HTTP 200, clases `udp-eventos-archive--list`, `udp-card-evento--list` presentes. Cards visibles: 1 (mismo motivo).
+- Single (`conversacion-unidad-minima-practicas-editoriales-y-artisticas`): HTTP 200. Clases `udp-single-event*` y `udp-event-meta*` completas. "Volver a Eventos" y "Agregar al calendario" presentes con `udp_ics=49996`. "Te podría interesar" no renderiza (0 eventos con thumbnail en facultad del post actual).
+- ICS (EVENT_ID=54943): HTTP 200, `BEGIN:VCALENDAR`, `DTSTART:20260409T084557Z` (real, no epoch).
+- Filtro facultad (ID=16): option `selected='selected'` correcta. Cards: 1 (misma limitación thumbnail).
+
+**Pendientes**:
+- F4 extras: image gallery del single-post (campo ACF gallery + carousel JS).
+- ACF nuevo `entrada_info` (textarea) en grupo agenda para sustituir el hardcoded "Entrada liberada".
+- Color por término de taxonomía (eyebrows actualmente hardcoded yellow).
+- `/eventos/` slug si el cliente prefiere a `/agenda-udp/`.
+- Subir imágenes featured a más eventos en BD para que el archive muestre los 6/12 cards esperados.

@@ -1,0 +1,209 @@
+// ==========================================================================
+// CARD EVENTO — primitive con 2 modos: grid (image-left + CTA) y list (row)
+// Usado en archive Eventos + related en single-event.
+// ==========================================================================
+
+.udp-card-evento {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+
+    // ---- GRID MODE ----
+    &--grid {
+        display: flex;
+        gap: $space-md;
+        align-items: flex-start;
+
+        .udp-card-evento__media {
+            flex: 0 0 228px;
+            width: 228px;
+            height: 275px;
+            margin: 0;
+            overflow: hidden;
+            background: $dark-2;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                transition: transform 0.4s ease;
+            }
+        }
+
+        .udp-card-evento__body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: $space-2xs;
+            padding-right: 60px;
+            position: relative;
+            min-height: 275px;
+        }
+
+        .udp-card-evento__title {
+            margin: 0;
+            font-family: $font-family-body;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 1.3;
+            color: inherit;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .udp-card-evento__eyebrow {
+            margin: $space-sm 0 0;
+            font-family: $font-family-mono;
+            font-size: 12px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: $white-70;
+        }
+
+        .udp-card-evento__datetime,
+        .udp-card-evento__lugar {
+            margin: 0;
+            font-family: $font-family-body;
+            font-size: 14px;
+            line-height: 20px;
+            color: $white;
+        }
+
+        .udp-card-evento__lugar {
+            color: $white-70;
+            font-size: 12px;
+        }
+
+        .udp-card-evento__cta {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 9999px;
+            border: 1px solid $gray-medium;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: $white;
+            transition:
+                background-color $transition-base,
+                color $transition-base,
+                border-color $transition-base;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            &:hover .udp-card-evento__media img,
+            &:focus-visible .udp-card-evento__media img {
+                transform: scale(1.04);
+            }
+        }
+
+        &:hover .udp-card-evento__cta,
+        &:focus-visible .udp-card-evento__cta {
+            background-color: $white;
+            color: $dark-1;
+            border-color: $white;
+        }
+
+        @include media-down(md) {
+            flex-direction: column;
+            gap: $space-sm;
+
+            .udp-card-evento__media {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+                flex: 0 0 auto;
+            }
+
+            .udp-card-evento__body {
+                padding-right: 0;
+                min-height: 0;
+            }
+
+            .udp-card-evento__cta {
+                position: static;
+                margin-top: $space-sm;
+            }
+        }
+    }
+
+    // ---- LIST MODE ----
+    &--list {
+        display: grid;
+        grid-template-columns: 140px 1fr 200px;
+        gap: $space-md;
+        align-items: center;
+        padding: $space-md 0;
+        border-bottom: 1px solid rgba($white, 0.15);
+        transition: background-color $transition-base;
+
+        &:hover,
+        &:focus-visible {
+            background-color: rgba($white, 0.03);
+            outline: none;
+        }
+
+        .udp-card-evento__eyebrow {
+            margin: 0;
+            font-family: $font-family-mono;
+            font-size: 12px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: $white-70;
+        }
+
+        .udp-card-evento__title {
+            margin: 0;
+            font-family: $font-family-body;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 1.4;
+            color: $white;
+        }
+
+        .udp-card-evento__date {
+            font-family: $font-family-body;
+            font-size: 14px;
+            color: $white-70;
+            text-align: right;
+        }
+
+        @include media-down(md) {
+            grid-template-columns: 1fr;
+            gap: $space-2xs;
+            padding: $space-sm 0;
+
+            .udp-card-evento__date {
+                text-align: left;
+            }
+        }
+    }
+
+    // ---- LIGHT THEME (related en single-event) ----
+    &--light {
+        &.udp-card-evento--grid {
+            .udp-card-evento__title { color: $dark-1; }
+            .udp-card-evento__eyebrow { color: $dark-2; }
+            .udp-card-evento__datetime { color: $dark-1; }
+            .udp-card-evento__lugar { color: $dark-2; }
+            .udp-card-evento__cta {
+                color: $dark-1;
+                border-color: rgba($dark-1, 0.2);
+            }
+            &:hover .udp-card-evento__cta,
+            &:focus-visible .udp-card-evento__cta {
+                background-color: $dark-1;
+                color: $white;
+                border-color: $dark-1;
+            }
+        }
+    }
+}

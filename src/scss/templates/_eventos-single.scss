@@ -1,0 +1,240 @@
+// ==========================================================================
+// SINGLE EVENT — `single-agenda.php`
+// Light theme. Layout 2-col sidebar + content + share + related.
+// ==========================================================================
+
+.udp-single-event {
+    background-color: $white;
+    color: $dark-1;
+    padding-bottom: $space-3xl;
+    position: relative;
+
+    &__header {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding: $space-2xl $space-3xl 0;
+
+        @include media-down(md) {
+            padding: $space-xl $space-sm 0;
+        }
+    }
+
+    &__back {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: $font-family-body;
+        font-size: 14px;
+        font-weight: 500;
+        color: $dark-1;
+        text-decoration: none;
+        margin-bottom: $space-lg;
+
+        &:hover, &:focus-visible {
+            text-decoration: underline;
+            color: $dark-1;
+        }
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 48px;
+        line-height: 1.1;
+        color: $dark-1;
+
+        @include media-down(md) {
+            font-size: 32px;
+        }
+    }
+
+    &__separator {
+        max-width: 1360px;
+        margin: $space-2xl auto 0;
+        border: 0;
+        height: 1px;
+        background-color: rgba($dark-1, 0.15);
+    }
+
+    &__body {
+        max-width: 1440px;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 60px;
+
+        @include media-down(lg) {
+            grid-template-columns: 1fr;
+            padding: 0 $space-sm;
+            gap: $space-2xl;
+        }
+    }
+
+    &__content {
+        max-width: 720px;
+
+        @include media-down(lg) {
+            max-width: none;
+        }
+    }
+
+    &__featured {
+        margin: 0 0 $space-md;
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    &__subtitulo {
+        margin: 0 0 $space-md;
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 500;
+        color: $dark-1;
+    }
+
+    &__entry-content {
+        font-family: $font-family-body;
+        font-size: 16px;
+        line-height: 24px;
+        color: $dark-1;
+
+        p { margin: 0 0 $space-md; }
+        p:last-child { margin-bottom: 0; }
+        a { color: $brand-blue; text-decoration: underline; }
+        strong { font-weight: 600; }
+        ul, ol { margin: 0 0 $space-md; padding-inline-start: $space-lg; }
+        h2, h3, h4 {
+            margin: $space-2xl 0 $space-md;
+            font-family: $font-family-body;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        h2 { font-size: 24px; }
+        h3 { font-size: 20px; }
+        h4 { font-size: 18px; }
+    }
+
+    &__related {
+        background-color: rgba($dark-1, 0.04);
+        margin-top: $space-3xl;
+        padding: $space-3xl 0;
+    }
+
+    &__related-inner {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding-inline: $space-3xl;
+
+        @include media-down(md) {
+            padding-inline: $space-sm;
+        }
+    }
+
+    &__related-title {
+        margin: 0 0 $space-2xl;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 24px;
+        color: $dark-1;
+    }
+
+    &__related-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: $space-2xl;
+
+        @include media-down(lg) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// EVENT META (sidebar) — light theme
+// --------------------------------------------------------------------------
+.udp-event-meta {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+
+    &__row {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__label {
+        font-family: $font-family-body;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: rgba($dark-1, 0.5);
+    }
+
+    &__value {
+        font-family: $font-family-body;
+        font-size: 14px;
+        line-height: 1.4;
+        color: $dark-1;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+        margin-top: $space-md;
+    }
+
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 $space-md;
+        font-family: $font-family-body;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        border-radius: 9999px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition:
+            background-color $transition-base,
+            color $transition-base,
+            border-color $transition-base;
+
+        &--outline {
+            color: $dark-1;
+            border-color: $dark-1;
+            background-color: transparent;
+
+            &:hover, &:focus-visible {
+                background-color: $dark-1;
+                color: $white;
+                outline: none;
+            }
+        }
+
+        &--primary {
+            color: $white;
+            background-color: $dark-1;
+            border-color: $dark-1;
+
+            &:hover, &:focus-visible {
+                background-color: $brand-blue;
+                border-color: $brand-blue;
+                outline: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,137 @@
+// ==========================================================================
+// EVENTOS ARCHIVE — page template `page-eventos.php`
+// Theme dark. Header con toggle grid/list. Filtros + body + paginación.
+// Reusa estilos de filtros y paginación de `_noticias-archive.scss`.
+// ==========================================================================
+
+.udp-eventos-archive {
+    background-color: $dark-1;
+    color: $white;
+    padding-bottom: $space-3xl;
+
+    &__header {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding: $space-2xl $space-3xl 0;
+        position: relative;
+
+        @include media-down(md) {
+            padding: $space-xl $space-sm 0;
+        }
+
+        .udp-breadcrumb__item,
+        .udp-breadcrumb__link,
+        .udp-breadcrumb__current {
+            color: $white;
+        }
+        .udp-breadcrumb__sep { color: $white-70; }
+    }
+
+    &__title {
+        margin: $space-md 0 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 64px;
+        line-height: 1.05;
+        color: $white;
+
+        @include media-down(md) {
+            font-size: 40px;
+        }
+    }
+
+    &__toggle {
+        position: absolute;
+        right: $space-3xl;
+        bottom: 0;
+        display: inline-flex;
+        gap: 8px;
+
+        @include media-down(md) {
+            position: static;
+            margin-top: $space-sm;
+            right: auto;
+        }
+    }
+
+    &__toggle-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 9999px;
+        border: 1px solid rgba($white, 0.3);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+        text-decoration: none;
+        transition:
+            background-color $transition-base,
+            color $transition-base,
+            border-color $transition-base;
+
+        &:hover,
+        &:focus-visible {
+            border-color: $white;
+            outline: none;
+        }
+
+        &--active {
+            background-color: $white;
+            color: $dark-1;
+            border-color: $white;
+        }
+    }
+
+    &__separator {
+        max-width: 1360px;
+        margin: $space-2xl auto 0;
+        border: 0;
+        height: 1px;
+        background-color: rgba($white, 0.15);
+    }
+
+    &__list {
+        list-style: none;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        max-width: 1440px;
+
+        @include media-down(md) {
+            padding: 0 $space-sm;
+        }
+
+        &--grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: $space-2xl 50px;
+
+            @include media-down(lg) {
+                grid-template-columns: 1fr;
+                gap: $space-2xl;
+            }
+        }
+
+        &--list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+    }
+
+    &__item {
+        display: block;
+    }
+
+    &__empty {
+        max-width: 1440px;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        font-family: $font-family-body;
+        font-size: 16px;
+        color: $white-70;
+
+        @include media-down(md) {
+            padding: 0 $space-sm;
+        }
+    }
+}

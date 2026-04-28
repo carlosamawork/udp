@@ -272,3 +272,149 @@ function udp_query_noticias( array $filters ): array {
         'paged'     => $paged,
     );
 }
+
+/**
+ * Convierte un WP_Post (CPT agenda) a la forma Card adaptada para evento.
+ * Devuelve null si no hay featured image (igual que noticias).
+ *
+ * Card shape evento adicional al de noticia:
+ *   - fecha_display: human readable "10 de Marzo de 2026"
+ *   - hora_display:  del ACF hora_inicio "12:00 hrs"
+ *   - lugar:         ACF lugar
+ * Eyebrow viene del primer post_tag (case original) — uppercase via CSS.
+ */
+function udp_card_data_from_agenda( WP_Post $post ): ?array {
+    $thumb_id = get_post_thumbnail_id( $post->ID );
+    if ( ! $thumb_id ) {
+        return null;
+    }
+
+    $imagen_url = wp_get_attachment_image_url( $thumb_id, 'medium_large' );
+    if ( ! $imagen_url ) {
+        return null;
+    }
+
+    $metadata = wp_get_attachment_metadata( $thumb_id );
+
+    $eyebrow_text = '';
+    $tags = get_the_terms( $post->ID, 'post_tag' );
+    if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
+        $eyebrow_text = $tags[0]->name;
+    }
+
+    // get_field('fecha') returns the ACF "Return Format" (human-readable string like "3 Octubre 2017").
+    // For reliable ISO parsing use the raw postmeta which always stores Ymd ('20171003').
+    $fecha_raw = get_post_meta( $post->ID, 'fecha', true );
+    $hora_acf  = function_exists( 'get_field' ) ? get_field( 'hora_inicio', $post->ID ) : '';
+    $lugar     = function_exists( 'get_field' ) ? (string) get_field( 'lugar', $post->ID ) : '';
+
+    $fecha_iso = '';
+    $fecha_disp = '';
+    if ( $fecha_raw ) {
+        // ACF date_picker stores dates as Ymd ('20210101') in postmeta.
+        // strtotime() does not reliably parse Ymd on all PHP builds, so use DateTime as primary.
+        $dt = DateTime::createFromFormat( 'Ymd', $fecha_raw );
+        if ( $dt ) {
+            $ts = $dt->getTimestamp();
+        } else {
+            $ts = strtotime( $fecha_raw );
+        }
+        if ( $ts ) {
+            $fecha_iso  = date( 'Y-m-d', $ts );
+            $fecha_disp = date_i18n( 'j \d\e F \d\e Y', $ts );
+        }
+    }
+
+    $hora_disp = '';
+    if ( $hora_acf ) {
+        $ts_h = strtotime( $hora_acf );
+        if ( $ts_h ) {
+            $hora_disp = date_i18n( 'H:i', $ts_h ) . ' hrs';
+        }
+    }
+
+    return array(
+        'post_id'       => (int) $post->ID,
+        'eyebrow'       => $eyebrow_text,
+        'eyebrow_color' => 'yellow',
+        'titulo'        => get_the_title( $post ),
+        'imagen'        => array(
+            'id'    => (int) $thumb_id,
+            'url'   => $imagen_url,
+            'alt'   => (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true ),
+            'sizes' => is_array( $metadata ) && isset( $metadata['sizes'] ) ? $metadata['sizes'] : array(),
+        ),
+        'fecha'         => $fecha_iso,
+        'fecha_display' => $fecha_disp,
+        'hora_display'  => $hora_disp,
+        'lugar'         => $lugar,
+        'href'          => get_permalink( $post ),
+        'target'        => '',
+    );
+}
+
+/**
+ * Wrapper sobre WP_Query para archive Agenda.
+ * Order por meta `fecha` ASC (próximos primero).
+ */
+function udp_query_agenda( array $filters ): array {
+    $facultad = (int) ( $filters['facultad'] ?? 0 );
+    $year     = (int) ( $filters['year']     ?? 0 );
+    $s        = trim( (string) ( $filters['s'] ?? '' ) );
+    $paged    = max( 1, (int) ( $filters['paged'] ?? 1 ) );
+    $limit    = max( 1, (int) ( $filters['limit'] ?? 6 ) );
+    $exclude  = isset( $filters['exclude'] ) && is_array( $filters['exclude'] ) ? array_map( 'intval', $filters['exclude'] ) : array();
+
+    $args = array(
+        'post_type'      => 'agenda',
+        'post_status'    => 'publish',
+        'posts_per_page' => $limit,
+        'paged'          => $paged,
+        'meta_key'       => 'fecha',
+        'orderby'        => 'meta_value',
+        'order'          => 'ASC',
+    );
+
+    $tax_query = array();
+    if ( $facultad > 0 ) {
+        $tax_query[] = array( 'taxonomy' => 'facultad', 'field' => 'term_id', 'terms' => array( $facultad ) );
+    }
+    if ( ! empty( $tax_query ) ) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    if ( $year > 0 ) {
+        $args['meta_query'] = array(
+            array(
+                'key'     => 'fecha',
+                'value'   => sprintf( '%04d', $year ),
+                'compare' => 'LIKE',
+            ),
+        );
+    }
+
+    if ( $s !== '' ) {
+        $args['s'] = $s;
+    }
+
+    if ( ! empty( $exclude ) ) {
+        $args['post__not_in'] = $exclude;
+    }
+
+    $q = new WP_Query( $args );
+
+    $cards = array();
+    foreach ( $q->posts as $post ) {
+        $card = udp_card_data_from_agenda( $post );
+        if ( $card ) {
+            $cards[] = $card;
+        }
+    }
+
+    return array(
+        'cards'     => $cards,
+        'total'     => (int) $q->found_posts,
+        'max_pages' => $q->found_posts > 0 ? (int) ceil( $q->found_posts / $limit ) : 0,
+        'paged'     => $paged,
+    );
+}
