@@ -278,3 +278,91 @@
         }
     }
 }
+
+// --------------------------------------------------------------------------
+// VARIANTE FEATURED — image fullbleed + overlay + eyebrow + date + título centrado
+// --------------------------------------------------------------------------
+.udp-card-noticia--featured {
+    position: relative;
+    display: block;
+    aspect-ratio: 432 / 580;
+    overflow: hidden;
+    color: $white;
+    text-decoration: none;
+
+    .udp-card-noticia__media--featured {
+        position: absolute;
+        inset: 0;
+        margin: 0;
+        background: $dark-2;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+    }
+
+    .udp-card-noticia__overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            rgba($dark-1, 0.25) 0%,
+            rgba($dark-1, 0.45) 50%,
+            rgba($dark-1, 0.65) 100%
+        );
+    }
+
+    .udp-card-noticia__featured-meta {
+        position: absolute;
+        top: $space-md;
+        left: $space-md;
+        right: $space-md;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        z-index: 2;
+    }
+
+    .udp-card-noticia__date--featured {
+        font-family: $font-family-body;
+        font-size: 14px;
+        font-weight: 500;
+        color: $white;
+    }
+
+    .udp-card-noticia__title--featured {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $space-3xl;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 1.1;
+        text-align: center;
+        color: $white;
+        text-transform: none;
+        -webkit-line-clamp: unset;
+        overflow: visible;
+
+        @include media-down(md) {
+            font-size: 28px;
+            padding: $space-lg;
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        &:hover .udp-card-noticia__media--featured img,
+        &:focus-visible .udp-card-noticia__media--featured img {
+            transform: scale(1.04);
+        }
+    }
+}

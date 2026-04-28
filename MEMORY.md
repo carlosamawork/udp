@@ -253,6 +253,67 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - WP intercepta el query param `?s=` globalmente en el request lifecycle (antes de template routing). Si un form GET en un page template usa `name="s"`, el request se procesa como búsqueda global y NO llega al template. Workaround: usar nombre custom (`udp_s`) y pasarlo internamente a WP_Query.
 
 **Pendientes**:
-- F4b2: hero band del archive con featured card (image overlay) + 2 side compactas. Bumpa `posts_per_page` de 6 → 9. Probable: campo ACF `featured_post` (post_object) en options page para curaduría editorial.
+- F4b2 (parcial): hero band del archive con featured card + 2 side compactas → Tasks 4+5 completados (ver entrada 2026-04-28 F4b2 Tasks 4+5). Quedan: bump posts_per_page 6→9, wiring PHP del hero en page-noticias.php, campo ACF featured_post.
 - F4c: archive Agenda (toggle grid/list) + single-evento + nuevo card primitive `card-evento.php`. Reutilizará `udp_query_noticias` pattern → `udp_query_agenda()`, y los partials `archive/pagination.php`.
 - Image gallery del single (Figma muestra 3 imágenes con arrows después del body) → F4b2 cuando se añada el campo ACF gallery.
+
+### 2026-04-28 — F4b2 Tasks 4+5: Hero partial + SCSS featured + dark theme
+
+**Hechos**:
+- Task 4: Creado `template-parts/archive/noticias-hero.php` — partial de la hero band. Acepta `$args['featured']` (card array|null) + `$args['side']` (array de cards). Delega a `card-noticia.php` con `variant=featured` y `variant=horizontal`.
+- Task 5.1: Appended `.udp-card-noticia--featured` modifier a `src/scss/blocks/_card-grid.scss` — image fullbleed absolutamente posicionada + overlay gradient + título centrado + zoom hover.
+- Task 5.2: Reemplazado íntegro `src/scss/templates/_noticias-archive.scss` — dark theme ($dark-1 bg, $white text), hero band layout (.udp-noticias-hero), filtros dark (borders rgba $white 0.2, chevron SVG blanco), paginación invertida (current = $white bg + $dark-1 text).
+- Build: ✓ 663ms, sin errores. PHP lint: no syntax errors.
+
+**Decisiones**:
+- `_noticias-archive.scss` se reemplazó por completo (no append) — la especificación exigía reemplazar light theme por dark. Mantener ambos habría generado conflictos de especificidad.
+- `--featured` va como selector raíz (`.udp-card-noticia--featured`) no anidado dentro de `.udp-card-noticia` — es un modifier BEM que sobreescribe el bloque base por completo (layout absolutamente diferente). Igual que `--horizontal`.
+
+**Pendientes F4b2**:
+- Wiring PHP: integrar noticias-hero.php en page-noticias.php (get_template_part con featured/side de la query o ACF).
+- Campo ACF `featured_post` (post_object) en options page UDP para curaduría editorial.
+- Bump `posts_per_page` de 6 → 9 para compensar los 3 posts consumidos por el hero.
+
+### 2026-04-28 — F4b2 Task 6: page-noticias.php logic update (page 1 vs 2+, theme=dark)
+
+**Hechos**:
+- `templates/page-noticias.php` reemplazado íntegramente con la lógica de hero/page-1.
+- `$show_hero` flag: true solo cuando `$paged === 1` && sin filtros (cat/year/s vacíos).
+- Página 1 sin filtros: featured (ACF `featured_post` o fallback a más reciente con thumbnail) + 2 side cards + 6 grid (9 totales en pantalla).
+- Página 1 con filtros o página 2+: 9 cards en grid, sin hero.
+- Hero se renderiza con `get_template_part('template-parts/archive/noticias-hero', ...)` cuando `$show_hero && ($featured_card || !empty($side_cards))`.
+- Empty state condicional: solo muestra "No se encontraron noticias" cuando `!$featured_card && empty($side_cards)` — no se muestra en página 1 normal que tiene hero pero grid vacío.
+- theme cambiado de `'light'` → `'dark'` en el `get_template_part` de `card-noticia`.
+- PHP lint: `No syntax errors detected`. No hay commit (instrucción del plan).
+
+**Decisiones**:
+- `$featured_id` se resuelve primero por ACF (`get_field('featured_post', $page_id)`) y cae a fallback `get_posts` con `meta_query EXISTS _thumbnail_id`. Esto evita depender de que el campo ACF esté configurado en el CMS para que la página funcione en entornos de dev.
+- Side query y grid query usan arrays `$exclude_for_side` / `$exclude_for_grid` para ir acumulando exclusiones — evita que el mismo post aparezca en hero + side + grid.
+- `udp_query_noticias` recibe `'exclude'` en el hero path y `cat/year/s/paged` en el filtros path — la función ya existía con estos args desde F4b1.
+- `$max_pages` sale del `$grid_result` en ambos paths — el hero path usa el grid de 6 posts (pág 1 solo), el filtros path usa la query de 9 posts con paginación.
+
+**Pendiente**:
+- Campo ACF `featured_post` (post_object) en el grupo de la página "Noticias" (ID 97) — mientras no exista, el fallback automático funciona bien.
+
+---
+
+### 2026-04-28 — F4b2 Noticias hero band + tema dark fix
+
+**Hechos**:
+- Archive Noticias corregido a tema **dark** (F4b1 lo había deployado light por error de spec). `templates/page-noticias.php` pasa `theme=dark` al card-noticia. SCSS `_noticias-archive.scss` invertido (bg `$dark-1`, color `$white`, breadcrumb override, filtros input/select con border `rgba($white,0.2)` y placeholder `rgba($white,0.5)`, paginación con current bg `$white` color `$dark-1`).
+- Hero band en página 1 sin filtros: 1 featured grande (variant=`featured`) + 2 side compactas (variant=`horizontal`) en grid 2-col (`udp-noticias-hero__inner`). Mobile cae a 1-col.
+- Featured card: image fullbleed + overlay gradient `rgba($dark-1, 0.25→0.65)` + eyebrow yellow top-left + date top-right + título centrado Arizona Flare 40px (28px mobile). Aspect-ratio 432/580. Hover image scale 1.04. Sin "Leer más" — toda la card es clickable.
+- ACF group nuevo `group_template_noticias` con field único `featured_post` (post_object, nullable). Location `page_template == page-noticias.php`. Si vacío, fallback al post más reciente con featured image.
+- Helper `udp_card_data_from_post` ahora incluye `post_id` en el shape Card (necesario para excluir IDs en queries siguientes).
+- Helper `udp_query_noticias` acepta nuevo arg `exclude` (array de post IDs) → mapea a `post__not_in`.
+- `posts_per_page` lógica: página 1 sin filtros = 9 (1 featured + 2 side + 6 grid); página 1 con filtros = 9 grid; página 2+ = 9 grid.
+
+**Decisiones clave**:
+- El featured se SUPRIME cuando hay filtros activos (cat/year/udp_s) o en página 2+. Razón: el ACF `featured_post` puede ser de otra categoría; mostrarlo confundiría.
+- Card `--featured` es un markup ALTERNATIVO en card-noticia.php (rama `if/else` por variant). No comparte el `<a>...<body>` con default/horizontal — necesita estructura distinta (image fullbleed + overlays absolutos + título centrado).
+- Helper `udp_query_noticias()` se llama hasta 3 veces en page 1 (featured fallback + side + grid). Cada query con su propio `exclude` correctamente acumulado.
+- Pattern UPSERT del ACF JSON ahora consulta DB directamente por `post_name` (en lugar de `acf_get_field_group()` que devuelve ID:0 con local JSON). Aplicado a `group_template_noticias` para evitar duplicados.
+
+**Pendientes**:
+- F4c: Agenda (toggle grid/list, single-evento, card-evento.php). Reusará paginación + exclude pattern.
+- F4 extras: image gallery del single (campo ACF gallery + carousel JS).

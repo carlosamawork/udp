@@ -74,6 +74,7 @@ function udp_card_data_from_post( WP_Post $post ): ?array {
     $eyebrow = udp_card_eyebrow_from_post( $post );
 
     return array(
+        'post_id'       => (int) $post->ID,
         'eyebrow'       => $eyebrow['text'],
         'eyebrow_color' => $eyebrow['color'],
         'titulo'        => get_the_title( $post ),
@@ -225,6 +226,7 @@ function udp_query_noticias( array $filters ): array {
     $s     = trim( (string) ( $filters['s'] ?? '' ) );
     $paged = max( 1, (int) ( $filters['paged'] ?? 1 ) );
     $limit = max( 1, (int) ( $filters['limit'] ?? 6 ) );
+    $exclude = isset( $filters['exclude'] ) && is_array( $filters['exclude'] ) ? array_map( 'intval', $filters['exclude'] ) : array();
 
     $args = array(
         'post_type'      => 'post',
@@ -247,6 +249,10 @@ function udp_query_noticias( array $filters ): array {
 
     if ( $s !== '' ) {
         $args['s'] = $s;
+    }
+
+    if ( ! empty( $exclude ) ) {
+        $args['post__not_in'] = $exclude;
     }
 
     $q = new WP_Query( $args );

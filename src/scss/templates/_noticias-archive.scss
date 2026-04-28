@@ -1,12 +1,12 @@
 // ==========================================================================
 // NOTICIAS ARCHIVE — page template `page-noticias.php`
-// Header light + filtros + grid 2-col + paginación.
-// Card --horizontal en `_card-grid.scss`.
+// Header DARK + filtros dark + hero band + grid 2-col + paginación.
+// Card --horizontal y --featured en `_card-grid.scss`.
 // ==========================================================================
 
 .udp-noticias-archive {
-    background-color: $white;
-    color: $dark-1;
+    background-color: $dark-1;
+    color: $white;
     padding-bottom: $space-3xl;
 
     &__header {
@@ -18,14 +18,14 @@
             padding: $space-xl $space-sm 0;
         }
 
-        // Override breadcrumb colors para light theme
+        // Override breadcrumb colors para dark theme
         .udp-breadcrumb__item,
         .udp-breadcrumb__link,
         .udp-breadcrumb__current {
-            color: $dark-1;
+            color: $white;
         }
         .udp-breadcrumb__sep {
-            color: $dark-2;
+            color: $white-70;
         }
     }
 
@@ -35,7 +35,7 @@
         font-weight: 500;
         font-size: 64px;
         line-height: 1.05;
-        color: $dark-1;
+        color: $white;
 
         @include media-down(md) {
             font-size: 40px;
@@ -47,7 +47,7 @@
         margin: $space-2xl auto 0;
         border: 0;
         height: 1px;
-        background-color: rgba($dark-1, 0.15);
+        background-color: rgba($white, 0.15);
     }
 
     &__list {
@@ -57,7 +57,7 @@
         max-width: 1440px;
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: $space-2xl 50px;  // gap-y 32 / gap-x 50
+        gap: $space-2xl 50px;
 
         @include media-down(lg) {
             grid-template-columns: 1fr;
@@ -76,12 +76,48 @@
         padding: 0 $space-3xl;
         font-family: $font-family-body;
         font-size: 16px;
-        color: $dark-2;
+        color: $white-70;
     }
 }
 
 // --------------------------------------------------------------------------
-// FILTERS — 3 columnas: 2 dropdowns + search
+// HERO BAND (page 1, sin filtros activos)
+// --------------------------------------------------------------------------
+.udp-noticias-hero {
+    margin-top: $space-2xl;
+
+    &__inner {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding: 0 $space-3xl;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+
+        @include media-down(lg) {
+            grid-template-columns: 1fr;
+            padding: 0 $space-sm;
+            gap: $space-2xl;
+        }
+    }
+
+    &__featured {
+        display: block;
+    }
+
+    &__side {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    &__side-item {
+        display: block;
+    }
+}
+
+// --------------------------------------------------------------------------
+// FILTERS — dark theme
 // --------------------------------------------------------------------------
 .udp-archive-filters {
     max-width: 1440px;
@@ -122,16 +158,20 @@
         padding: 0 36px 0 16px;
         font-family: $font-family-body;
         font-size: 14px;
-        color: $dark-1;
+        color: $white;
         background-color: transparent;
-        border: 1px solid rgba($dark-1, 0.2);
+        border: 1px solid rgba($white, 0.2);
         border-radius: 0;
         cursor: pointer;
 
-        // Custom chevron via SVG bg
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%231C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%23FFFFFF' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 14px center;
+
+        option {
+            color: $dark-1;
+            background-color: $white;
+        }
 
         &:focus-visible {
             outline: 2px solid $brand-blue;
@@ -145,9 +185,9 @@
         padding: 0 48px 0 16px;
         font-family: $font-family-body;
         font-size: 14px;
-        color: $dark-1;
+        color: $white;
         background-color: transparent;
-        border: 1px solid rgba($dark-1, 0.2);
+        border: 1px solid rgba($white, 0.2);
         border-radius: 0;
 
         &:focus-visible {
@@ -156,7 +196,7 @@
         }
 
         &::placeholder {
-            color: rgba($dark-1, 0.5);
+            color: rgba($white, 0.5);
         }
     }
 
@@ -168,7 +208,7 @@
         width: 40px;
         background: transparent;
         border: 0;
-        color: $dark-1;
+        color: $white;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
@@ -182,7 +222,7 @@
 }
 
 // --------------------------------------------------------------------------
-// PAGINATION
+// PAGINATION — dark theme (invertido)
 // --------------------------------------------------------------------------
 .udp-pagination {
     max-width: 1440px;
@@ -216,29 +256,29 @@
             font-family: $font-family-body;
             font-size: 14px;
             font-weight: 500;
-            color: $dark-1;
+            color: $white;
             text-decoration: none;
             border: 1px solid transparent;
         }
 
         &--current span.current {
-            background-color: $dark-1;
-            color: $white;
+            background-color: $white;
+            color: $dark-1;
         }
 
         a:hover,
         a:focus-visible {
-            border-color: rgba($dark-1, 0.3);
+            border-color: rgba($white, 0.3);
             outline: none;
         }
 
         &--prev a,
         &--next a {
-            color: $dark-1;
+            color: $white;
         }
 
         &--dots {
-            color: rgba($dark-1, 0.5);
+            color: rgba($white, 0.5);
             padding: 0 4px;
         }
     }

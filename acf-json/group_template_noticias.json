@@ -1,0 +1,50 @@
+{
+    "key": "group_template_noticias",
+    "title": "Template — Noticias",
+    "fields": [
+        {
+            "key": "field_template_noticias_featured_post",
+            "label": "Post destacado",
+            "name": "featured_post",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Post que aparece en la zona hero de la página 1. Si dejas vacío, se muestra automáticamente la noticia más reciente con imagen destacada.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post"
+            ],
+            "return_format": "id",
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "taxonomy": [],
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates\/page-noticias.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "ACF para la página Noticias (page-noticias.php). Selecciona el post destacado del hero band.",
+    "show_in_rest": false,
+    "display_title": "",
+    "modified": 1777396685
+}

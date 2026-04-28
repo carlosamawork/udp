@@ -28,9 +28,38 @@ $fecha_display = function_exists( 'udp_card_format_date' ) ? udp_card_format_dat
 $target        = $card['target'] ?? '';
 $rel           = $target === '_blank' ? 'noopener noreferrer' : '';
 
-$variant = isset( $args['variant'] ) && in_array( $args['variant'], array( 'horizontal' ), true ) ? $args['variant'] : '';
+$variant = isset( $args['variant'] ) && in_array( $args['variant'], array( 'horizontal', 'featured' ), true ) ? $args['variant'] : '';
 $class = 'udp-card-noticia udp-card-noticia--' . $theme . ( $variant ? ' udp-card-noticia--' . $variant : '' );
 ?>
+<?php if ( $variant === 'featured' ) : ?>
+<a
+    href="<?php echo esc_url( $href ); ?>"
+    class="<?php echo esc_attr( $class ); ?>"
+    <?php if ( $target ) : ?>target="<?php echo esc_attr( $target ); ?>"<?php endif; ?>
+    <?php if ( $rel ) : ?>rel="<?php echo esc_attr( $rel ); ?>"<?php endif; ?>
+>
+    <figure class="udp-card-noticia__media udp-card-noticia__media--featured">
+        <img
+            src="<?php echo esc_url( $imagen['url'] ); ?>"
+            alt="<?php echo esc_attr( $imagen['alt'] ?? '' ); ?>"
+            loading="lazy"
+            decoding="async"
+        />
+        <span class="udp-card-noticia__overlay" aria-hidden="true"></span>
+    </figure>
+    <div class="udp-card-noticia__featured-meta">
+        <?php if ( $eyebrow ) : ?>
+            <span class="udp-card-noticia__eyebrow<?php echo $eyebrow_color ? ' udp-card-noticia__eyebrow--' . esc_attr( $eyebrow_color ) : ''; ?>"><?php echo esc_html( $eyebrow ); ?></span>
+        <?php else : ?>
+            <span class="udp-card-noticia__eyebrow udp-card-noticia__eyebrow--yellow"><?php esc_html_e( 'Destacado', 'starter-theme' ); ?></span>
+        <?php endif; ?>
+        <?php if ( $fecha_iso && $fecha_display ) : ?>
+            <time class="udp-card-noticia__date udp-card-noticia__date--featured" datetime="<?php echo esc_attr( $fecha_iso ); ?>"><?php echo esc_html( $fecha_display ); ?></time>
+        <?php endif; ?>
+    </div>
+    <h3 class="udp-card-noticia__title udp-card-noticia__title--featured"><?php echo esc_html( $titulo ); ?></h3>
+</a>
+<?php else : ?>
 <a
     href="<?php echo esc_url( $href ); ?>"
     class="<?php echo esc_attr( $class ); ?>"
@@ -63,3 +92,4 @@ $class = 'udp-card-noticia udp-card-noticia--' . $theme . ( $variant ? ' udp-car
         </span>
     </div>
 </a>
+<?php endif; ?>
