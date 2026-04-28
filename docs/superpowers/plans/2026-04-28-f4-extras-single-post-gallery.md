@@ -25,7 +25,7 @@
 
 ## Task 1: Partial + integración en single-post.php
 
-- [ ] **Step 1: Crear `template-parts/single/post-gallery.php`**
+- [x] **Step 1: Crear `template-parts/single/post-gallery.php`**
 
 ```php
 <?php
@@ -76,7 +76,7 @@ if ( ! is_array( $gallery ) || empty( $gallery ) ) {
 </section>
 ```
 
-- [ ] **Step 2: Modificar `single-post.php` para incluir la galería**
+- [x] **Step 2: Modificar `single-post.php` para incluir la galería**
 
 Edit `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/single-post.php`. Localizar el bloque:
 
@@ -108,7 +108,7 @@ get_template_part( 'template-parts/single/post-related', null, array( 'post_id' 
 ?>
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -122,7 +122,7 @@ Expected: 2× `No syntax errors detected`.
 
 ## Task 2: JS module Swiper init
 
-- [ ] **Step 1: Crear `src/js/modules/single-post-gallery.js`**
+- [x] **Step 1: Crear `src/js/modules/single-post-gallery.js`**
 
 ```javascript
 /**
@@ -166,7 +166,7 @@ export async function initSinglePostGallery() {
 }
 ```
 
-- [ ] **Step 2: Wire en `src/js/main.js`**
+- [x] **Step 2: Wire en `src/js/main.js`**
 
 Edit `src/js/main.js`. Localizar la línea `import { initSectionLandingSwiper } from '@modules/section-landing-swiper';` y AÑADIR DESPUÉS:
 
@@ -180,7 +180,7 @@ Localizar el bloque `domReady(() => {` y AÑADIR la línea `initSinglePostGaller
 
 ## Task 3: SCSS gallery
 
-- [ ] **Step 1: Añadir SCSS al final de `_noticias-single.scss`**
+- [x] **Step 1: Añadir SCSS al final de `_noticias-single.scss`**
 
 Append AL FINAL de `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/src/scss/templates/_noticias-single.scss`:
 
@@ -261,7 +261,7 @@ Append AL FINAL de `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-
 }
 ```
 
-- [ ] **Step 2: Build**
+- [x] **Step 2: Build**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run build 2>&1 | tail -5
@@ -273,7 +273,7 @@ Expected: build OK, CSS sube ~1 kB. Si Swiper se reusa en otro chunk, no añade 
 
 ## Task 4: E2E + commit
 
-- [ ] **Step 1: Encontrar un post con gallery populada**
+- [x] **Step 1: Encontrar un post con gallery populada**
 
 ```bash
 export MYSQL_PWD=root
@@ -288,7 +288,7 @@ echo "$GALLERY_POST"
 
 Si vacío: ningún post tiene gallery — el partial early-returns silencio. Documentar y saltar al commit.
 
-- [ ] **Step 2: Curl + verificar markup**
+- [x] **Step 2: Curl + verificar markup**
 
 ```bash
 SLUG=$(echo "$GALLERY_POST" | awk '{print $2}')
@@ -302,7 +302,7 @@ curl -s "http://localhost:8888/udp/$SLUG/?nocache=$TS" | grep -cE 'udp-single-po
 
 Expected: Aparecen `udp-single-post__gallery`, `udp-single-post__gallery-viewport`, `udp-single-post__gallery-list`, `udp-single-post__gallery-item`, `udp-single-post__gallery-nav`. Image count >= 1.
 
-- [ ] **Step 3: Update MEMORY.md**
+- [x] **Step 3: Update MEMORY.md**
 
 Append:
 
@@ -326,7 +326,7 @@ Append:
 - El campo ACF `galeria_de_imagenes` existe pero la mayoría de posts no la tienen populada — documentar editorial.
 ```
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
