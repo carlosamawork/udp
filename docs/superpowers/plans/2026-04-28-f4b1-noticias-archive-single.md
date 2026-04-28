@@ -40,7 +40,7 @@
 **Files:**
 - Modify: `wp-content/themes/starter-theme/inc/udp-cards.php`
 
-- [ ] **Step 1: Añadir `udp_get_post_years()` al final del archivo**
+- [x] **Step 1: Añadir `udp_get_post_years()` al final del archivo**
 
 Edit `inc/udp-cards.php`. Añadir AL FINAL del archivo (después de la última función existente, antes del cierre del archivo si lo hubiera):
 
@@ -129,7 +129,7 @@ function udp_query_noticias( array $filters ): array {
 }
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -137,7 +137,7 @@ function udp_query_noticias( array $filters ): array {
 
 Expected: `No syntax errors detected`.
 
-- [ ] **Step 3: Smoke test del helper**
+- [x] **Step 3: Smoke test del helper**
 
 Crear `/tmp/test-udp-query-noticias.php`:
 
@@ -172,7 +172,7 @@ Expected: cards >= 1 (los posts más recientes con featured image), total = 4064
 - Modify: `wp-content/themes/starter-theme/template-parts/blocks/parts/card-noticia.php`
 - Modify: `wp-content/themes/starter-theme/src/scss/blocks/_card-grid.scss`
 
-- [ ] **Step 1: Soportar arg `variant` en el partial**
+- [x] **Step 1: Soportar arg `variant` en el partial**
 
 Edit `template-parts/blocks/parts/card-noticia.php`. Localizar la línea:
 
@@ -189,7 +189,7 @@ $class = 'udp-card-noticia udp-card-noticia--' . $theme . ( $variant ? ' udp-car
 
 Justo después de la línea `$rel = $target === '_blank' ? 'noopener noreferrer' : '';` (que ya existe).
 
-- [ ] **Step 2: Documentar el nuevo arg en el docblock del partial**
+- [x] **Step 2: Documentar el nuevo arg en el docblock del partial**
 
 Edit el mismo archivo. Localizar el docblock superior (líneas 2-10) y añadir al @var:
 
@@ -198,7 +198,7 @@ Edit el mismo archivo. Localizar el docblock superior (líneas 2-10) y añadir a
  *                  variant: '' (default) | 'horizontal' (image-left 201×275 para archive)
 ```
 
-- [ ] **Step 3: Añadir modifier SCSS**
+- [x] **Step 3: Añadir modifier SCSS**
 
 Edit `src/scss/blocks/_card-grid.scss`. AL FINAL del archivo (después de la última `}` de `.udp-card-noticia`), AÑADIR:
 
@@ -245,7 +245,7 @@ Edit `src/scss/blocks/_card-grid.scss`. AL FINAL del archivo (después de la úl
 }
 ```
 
-- [ ] **Step 4: Validar PHP + build**
+- [x] **Step 4: Validar PHP + build**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/parts/card-noticia.php
@@ -261,7 +261,7 @@ Expected: PHP OK, build OK, CSS sube ~0.5 kB.
 **Files:**
 - Create: `wp-content/themes/starter-theme/templates/page-noticias.php`
 
-- [ ] **Step 1: Crear el page template**
+- [x] **Step 1: Crear el page template**
 
 Create `wp-content/themes/starter-theme/templates/page-noticias.php`:
 
@@ -359,7 +359,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templates/page-noticias.php
@@ -367,7 +367,7 @@ get_footer();
 
 Expected: `No syntax errors detected`.
 
-- [ ] **Step 3: Asignar el template a la página Noticias (ID 97) vía SQL**
+- [x] **Step 3: Asignar el template a la página Noticias (ID 97) vía SQL**
 
 ```bash
 export MYSQL_PWD=root
@@ -392,13 +392,13 @@ Expected: `templates/page-noticias.php`.
 **Files:**
 - Create: `wp-content/themes/starter-theme/template-parts/archive/noticias-filters.php`
 
-- [ ] **Step 1: Crear directorio**
+- [x] **Step 1: Crear directorio**
 
 ```bash
 mkdir -p /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/archive
 ```
 
-- [ ] **Step 2: Crear el partial**
+- [x] **Step 2: Crear el partial**
 
 Create `wp-content/themes/starter-theme/template-parts/archive/noticias-filters.php`:
 
@@ -484,7 +484,7 @@ $years = function_exists( 'udp_get_post_years' ) ? udp_get_post_years() : array(
 </script>
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/archive/noticias-filters.php
@@ -499,7 +499,7 @@ Expected: `No syntax errors detected`.
 **Files:**
 - Create: `wp-content/themes/starter-theme/template-parts/archive/pagination.php`
 
-- [ ] **Step 1: Crear el partial**
+- [x] **Step 1: Crear el partial**
 
 Create `wp-content/themes/starter-theme/template-parts/archive/pagination.php`:
 
@@ -563,7 +563,7 @@ if ( empty( $pages ) ) {
 </nav>
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/archive/pagination.php
@@ -579,13 +579,13 @@ Expected: `No syntax errors detected`.
 - Create: `wp-content/themes/starter-theme/src/scss/templates/_noticias-archive.scss`
 - Modify: `wp-content/themes/starter-theme/src/scss/main.scss`
 
-- [ ] **Step 1: Crear directorio si no existe**
+- [x] **Step 1: Crear directorio si no existe**
 
 ```bash
 mkdir -p /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/src/scss/templates
 ```
 
-- [ ] **Step 2: Crear el SCSS**
+- [x] **Step 2: Crear el SCSS**
 
 Create `wp-content/themes/starter-theme/src/scss/templates/_noticias-archive.scss`:
 
@@ -837,7 +837,7 @@ Create `wp-content/themes/starter-theme/src/scss/templates/_noticias-archive.scs
 }
 ```
 
-- [ ] **Step 3: Importar en main.scss**
+- [x] **Step 3: Importar en main.scss**
 
 Edit `src/scss/main.scss`. Localizar la sección de imports (después de `@import "blocks/...";` lines) y AÑADIR ANTES de los component imports una sección nueva o usar la existente:
 
@@ -850,7 +850,7 @@ Edit `src/scss/main.scss`. Localizar la sección de imports (después de `@impor
 
 Si ya existe un comment de "Templates" sección, añadir el import allí. Si no, crear la sección al final, antes de cualquier override.
 
-- [ ] **Step 4: Build**
+- [x] **Step 4: Build**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run build 2>&1 | tail -5
@@ -868,13 +868,13 @@ Expected: build OK, CSS sube ~3-5 kB.
 - Create: `wp-content/themes/starter-theme/template-parts/single/post-share.php`
 - Create: `wp-content/themes/starter-theme/template-parts/single/post-related.php`
 
-- [ ] **Step 1: Crear directorio**
+- [x] **Step 1: Crear directorio**
 
 ```bash
 mkdir -p /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/single
 ```
 
-- [ ] **Step 2: Crear `single-post.php`**
+- [x] **Step 2: Crear `single-post.php`**
 
 Create `wp-content/themes/starter-theme/single-post.php`:
 
@@ -923,7 +923,7 @@ endwhile;
 get_footer();
 ```
 
-- [ ] **Step 3: Crear `template-parts/single/post-hero.php`**
+- [x] **Step 3: Crear `template-parts/single/post-hero.php`**
 
 ```php
 <?php
@@ -989,7 +989,7 @@ $thumb_alt = $thumb_id ? (string) get_post_meta( $thumb_id, '_wp_attachment_imag
 </header>
 ```
 
-- [ ] **Step 4: Crear `template-parts/single/post-share.php`**
+- [x] **Step 4: Crear `template-parts/single/post-share.php`**
 
 ```php
 <?php
@@ -1084,7 +1084,7 @@ $linkedin  = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlenco
 </script>
 ```
 
-- [ ] **Step 5: Crear `template-parts/single/post-related.php`**
+- [x] **Step 5: Crear `template-parts/single/post-related.php`**
 
 ```php
 <?php
@@ -1170,7 +1170,7 @@ if ( empty( $cards ) ) {
 </section>
 ```
 
-- [ ] **Step 6: Validar PHP de los 4 archivos**
+- [x] **Step 6: Validar PHP de los 4 archivos**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -1190,7 +1190,7 @@ Expected: 4× `No syntax errors detected`.
 - Create: `wp-content/themes/starter-theme/src/scss/templates/_noticias-single.scss`
 - Modify: `wp-content/themes/starter-theme/src/scss/main.scss`
 
-- [ ] **Step 1: Crear el SCSS**
+- [x] **Step 1: Crear el SCSS**
 
 Create `wp-content/themes/starter-theme/src/scss/templates/_noticias-single.scss`:
 
@@ -1465,7 +1465,7 @@ Create `wp-content/themes/starter-theme/src/scss/templates/_noticias-single.scss
 }
 ```
 
-- [ ] **Step 2: Importar en main.scss**
+- [x] **Step 2: Importar en main.scss**
 
 Edit `src/scss/main.scss`. AÑADIR después del `@import "templates/noticias-archive";` la línea:
 
@@ -1473,7 +1473,7 @@ Edit `src/scss/main.scss`. AÑADIR después del `@import "templates/noticias-arc
 @import "templates/noticias-single";
 ```
 
-- [ ] **Step 3: Build**
+- [x] **Step 3: Build**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run build 2>&1 | tail -5
@@ -1488,7 +1488,7 @@ Expected: build OK, CSS sube otros ~3-4 kB.
 **Files:**
 - Modify: `wp-content/themes/starter-theme/MEMORY.md`
 
-- [ ] **Step 1: Validar archive sin filtros**
+- [x] **Step 1: Validar archive sin filtros**
 
 ```bash
 TS=$(date +%s)
@@ -1507,7 +1507,7 @@ Expected:
 - Aparecen `udp-noticias-archive`, `udp-noticias-archive__title`, `udp-archive-filters`, `udp-card-noticia`, `udp-card-noticia--horizontal`, `udp-card-noticia--light`, `udp-pagination`
 - Card count = 6
 
-- [ ] **Step 2: Validar archive con filtro de categoría**
+- [x] **Step 2: Validar archive con filtro de categoría**
 
 Encontrar un term_id válido:
 
@@ -1530,7 +1530,7 @@ curl -s "http://localhost:8888/udp/noticias/?cat=$CAT_ID&nocache=$TS" | grep -E 
 
 Expected: el `<option>` con `value="$CAT_ID"` tiene `selected="selected"`. Hay items en el grid (cantidad varía).
 
-- [ ] **Step 3: Validar archive con búsqueda**
+- [x] **Step 3: Validar archive con búsqueda**
 
 ```bash
 TS=$(date +%s)
@@ -1539,7 +1539,7 @@ curl -s "http://localhost:8888/udp/noticias/?s=universidad&nocache=$TS" | grep -
 
 Expected: número >= 1 (posts que matcheen "universidad").
 
-- [ ] **Step 4: Validar paginación con paged=2**
+- [x] **Step 4: Validar paginación con paged=2**
 
 ```bash
 TS=$(date +%s)
@@ -1548,7 +1548,7 @@ curl -s "http://localhost:8888/udp/noticias/?paged=2&nocache=$TS" | grep -oE "ud
 
 Expected: el current page debe ser "2".
 
-- [ ] **Step 5: Encontrar un post con featured image y validar single**
+- [x] **Step 5: Encontrar un post con featured image y validar single**
 
 ```bash
 export MYSQL_PWD=root
@@ -1575,14 +1575,14 @@ Expected:
 - `udp-single-post`, `udp-single-post__hero`, `udp-single-post__title`, `udp-single-post__meta`, `udp-single-post__featured`, `udp-single-post__body`, `udp-single-post__content`, `udp-single-post__share`, `udp-single-post__related`
 - Texto "Volver a Noticias", al menos 4 share-btn instances, "Te podría interesar"
 
-- [ ] **Step 6: Limpiar archivos /tmp**
+- [x] **Step 6: Limpiar archivos /tmp**
 
 ```bash
 rm -f /tmp/test-udp-query-noticias.php
 echo "Cleanup OK"
 ```
 
-- [ ] **Step 7: Actualizar MEMORY.md**
+- [x] **Step 7: Actualizar MEMORY.md**
 
 Append a `wp-content/themes/starter-theme/MEMORY.md`:
 
@@ -1617,7 +1617,7 @@ Append a `wp-content/themes/starter-theme/MEMORY.md`:
 - Share toast "Copiado" usa hidden+timeout. Si se quiere transición fade, refactor minor en SCSS.
 ```
 
-- [ ] **Step 8: Commit final**
+- [x] **Step 8: Commit final**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
