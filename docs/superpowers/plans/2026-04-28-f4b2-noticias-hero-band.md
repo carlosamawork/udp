@@ -30,7 +30,7 @@
 **Files:**
 - Modify: `wp-content/themes/starter-theme/inc/udp-cards.php`
 
-- [ ] **Step 1: Añadir `post_id` al return de `udp_card_data_from_post`**
+- [x] **Step 1: Añadir `post_id` al return de `udp_card_data_from_post`**
 
 Edit `inc/udp-cards.php`. Localizar la función `udp_card_data_from_post` y AÑADIR la key `post_id` al array de retorno (justo después de `'id' => (int) $thumb_id` o como key separada al inicio del array). El return debe incluir:
 
@@ -54,7 +54,7 @@ return array(
 
 Buscar el `return array(` dentro de `udp_card_data_from_post` y AÑADIR `'post_id' => (int) $post->ID,` como primera entrada del array.
 
-- [ ] **Step 2: Añadir arg `exclude` a `udp_query_noticias`**
+- [x] **Step 2: Añadir arg `exclude` a `udp_query_noticias`**
 
 En la misma función `udp_query_noticias`, añadir extracción del arg al inicio:
 
@@ -72,7 +72,7 @@ if ( ! empty( $exclude ) ) {
 }
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -80,7 +80,7 @@ if ( ! empty( $exclude ) ) {
 
 Expected: `No syntax errors detected`.
 
-- [ ] **Step 4: Smoke test exclude**
+- [x] **Step 4: Smoke test exclude**
 
 Crear `/tmp/test-exclude.php`:
 
@@ -117,7 +117,7 @@ Expected: el primer post_id de r1 != primer post_id de r2; "Exclude OK".
 **Files:**
 - Create: `wp-content/themes/starter-theme/acf-json/group_template_noticias.json`
 
-- [ ] **Step 1: Escribir el JSON**
+- [x] **Step 1: Escribir el JSON**
 
 Create `wp-content/themes/starter-theme/acf-json/group_template_noticias.json`:
 
@@ -152,7 +152,7 @@ Create `wp-content/themes/starter-theme/acf-json/group_template_noticias.json`:
 }
 ```
 
-- [ ] **Step 2: Validar y sync**
+- [x] **Step 2: Validar y sync**
 
 ```bash
 jq empty /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_template_noticias.json && echo "JSON válido"
@@ -190,7 +190,7 @@ Ejecutar:
 
 Expected: `CREATE new` + `Success: id=NNNNN`.
 
-- [ ] **Step 3: Verificar 1 sola row en DB**
+- [x] **Step 3: Verificar 1 sola row en DB**
 
 ```bash
 export MYSQL_PWD=root
@@ -215,7 +215,7 @@ SELECT ID, post_date FROM wp_fnku4yposts WHERE post_type='acf-field-group' AND p
 **Files:**
 - Modify: `wp-content/themes/starter-theme/template-parts/blocks/parts/card-noticia.php`
 
-- [ ] **Step 1: Soportar 'featured' en la whitelist de variant**
+- [x] **Step 1: Soportar 'featured' en la whitelist de variant**
 
 Edit `template-parts/blocks/parts/card-noticia.php`. Localizar la línea:
 
@@ -229,7 +229,7 @@ Reemplazar por:
 $variant = isset( $args['variant'] ) && in_array( $args['variant'], array( 'horizontal', 'featured' ), true ) ? $args['variant'] : '';
 ```
 
-- [ ] **Step 2: Añadir bloque condicional para markup featured**
+- [x] **Step 2: Añadir bloque condicional para markup featured**
 
 En el mismo archivo, ANTES del `<a href=...>` actual, AÑADIR:
 
@@ -273,7 +273,7 @@ Y al FINAL del `<a>...</a>` actual existente, AÑADIR:
 
 Esto hace que cuando `variant=featured`, se renderice el markup nuevo (image fullbleed + overlay + eyebrow top-left + date top-right + título centrado), y para los demás casos (default y horizontal) se renderice el markup existente.
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/parts/card-noticia.php
@@ -288,7 +288,7 @@ Expected: `No syntax errors detected`.
 **Files:**
 - Create: `wp-content/themes/starter-theme/template-parts/archive/noticias-hero.php`
 
-- [ ] **Step 1: Crear el partial**
+- [x] **Step 1: Crear el partial**
 
 Create `template-parts/archive/noticias-hero.php`:
 
@@ -347,7 +347,7 @@ if ( ! $featured && empty( $side ) ) {
 </section>
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/archive/noticias-hero.php
@@ -363,7 +363,7 @@ Expected: `No syntax errors detected`.
 - Modify: `wp-content/themes/starter-theme/src/scss/blocks/_card-grid.scss`
 - Modify: `wp-content/themes/starter-theme/src/scss/templates/_noticias-archive.scss`
 
-- [ ] **Step 1: Añadir `.udp-card-noticia--featured` modifier**
+- [x] **Step 1: Añadir `.udp-card-noticia--featured` modifier**
 
 Edit `src/scss/blocks/_card-grid.scss`. AL FINAL del archivo (después del modifier `--horizontal`), AÑADIR:
 
@@ -459,7 +459,7 @@ Edit `src/scss/blocks/_card-grid.scss`. AL FINAL del archivo (después del modif
 }
 ```
 
-- [ ] **Step 2: Cambiar tema archive a dark + añadir hero band layout**
+- [x] **Step 2: Cambiar tema archive a dark + añadir hero band layout**
 
 Edit `src/scss/templates/_noticias-archive.scss`. REEMPLAZAR todo el contenido del archivo por:
 
@@ -752,7 +752,7 @@ Edit `src/scss/templates/_noticias-archive.scss`. REEMPLAZAR todo el contenido d
 }
 ```
 
-- [ ] **Step 3: Build**
+- [x] **Step 3: Build**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run build 2>&1 | tail -5
@@ -767,7 +767,7 @@ Expected: build OK, CSS sube ~3-4 kB (más reglas de hero + featured + dark over
 **Files:**
 - Modify: `wp-content/themes/starter-theme/templates/page-noticias.php`
 
-- [ ] **Step 1: Reescribir el page template**
+- [x] **Step 1: Reescribir el page template**
 
 Edit `templates/page-noticias.php`. REEMPLAZAR el contenido completo por:
 
@@ -939,7 +939,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templates/page-noticias.php
@@ -954,7 +954,7 @@ Expected: `No syntax errors detected`.
 **Files:**
 - Modify: `wp-content/themes/starter-theme/MEMORY.md`
 
-- [ ] **Step 1: Validar archive page 1 sin filtros — hero band visible**
+- [x] **Step 1: Validar archive page 1 sin filtros — hero band visible**
 
 ```bash
 TS=$(date +%s)
@@ -978,7 +978,7 @@ Expected:
 - Aparecen `udp-noticias-hero`, `udp-noticias-hero__featured`, `udp-noticias-hero__side`, `udp-card-noticia--featured`, `udp-card-noticia--horizontal`, `udp-card-noticia--dark`
 - Featured: 1, side: 2, grid: 6 (total 9 cards en página 1)
 
-- [ ] **Step 2: Validar page 2 — sin hero band**
+- [x] **Step 2: Validar page 2 — sin hero band**
 
 ```bash
 TS=$(date +%s)
@@ -990,7 +990,7 @@ echo "(9 expected — solo grid)"
 
 Expected: 0 hero, 9 grid items.
 
-- [ ] **Step 3: Validar con filtro — sin hero**
+- [x] **Step 3: Validar con filtro — sin hero**
 
 ```bash
 export MYSQL_PWD=root
@@ -1008,14 +1008,14 @@ echo "(<= 9 expected — depende del count de la categoría)"
 
 Expected: 0 hero, items <= 9.
 
-- [ ] **Step 4: Cleanup**
+- [x] **Step 4: Cleanup**
 
 ```bash
 rm -f /tmp/test-exclude.php /tmp/acf-sync-noticias-template.php
 echo "Cleanup OK"
 ```
 
-- [ ] **Step 5: Update MEMORY.md**
+- [x] **Step 5: Update MEMORY.md**
 
 Append a `MEMORY.md`:
 
@@ -1042,7 +1042,7 @@ Append a `MEMORY.md`:
 - F4 extras: image gallery del single (campo ACF gallery + carousel JS).
 ```
 
-- [ ] **Step 6: Commit final**
+- [x] **Step 6: Commit final**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
