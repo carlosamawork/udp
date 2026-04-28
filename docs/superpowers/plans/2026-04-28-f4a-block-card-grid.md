@@ -34,7 +34,7 @@
 **Files:**
 - Create: `wp-content/themes/starter-theme/acf-json/group_template_flexible_content.json`
 
-- [ ] **Step 1: Escribir el JSON**
+- [x] **Step 1: Escribir el JSON**
 
 ```json
 {
@@ -171,7 +171,7 @@
 }
 ```
 
-- [ ] **Step 2: Validar JSON**
+- [x] **Step 2: Validar JSON**
 
 ```bash
 jq empty /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_template_flexible_content.json && echo "JSON válido"
@@ -179,7 +179,7 @@ jq empty /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-j
 
 Expected: `JSON válido`.
 
-- [ ] **Step 3: Sync con UPSERT**
+- [x] **Step 3: Sync con UPSERT**
 
 Crear `/tmp/acf-sync-flex-content.php`:
 
@@ -207,7 +207,7 @@ test -f /tmp/wp-cli.phar || curl -sL https://raw.githubusercontent.com/wp-cli/bu
 
 Expected: `CREATE new` + `Success: id=NNNNN`.
 
-- [ ] **Step 4: Verificar el field group registrado**
+- [x] **Step 4: Verificar el field group registrado**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php /tmp/wp-cli.phar eval 'print_r( acf_get_fields( acf_get_field_group("group_template_flexible_content")["ID"] )[0]["layouts"] );' --path=/Applications/MAMP/htdocs/udp/cms 2>&1 | tail -25
@@ -223,7 +223,7 @@ Expected: imprime un array con la key `layout_block_card_grid` y sus sub-fields.
 - Create: `wp-content/themes/starter-theme/inc/udp-cards.php`
 - Modify: `wp-content/themes/starter-theme/functions.php`
 
-- [ ] **Step 1: Esqueleto del archivo**
+- [x] **Step 1: Esqueleto del archivo**
 
 Create `wp-content/themes/starter-theme/inc/udp-cards.php`:
 
@@ -407,7 +407,7 @@ function udp_query_cards( array $args ): array {
 }
 ```
 
-- [ ] **Step 2: Wire en functions.php**
+- [x] **Step 2: Wire en functions.php**
 
 Edit `wp-content/themes/starter-theme/functions.php`. Localizar la sección donde otros helpers se cargan (búsqueda: `require_once STARTER_BS5_DIR . 'inc/`) y AÑADIR la línea:
 
@@ -417,7 +417,7 @@ require_once STARTER_BS5_DIR . 'inc/udp-cards.php';
 
 Justo después del último `require_once` existente.
 
-- [ ] **Step 3: Validar PHP syntax**
+- [x] **Step 3: Validar PHP syntax**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -426,7 +426,7 @@ Justo después del último `require_once` existente.
 
 Expected: 2× `No syntax errors detected`.
 
-- [ ] **Step 4: Smoke test del helper en modo manual**
+- [x] **Step 4: Smoke test del helper en modo manual**
 
 Crear `/tmp/test-udp-query-cards.php`:
 
@@ -468,7 +468,7 @@ fecha display: 28 / 04 / 2026
 Success: Helper OK
 ```
 
-- [ ] **Step 5: Smoke test del helper en modo post**
+- [x] **Step 5: Smoke test del helper en modo post**
 
 Crear `/tmp/test-udp-query-cards-post.php`:
 
@@ -510,13 +510,13 @@ Si `cards count: 0` y `total: 3+`: significa que ningún post entre los 3 más r
 **Files:**
 - Create: `wp-content/themes/starter-theme/template-parts/blocks/parts/card-noticia.php`
 
-- [ ] **Step 1: Crear directorio si no existe**
+- [x] **Step 1: Crear directorio si no existe**
 
 ```bash
 mkdir -p /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/parts
 ```
 
-- [ ] **Step 2: Crear el partial**
+- [x] **Step 2: Crear el partial**
 
 Create `wp-content/themes/starter-theme/template-parts/blocks/parts/card-noticia.php`:
 
@@ -586,7 +586,7 @@ $class = 'udp-card-noticia udp-card-noticia--' . $theme;
 </a>
 ```
 
-- [ ] **Step 3: Validar PHP syntax**
+- [x] **Step 3: Validar PHP syntax**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/parts/card-noticia.php
@@ -601,7 +601,7 @@ Expected: `No syntax errors detected`.
 **Files:**
 - Create: `wp-content/themes/starter-theme/template-parts/blocks/block-card_grid.php`
 
-- [ ] **Step 1: Crear el container**
+- [x] **Step 1: Crear el container**
 
 Create `wp-content/themes/starter-theme/template-parts/blocks/block-card_grid.php`:
 
@@ -675,7 +675,7 @@ $container_class = sprintf( 'udp-card-grid udp-card-grid--%s udp-card-grid--%s',
 </section>
 ```
 
-- [ ] **Step 2: Validar PHP syntax**
+- [x] **Step 2: Validar PHP syntax**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/block-card_grid.php
@@ -691,7 +691,7 @@ Expected: `No syntax errors detected`.
 - Create: `wp-content/themes/starter-theme/src/scss/blocks/_card-grid.scss`
 - Modify: `wp-content/themes/starter-theme/src/scss/main.scss`
 
-- [ ] **Step 1: Crear el parcial SCSS**
+- [x] **Step 1: Crear el parcial SCSS**
 
 Create `wp-content/themes/starter-theme/src/scss/blocks/_card-grid.scss`:
 
@@ -938,7 +938,7 @@ Create `wp-content/themes/starter-theme/src/scss/blocks/_card-grid.scss`:
 }
 ```
 
-- [ ] **Step 2: Importar el parcial en main.scss**
+- [x] **Step 2: Importar el parcial en main.scss**
 
 Edit `wp-content/themes/starter-theme/src/scss/main.scss`. Localizar la sección `// 7. Bloques ACF` y AÑADIR el import (sin tocar imports existentes):
 
@@ -953,7 +953,7 @@ Edit `wp-content/themes/starter-theme/src/scss/main.scss`. Localizar la sección
 
 Si `_section-landing` o `_flexible-blocks` no están en esa sección con esos nombres, añadir solo `@import "blocks/card-grid";` después del último @import de bloques ACF existente.
 
-- [ ] **Step 3: Build**
+- [x] **Step 3: Build**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run build 2>&1 | tail -8
@@ -968,7 +968,7 @@ Expected: build OK, CSS sube ~3-5 kB.
 **Files:**
 - Modify: `wp-content/themes/starter-theme/MEMORY.md`
 
-- [ ] **Step 1: Encontrar attachment ID para imagen de prueba**
+- [x] **Step 1: Encontrar attachment ID para imagen de prueba**
 
 ```bash
 export MYSQL_PWD=root
@@ -977,7 +977,7 @@ export MYSQL_PWD=root
 
 Anotar el ID devuelto (`<ATT_ID>`). Si la query devuelve vacío: reportar al usuario "no hay attachments en DB; saltando E2E manual y validando solo PHP+build". El plan completa en ese caso.
 
-- [ ] **Step 2: Crear página flex de prueba con bloque manual**
+- [x] **Step 2: Crear página flex de prueba con bloque manual**
 
 Crear `/tmp/seed-test-card-grid.php` (sustituyendo `<ATT_ID>` por el valor del Step 1):
 
@@ -1022,7 +1022,7 @@ Ejecutar:
 
 Anotar el `page_id` devuelto (`<PAGE_ID>`).
 
-- [ ] **Step 3: Validar HTML — modo manual / 3col / dark**
+- [x] **Step 3: Validar HTML — modo manual / 3col / dark**
 
 ```bash
 TS=$(date +%s)
@@ -1035,7 +1035,7 @@ Expected: aparecen al menos:
 - `udp-card-noticia__eyebrow--yellow`, `--red`, `--blue`
 - Texto "Bloque de prueba", "Card amarilla", "Card roja", "Card azul"
 
-- [ ] **Step 4: Cambiar layout a 4col vía update_field y revalidar**
+- [x] **Step 4: Cambiar layout a 4col vía update_field y revalidar**
 
 Crear `/tmp/update-test-4col.php`:
 
@@ -1058,7 +1058,7 @@ curl -s "http://localhost:8888/udp/test-card-grid/?nocache=$TS" | grep -oE "udp-
 
 Expected: aparece `udp-card-grid--4col` y `udp-card-grid--dark` (NO debe aparecer `--3col`).
 
-- [ ] **Step 5: Cambiar layout a list + theme light**
+- [x] **Step 5: Cambiar layout a list + theme light**
 
 Crear `/tmp/update-test-list-light.php`:
 
@@ -1082,7 +1082,7 @@ curl -s "http://localhost:8888/udp/test-card-grid/?nocache=$TS" | grep -oE "udp-
 
 Expected: aparecen `udp-card-grid--list`, `udp-card-grid--light`, `udp-card-noticia--light`.
 
-- [ ] **Step 6: Cambiar fuente a `post` y verificar query real**
+- [x] **Step 6: Cambiar fuente a `post` y verificar query real**
 
 Crear `/tmp/update-test-source-post.php`:
 
@@ -1108,7 +1108,7 @@ curl -s "http://localhost:8888/udp/test-card-grid/?nocache=$TS" | grep -cE "udp-
 
 Expected: número >= 1 (cantidad de cards reales rendereadas — depende de cuántos posts publicados tienen featured image). Si devuelve `0`, NO es fallo del helper — significa que ningún post entre los 6 más recientes tiene featured image. Documentar y continuar.
 
-- [ ] **Step 7: Borrar la página de prueba y los archivos /tmp**
+- [x] **Step 7: Borrar la página de prueba y los archivos /tmp**
 
 ```bash
 export MYSQL_PWD=root
@@ -1117,7 +1117,7 @@ rm -f /tmp/seed-test-card-grid.php /tmp/update-test-4col.php /tmp/update-test-li
 echo "Cleanup OK"
 ```
 
-- [ ] **Step 8: Actualizar MEMORY.md**
+- [x] **Step 8: Actualizar MEMORY.md**
 
 Append a `wp-content/themes/starter-theme/MEMORY.md`:
 
@@ -1143,7 +1143,7 @@ Append a `wp-content/themes/starter-theme/MEMORY.md`:
 - Cleanup de scaffold legacy (`block-cards_grid.php`, `_flexible-blocks.scss`) cuando todos los bloques UDP estén migrados.
 ```
 
-- [ ] **Step 9: Commit final**
+- [x] **Step 9: Commit final**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
