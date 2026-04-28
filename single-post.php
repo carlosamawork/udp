@@ -30,6 +30,8 @@ while ( have_posts() ) :
             </div>
         </div>
 
+        <?php get_template_part( 'template-parts/single/post-gallery', null, array( 'post_id' => get_the_ID() ) ); ?>
+
         <?php
         get_template_part( 'template-parts/single/post-related', null, array( 'post_id' => get_the_ID() ) );
         ?>

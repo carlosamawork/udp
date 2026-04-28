@@ -34,6 +34,7 @@ import { initSmoothScroll } from '@modules/smooth-scroll';
 import { initScrollAnimations } from '@modules/scroll-animations';
 import { initMobileMenu } from '@modules/mobile-menu';
 import { initSectionLandingSwiper } from '@modules/section-landing-swiper';
+import { initSinglePostGallery } from '@modules/single-post-gallery';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -53,6 +54,7 @@ domReady(() => {
     initScrollAnimations();
     initMobileMenu();
     initSectionLandingSwiper();
+    initSinglePostGallery();
 
     console.log('[StarterBS5] Theme initialized');
 });

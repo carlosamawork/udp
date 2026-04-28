@@ -390,8 +390,21 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Filtro facultad (ID=16): option `selected='selected'` correcta. Cards: 1 (misma limitación thumbnail).
 
 **Pendientes**:
-- F4 extras: image gallery del single-post (campo ACF gallery + carousel JS).
 - ACF nuevo `entrada_info` (textarea) en grupo agenda para sustituir el hardcoded "Entrada liberada".
 - Color por término de taxonomía (eyebrows actualmente hardcoded yellow).
 - `/eventos/` slug si el cliente prefiere a `/agenda-udp/`.
 - Subir imágenes featured a más eventos en BD para que el archive muestre los 6/12 cards esperados.
+
+### 2026-04-28 — F4 extras: image gallery en single-post
+
+**Hechos**:
+- Galería del campo ACF existente `galeria_de_imagenes` (group `cpt_post_meta`, ya creado en F1) se renderiza en `single-post.php` entre el body content y el related section.
+- Partial nuevo `template-parts/single/post-gallery.php` itera el array de attachments y emite `<ul class="...gallery-list swiper-wrapper">` con `<li class="...swiper-slide">` por imagen.
+- Nav buttons (prev/next) custom UDP — círculos 40×40 con borders dark, hover bg dark.
+- JS module nuevo `single-post-gallery.js` lazy-importa Swiper + Navigation + Keyboard solo si `[data-udp-post-gallery]` existe. Mismo patrón que `section-landing-swiper.js` (F3) y `card-grid` no aplica aquí (block diferente).
+- Posts sin galería: el partial early-returns silenciosamente (no markup).
+- Reusa la dependencia Swiper de F3 (ya en package.json) — chunk separado lazy-loaded, no añade peso al main bundle.
+- E2E validado: post ID 28413 devuelve 22 slides y las 7 clases BEM esperadas.
+
+**Pendientes**:
+- F5+: el cliente sigue con calendario, concursos, facultades, carreras, centros, home, etc.

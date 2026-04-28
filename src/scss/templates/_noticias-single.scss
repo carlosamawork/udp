@@ -266,3 +266,77 @@
         display: block;
     }
 }
+
+// --------------------------------------------------------------------------
+// SINGLE POST — Image gallery (Swiper)
+// --------------------------------------------------------------------------
+.udp-single-post__gallery {
+    max-width: 1440px;
+    margin: $space-3xl auto 0;
+    padding: 0 $space-3xl;
+    position: relative;
+
+    @include media-down(md) {
+        padding: 0 $space-sm;
+    }
+
+    &-viewport {
+        overflow: hidden;
+    }
+
+    &-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    &-item {
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    &-nav {
+        display: flex;
+        gap: 8px;
+        margin-top: $space-md;
+        justify-content: flex-end;
+    }
+
+    &-prev,
+    &-next {
+        width: 40px;
+        height: 40px;
+        border-radius: 9999px;
+        border: 1px solid rgba($dark-1, 0.3);
+        background: transparent;
+        color: $dark-1;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+            background-color $transition-base,
+            color $transition-base,
+            border-color $transition-base;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $dark-1;
+            color: $white;
+            outline: none;
+        }
+
+        &.swiper-button-disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    }
+}
