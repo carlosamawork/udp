@@ -18,7 +18,6 @@
     padding-top: $space-2xl;  // 32px
 
     &__inner {
-        max-width: 1440px;
         margin-inline: auto;
         padding-inline: $space-3xl;  // 40px
         padding-bottom: $space-3xl;
@@ -188,20 +187,14 @@
 // MODO SWIPER — carrusel horizontal con peek
 // --------------------------------------------------------------------------
 .udp-section-cards--swiper {
+    // El padding/gap los gestiona Swiper en JS:
+    //   - spaceBetween:        gap entre slides
+    //   - slidesOffsetBefore:  margen izquierdo (= padding inicial)
+    //   - slidesOffsetAfter:   margen derecho (final del último slide)
+    // Si se ponen aquí en CSS, los cálculos de freeMode quedan desfasados
+    // y el último slide nunca alcanza el borde derecho.
     .udp-section-cards__viewport {
         overflow: visible;  // Necesario para que la card peek se vea
-        padding-inline: $space-3xl;
-        padding-right: 150px;  // Reveal de la siguiente card (Figma)
-
-        @include media-down(md) {
-            padding-inline: $space-sm;
-            padding-right: 60px;
-        }
-    }
-
-    .udp-section-cards__list {
-        display: flex;
-        gap: 33px;
     }
 
     .udp-section-cards__item.swiper-slide {

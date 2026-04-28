@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import path from 'path';
 import liveReload from 'vite-plugin-live-reload';
 import { glob } from 'glob';
@@ -12,12 +12,17 @@ const jsEntries = glob.sync('src/js/*.js').reduce((entries, file) => {
     return entries;
 }, {});
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
     const isDev = command === 'serve';
+    // Carga TODAS las vars del .env / .env.local (sin prefijo `VITE_`).
+    // VITE_BASE_PATH permite override por entorno cuando WP no vive en raíz
+    // (p.ej. MAMP en /udp/cms/). Default = path en raíz para producción.
+    const env = loadEnv(mode, __dirname, '');
+    const baseProd = env.VITE_BASE_PATH || '/wp-content/themes/starter-theme/dist/';
 
     return {
         // Base path para los assets compilados
-        base: isDev ? '/' : '/wp-content/themes/starter-theme/dist/',
+        base: isDev ? '/' : baseProd,
 
         plugins: [
             // Recarga el navegador cuando cambien archivos PHP

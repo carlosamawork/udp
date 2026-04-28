@@ -149,3 +149,38 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 **Pendientes**:
 - Páginas iniciales que el usuario puede asignar el template: Pregrado, Conoce UDP, Gobernanza y Reglamentos, Premios y distinciones, Servicios, Webmail UDP. El admin asigna manualmente desde el editor.
 - F4 en adelante: archivos/singles de CPT.
+
+### 2026-04-28 — Fix: Vite base path para subdir install (MAMP /udp/cms/)
+
+**Síntoma**: Swiper no inicializaba. Consola mostraba 404 en chunks dinámicos (`swiper.xxx.js`, `utils.xxx.js`, `index.xxx.js`) y todas las fonts woff2. `main.js` sí cargaba.
+
+**Raíz**: `vite.config.js` tenía `base: '/wp-content/themes/starter-theme/dist/'` hardcodeado. Pero MAMP local sirve WP en `http://localhost:8888/udp/cms/`, así que Vite reescribía URLs sin el prefijo `/udp/cms/` en build-time. `main.js` cargaba porque PHP lo encola con `STARTER_BS5_URI` (URL completa de WP), pero dynamic imports y `url()` en CSS quedaban con el path equivocado.
+
+**Fix**: `vite.config.js` ahora usa `loadEnv()` y lee `VITE_BASE_PATH` desde `.env.local`, con fallback al default de raíz para producción. Creado `.env.local` (ya gitignored) con `VITE_BASE_PATH=/udp/cms/wp-content/themes/starter-theme/dist/`.
+
+**Side note**: `dist/` quedó owned by `root:staff` por algún `sudo npm` previo — `npm run build` falló con EACCES hasta resolver con `sudo chown -R 501:20 dist`. Mismo patrón que el bug de `~/.npm` documentado en F0.
+
+**Verificación**: Curl 200 en chunks + fonts; `grep` confirma path `/udp/cms/...` baked en `main.DY8Fqxyc.js` y `main.BurZMkSV.css`.
+
+### 2026-04-28 — F3 Section Landing — Refactor v2 (sin imagen + breadcrumb + back-card)
+
+> Esta entrada **reemplaza conceptualmente** la entrada anterior "F3 Section Landing Template completada" (línea 138). Aquella describe la v1 y se mantiene como historial de la iteración inicial; la arquitectura efectiva en código es la v2 descrita aquí.
+
+**Cambios respecto a v1**:
+- ACF: `hero` group → `page_header` group. Eliminados `hero.imagen_fondo` y `cards.imagen` (las cards son siempre gris→lila sin imagen, el header no usa bg image en este template). `hero.bajada` (textarea) → `page_header.descripcion` (wysiwyg).
+- Nuevo template-part reutilizable `template-parts/sections/breadcrumb.php` que recorre `wp_get_post_parent_id` desde la página actual hasta la raíz, prepende "Inicio" y marca el último ítem como `<span aria-current="page">`. Acepta args opcionales `page_id` y `home_label`.
+- `section-landing-hero.php` → `section-landing-header.php` (incluye breadcrumb + título + descripción wysiwyg + separador `$gray-medium`).
+- Container `section-landing-cards.php` ahora **prepende automáticamente** una card sintética con `variant=back` cuando `wp_get_post_parent_id() > 0`. El editor NO la edita.
+- Card single soporta dos variantes: `default` (icono arrow-up-right, eyebrow + título + descripción) y `back` (icono undo-2, solo título "Volver a {padre}").
+- SCSS: header sin `max-width: 1440` (usa anchos heredados de la layout). Swiper sin padding/gap CSS — el padding inicial/final lo gestiona Swiper.js vía `slidesOffsetBefore/slidesOffsetAfter` (40px desktop, 16px mobile) para que `freeMode` calcule bien el extremo derecho.
+- Hover de card: bg `$dark-2` → `$brand-blue` (#4539F2). El `transform: translateY(-2px)` ahora respeta `prefers-reduced-motion`.
+- Breadcrumb current con `font-weight: 600` (diferenciación visual vs links).
+
+**Verificación E2E**:
+- Página TOP-LEVEL (`/udp/test-section-landing-top/`): HTTP 200, `udp-section-header__title`, breadcrumb `Inicio › Test Section Landing Top` (current), sin back-card. Container de cards omitido por early return (repeater vacío). ✓
+- Página HIJA (`/udp/test-section-landing-top/test-section-landing-child/`): HTTP 200, breadcrumb 3 niveles `Inicio › Test ... Top › Test ... Child` (current), `udp-section-card--back` con título "Volver a Test Section Landing Top". ✓
+- Páginas de prueba creadas vía SQL e immediately removed tras la verificación (no quedan residuos en `wp_fnku4yposts` ni `wp_fnku4ypostmeta`).
+
+**Pendientes**:
+- El usuario debe asignar el template manualmente desde el dropdown del editor a las páginas iniciales: Pregrado, Conoce UDP, Gobernanza y Reglamentos, Premios y distinciones, Servicios, Webmail UDP.
+- F4 en adelante: archivos/singles de CPT.

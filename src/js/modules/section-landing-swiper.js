@@ -26,12 +26,14 @@ export async function initSectionLandingSwiper() {
             modules: [Navigation, Keyboard, FreeMode],
             slidesPerView: 'auto',
             spaceBetween: 33,
+            slidesOffsetBefore: 40,  // padding inicial (= $space-3xl)
+            slidesOffsetAfter: 40,   // margen al final para que el último slide respire
             freeMode: { enabled: true, momentum: true },
             keyboard: { enabled: true },
             grabCursor: true,
             breakpoints: {
-                768: { spaceBetween: 33 },
-                0:   { spaceBetween: 16 },
+                768: { spaceBetween: 33, slidesOffsetBefore: 40, slidesOffsetAfter: 40 },
+                0:   { spaceBetween: 16, slidesOffsetBefore: 16, slidesOffsetAfter: 16 },
             },
         });
     });
