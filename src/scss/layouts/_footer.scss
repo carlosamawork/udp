@@ -7,7 +7,6 @@
     background: #000;
     color: $white;
     padding: 70px 40px;
-    margin-top: $space-5xl;
 
     @include media-down(md) {
         padding: $space-3xl $space-lg;
@@ -17,7 +16,6 @@
         display: flex;
         flex-direction: column;
         gap: $space-2xl; // 32px entre contact strip y bottom row
-        max-width: 1360px;
         margin-inline: auto;
     }
 
