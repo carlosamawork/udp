@@ -38,7 +38,7 @@
 **Files:**
 - Modify: `inc/udp-cards.php`
 
-- [ ] **Step 1: Añadir AL FINAL del archivo**
+- [x] **Step 1: Añadir AL FINAL del archivo**
 
 ```php
 
@@ -196,7 +196,7 @@ function udp_query_agenda( array $filters ): array {
 }
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -204,7 +204,7 @@ function udp_query_agenda( array $filters ): array {
 
 Expected: `No syntax errors detected`.
 
-- [ ] **Step 3: Smoke test**
+- [x] **Step 3: Smoke test**
 
 Crear `/tmp/test-udp-query-agenda.php`:
 
@@ -239,7 +239,7 @@ Expected: cards >= 1, total > 0, datos del primer evento (titulo, eyebrow del po
 - Create: `inc/udp-ics.php`
 - Modify: `functions.php`
 
-- [ ] **Step 1: Crear handler ICS**
+- [x] **Step 1: Crear handler ICS**
 
 Create `inc/udp-ics.php`:
 
@@ -324,7 +324,7 @@ add_action( 'init', function () {
 } );
 ```
 
-- [ ] **Step 2: Wire en functions.php**
+- [x] **Step 2: Wire en functions.php**
 
 Edit `functions.php`. Localizar la línea `require_once STARTER_BS5_DIR . 'inc/udp-cards.php';` (añadida en F4a) y AÑADIR DESPUÉS:
 
@@ -332,7 +332,7 @@ Edit `functions.php`. Localizar la línea `require_once STARTER_BS5_DIR . 'inc/u
 require_once STARTER_BS5_DIR . 'inc/udp-ics.php';
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -342,7 +342,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/functi
 
 Expected: 2× `No syntax errors detected`.
 
-- [ ] **Step 4: Smoke test del endpoint**
+- [x] **Step 4: Smoke test del endpoint**
 
 Encontrar un evento publicado con fecha:
 
@@ -370,7 +370,7 @@ Expected: HTTP 200, `Content-Type: text/calendar`, body comienza con `BEGIN:VCAL
 **Files:**
 - Create: `template-parts/blocks/parts/card-evento.php`
 
-- [ ] **Step 1: Crear el partial**
+- [x] **Step 1: Crear el partial**
 
 ```php
 <?php
@@ -448,7 +448,7 @@ $datetime_combined = trim( $fecha_d . ( $hora_d ? ', ' . $hora_d : '' ) );
 <?php endif; ?>
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/parts/card-evento.php
@@ -463,7 +463,7 @@ Expected: `No syntax errors detected`.
 **Files:**
 - Create: `template-parts/archive/eventos-filters.php`
 
-- [ ] **Step 1: Crear el partial**
+- [x] **Step 1: Crear el partial**
 
 ```php
 <?php
@@ -569,7 +569,7 @@ $view_active = isset( $_GET['view'] ) && $_GET['view'] === 'list' ? 'list' : 'gr
 </script>
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/archive/eventos-filters.php
@@ -584,7 +584,7 @@ Expected: `No syntax errors detected`.
 **Files:**
 - Create: `templates/page-eventos.php`
 
-- [ ] **Step 1: Crear el page template**
+- [x] **Step 1: Crear el page template**
 
 ```php
 <?php
@@ -698,7 +698,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Asignar template a página Agenda (ID 91)**
+- [x] **Step 2: Asignar template a página Agenda (ID 91)**
 
 ```bash
 export MYSQL_PWD=root
@@ -727,7 +727,7 @@ SELECT COUNT(*), meta_value FROM wp_fnku4ypostmeta WHERE post_id=91 AND meta_key
 
 Expected: `1 templates/page-eventos.php`.
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templates/page-eventos.php
@@ -744,7 +744,7 @@ Expected: `No syntax errors detected`.
 - Create: `template-parts/single/event-meta.php`
 - Create: `template-parts/single/event-related.php`
 
-- [ ] **Step 1: Crear `single-agenda.php`**
+- [x] **Step 1: Crear `single-agenda.php`**
 
 ```php
 <?php
@@ -824,7 +824,7 @@ endwhile;
 get_footer();
 ```
 
-- [ ] **Step 2: Crear `template-parts/single/event-meta.php`**
+- [x] **Step 2: Crear `template-parts/single/event-meta.php`**
 
 ```php
 <?php
@@ -942,7 +942,7 @@ $ics_url = add_query_arg( 'udp_ics', $post_id, home_url( '/' ) );
 </div>
 ```
 
-- [ ] **Step 3: Crear `template-parts/single/event-related.php`**
+- [x] **Step 3: Crear `template-parts/single/event-related.php`**
 
 ```php
 <?php
@@ -1030,7 +1030,7 @@ if ( empty( $cards ) ) {
 </section>
 ```
 
-- [ ] **Step 4: Validar PHP de los 3 archivos**
+- [x] **Step 4: Validar PHP de los 3 archivos**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -1051,7 +1051,7 @@ Expected: 3× `No syntax errors detected`.
 - Create: `src/scss/templates/_eventos-single.scss`
 - Modify: `src/scss/main.scss`
 
-- [ ] **Step 1: `_card-evento.scss`**
+- [x] **Step 1: `_card-evento.scss`**
 
 ```scss
 // ==========================================================================
@@ -1266,7 +1266,7 @@ Expected: 3× `No syntax errors detected`.
 }
 ```
 
-- [ ] **Step 2: `_eventos-archive.scss`**
+- [x] **Step 2: `_eventos-archive.scss`**
 
 ```scss
 // ==========================================================================
@@ -1408,7 +1408,7 @@ Expected: 3× `No syntax errors detected`.
 }
 ```
 
-- [ ] **Step 3: `_eventos-single.scss`**
+- [x] **Step 3: `_eventos-single.scss`**
 
 ```scss
 // ==========================================================================
@@ -1669,7 +1669,7 @@ Expected: 3× `No syntax errors detected`.
 }
 ```
 
-- [ ] **Step 4: Imports en main.scss + build**
+- [x] **Step 4: Imports en main.scss + build**
 
 Edit `src/scss/main.scss`. AÑADIR después del último @import existente (al final de la sección de templates / blocks):
 
@@ -1694,7 +1694,7 @@ Expected: build OK, CSS sube ~8-10 kB.
 **Files:**
 - Modify: `MEMORY.md`
 
-- [ ] **Step 1: Validar archive grid (default)**
+- [x] **Step 1: Validar archive grid (default)**
 
 ```bash
 TS=$(date +%s)
@@ -1710,7 +1710,7 @@ curl -s "http://localhost:8888/udp/agenda-udp/?nocache=$TS" | grep -cE 'udp-card
 
 Expected: HTTP 200, classes presentes (`udp-eventos-archive`, `udp-eventos-archive--grid`, `udp-eventos-archive__toggle`, `udp-card-evento--grid`, etc.), card count = 6.
 
-- [ ] **Step 2: Validar archive list**
+- [x] **Step 2: Validar archive list**
 
 ```bash
 TS=$(date +%s)
@@ -1723,7 +1723,7 @@ curl -s "http://localhost:8888/udp/agenda-udp/?view=list&nocache=$TS" | grep -cE
 
 Expected: classes incluyen `--list`. Card count = 12 (el limit en list es 12 vs 6 en grid según `page-eventos.php`).
 
-- [ ] **Step 3: Validar single de un evento**
+- [x] **Step 3: Validar single de un evento**
 
 ```bash
 export MYSQL_PWD=root
@@ -1747,7 +1747,7 @@ curl -s "http://localhost:8888/udp/agenda/$SLUG/?nocache=$TS" | grep -E "Volver 
 
 Expected: HTTP 200, classes `udp-single-event*` y `udp-event-meta*` presentes, "Volver a Eventos" + "Agregar al calendario" + "Te podría interesar" en el HTML, link `udp_ics=ID`.
 
-- [ ] **Step 4: Validar ICS endpoint**
+- [x] **Step 4: Validar ICS endpoint**
 
 ```bash
 EVENT_ID=$(/Applications/MAMP/Library/bin/mysql80/bin/mysql --socket=/Applications/MAMP/tmp/mysql/mysql.sock -uroot udp -sN -e "
@@ -1764,7 +1764,7 @@ curl -s "http://localhost:8888/udp/?udp_ics=$EVENT_ID" | head -10
 
 Expected: HTTP 200, `Content-Type: text/calendar`, body comienza `BEGIN:VCALENDAR` y contiene `BEGIN:VEVENT`, `SUMMARY`, `DTSTART`, `DTEND`.
 
-- [ ] **Step 5: Validar filtro facultad**
+- [x] **Step 5: Validar filtro facultad**
 
 ```bash
 FAC_ID=$(/Applications/MAMP/Library/bin/mysql80/bin/mysql --socket=/Applications/MAMP/tmp/mysql/mysql.sock -uroot udp -sN -e "
@@ -1779,14 +1779,14 @@ curl -s "http://localhost:8888/udp/agenda-udp/?facultad=$FAC_ID&nocache=$TS" | g
 
 Expected: option con `value=$FAC_ID` selected. Cards visibles.
 
-- [ ] **Step 6: Cleanup**
+- [x] **Step 6: Cleanup**
 
 ```bash
 rm -f /tmp/test-udp-query-agenda.php
 echo "Cleanup OK"
 ```
 
-- [ ] **Step 7: Update MEMORY.md**
+- [x] **Step 7: Update MEMORY.md**
 
 Append:
 
@@ -1820,7 +1820,7 @@ Append:
 - `/eventos/` slug si el cliente prefiere a `/agenda-udp/`.
 ```
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
