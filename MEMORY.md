@@ -184,3 +184,31 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 **Pendientes**:
 - El usuario debe asignar el template manualmente desde el dropdown del editor a las páginas iniciales: Pregrado, Conoce UDP, Gobernanza y Reglamentos, Premios y distinciones, Servicios, Webmail UDP.
 - F4 en adelante: archivos/singles de CPT.
+
+### 2026-04-28 — F4a `block_card_grid` + helpers
+
+**Hechos**:
+- ACF group `group_template_flexible_content` (location `page_template == page-flexible.php`) con campo `content_blocks` flex y único layout `block_card_grid`. Sub-fields: `titulo`, `eyebrow`, `fuente` (manual|post|concurso), `cards_manuales` (repeater con eyebrow + eyebrow_color + titulo + imagen + fecha + link), `filtros` (group con taxonomias + n_items + orden, condicional a fuente IN [post, concurso]), `columnas` (3col|4col|list), `theme` (dark|light).
+- Helper plano `inc/udp-cards.php` con 4 funciones: `udp_query_cards($args)` (entry point, devuelve `{cards, total, max_pages, paged}`), `udp_card_data_from_post($post)` (mapea WP_Post → shape Card o null si no hay featured image), `udp_card_eyebrow_from_post($post)` (text + color desde primer término `category`, color hardcoded 'yellow' por ahora), `udp_card_format_date($iso)` ('YYYY-MM-DD' → 'DD / MM / YYYY' con `date_i18n`).
+- Container `template-parts/blocks/block-block_card_grid.php` y card primitive `template-parts/blocks/parts/card-noticia.php`. La card es `<a>` envolvente, line-clamp 2 en título, image con scale 1.03 en hover (respeta `prefers-reduced-motion`), "Leer más" subraya con thickness 2px.
+- SCSS único `_card-grid.scss` con modifiers BEM (`--3col`, `--4col`, `--list`, `--dark`, `--light`, `--yellow`, `--red`, `--blue`). Mobile (`<md`) cae a 1 col en grid; en `<xl` baja a 2 cols (3col y 4col). `$brand-yellow` añadido a `_variables.scss` con valor `#FCD303` (UDP gold-medium del Figma `main/AmarilloUDP/gold-medium`).
+- Verificación E2E pasada con seed via `update_post_meta()` directo: bloque manual con 4 cards rendereó las 4 con sus colores de eyebrow, cambios runtime de columnas (3col → 4col → list) y theme (dark → light) reflejados sin tocar PHP, fuente=post devolvió 6 cards desde DB real.
+
+**Decisiones clave**:
+- Performance: `udp_card_data_from_post()` usa `wp_get_attachment_image_url` + `get_post_meta` en lugar de `wp_prepare_attachment_for_js` (este último corre ~15 filtros del media modal, innecesarios para una card). `udp_query_cards()` añade arg `need_pagination` (default false) que controla `no_found_rows` en WP_Query — block path evita SQL_CALC_FOUND_ROWS, archive path lo activa para poblar `total`/`max_pages`.
+- Eyebrow color para `fuente=post` queda hardcoded en `yellow`. Implementar color por término requiere ACF de color picker en cada término — diferido para iteración futura.
+- Fuente `concurso` ignora el filtro `taxonomias` (concurso no usa `category`). Documentado en `udp_query_cards()`.
+- Posts sin featured image se omiten silenciosamente. El editor lo sabe (la imagen es featured de WordPress).
+- Helper devuelve `total` y `max_pages` para que F4b/F4c puedan paginar archives sin reescribir la query.
+
+**Cosas que descubrí**:
+- ACF JSON local + `acf_import_field_group()` puede generar duplicados de DB row si ACF auto-importa el JSON antes que corra el script (auto-sync hook + manual sync). Solución: borrar el row más viejo a mano. Pattern UPSERT del script falla porque `acf_get_field_group()` con local JSON devuelve `ID: 0`.
+- **CRÍTICO (naming)**: `page-flexible.php` llama `get_template_part('template-parts/blocks/block', $layout)` donde `$layout = 'block_card_grid'`. WordPress busca `block-block_card_grid.php` (slug=`block`, name=`block_card_grid`). El archivo se nombró originalmente `block-card_grid.php` (sin el prefijo `block_`), lo que hacía que la sección fuera silenciosamente vacía (have_rows devolvía datos correctamente en WP-CLI pero el template part no se cargaba vía HTTP). Renombrado a `block-block_card_grid.php`. Regla: el layout name en ACF debe matchear exactamente la porción `{name}` del call, o bien el layout name debe ser sin prefijo `block_` si el slug del template_part es `block`.
+- Seeding de flex content vía `update_field()` con array anidado solo guarda el layout key, no los sub-fields. Para seed correcto: usar `update_post_meta()` directamente con la estructura de claves `content_blocks_0_titulo`, `content_blocks_0_cards_manuales`, `content_blocks_0_cards_manuales_0_eyebrow`, etc. + los correspondientes `_` reference keys.
+- `grep -cE "udp-card-noticia "` (con espacio al final) falla cuando el HTML tiene la class en su propia línea indentada. Usar `grep -cE "udp-card-noticia"` (sin espacio).
+
+**Pendientes**:
+- F4b: archive-post + single-post (Noticias). Reusará `udp_query_cards()` con `paged` + `need_pagination=true` y `udp_card_data_from_post()` para markup directo (sin pasar por el bloque).
+- F4c: archive-agenda (toggle grid/list) + single-agenda + nuevo card primitive `card-evento.php` (image-izquierda + CTA circular).
+- Cleanup de scaffold legacy (`block-cards_grid.php`, `_flexible-blocks.scss`) cuando todos los bloques UDP estén migrados.
+- El group PHP `group_flexible_blocks` en `inc/acf-setup.php` tiene mismo field name `content_blocks` que el nuevo JSON group — coexisten sin conflicto (ambos aplican al mismo template) pero el PHP group está vacío (no tiene `block_card_grid` layout). Limpiar en F11.

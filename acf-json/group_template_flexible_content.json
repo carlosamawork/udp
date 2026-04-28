@@ -1,0 +1,449 @@
+{
+    "key": "group_template_flexible_content",
+    "title": "Template — Flexible Content",
+    "fields": [
+        {
+            "key": "field_template_flex_content_blocks",
+            "label": "Bloques de contenido",
+            "name": "content_blocks",
+            "aria-label": "",
+            "type": "flexible_content",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "button_label": "Añadir bloque",
+            "min": 0,
+            "layouts": {
+                "layout_block_card_grid": {
+                    "key": "layout_block_card_grid",
+                    "name": "block_card_grid",
+                    "label": "Grid de cards",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_card_grid_titulo",
+                            "label": "Título de la sección",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_card_grid_eyebrow",
+                            "label": "Eyebrow",
+                            "name": "eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_card_grid_fuente",
+                            "label": "Fuente de datos",
+                            "name": "fuente",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "manual": "Manual",
+                                "post": "Noticias (CPT post)",
+                                "concurso": "Concursos (CPT concurso-academico)"
+                            },
+                            "default_value": "manual",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_card_grid_cards_manuales",
+                            "label": "Cards manuales",
+                            "name": "cards_manuales",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_block_card_grid_fuente",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 1,
+                            "layout": "block",
+                            "button_label": "Agregar card",
+                            "max": 0,
+                            "rows_per_page": 20,
+                            "collapsed": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_card_grid_card_eyebrow",
+                                    "label": "Eyebrow",
+                                    "name": "eyebrow",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "Etiqueta superior. P.ej. INTERNACIONAL.",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_card_grid_cards_manuales"
+                                },
+                                {
+                                    "key": "field_block_card_grid_card_eyebrow_color",
+                                    "label": "Color del eyebrow",
+                                    "name": "eyebrow_color",
+                                    "aria-label": "",
+                                    "type": "radio",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "choices": {
+                                        "yellow": "Amarillo",
+                                        "red": "Rojo",
+                                        "blue": "Azul"
+                                    },
+                                    "default_value": "yellow",
+                                    "layout": "horizontal",
+                                    "return_format": "value",
+                                    "other_choice": 0,
+                                    "save_other_choice": 0,
+                                    "allow_null": 0,
+                                    "parent_repeater": "field_block_card_grid_cards_manuales"
+                                },
+                                {
+                                    "key": "field_block_card_grid_card_titulo",
+                                    "label": "Título",
+                                    "name": "titulo",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_card_grid_cards_manuales"
+                                },
+                                {
+                                    "key": "field_block_card_grid_card_imagen",
+                                    "label": "Imagen",
+                                    "name": "imagen",
+                                    "aria-label": "",
+                                    "type": "image",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "card-thumbnail",
+                                    "library": "all",
+                                    "min_width": 0,
+                                    "min_height": 0,
+                                    "min_size": 0,
+                                    "max_width": 0,
+                                    "max_height": 0,
+                                    "max_size": 0,
+                                    "mime_types": "",
+                                    "parent_repeater": "field_block_card_grid_cards_manuales"
+                                },
+                                {
+                                    "key": "field_block_card_grid_card_fecha",
+                                    "label": "Fecha",
+                                    "name": "fecha",
+                                    "aria-label": "",
+                                    "type": "date_picker",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "display_format": "d \/ m \/ Y",
+                                    "return_format": "Y-m-d",
+                                    "first_day": 1,
+                                    "default_to_current_date": 0,
+                                    "parent_repeater": "field_block_card_grid_cards_manuales"
+                                },
+                                {
+                                    "key": "field_block_card_grid_card_link",
+                                    "label": "Link",
+                                    "name": "link",
+                                    "aria-label": "",
+                                    "type": "link",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "parent_repeater": "field_block_card_grid_cards_manuales"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_card_grid_filtros",
+                            "label": "Filtros (CPT)",
+                            "name": "filtros",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_block_card_grid_fuente",
+                                        "operator": "==",
+                                        "value": "post"
+                                    }
+                                ],
+                                [
+                                    {
+                                        "field": "field_block_card_grid_fuente",
+                                        "operator": "==",
+                                        "value": "concurso"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_card_grid_filtros_taxonomias",
+                                    "label": "Categorías (solo Noticias)",
+                                    "name": "taxonomias",
+                                    "aria-label": "",
+                                    "type": "taxonomy",
+                                    "instructions": "Si dejas vacío, se muestran todos. Aplica solo a fuente Noticias.",
+                                    "required": false,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_block_card_grid_fuente",
+                                                "operator": "==",
+                                                "value": "post"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "taxonomy": "category",
+                                    "field_type": "multi_select",
+                                    "return_format": "id",
+                                    "multiple": 0,
+                                    "allow_null": 0,
+                                    "add_term": 1,
+                                    "load_terms": 0,
+                                    "save_terms": 0,
+                                    "bidirectional_target": []
+                                },
+                                {
+                                    "key": "field_block_card_grid_filtros_n_items",
+                                    "label": "Número de items",
+                                    "name": "n_items",
+                                    "aria-label": "",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": 6,
+                                    "min": 1,
+                                    "max": 24,
+                                    "step": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": ""
+                                },
+                                {
+                                    "key": "field_block_card_grid_filtros_orden",
+                                    "label": "Orden",
+                                    "name": "orden",
+                                    "aria-label": "",
+                                    "type": "radio",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "choices": {
+                                        "date_desc": "Más recientes primero",
+                                        "date_asc": "Más antiguos primero",
+                                        "random": "Aleatorio"
+                                    },
+                                    "default_value": "date_desc",
+                                    "layout": "horizontal",
+                                    "return_format": "value",
+                                    "other_choice": 0,
+                                    "save_other_choice": 0,
+                                    "allow_null": 0
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_card_grid_columnas",
+                            "label": "Columnas",
+                            "name": "columnas",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "3col": "3 columnas",
+                                "4col": "4 columnas",
+                                "list": "Lista (apilado)"
+                            },
+                            "default_value": "3col",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_card_grid_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "dark",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                }
+            },
+            "max": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates\/page-flexible.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "Campo content_blocks (flexible content) con el layout block_card_grid. Container del bloque y card primitive son template-parts.",
+    "show_in_rest": false,
+    "display_title": "",
+    "modified": 1777388423
+}

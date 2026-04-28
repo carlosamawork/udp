@@ -1,0 +1,240 @@
+// ==========================================================================
+// BLOCK CARD GRID — flexible content layout `block_card_grid`
+// Container con modificadores --3col / --4col / --list y --dark / --light.
+// La card primitive `udp-card-noticia` también se usa en archive-post (F4b).
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// CONTAINER
+// --------------------------------------------------------------------------
+.udp-card-grid {
+    padding: $space-3xl 0;
+
+    &--dark {
+        background-color: $dark-1;
+        color: $white;
+    }
+
+    &--light {
+        background-color: $white;
+        color: $dark-1;
+    }
+
+    &__inner {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding-inline: $space-3xl;  // 40px
+
+        @include media-down(md) {
+            padding-inline: $space-sm;
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+        margin-bottom: $space-2xl;
+    }
+
+    &__eyebrow {
+        margin: 0;
+        @include eyebrow($white-70);
+
+        .udp-card-grid--light & {
+            color: $dark-2;
+        }
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 1.1;
+        color: inherit;
+
+        @include media-down(md) {
+            font-size: 28px;
+        }
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: $space-md;  // 18px
+
+        @include media-down(md) {
+            grid-template-columns: 1fr !important;  // forzar 1 col en mobile
+        }
+    }
+
+    &--3col .udp-card-grid__list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        @include media-down(xl) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    &--4col .udp-card-grid__list {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+
+        @include media-down(xl) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    &--list .udp-card-grid__list {
+        grid-template-columns: 1fr;
+        gap: $space-sm;
+    }
+
+    &__item {
+        display: block;
+    }
+}
+
+// --------------------------------------------------------------------------
+// CARD PRIMITIVE — image (top) + eyebrow + title + date + "Leer más"
+// --------------------------------------------------------------------------
+.udp-card-noticia {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2xs;
+    color: inherit;
+    text-decoration: none;
+    transition: color $transition-base;
+
+    &__media {
+        margin: 0;
+        overflow: hidden;
+        background: $dark-2;
+        aspect-ratio: 4 / 3;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform $transition-base;
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        &:hover .udp-card-noticia__media img,
+        &:focus-visible .udp-card-noticia__media img {
+            transform: scale(1.03);
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+        padding-top: $space-xs;
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        gap: $space-sm;
+        flex-wrap: wrap;
+    }
+
+    &__eyebrow {
+        display: inline-block;
+        padding: 2px 8px;
+        font-family: $font-family-mono;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.4;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: $dark-1;
+        background-color: $brand-yellow;
+
+        &--yellow { background-color: $brand-yellow; color: $dark-1; }
+        &--red    { background-color: $brand-red;    color: $white; }
+        &--blue   { background-color: $brand-blue;   color: $white; }
+    }
+
+    &__date {
+        font-family: $font-family-body;
+        font-size: 12px;
+        font-weight: 400;
+        color: $white-70;
+
+        .udp-card-grid--light & {
+            color: $dark-2;
+        }
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: $line-height-snug;
+        color: inherit;
+
+        // line-clamp 2 lines
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+
+        .udp-card-grid--4col & { font-size: 16px; }
+        .udp-card-grid--list & { font-size: 16px; }
+    }
+
+    &__more {
+        margin-top: $space-2xs;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: $font-family-body;
+        font-size: 14px;
+        font-weight: 500;
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+        transition: text-decoration-thickness $transition-base;
+
+        svg {
+            transition: transform $transition-base;
+        }
+    }
+
+    &:hover .udp-card-noticia__more,
+    &:focus-visible .udp-card-noticia__more {
+        text-decoration-thickness: 2px;
+
+        svg {
+            transform: translate(2px, -2px);
+        }
+    }
+
+    // ---- LIST LAYOUT ----
+    .udp-card-grid--list & {
+        flex-direction: row;
+        gap: $space-md;
+        align-items: flex-start;
+
+        .udp-card-noticia__media {
+            flex: 0 0 96px;
+            width: 96px;
+            height: 96px;
+            aspect-ratio: 1;
+        }
+
+        .udp-card-noticia__body {
+            padding-top: 0;
+            flex: 1;
+        }
+    }
+}
