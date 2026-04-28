@@ -212,3 +212,47 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - F4c: archive-agenda (toggle grid/list) + single-agenda + nuevo card primitive `card-evento.php` (image-izquierda + CTA circular).
 - Cleanup de scaffold legacy (`block-cards_grid.php`, `_flexible-blocks.scss`) cuando todos los bloques UDP estén migrados.
 - El group PHP `group_flexible_blocks` en `inc/acf-setup.php` tiene mismo field name `content_blocks` que el nuevo JSON group — coexisten sin conflicto (ambos aplican al mismo template) pero el PHP group está vacío (no tiene `block_card_grid` layout). Limpiar en F11.
+
+### 2026-04-28 — F4b Task 2: Card `--horizontal` modifier
+
+**Hechos**:
+- `card-noticia.php`: docblock actualizado (`@var array $args` documenta nuevo arg `variant`).
+- `card-noticia.php`: variable `$variant` sanitizada (whitelist `['horizontal']`), clase BEM `udp-card-noticia--horizontal` condicionalmente añadida.
+- `_card-grid.scss`: bloque `.udp-card-noticia--horizontal` añadido al final del archivo. Diseño: `flex-direction: row`, gap 30px (Figma spec), imagen fija 201×275px. Mobile (`<md`): cae a `flex-direction: column`, imagen 16/9 full-width.
+- PHP lint: sin errores. Build: OK en 1.22s.
+
+**Decisión**:
+- El modifier es selector de nivel raíz (`.udp-card-noticia--horizontal { ... }`) en lugar de anidado dentro de `.udp-card-noticia { ... }` para evitar especificidad conflictiva con overrides de layout (`.udp-card-grid--list &` y similares).
+
+**Pendiente**:
+- Task 3 de F4b: archivo `archive-post.php` que pase `variant=>'horizontal'` al partial.
+
+### 2026-04-28 — F4b1 Noticias archive (simple) + single-post
+
+**Hechos**:
+- `templates/page-noticias.php` asignado manualmente a la página "Noticias" (ID 97). Archive con filtros (categoría + año + búsqueda via $_GET) + grid 2-col × 3 filas (6 cards/page) + paginación. Light theme.
+- `inc/udp-cards.php` extendido con `udp_query_noticias($filters)` (wrapper WP_Query con date_query + s) y `udp_get_post_years()` (transient 1 día). El `udp_query_cards()` de F4a queda intocado.
+- Card primitive `card-noticia.php` extendido con arg `variant='horizontal'` → SCSS modifier `--horizontal` (image-left 201×275, line-clamp 3). Reutilizable por F4c.
+- Partials reutilizables en `template-parts/archive/`: `noticias-filters.php` (form GET con auto-submit JS) y `pagination.php` (wrapper paginate_links con BEM UDP). El de paginación lo usará F4c también.
+- `single-post.php` reemplaza el scaffold genérico para post_type=post (single.php queda como fallback). Hero light + content + share floating + related.
+- Partials del single en `template-parts/single/`: `post-hero.php`, `post-share.php` (5 botones — copy URL con clipboard fallback + Facebook + X + WhatsApp + LinkedIn), `post-related.php` (3 cards por categoría primaria con fallback a más recientes si <3 matches).
+- SCSS templates `_noticias-archive.scss` (header light + filtros 3-col + grid + paginación) y `_noticias-single.scss` (hero + content max-width 480px + share sticky + related grid 3-col).
+- Verificación E2E: `/noticias/` HTTP 200 con 6 cards, filtros funcionando con cat/year/udp_s, paginación correcta, single con todos los markup classes esperados.
+
+**Decisiones clave**:
+- `templates/page-noticias.php` (page template) en vez de `home.php` o `archive-post.php` porque WP routea `/noticias/` como page por defecto y porque `home.php` colisionaría con F9 (Home) cuando se setee `show_on_front=page`.
+- `udp_query_cards()` de F4a queda intocado — soporta solo el shape del bloque flex. `udp_query_noticias()` es el wrapper específico para archive (con year + search). Patrón reutilizable: F4c tendrá `udp_query_agenda()` similar.
+- Eyebrow en single y archive viene del primer término `category` del post (color hardcoded yellow). Igual que F4a — pendiente de implementar color por término.
+- Share buttons usan `<button>` para copy URL (con clipboard API + fallback a `window.prompt`) y `<a target=_blank>` para los demás.
+- Pagination preserva todos los filtros del URL (cat + year + udp_s) vía `add_args` de paginate_links.
+- **CRÍTICO**: El param de búsqueda en el form usa `name="udp_s"` (NO `name="s"`). WP intercepta `?s=` como búsqueda global antes de que llegue al page template — redirige a la página de resultados de búsqueda nativa (404 si no hay resultados). El template lee `$_GET['udp_s']` y lo pasa a `WP_Query` como `'s'` internamente.
+
+**Cosas que descubrí**:
+- `paginate_links` con `type='array'` devuelve cada link como HTML string — para aplicar BEM modifiers UDP (`--current`, `--prev`, `--next`, `--dots`) detectamos las clases nativas WP (`current`, `prev`, `next`, `dots`) en cada string y mapeamos.
+- `get_query_var('paged')` solo se popula automáticamente para queries de archive nativas. En page templates con WP_Query custom hay que leer `$_GET['paged']` también como fallback.
+- WP intercepta el query param `?s=` globalmente en el request lifecycle (antes de template routing). Si un form GET en un page template usa `name="s"`, el request se procesa como búsqueda global y NO llega al template. Workaround: usar nombre custom (`udp_s`) y pasarlo internamente a WP_Query.
+
+**Pendientes**:
+- F4b2: hero band del archive con featured card (image overlay) + 2 side compactas. Bumpa `posts_per_page` de 6 → 9. Probable: campo ACF `featured_post` (post_object) en options page para curaduría editorial.
+- F4c: archive Agenda (toggle grid/list) + single-evento + nuevo card primitive `card-evento.php`. Reutilizará `udp_query_noticias` pattern → `udp_query_agenda()`, y los partials `archive/pagination.php`.
+- Image gallery del single (Figma muestra 3 imágenes con arrows después del body) → F4b2 cuando se añada el campo ACF gallery.

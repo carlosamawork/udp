@@ -67,6 +67,12 @@
 @import "blocks/card-grid";
 
 // --------------------------------------------------------------------------
-// 8. Utilidades / Animaciones (siempre al final)
+// 8. Templates (page templates con estilos propios)
+// --------------------------------------------------------------------------
+@import "templates/noticias-archive";
+@import "templates/noticias-single";
+
+// --------------------------------------------------------------------------
+// 9. Utilidades / Animaciones (siempre al final)
 // --------------------------------------------------------------------------
 @import "utilities/animations";

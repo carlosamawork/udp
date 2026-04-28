@@ -7,7 +7,8 @@
  *
  * @package Starter_Theme
  *
- * @var array $args ['card' => array, 'theme' => string]
+ * @var array $args ['card' => array, 'theme' => string, 'variant' => string]
+ *                  variant: '' (default) | 'horizontal' (image-left 201×275 para archive)
  */
 $card  = isset( $args['card'] ) && is_array( $args['card'] ) ? $args['card'] : array();
 $theme = isset( $args['theme'] ) && in_array( $args['theme'], array( 'dark', 'light' ), true ) ? $args['theme'] : 'dark';
@@ -27,7 +28,8 @@ $fecha_display = function_exists( 'udp_card_format_date' ) ? udp_card_format_dat
 $target        = $card['target'] ?? '';
 $rel           = $target === '_blank' ? 'noopener noreferrer' : '';
 
-$class = 'udp-card-noticia udp-card-noticia--' . $theme;
+$variant = isset( $args['variant'] ) && in_array( $args['variant'], array( 'horizontal' ), true ) ? $args['variant'] : '';
+$class = 'udp-card-noticia udp-card-noticia--' . $theme . ( $variant ? ' udp-card-noticia--' . $variant : '' );
 ?>
 <a
     href="<?php echo esc_url( $href ); ?>"

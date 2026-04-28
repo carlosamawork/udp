@@ -184,3 +184,85 @@ function udp_query_cards( array $args ): array {
         'paged'     => $paged,
     );
 }
+
+/**
+ * Devuelve los años con posts publicados (DESC). Cacheado 1 día via transient.
+ *
+ * @return int[] Array de años (4 dígitos) ordenados DESC.
+ */
+function udp_get_post_years(): array {
+    $cache = get_transient( 'udp_post_years' );
+    if ( $cache !== false ) {
+        return $cache;
+    }
+    global $wpdb;
+    $years = $wpdb->get_col(
+        "SELECT DISTINCT YEAR(post_date) FROM {$wpdb->posts}
+         WHERE post_type='post' AND post_status='publish'
+         ORDER BY YEAR(post_date) DESC"
+    );
+    $years = array_map( 'intval', (array) $years );
+    set_transient( 'udp_post_years', $years, DAY_IN_SECONDS );
+    return $years;
+}
+
+/**
+ * Wrapper sobre WP_Query especializado en archive de Noticias.
+ * Soporta filtros que `udp_query_cards()` no maneja: año + búsqueda.
+ *
+ * @param array $filters {
+ *     @type int    $cat    term_id de category. 0 o ausente = sin filtro.
+ *     @type int    $year   Año (YYYY). 0 o ausente = sin filtro.
+ *     @type string $s      Texto de búsqueda. '' = sin búsqueda.
+ *     @type int    $paged  Página 1-based. Default 1.
+ *     @type int    $limit  Posts por página. Default 6.
+ * }
+ * @return array { cards, total, max_pages, paged } — mismo shape que udp_query_cards.
+ */
+function udp_query_noticias( array $filters ): array {
+    $cat   = (int) ( $filters['cat']   ?? 0 );
+    $year  = (int) ( $filters['year']  ?? 0 );
+    $s     = trim( (string) ( $filters['s'] ?? '' ) );
+    $paged = max( 1, (int) ( $filters['paged'] ?? 1 ) );
+    $limit = max( 1, (int) ( $filters['limit'] ?? 6 ) );
+
+    $args = array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => $limit,
+        'paged'          => $paged,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+
+    if ( $cat > 0 ) {
+        $args['tax_query'] = array(
+            array( 'taxonomy' => 'category', 'field' => 'term_id', 'terms' => array( $cat ) ),
+        );
+    }
+
+    if ( $year > 0 ) {
+        $args['date_query'] = array( array( 'year' => $year ) );
+    }
+
+    if ( $s !== '' ) {
+        $args['s'] = $s;
+    }
+
+    $q = new WP_Query( $args );
+
+    $cards = array();
+    foreach ( $q->posts as $post ) {
+        $card = udp_card_data_from_post( $post );
+        if ( $card ) {
+            $cards[] = $card;
+        }
+    }
+
+    return array(
+        'cards'     => $cards,
+        'total'     => (int) $q->found_posts,
+        'max_pages' => $q->found_posts > 0 ? (int) ceil( $q->found_posts / $limit ) : 0,
+        'paged'     => $paged,
+    );
+}

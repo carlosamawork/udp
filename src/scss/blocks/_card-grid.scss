@@ -238,3 +238,43 @@
         }
     }
 }
+
+// --------------------------------------------------------------------------
+// VARIANTE HORIZONTAL — image-left 201×275 (archive Noticias / archive Agenda)
+// --------------------------------------------------------------------------
+.udp-card-noticia--horizontal {
+    flex-direction: row;
+    gap: 30px;  // Spec Figma: 30px entre image y texto
+    align-items: flex-start;
+
+    .udp-card-noticia__media {
+        flex: 0 0 201px;
+        width: 201px;
+        height: 275px;
+        aspect-ratio: 201 / 275;
+    }
+
+    .udp-card-noticia__body {
+        flex: 1;
+        padding-top: 0;
+        gap: $space-sm;
+    }
+
+    .udp-card-noticia__title {
+        font-size: 20px;
+        line-height: 1.3;
+        -webkit-line-clamp: 3;
+    }
+
+    @include media-down(md) {
+        flex-direction: column;
+        gap: $space-md;
+
+        .udp-card-noticia__media {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            flex: 0 0 auto;
+        }
+    }
+}

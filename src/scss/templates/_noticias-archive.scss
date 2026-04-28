@@ -1,0 +1,245 @@
+// ==========================================================================
+// NOTICIAS ARCHIVE — page template `page-noticias.php`
+// Header light + filtros + grid 2-col + paginación.
+// Card --horizontal en `_card-grid.scss`.
+// ==========================================================================
+
+.udp-noticias-archive {
+    background-color: $white;
+    color: $dark-1;
+    padding-bottom: $space-3xl;
+
+    &__header {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding: $space-2xl $space-3xl 0;
+
+        @include media-down(md) {
+            padding: $space-xl $space-sm 0;
+        }
+
+        // Override breadcrumb colors para light theme
+        .udp-breadcrumb__item,
+        .udp-breadcrumb__link,
+        .udp-breadcrumb__current {
+            color: $dark-1;
+        }
+        .udp-breadcrumb__sep {
+            color: $dark-2;
+        }
+    }
+
+    &__title {
+        margin: $space-md 0 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 64px;
+        line-height: 1.05;
+        color: $dark-1;
+
+        @include media-down(md) {
+            font-size: 40px;
+        }
+    }
+
+    &__separator {
+        max-width: 1360px;
+        margin: $space-2xl auto 0;
+        border: 0;
+        height: 1px;
+        background-color: rgba($dark-1, 0.15);
+    }
+
+    &__list {
+        list-style: none;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        max-width: 1440px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: $space-2xl 50px;  // gap-y 32 / gap-x 50
+
+        @include media-down(lg) {
+            grid-template-columns: 1fr;
+            padding: 0 $space-sm;
+            gap: $space-2xl;
+        }
+    }
+
+    &__item {
+        display: block;
+    }
+
+    &__empty {
+        max-width: 1440px;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        font-family: $font-family-body;
+        font-size: 16px;
+        color: $dark-2;
+    }
+}
+
+// --------------------------------------------------------------------------
+// FILTERS — 3 columnas: 2 dropdowns + search
+// --------------------------------------------------------------------------
+.udp-archive-filters {
+    max-width: 1440px;
+    margin: $space-md auto 0;
+    padding: 0 $space-3xl;
+    display: grid;
+    grid-template-columns: 320px 320px 1fr;
+    gap: 12px;
+    align-items: center;
+
+    @include media-down(lg) {
+        grid-template-columns: 1fr;
+        padding: 0 $space-sm;
+        gap: $space-2xs;
+    }
+
+    &__group {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    &__group--search {
+        max-width: 380px;
+        justify-self: end;
+
+        @include media-down(lg) {
+            max-width: none;
+            justify-self: stretch;
+        }
+    }
+
+    &__select {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        height: 40px;
+        padding: 0 36px 0 16px;
+        font-family: $font-family-body;
+        font-size: 14px;
+        color: $dark-1;
+        background-color: transparent;
+        border: 1px solid rgba($dark-1, 0.2);
+        border-radius: 0;
+        cursor: pointer;
+
+        // Custom chevron via SVG bg
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%231C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: 2px;
+        }
+    }
+
+    &__input {
+        flex: 1;
+        height: 40px;
+        padding: 0 48px 0 16px;
+        font-family: $font-family-body;
+        font-size: 14px;
+        color: $dark-1;
+        background-color: transparent;
+        border: 1px solid rgba($dark-1, 0.2);
+        border-radius: 0;
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: 2px;
+        }
+
+        &::placeholder {
+            color: rgba($dark-1, 0.5);
+        }
+    }
+
+    &__submit {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 40px;
+        width: 40px;
+        background: transparent;
+        border: 0;
+        color: $dark-1;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: -2px;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// PAGINATION
+// --------------------------------------------------------------------------
+.udp-pagination {
+    max-width: 1440px;
+    margin: $space-3xl auto 0;
+    padding: 0 $space-3xl;
+    display: flex;
+    justify-content: flex-end;
+
+    @include media-down(md) {
+        padding: 0 $space-sm;
+        justify-content: center;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline-flex;
+        gap: 4px;
+        align-items: center;
+    }
+
+    &__item {
+        a, span.current {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            padding: 0 8px;
+            font-family: $font-family-body;
+            font-size: 14px;
+            font-weight: 500;
+            color: $dark-1;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+        &--current span.current {
+            background-color: $dark-1;
+            color: $white;
+        }
+
+        a:hover,
+        a:focus-visible {
+            border-color: rgba($dark-1, 0.3);
+            outline: none;
+        }
+
+        &--prev a,
+        &--next a {
+            color: $dark-1;
+        }
+
+        &--dots {
+            color: rgba($dark-1, 0.5);
+            padding: 0 4px;
+        }
+    }
+}
