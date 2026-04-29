@@ -31,7 +31,7 @@
 
 **File:** `inc/udp-cards.php`
 
-- [ ] **Step 1: Append AT END del archivo**
+- [x] **Step 1: Append AT END del archivo**
 
 ```php
 
@@ -190,13 +190,13 @@ function udp_query_calendario( array $filters ): array {
 }
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
 ```
 
-- [ ] **Step 3: Extender ICS endpoint para calendario all-day**
+- [x] **Step 3: Extender ICS endpoint para calendario all-day**
 
 Edit `inc/udp-ics.php`. Find:
 
@@ -238,13 +238,13 @@ Replace with:
     }
 ```
 
-- [ ] **Step 4: Validar PHP del ICS**
+- [x] **Step 4: Validar PHP del ICS**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-ics.php
 ```
 
-- [ ] **Step 5: Smoke test calendario helpers**
+- [x] **Step 5: Smoke test calendario helpers**
 
 Crear `/tmp/test-udp-query-calendario.php`:
 
@@ -268,7 +268,7 @@ WP_CLI::success( 'Calendario OK' );
 
 Expected: total > 0, months > 0 con conteos por mes, years populated.
 
-- [ ] **Step 6: Smoke test ICS calendario**
+- [x] **Step 6: Smoke test ICS calendario**
 
 ```bash
 export MYSQL_PWD=root
@@ -290,7 +290,7 @@ Expected: HTTP 200, body contiene `DTSTART;VALUE=DATE:YYYYMMDD` (no T-time forma
 
 **File:** `templates/page-calendario.php`
 
-- [ ] **Step 1: Crear page template**
+- [x] **Step 1: Crear page template**
 
 ```php
 <?php
@@ -419,7 +419,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Asignar template a página 74**
+- [x] **Step 2: Asignar template a página 74**
 
 ```bash
 export MYSQL_PWD=root
@@ -437,7 +437,7 @@ $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmet
 
 Expected: `templates/page-calendario.php`.
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templates/page-calendario.php
@@ -447,7 +447,7 @@ Expected: `templates/page-calendario.php`.
 
 ## Task 3: 4 partials
 
-- [ ] **Step 1: Sidebar — `calendario-sidebar.php`**
+- [x] **Step 1: Sidebar — `calendario-sidebar.php`**
 
 Create `template-parts/archive/calendario-sidebar.php`:
 
@@ -506,7 +506,7 @@ $action_url = get_permalink( get_the_ID() );
 </script>
 ```
 
-- [ ] **Step 2: Filters — `calendario-filters.php`**
+- [x] **Step 2: Filters — `calendario-filters.php`**
 
 Create `template-parts/archive/calendario-filters.php`:
 
@@ -580,7 +580,7 @@ $action_url = get_permalink( get_the_ID() );
 </script>
 ```
 
-- [ ] **Step 3: Month section — `calendario-month-section.php`**
+- [x] **Step 3: Month section — `calendario-month-section.php`**
 
 Create `template-parts/archive/calendario-month-section.php`:
 
@@ -613,7 +613,7 @@ if ( empty( $entries ) || ! $month_name ) {
 </section>
 ```
 
-- [ ] **Step 4: Entry — `entry-calendario.php`**
+- [x] **Step 4: Entry — `entry-calendario.php`**
 
 Create `template-parts/blocks/parts/entry-calendario.php`:
 
@@ -669,7 +669,7 @@ $class = 'udp-entry-calendario' . ( $destacado ? ' udp-entry-calendario--destaca
 </li>
 ```
 
-- [ ] **Step 5: Validar los 4 partials**
+- [x] **Step 5: Validar los 4 partials**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -687,7 +687,7 @@ Expected: 4× `No syntax errors detected`.
 
 **File:** `src/scss/templates/_calendario-archive.scss`
 
-- [ ] **Step 1: Crear el SCSS**
+- [x] **Step 1: Crear el SCSS**
 
 ```scss
 // ==========================================================================
@@ -986,7 +986,7 @@ Expected: 4× `No syntax errors detected`.
 }
 ```
 
-- [ ] **Step 2: Importar en main.scss + build**
+- [x] **Step 2: Importar en main.scss + build**
 
 Edit `src/scss/main.scss`. Después del último `@import "templates/...";`, añadir:
 
@@ -1006,7 +1006,7 @@ Expected: build OK.
 
 ## Task 5: E2E + MEMORY + commit
 
-- [ ] **Step 1: Verificar archive**
+- [x] **Step 1: Verificar archive**
 
 ```bash
 TS=$(date +%s)
@@ -1025,7 +1025,7 @@ curl -s "http://localhost:8888/udp/calendario-academico/?nocache=$TS" | grep -oE
 
 Expected: HTTP 200, classes presentes, entries > 0, secciones de meses.
 
-- [ ] **Step 2: Verificar ICS calendario all-day**
+- [x] **Step 2: Verificar ICS calendario all-day**
 
 ```bash
 export MYSQL_PWD=root
@@ -1039,7 +1039,7 @@ curl -s "http://localhost:8888/udp/?udp_ics=$CAL_ID" | head -10
 
 Expected: body contiene `DTSTART;VALUE=DATE:YYYYMMDD` (all-day, no T-time).
 
-- [ ] **Step 3: Filtros**
+- [x] **Step 3: Filtros**
 
 ```bash
 TS=$(date +%s)
@@ -1056,13 +1056,13 @@ curl -s "http://localhost:8888/udp/calendario-academico/?udp_year=2025&nocache=$
 echo "(año 2025)"
 ```
 
-- [ ] **Step 4: Cleanup**
+- [x] **Step 4: Cleanup**
 
 ```bash
 rm -f /tmp/test-udp-query-calendario.php
 ```
 
-- [ ] **Step 5: MEMORY.md**
+- [x] **Step 5: MEMORY.md**
 
 Append:
 
@@ -1092,7 +1092,7 @@ Append:
 - JS active-month tracking en sidebar (IntersectionObserver): defer.
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
