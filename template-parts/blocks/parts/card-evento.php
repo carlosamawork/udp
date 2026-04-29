@@ -25,9 +25,7 @@ $lugar     = $card['lugar'] ?? '';
 if ( empty( $href ) || empty( $titulo ) ) {
     return;
 }
-if ( $mode === 'grid' && empty( $imagen['url'] ?? '' ) ) {
-    return;
-}
+$has_image = ! empty( $imagen['url'] ?? '' );
 
 $class = 'udp-card-evento udp-card-evento--' . $mode . ' udp-card-evento--' . $theme;
 $datetime_combined = trim( $fecha_d . ( $hora_d ? ', ' . $hora_d : '' ) );
@@ -44,13 +42,15 @@ $datetime_combined = trim( $fecha_d . ( $hora_d ? ', ' . $hora_d : '' ) );
 </a>
 <?php else : ?>
 <a href="<?php echo esc_url( $href ); ?>" class="<?php echo esc_attr( $class ); ?>">
-    <figure class="udp-card-evento__media">
-        <img
-            src="<?php echo esc_url( $imagen['url'] ); ?>"
-            alt="<?php echo esc_attr( $imagen['alt'] ?? '' ); ?>"
-            loading="lazy"
-            decoding="async"
-        />
+    <figure class="udp-card-evento__media<?php echo $has_image ? '' : ' udp-card-evento__media--placeholder'; ?>">
+        <?php if ( $has_image ) : ?>
+            <img
+                src="<?php echo esc_url( $imagen['url'] ); ?>"
+                alt="<?php echo esc_attr( $imagen['alt'] ?? '' ); ?>"
+                loading="lazy"
+                decoding="async"
+            />
+        <?php endif; ?>
     </figure>
     <div class="udp-card-evento__body">
         <h3 class="udp-card-evento__title"><?php echo esc_html( $titulo ); ?></h3>

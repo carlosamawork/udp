@@ -30,6 +30,19 @@
                 display: block;
                 transition: transform 0.4s ease;
             }
+
+            &--placeholder {
+                // Placeholder visual: subtle diagonal hatching para diferenciarse
+                // de un image faltante real. Mantiene el ratio del card.
+                background:
+                    repeating-linear-gradient(
+                        45deg,
+                        $dark-2,
+                        $dark-2 8px,
+                        rgba($white, 0.04) 8px,
+                        rgba($white, 0.04) 16px
+                    );
+            }
         }
 
         .udp-card-evento__body {

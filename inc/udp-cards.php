@@ -284,17 +284,17 @@ function udp_query_noticias( array $filters ): array {
  * Eyebrow viene del primer post_tag (case original) — uppercase via CSS.
  */
 function udp_card_data_from_agenda( WP_Post $post ): ?array {
-    $thumb_id = get_post_thumbnail_id( $post->ID );
-    if ( ! $thumb_id ) {
-        return null;
-    }
+    $thumb_id = (int) get_post_thumbnail_id( $post->ID );
+    $imagen_url = '';
+    $imagen_alt = '';
+    $sizes      = array();
 
-    $imagen_url = wp_get_attachment_image_url( $thumb_id, 'medium_large' );
-    if ( ! $imagen_url ) {
-        return null;
+    if ( $thumb_id > 0 ) {
+        $imagen_url = wp_get_attachment_image_url( $thumb_id, 'medium_large' ) ?: '';
+        $imagen_alt = (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+        $metadata   = wp_get_attachment_metadata( $thumb_id );
+        $sizes      = is_array( $metadata ) && isset( $metadata['sizes'] ) ? $metadata['sizes'] : array();
     }
-
-    $metadata = wp_get_attachment_metadata( $thumb_id );
 
     $eyebrow_text = '';
     $tags = get_the_terms( $post->ID, 'post_tag' );
@@ -339,10 +339,10 @@ function udp_card_data_from_agenda( WP_Post $post ): ?array {
         'eyebrow_color' => 'yellow',
         'titulo'        => get_the_title( $post ),
         'imagen'        => array(
-            'id'    => (int) $thumb_id,
+            'id'    => $thumb_id,
             'url'   => $imagen_url,
-            'alt'   => (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true ),
-            'sizes' => is_array( $metadata ) && isset( $metadata['sizes'] ) ? $metadata['sizes'] : array(),
+            'alt'   => $imagen_alt,
+            'sizes' => $sizes,
         ),
         'fecha'         => $fecha_iso,
         'fecha_display' => $fecha_disp,
