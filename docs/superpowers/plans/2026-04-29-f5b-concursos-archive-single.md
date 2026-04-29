@@ -15,7 +15,7 @@
 **Files:**
 - Modify: `acf-json/group_cpt_concurso_meta.json`
 
-- [ ] **Step 1: Añadir field al JSON**
+- [x] **Step 1: Añadir field al JSON**
 
 Edit `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_cpt_concurso_meta.json`. Read it first to understand structure. Then add a new field object to the `fields` array:
 
@@ -36,7 +36,7 @@ Edit `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json
 
 Insert it AFTER the existing `archivo_concurso` field. Validate JSON.
 
-- [ ] **Step 2: Validar + sync**
+- [x] **Step 2: Validar + sync**
 
 ```bash
 jq empty /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_cpt_concurso_meta.json && echo "JSON válido"
@@ -79,7 +79,7 @@ Expected: `UPDATE existing id=NNN` + `Success: id=NNN`.
 
 **File:** `inc/udp-cards.php`
 
-- [ ] **Step 1: Append AT END del archivo**
+- [x] **Step 1: Append AT END del archivo**
 
 ```php
 
@@ -176,7 +176,7 @@ function udp_query_concursos( array $filters ): array {
 }
 ```
 
-- [ ] **Step 2: Validar PHP + smoke test**
+- [x] **Step 2: Validar PHP + smoke test**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -212,7 +212,7 @@ Expected: cards 0-3 (depende de cuántos tengan featured image), total = 3, dato
 - Create: `templates/page-concursos.php`
 - Create: `template-parts/archive/concursos-filters.php`
 
-- [ ] **Step 1: Page template**
+- [x] **Step 1: Page template**
 
 Create `templates/page-concursos.php`:
 
@@ -309,7 +309,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Filters partial**
+- [x] **Step 2: Filters partial**
 
 Create `template-parts/archive/concursos-filters.php`:
 
@@ -363,7 +363,7 @@ if ( is_wp_error( $facultades ) ) { $facultades = array(); }
 </script>
 ```
 
-- [ ] **Step 3: Asignar template a página 76**
+- [x] **Step 3: Asignar template a página 76**
 
 ```bash
 export MYSQL_PWD=root
@@ -379,7 +379,7 @@ fi
 $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmeta WHERE post_id=76 AND meta_key='_wp_page_template';"
 ```
 
-- [ ] **Step 4: Validar PHP**
+- [x] **Step 4: Validar PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -396,7 +396,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 - Create: `template-parts/single/concurso-meta.php`
 - Create: `template-parts/single/concurso-files.php`
 
-- [ ] **Step 1: `single-concurso-academico.php`**
+- [x] **Step 1: `single-concurso-academico.php`**
 
 ```php
 <?php
@@ -474,7 +474,7 @@ endwhile;
 get_footer();
 ```
 
-- [ ] **Step 2: `template-parts/single/concurso-meta.php`**
+- [x] **Step 2: `template-parts/single/concurso-meta.php`**
 
 ```php
 <?php
@@ -509,7 +509,7 @@ if ( ! is_wp_error( $facultades ) && ! empty( $facultades ) ) {
 </div>
 ```
 
-- [ ] **Step 3: `template-parts/single/concurso-files.php`**
+- [x] **Step 3: `template-parts/single/concurso-files.php`**
 
 ```php
 <?php
@@ -551,7 +551,7 @@ if ( empty( $bases_url ) && empty( $formato_url ) ) {
 </div>
 ```
 
-- [ ] **Step 4: Validar PHP**
+- [x] **Step 4: Validar PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -569,7 +569,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 - Create: `src/scss/templates/_concursos-single.scss`
 - Modify: `src/scss/main.scss`
 
-- [ ] **Step 1: `_concursos-archive.scss`**
+- [x] **Step 1: `_concursos-archive.scss`**
 
 ```scss
 // ==========================================================================
@@ -738,7 +738,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 2: `_concursos-single.scss`**
+- [x] **Step 2: `_concursos-single.scss`**
 
 ```scss
 // ==========================================================================
@@ -922,7 +922,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 3: Imports en main.scss + build**
+- [x] **Step 3: Imports en main.scss + build**
 
 Edit `src/scss/main.scss`. Después del último `@import "templates/...";` (probablemente `templates/calendario-archive`), añadir:
 
@@ -941,7 +941,7 @@ cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run 
 
 ## Task 6: E2E + MEMORY + commit
 
-- [ ] **Step 1: Verify archive**
+- [x] **Step 1: Verify archive**
 
 ```bash
 TS=$(date +%s)
@@ -957,7 +957,7 @@ curl -s "http://localhost:8888/udp/concursos-academicos/?nocache=$TS" | grep -cE
 
 Expected: HTTP 200, classes presentes, cards 0-3 (depends on featured images).
 
-- [ ] **Step 2: Verify single**
+- [x] **Step 2: Verify single**
 
 ```bash
 export MYSQL_PWD=root
@@ -973,13 +973,13 @@ echo "=== Buttons + back link ==="
 curl -s "http://localhost:8888/udp/concurso-academico/$SLUG/?nocache=$TS" | grep -E "Volver a Concursos|Descargar bases|Formato de propuestas" | head -5
 ```
 
-- [ ] **Step 3: Cleanup**
+- [x] **Step 3: Cleanup**
 
 ```bash
 rm -f /tmp/test-udp-query-concursos.php /tmp/acf-sync-concurso-meta.php
 ```
 
-- [ ] **Step 4: MEMORY.md**
+- [x] **Step 4: MEMORY.md**
 
 Append:
 
@@ -1004,7 +1004,7 @@ Append:
 - F5 cerrado. Próxima fase opcional: F6 (Facultades + Carreras + Centros) o seguir según prioridad del cliente.
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
