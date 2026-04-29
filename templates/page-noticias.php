@@ -16,8 +16,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$cat   = isset( $_GET['cat'] ) ? (int) $_GET['cat'] : 0;
-$year  = isset( $_GET['year'] ) ? (int) $_GET['year'] : 0;
+$cat   = isset( $_GET['udp_cat'] ) ? (int) $_GET['udp_cat'] : 0;
+$year  = isset( $_GET['udp_year'] ) ? (int) $_GET['udp_year'] : 0;
 $s     = isset( $_GET['udp_s'] ) ? sanitize_text_field( wp_unslash( $_GET['udp_s'] ) ) : '';
 $paged = max( 1, (int) ( get_query_var( 'paged' ) ?: ( $_GET['paged'] ?? 1 ) ) );
 

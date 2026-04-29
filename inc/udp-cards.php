@@ -391,6 +391,17 @@ function udp_query_agenda( array $filters ): array {
                 'compare' => 'LIKE',
             ),
         );
+    } else {
+        // Sin filtro de año: mostrar solo eventos próximos (fecha >= hoy en Ymd)
+        $today_ymd = date( 'Ymd' );
+        $args['meta_query'] = array(
+            array(
+                'key'     => 'fecha',
+                'value'   => $today_ymd,
+                'compare' => '>=',
+                'type'    => 'CHAR',  // comparación lexicográfica funciona con Ymd
+            ),
+        );
     }
 
     if ( $s !== '' ) {

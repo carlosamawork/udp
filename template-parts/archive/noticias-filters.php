@@ -28,7 +28,7 @@ $years = function_exists( 'udp_get_post_years' ) ? udp_get_post_years() : array(
 
     <div class="udp-archive-filters__group">
         <label for="udp-filter-cat" class="visually-hidden"><?php esc_html_e( 'Selecciona categoría', 'starter-theme' ); ?></label>
-        <select id="udp-filter-cat" name="cat" class="udp-archive-filters__select" data-udp-autosubmit>
+        <select id="udp-filter-cat" name="udp_cat" class="udp-archive-filters__select" data-udp-autosubmit>
             <option value=""><?php esc_html_e( 'Selecciona categoría', 'starter-theme' ); ?></option>
             <?php foreach ( $categories as $term ) : ?>
                 <option value="<?php echo esc_attr( $term->term_id ); ?>" <?php selected( $cat_active, $term->term_id ); ?>>
@@ -40,7 +40,7 @@ $years = function_exists( 'udp_get_post_years' ) ? udp_get_post_years() : array(
 
     <div class="udp-archive-filters__group">
         <label for="udp-filter-year" class="visually-hidden"><?php esc_html_e( 'Selecciona año', 'starter-theme' ); ?></label>
-        <select id="udp-filter-year" name="year" class="udp-archive-filters__select" data-udp-autosubmit>
+        <select id="udp-filter-year" name="udp_year" class="udp-archive-filters__select" data-udp-autosubmit>
             <option value=""><?php esc_html_e( 'Selecciona año', 'starter-theme' ); ?></option>
             <?php foreach ( $years as $y ) : ?>
                 <option value="<?php echo esc_attr( $y ); ?>" <?php selected( $year_active, $y ); ?>>

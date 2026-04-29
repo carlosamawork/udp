@@ -49,7 +49,7 @@ $view_active = isset( $_GET['view'] ) && $_GET['view'] === 'list' ? 'list' : 'gr
 
     <div class="udp-archive-filters__group">
         <label for="udp-filter-facultad" class="visually-hidden"><?php esc_html_e( 'Selecciona facultad', 'starter-theme' ); ?></label>
-        <select id="udp-filter-facultad" name="facultad" class="udp-archive-filters__select" data-udp-autosubmit>
+        <select id="udp-filter-facultad" name="udp_facultad" class="udp-archive-filters__select" data-udp-autosubmit>
             <option value=""><?php esc_html_e( 'Selecciona facultad', 'starter-theme' ); ?></option>
             <?php foreach ( $facultades as $term ) : ?>
                 <option value="<?php echo esc_attr( $term->term_id ); ?>" <?php selected( $facultad_active, $term->term_id ); ?>>
@@ -61,7 +61,7 @@ $view_active = isset( $_GET['view'] ) && $_GET['view'] === 'list' ? 'list' : 'gr
 
     <div class="udp-archive-filters__group">
         <label for="udp-filter-year" class="visually-hidden"><?php esc_html_e( 'Selecciona año', 'starter-theme' ); ?></label>
-        <select id="udp-filter-year" name="year" class="udp-archive-filters__select" data-udp-autosubmit>
+        <select id="udp-filter-year" name="udp_year" class="udp-archive-filters__select" data-udp-autosubmit>
             <option value=""><?php esc_html_e( 'Selecciona año', 'starter-theme' ); ?></option>
             <?php foreach ( $years as $y ) : ?>
                 <option value="<?php echo esc_attr( $y ); ?>" <?php selected( $year_active, $y ); ?>>

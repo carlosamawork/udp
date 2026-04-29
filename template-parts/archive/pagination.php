@@ -25,9 +25,10 @@ $pages = paginate_links( array(
     'next_text' => '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     'type'      => 'array',
     'add_args'  => array_filter( array(
-        'cat'  => isset( $_GET['cat'] )  ? (int) $_GET['cat']  : null,
-        'year' => isset( $_GET['year'] ) ? (int) $_GET['year'] : null,
-        's'    => isset( $_GET['s'] )    ? sanitize_text_field( wp_unslash( $_GET['s'] ) ) : null,
+        'udp_cat'  => isset( $_GET['udp_cat'] )  ? (int) $_GET['udp_cat']  : null,
+        'udp_year' => isset( $_GET['udp_year'] ) ? (int) $_GET['udp_year'] : null,
+        'udp_s'    => isset( $_GET['udp_s'] )    ? sanitize_text_field( wp_unslash( $_GET['udp_s'] ) ) : null,
+        'udp_facultad' => isset( $_GET['udp_facultad'] ) ? (int) $_GET['udp_facultad'] : null,
     ) ),
 ) );
 

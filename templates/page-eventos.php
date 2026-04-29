@@ -11,8 +11,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$facultad = isset( $_GET['facultad'] ) ? (int) $_GET['facultad'] : 0;
-$year     = isset( $_GET['year'] )     ? (int) $_GET['year']     : 0;
+$facultad = isset( $_GET['udp_facultad'] ) ? (int) $_GET['udp_facultad'] : 0;
+$year     = isset( $_GET['udp_year'] )     ? (int) $_GET['udp_year']     : 0;
 $s        = isset( $_GET['udp_s'] )    ? sanitize_text_field( wp_unslash( $_GET['udp_s'] ) ) : '';
 $paged    = max( 1, (int) ( get_query_var( 'paged' ) ?: ( $_GET['paged'] ?? 1 ) ) );
 $view     = ( isset( $_GET['view'] ) && $_GET['view'] === 'list' ) ? 'list' : 'grid';
@@ -31,9 +31,9 @@ $cards     = $result['cards'];
 $max_pages = $result['max_pages'];
 
 $base_args = array_filter( array(
-    'facultad' => $facultad ?: null,
-    'year'     => $year     ?: null,
-    'udp_s'    => $s        ?: null,
+    'udp_facultad' => $facultad ?: null,
+    'udp_year'     => $year     ?: null,
+    'udp_s'        => $s        ?: null,
 ) );
 $url_grid = add_query_arg( array_merge( $base_args, array( 'view' => 'grid' ) ), get_permalink( get_the_ID() ) );
 $url_list = add_query_arg( array_merge( $base_args, array( 'view' => 'list' ) ), get_permalink( get_the_ID() ) );
