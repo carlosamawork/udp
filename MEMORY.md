@@ -408,3 +408,86 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 **Pendientes**:
 - F5+: el cliente sigue con calendario, concursos, facultades, carreras, centros, home, etc.
+
+### 2026-04-28 — Bugfix F4b1/F4c: prefijo udp_ en params + agenda >= hoy
+
+**Bug 1**: `year`, `cat`, `facultad` son WP built-in query vars. Al enviar el form con `?year=2024`, WP interceptaba el request y ruteaba a date archive → 404.
+
+**Fix aplicado**:
+- `$_GET['cat']` → `$_GET['udp_cat']` en `templates/page-noticias.php`
+- `$_GET['year']` → `$_GET['udp_year']` en `templates/page-noticias.php` y `templates/page-eventos.php`
+- `$_GET['facultad']` → `$_GET['udp_facultad']` en `templates/page-eventos.php`
+- `name="cat"` → `name="udp_cat"`, `name="year"` → `name="udp_year"` en `template-parts/archive/noticias-filters.php`
+- `name="facultad"` → `name="udp_facultad"`, `name="year"` → `name="udp_year"` en `template-parts/archive/eventos-filters.php`
+- `add_args` en `template-parts/archive/pagination.php`: claves `cat/year/s` → `udp_cat/udp_year/udp_s` + añadido `udp_facultad`
+- `$base_args` en `page-eventos.php` (para view toggle URLs): `facultad/year` → `udp_facultad/udp_year`
+- Los args internos de `udp_query_noticias()` y `udp_query_agenda()` se mantienen iguales — el mapeo $GET→función ya estaba correcto.
+
+**Bug 2**: `udp_query_agenda` usaba `orderby=meta_value, order=ASC` globalmente. Eventos de 2021 aparecían al inicio.
+
+**Fix**: En `inc/udp-cards.php`, bloque `else` añadido tras el condicional `if ($year > 0)`:
+```php
+$today_ymd = date('Ymd');
+$args['meta_query'] = [['key'=>'fecha','value'=>$today_ymd,'compare'=>'>=','type'=>'CHAR']];
+```
+Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver todo ese año). Sin filtro de año, solo se muestran eventos próximos.
+
+**Verificación**:
+- `php -l`: 6/6 sin errores de sintaxis.
+- `?udp_year=2024` → HTTP 200 (antes 404).
+- `?udp_year=2026` en noticias → HTTP 200.
+- `?year=2024` (sin prefijo) → HTTP 404 esperado (WP date archive, correcto — el form ya no emite este param).
+- DB confirma: la única fecha >= 20260428 es el evento del 20260713 (sin thumbnail). El filtro >=hoy funciona.
+- Commit: `89834d7`
+
+**Regla descubierta**: Los query params de forms GET propios deben llevar prefijo para evitar colisión con WP built-in vars: `year`, `cat`, `tag`, `author`, `s`, `p`, `name`, `feed`, `tb`, `paged`, `comments_popup`, `preview`, `page`, `calendar`, `m`, `w`, `day`, `monthnum`, `order`, `orderby`, `meta_key`, `meta_value`, `meta_compare`, `meta_query`, `posts`, etc.
+
+### 2026-04-28 — Fix: featured image opcional en card-evento grid + placeholder
+
+**Hechos**:
+- `udp_card_data_from_agenda()` ya NO devuelve `null` cuando falta featured image. Ahora devuelve siempre el array Card con `imagen.url = ''`.
+- `card-evento.php` (grid mode): eliminado early-return para `empty imagen.url`. La figura recibe class `--placeholder` cuando no hay imagen; el `<img>` se emite condicionalmente.
+- SCSS `_card-evento.scss`: modifier `&--placeholder` añadido dentro de `.udp-card-evento__media` con hatching diagonal sutil (`repeating-linear-gradient 45deg`).
+- `udp_card_data_from_post()` (Noticias) NO cambia — featured image sigue siendo requerida allí.
+
+**Verificación**:
+- `php -l`: 2/2 sin errores de sintaxis.
+- Build: ✓ en 660ms.
+- E2E: `/agenda-udp/` muestra 1 card con `udp-card-evento__media--placeholder` (el único evento próximo en BD local no tiene featured image).
+- Commit: `4f678f1`
+
+**Decisiones**:
+- Solo `udp_card_data_from_agenda` liberada del requirement de featured image — Agenda es CPT donde las imágenes no siempre están disponibles. Noticias mantiene el estándar editorial (imagen requerida).
+- El placeholder visual usa hatching diagonal vs gris sólido para distinguir visualmente "sin imagen intencional" de un posible error de carga.
+
+### 2026-04-29 — F5a Calendario Académico archive
+
+**Hechos**:
+- `templates/page-calendario.php` asignado a página "Calendario Académico" (ID 74). Theme dark, layout 2-col: sidebar sticky con dropdown año + lista de meses anchor + main con intro + secciones por mes.
+- Helpers nuevos en `inc/udp-cards.php`: `udp_query_calendario` (no pagina, devuelve entries_by_month), `udp_calendario_data_from_post` (siempre devuelve array, no requiere featured image), `udp_get_calendario_years` (transient 1 día). Detectó 3452 entries en 2026 distribuidas en 12 meses.
+- ICS endpoint extendido en `inc/udp-ics.php` para soportar `calendario` post_type además de `agenda`. Para calendario emite all-day events con `DTSTART;VALUE=DATE:YYYYMMDD` y `DTEND` día siguiente.
+- 4 partials en `template-parts/archive/`: `calendario-sidebar.php`, `calendario-filters.php`, `calendario-month-section.php`, y `template-parts/blocks/parts/entry-calendario.php`.
+- Filtros: `udp_publico` (publico-udp) + `udp_tipo` (tipo-udp) + `udp_s` + `udp_year` (en sidebar). Sidebar preserva los demás filtros via hidden inputs.
+- Entry destacado: border-left amarillo + bg sutil `rgba($brand-yellow, 0.05)` + tag yellow "Destacado".
+- Una sola página por año — no hay paginación. El usuario cambia el año vía dropdown del sidebar.
+- SCSS nuevo `_calendario-archive.scss` con: dark theme, 2-col grid (280/1fr), sidebar sticky 100px top, month sections con título Arizona Flare 32px, entries con grid 140/1fr (date + body).
+
+**Verificación E2E** (2026-04-29):
+- HTTP 200 ✓
+- 30 clases BEM presentes (archivo, sidebar, month, entry, filters) ✓
+- 3452 entries en año 2026 (default) ✓
+- 10+ secciones de meses (enero–noviembre) ✓
+- ICS all-day: `DTSTART;VALUE=DATE:20251229` y `DTEND;VALUE=DATE:20251230` ✓
+- Filtro `udp_publico` (PUB_ID=4052): 1393 entries ✓
+- Filtro `udp_year=2025`: 7 entries ✓
+
+**Decisiones clave**:
+- No paginación — calendario académico es un documento "completo" del año. Todos los entries cargan en una página (~3500 entries está bien, performance OK con `posts_per_page=-1`).
+- Año vía dropdown sidebar en lugar de top filter bar — coincide con el Figma y semánticamente "el año contextualiza toda la página".
+- ICS all-day para calendario: `VALUE=DATE` format (YYYYMMDD sin T-time) compatible con Google Calendar / Outlook / Apple. Diferente del ICS de agenda que usa hora_inicio.
+- Eyebrow en entries usa primer término de `tipo-udp` (mostrado como text + border, no yellow pill — el yellow está reservado para destacado).
+
+**Pendientes**:
+- F5b: Concursos archive + single (con descarga PDF).
+- `block_calendario_grid` flex content: diferido a iteración futura.
+- JS active-month tracking en sidebar (IntersectionObserver): defer.

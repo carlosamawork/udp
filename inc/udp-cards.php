@@ -372,7 +372,7 @@ function udp_query_agenda( array $filters ): array {
         'paged'          => $paged,
         'meta_key'       => 'fecha',
         'orderby'        => 'meta_value',
-        'order'          => 'ASC',
+        'order'          => 'DESC',
     );
 
     $tax_query = array();
@@ -389,17 +389,6 @@ function udp_query_agenda( array $filters ): array {
                 'key'     => 'fecha',
                 'value'   => sprintf( '%04d', $year ),
                 'compare' => 'LIKE',
-            ),
-        );
-    } else {
-        // Sin filtro de año: mostrar solo eventos próximos (fecha >= hoy en Ymd)
-        $today_ymd = date( 'Ymd' );
-        $args['meta_query'] = array(
-            array(
-                'key'     => 'fecha',
-                'value'   => $today_ymd,
-                'compare' => '>=',
-                'type'    => 'CHAR',  // comparación lexicográfica funciona con Ymd
             ),
         );
     }
@@ -427,5 +416,153 @@ function udp_query_agenda( array $filters ): array {
         'total'     => (int) $q->found_posts,
         'max_pages' => $q->found_posts > 0 ? (int) ceil( $q->found_posts / $limit ) : 0,
         'paged'     => $paged,
+    );
+}
+
+/**
+ * Devuelve los años con entradas de calendario (DESC). Cache 1 día.
+ *
+ * @return int[]
+ */
+function udp_get_calendario_years(): array {
+    $cache = get_transient( 'udp_calendario_years' );
+    if ( $cache !== false ) {
+        return $cache;
+    }
+    global $wpdb;
+    $years = $wpdb->get_col( "
+        SELECT DISTINCT LEFT(pm.meta_value, 4) AS y
+        FROM {$wpdb->postmeta} pm
+        JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+        WHERE pm.meta_key = 'fecha'
+          AND pm.meta_value REGEXP '^[0-9]{4}'
+          AND p.post_type = 'calendario'
+          AND p.post_status = 'publish'
+        ORDER BY y DESC
+    " );
+    $years = array_map( 'intval', (array) $years );
+    set_transient( 'udp_calendario_years', $years, DAY_IN_SECONDS );
+    return $years;
+}
+
+/**
+ * Convierte WP_Post (calendario) a Entry shape.
+ * SIEMPRE devuelve array (no null) — no requiere featured image.
+ *
+ * @return array
+ */
+function udp_calendario_data_from_post( WP_Post $post ): array {
+    $fecha_raw       = (string) get_post_meta( $post->ID, 'fecha', true );
+    $fecha_amistosa  = (string) get_post_meta( $post->ID, 'fecha_amistosa', true );
+    $destacado_raw   = get_post_meta( $post->ID, 'destacado', true );
+
+    $fecha_iso = '';
+    $fecha_disp_default = '';
+    if ( $fecha_raw ) {
+        $dt = DateTime::createFromFormat( 'Ymd', $fecha_raw );
+        if ( ! $dt ) {
+            $ts = strtotime( $fecha_raw );
+            if ( $ts ) {
+                $dt = ( new DateTime() )->setTimestamp( $ts );
+            }
+        }
+        if ( $dt ) {
+            $fecha_iso          = $dt->format( 'Y-m-d' );
+            $fecha_disp_default = date_i18n( 'j \d\e F', $dt->getTimestamp() );
+        }
+    }
+
+    $fecha_display = $fecha_amistosa !== '' ? $fecha_amistosa : $fecha_disp_default;
+
+    $tipo_name = '';
+    $tipos = get_the_terms( $post->ID, 'tipo-udp' );
+    if ( ! is_wp_error( $tipos ) && ! empty( $tipos ) ) {
+        $tipo_name = $tipos[0]->name;
+    }
+
+    $excerpt = wp_strip_all_tags( get_the_excerpt( $post ) );
+    if ( strlen( $excerpt ) > 160 ) {
+        $excerpt = mb_substr( $excerpt, 0, 157 ) . '…';
+    }
+
+    return array(
+        'post_id'       => (int) $post->ID,
+        'titulo'        => get_the_title( $post ),
+        'fecha'         => $fecha_iso,
+        'fecha_display' => $fecha_display,
+        'destacado'     => (bool) $destacado_raw,
+        'descripcion'   => $excerpt,
+        'tipo'          => $tipo_name,
+        'href_ics'      => add_query_arg( 'udp_ics', $post->ID, home_url( '/' ) ),
+    );
+}
+
+/**
+ * Wrapper sobre WP_Query para archive Calendario.
+ * NO PAGINATES — devuelve TODAS las entries del año, agrupadas por mes.
+ *
+ * @return array { entries_by_month: array<string,array>, total: int, year: int }
+ */
+function udp_query_calendario( array $filters ): array {
+    $publico = (int) ( $filters['publico'] ?? 0 );
+    $tipo    = (int) ( $filters['tipo']    ?? 0 );
+    $year    = (int) ( $filters['year']    ?? (int) date( 'Y' ) );
+    $s       = trim( (string) ( $filters['s'] ?? '' ) );
+
+    $args = array(
+        'post_type'      => 'calendario',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'meta_key'       => 'fecha',
+        'orderby'        => 'meta_value',
+        'order'          => 'ASC',
+        'meta_query'     => array(
+            array(
+                'key'     => 'fecha',
+                'value'   => sprintf( '%04d', $year ),
+                'compare' => 'LIKE',
+            ),
+        ),
+        'no_found_rows'  => true,
+    );
+
+    $tax_query = array();
+    if ( $publico > 0 ) {
+        $tax_query[] = array( 'taxonomy' => 'publico-udp', 'field' => 'term_id', 'terms' => array( $publico ) );
+    }
+    if ( $tipo > 0 ) {
+        $tax_query[] = array( 'taxonomy' => 'tipo-udp', 'field' => 'term_id', 'terms' => array( $tipo ) );
+    }
+    if ( count( $tax_query ) > 1 ) {
+        $tax_query['relation'] = 'AND';
+    }
+    if ( ! empty( $tax_query ) ) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    if ( $s !== '' ) {
+        $args['s'] = $s;
+    }
+
+    $q = new WP_Query( $args );
+
+    $entries_by_month = array();
+    foreach ( $q->posts as $post ) {
+        $entry = udp_calendario_data_from_post( $post );
+        if ( ! $entry['fecha'] ) {
+            continue;
+        }
+        $month_key = substr( $entry['fecha'], 5, 2 );
+        if ( ! isset( $entries_by_month[ $month_key ] ) ) {
+            $entries_by_month[ $month_key ] = array();
+        }
+        $entries_by_month[ $month_key ][] = $entry;
+    }
+    ksort( $entries_by_month );
+
+    return array(
+        'entries_by_month' => $entries_by_month,
+        'total'            => count( $q->posts ),
+        'year'             => $year,
     );
 }

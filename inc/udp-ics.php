@@ -60,7 +60,7 @@ add_action( 'init', function () {
         return;
     }
     $post = get_post( $post_id );
-    if ( ! $post || $post->post_type !== 'agenda' || $post->post_status !== 'publish' ) {
+    if ( ! $post || ! in_array( $post->post_type, array( 'agenda', 'calendario' ), true ) || $post->post_status !== 'publish' ) {
         return;
     }
 
@@ -103,8 +103,16 @@ add_action( 'init', function () {
     $ics .= "BEGIN:VEVENT\r\n";
     $ics .= "UID:" . $uid . "\r\n";
     $ics .= "DTSTAMP:" . gmdate( 'Ymd\THis\Z' ) . "\r\n";
-    $ics .= "DTSTART:" . gmdate( 'Ymd\THis\Z', $start_ts ) . "\r\n";
-    $ics .= "DTEND:" . gmdate( 'Ymd\THis\Z', $end_ts ) . "\r\n";
+    if ( $post->post_type === 'calendario' ) {
+        // All-day event: VALUE=DATE format (YYYYMMDD)
+        $start_date = gmdate( 'Ymd', $date_ts );
+        $end_date   = gmdate( 'Ymd', $date_ts + DAY_IN_SECONDS );
+        $ics .= "DTSTART;VALUE=DATE:" . $start_date . "\r\n";
+        $ics .= "DTEND;VALUE=DATE:" . $end_date . "\r\n";
+    } else {
+        $ics .= "DTSTART:" . gmdate( 'Ymd\THis\Z', $start_ts ) . "\r\n";
+        $ics .= "DTEND:" . gmdate( 'Ymd\THis\Z', $end_ts ) . "\r\n";
+    }
     $ics .= "SUMMARY:" . str_replace( array( "\r", "\n" ), ' ', $title ) . "\r\n";
     if ( $desc ) {
         $ics .= "DESCRIPTION:" . str_replace( array( "\r", "\n" ), ' ', $desc ) . "\r\n";

@@ -1,0 +1,294 @@
+// ==========================================================================
+// CALENDARIO ARCHIVE — page template `page-calendario.php`
+// Theme dark. Sidebar sticky de meses + main intro + secciones por mes.
+// ==========================================================================
+
+.udp-calendario-archive {
+    background-color: $dark-1;
+    color: $white;
+    padding-bottom: $space-3xl;
+
+    &__header {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding: $space-2xl $space-3xl 0;
+
+        @include media-down(md) {
+            padding: $space-xl $space-sm 0;
+        }
+
+        .udp-breadcrumb__item,
+        .udp-breadcrumb__link,
+        .udp-breadcrumb__current { color: $white; }
+        .udp-breadcrumb__sep { color: $white-70; }
+    }
+
+    &__title {
+        margin: $space-md 0 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 64px;
+        line-height: 1.05;
+        color: $white;
+
+        @include media-down(md) { font-size: 40px; }
+    }
+
+    &__separator {
+        max-width: 1360px;
+        margin: $space-2xl auto 0;
+        border: 0;
+        height: 1px;
+        background-color: rgba($white, 0.15);
+    }
+
+    &__body {
+        max-width: 1440px;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 60px;
+
+        @include media-down(lg) {
+            grid-template-columns: 1fr;
+            padding: 0 $space-sm;
+            gap: $space-xl;
+        }
+    }
+
+    &__sidebar {
+        position: sticky;
+        top: 100px;
+        align-self: start;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+
+        @include media-down(lg) {
+            position: static;
+            max-height: none;
+            overflow: visible;
+        }
+    }
+
+    &__main {
+        min-width: 0;
+    }
+
+    &__intro {
+        font-family: $font-family-body;
+        font-size: 16px;
+        line-height: 24px;
+        color: $white-70;
+        margin-bottom: $space-2xl;
+
+        p { margin: 0 0 $space-md; }
+        p:last-child { margin-bottom: 0; }
+    }
+
+    &__empty {
+        font-family: $font-family-body;
+        font-size: 16px;
+        color: $white-70;
+    }
+
+    &__back-to-top {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: $space-2xl;
+        font-family: $font-family-body;
+        font-size: 14px;
+        color: $white-70;
+        text-decoration: none;
+
+        &:hover, &:focus-visible {
+            color: $white;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// SIDEBAR — año + meses
+// --------------------------------------------------------------------------
+.udp-calendario-sidebar {
+    &__year-form {
+        margin-bottom: $space-md;
+    }
+
+    &__year-select {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        height: 40px;
+        padding: 0 36px 0 16px;
+        font-family: $font-family-body;
+        font-size: 14px;
+        color: $white;
+        background-color: transparent;
+        border: 1px solid rgba($white, 0.2);
+        border-radius: 0;
+        cursor: pointer;
+
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%23FFFFFF' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+
+        option { color: $dark-1; background-color: $white; }
+    }
+
+    &__months-nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__month {
+        a, span {
+            display: block;
+            padding: 8px 0;
+            font-family: $font-family-body;
+            font-size: 14px;
+            color: $white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba($white, 0.08);
+        }
+        a:hover, a:focus-visible {
+            color: $brand-yellow;
+            outline: none;
+        }
+        &--empty span { color: rgba($white, 0.3); cursor: default; }
+    }
+}
+
+// --------------------------------------------------------------------------
+// MONTH SECTION
+// --------------------------------------------------------------------------
+.udp-calendario-month {
+    margin-top: $space-2xl;
+
+    &__title {
+        margin: 0 0 $space-lg;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 1.1;
+        color: $white;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space-md;
+    }
+}
+
+// --------------------------------------------------------------------------
+// ENTRY CALENDARIO
+// --------------------------------------------------------------------------
+.udp-entry-calendario {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: $space-md;
+    padding: $space-md 0;
+    border-bottom: 1px solid rgba($white, 0.1);
+
+    @include media-down(md) {
+        grid-template-columns: 1fr;
+        gap: $space-2xs;
+    }
+
+    &--destacado {
+        padding-inline: $space-md;
+        border-left: 3px solid $brand-yellow;
+        background-color: rgba($brand-yellow, 0.05);
+    }
+
+    &__date {
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 14px;
+        color: $white-70;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+    }
+
+    &__meta {
+        display: flex;
+        gap: $space-2xs;
+        flex-wrap: wrap;
+    }
+
+    &__tag {
+        display: inline-block;
+        padding: 2px 8px;
+        font-family: $font-family-mono;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: $dark-1;
+        background-color: $brand-yellow;
+    }
+
+    &__tipo {
+        display: inline-block;
+        padding: 2px 8px;
+        font-family: $font-family-mono;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: $white-70;
+        border: 1px solid rgba($white, 0.2);
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 1.4;
+        color: $white;
+    }
+
+    &__desc {
+        margin: 0;
+        font-family: $font-family-body;
+        font-size: 14px;
+        line-height: 20px;
+        color: $white-70;
+    }
+
+    &__ics {
+        margin-top: $space-2xs;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: $font-family-body;
+        font-size: 12px;
+        color: $white;
+        text-decoration: none;
+        border: 1px solid rgba($white, 0.2);
+        padding: 6px 12px;
+        border-radius: 9999px;
+        align-self: flex-start;
+        transition: background-color $transition-base, color $transition-base, border-color $transition-base;
+
+        &:hover, &:focus-visible {
+            background-color: $white;
+            color: $dark-1;
+            border-color: $white;
+            outline: none;
+        }
+    }
+}
