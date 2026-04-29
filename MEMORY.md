@@ -488,6 +488,24 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - Eyebrow en entries usa primer término de `tipo-udp` (mostrado como text + border, no yellow pill — el yellow está reservado para destacado).
 
 **Pendientes**:
-- F5b: Concursos archive + single (con descarga PDF).
 - `block_calendario_grid` flex content: diferido a iteración futura.
 - JS active-month tracking en sidebar (IntersectionObserver): defer.
+
+### 2026-04-29 — F5b Concursos académicos archive + single
+
+**Hechos**:
+- `templates/page-concursos.php` asignado a página "Concursos Académicos" (ID 76). Light theme con hero **purple/blue** (`$brand-blue` bg). 2-col grid de cards horizontales (reusa `card-noticia variant=horizontal theme=light`).
+- `single-concurso-academico.php` enrutado para CPT `concurso-academico`. Layout 2-col sidebar (`concurso-meta` partial: fecha + eyebrow facultad) + content (featured image + caption desde `post_excerpt` + body + 2 buttons descarga). Reusa `post-share` partial.
+- Helpers nuevos en `inc/udp-cards.php`: `udp_query_concursos` + `udp_card_data_from_concurso` (eyebrow desde primer término facultad, color yellow).
+- ACF group `cpt_concurso_meta` extendido con field `archivo_formato_propuestas` (file, opcional). Field existente `archivo_concurso` se mapea al botón "Descargar bases".
+- Filtros: facultad + udp_s.
+- 2 SCSS nuevos: `_concursos-archive.scss` (light + purple hero) y `_concursos-single.scss` (layout 2-col + buttons pill outline/primary).
+
+**Decisiones clave**:
+- Caption single = `post_excerpt`. Si el cliente quiere control específico ("Periodo de postulación: hasta..."), añadir ACF dedicado en iteración futura.
+- Buttons primary hover = `$brand-blue` (consistencia con el hero purple).
+- 3 entries en DB → no necesita paginación pero el partial paginate_links se incluye igual (early-returns si max_pages <= 1).
+- `archivo_concurso` usa `return_format: "url"` (string) — concurso-files.php maneja ambos string y array para compatibilidad.
+
+**Pendientes**:
+- F5 cerrado. Próxima fase opcional: F6 (Facultades + Carreras + Centros) o seguir según prioridad del cliente.

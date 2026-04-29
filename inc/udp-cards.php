@@ -420,6 +420,98 @@ function udp_query_agenda( array $filters ): array {
 }
 
 /**
+ * Convierte WP_Post (concurso-academico) a Card shape.
+ * Eyebrow desde primer término de `facultad`. Color hardcoded yellow.
+ * Devuelve null si no hay featured image (igual que noticias).
+ */
+function udp_card_data_from_concurso( WP_Post $post ): ?array {
+    $thumb_id = (int) get_post_thumbnail_id( $post->ID );
+    $imagen_url = '';
+    $imagen_alt = '';
+    $sizes      = array();
+
+    if ( $thumb_id > 0 ) {
+        $imagen_url = wp_get_attachment_image_url( $thumb_id, 'medium_large' ) ?: '';
+        $imagen_alt = (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+        $metadata   = wp_get_attachment_metadata( $thumb_id );
+        $sizes      = is_array( $metadata ) && isset( $metadata['sizes'] ) ? $metadata['sizes'] : array();
+    }
+    if ( ! $imagen_url ) {
+        return null;
+    }
+
+    $eyebrow_text = '';
+    $facultades = get_the_terms( $post->ID, 'facultad' );
+    if ( ! is_wp_error( $facultades ) && ! empty( $facultades ) ) {
+        $eyebrow_text = $facultades[0]->name;
+    }
+
+    return array(
+        'post_id'       => (int) $post->ID,
+        'eyebrow'       => $eyebrow_text,
+        'eyebrow_color' => 'yellow',
+        'titulo'        => get_the_title( $post ),
+        'imagen'        => array(
+            'id'    => $thumb_id,
+            'url'   => $imagen_url,
+            'alt'   => $imagen_alt,
+            'sizes' => $sizes,
+        ),
+        'fecha'         => get_the_date( 'Y-m-d', $post ),
+        'href'          => get_permalink( $post ),
+        'target'        => '',
+    );
+}
+
+/**
+ * Wrapper sobre WP_Query para archive Concursos académicos.
+ */
+function udp_query_concursos( array $filters ): array {
+    $facultad = (int) ( $filters['facultad'] ?? 0 );
+    $s        = trim( (string) ( $filters['s'] ?? '' ) );
+    $paged    = max( 1, (int) ( $filters['paged'] ?? 1 ) );
+    $limit    = max( 1, (int) ( $filters['limit'] ?? 6 ) );
+
+    $args = array(
+        'post_type'      => 'concurso-academico',
+        'post_status'    => 'publish',
+        'posts_per_page' => $limit,
+        'paged'          => $paged,
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+
+    if ( $facultad > 0 ) {
+        $args['tax_query'] = array(
+            array( 'taxonomy' => 'facultad', 'field' => 'term_id', 'terms' => array( $facultad ) ),
+        );
+    }
+    if ( $s !== '' ) {
+        $args['s'] = $s;
+    }
+    if ( empty( $args['need_pagination'] ) ) {
+        $args['no_found_rows'] = ! ( $filters['need_pagination'] ?? false );
+    }
+
+    $q = new WP_Query( $args );
+
+    $cards = array();
+    foreach ( $q->posts as $post ) {
+        $card = udp_card_data_from_concurso( $post );
+        if ( $card ) {
+            $cards[] = $card;
+        }
+    }
+
+    return array(
+        'cards'     => $cards,
+        'total'     => (int) $q->found_posts,
+        'max_pages' => $q->found_posts > 0 ? (int) ceil( $q->found_posts / $limit ) : 0,
+        'paged'     => $paged,
+    );
+}
+
+/**
  * Devuelve los años con entradas de calendario (DESC). Cache 1 día.
  *
  * @return int[]
