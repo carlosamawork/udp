@@ -520,3 +520,20 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 **Decisiones clave**:
 - IntersectionObserver vs scroll listener: el observer es más performante (rAF interno) y no requiere debounce.
 - Topmost-wins logic: cuando dos meses son visibles a la vez (transition entre Enero y Febrero), el de arriba mantiene el active hasta que el de abajo cruza el rootMargin top.
+
+### 2026-04-29 — F5d block_calendario_grid (flex content)
+
+**Hechos**:
+- Layout `block_calendario_grid` añadido al campo flex `content_blocks` del group `group_template_flexible_content` (creado en F4a). Sub-fields: titulo, eyebrow, year, mes (select 'Todo el año' o '01'..'12'), filtros group (tipo + publico), n_items (max 30), theme (dark|light).
+- Helper nuevo `udp_query_calendario_flat` en `inc/udp-cards.php`: similar a `udp_query_calendario` pero devuelve flat list (no agrupado por mes), soporta filter de mes específico via meta_value LIKE 'YYYYMM', limit max 30.
+- Container partial `template-parts/blocks/block-block_calendario_grid.php` (slug-name pattern WP). Reusa partial `entry-calendario.php` (F5a).
+- SCSS nuevo `_block-calendario-grid.scss` con container + theme dark/light. Light theme override colors del entry para mantener contraste.
+- ACF sync via DB UPSERT (UPDATE existing id=55251). jq verify: ambos layouts presentes en JSON.
+- E2E: página de prueba ID 55282 renderizó 5 entries de Marzo 2026 con todas las clases BEM esperadas. Eliminada tras la prueba.
+
+**Decisiones clave**:
+- Helper separado `_flat` en lugar de extender `udp_query_calendario` con flag — mantiene cada función con responsabilidad única.
+- Light theme override — solo el entry necesita ajustes (no el container del block que ya define bg + color base).
+
+**Pendientes**:
+- F5 cerrado (a + b + c + d). F6 en adelante.

@@ -421,6 +421,230 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_block_calendario_grid": {
+                    "key": "layout_block_calendario_grid",
+                    "name": "block_calendario_grid",
+                    "label": "Grid de calendario",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_calendario_grid_titulo",
+                            "label": "Título de la sección",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_calendario_grid_eyebrow",
+                            "label": "Eyebrow",
+                            "name": "eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_calendario_grid_year",
+                            "label": "Año",
+                            "name": "year",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Año de las entries a mostrar.",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 2026,
+                            "min": 2020,
+                            "max": 2099,
+                            "step": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_calendario_grid_mes",
+                            "label": "Mes (opcional)",
+                            "name": "mes",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "": "Todo el año",
+                                "01": "Enero",
+                                "02": "Febrero",
+                                "03": "Marzo",
+                                "04": "Abril",
+                                "05": "Mayo",
+                                "06": "Junio",
+                                "07": "Julio",
+                                "08": "Agosto",
+                                "09": "Septiembre",
+                                "10": "Octubre",
+                                "11": "Noviembre",
+                                "12": "Diciembre"
+                            },
+                            "default_value": false,
+                            "allow_null": 0,
+                            "ui": 1,
+                            "return_format": "value",
+                            "multiple": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_block_calendario_grid_filtros",
+                            "label": "Filtros (opcional)",
+                            "name": "filtros",
+                            "aria-label": "",
+                            "type": "group",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "layout": "block",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_calendario_grid_filtros_tipo",
+                                    "label": "Tipo (tipo-udp)",
+                                    "name": "tipo",
+                                    "aria-label": "",
+                                    "type": "taxonomy",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "taxonomy": "tipo-udp",
+                                    "field_type": "select",
+                                    "return_format": "id",
+                                    "allow_null": 1,
+                                    "multiple": 0,
+                                    "add_term": 1,
+                                    "load_terms": 0,
+                                    "save_terms": 0,
+                                    "bidirectional_target": []
+                                },
+                                {
+                                    "key": "field_block_calendario_grid_filtros_publico",
+                                    "label": "Público (publico-udp)",
+                                    "name": "publico",
+                                    "aria-label": "",
+                                    "type": "taxonomy",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "taxonomy": "publico-udp",
+                                    "field_type": "select",
+                                    "return_format": "id",
+                                    "allow_null": 1,
+                                    "multiple": 0,
+                                    "add_term": 1,
+                                    "load_terms": 0,
+                                    "save_terms": 0,
+                                    "bidirectional_target": []
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_calendario_grid_n_items",
+                            "label": "Número de items",
+                            "name": "n_items",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 10,
+                            "min": 1,
+                            "max": 30,
+                            "step": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_calendario_grid_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "dark",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "max": ""
@@ -445,5 +669,5 @@
     "description": "Campo content_blocks (flexible content) con el layout block_card_grid. Container del bloque y card primitive son template-parts.",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1777388423
+    "modified": 1777558379
 }

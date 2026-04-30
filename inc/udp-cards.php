@@ -658,3 +658,72 @@ function udp_query_calendario( array $filters ): array {
         'year'             => $year,
     );
 }
+
+/**
+ * Flat list de entries de calendario para uso en bloques (no agrupa por mes).
+ *
+ * @param array $filters {
+ *     @type int    $year     YYYY. Default año actual.
+ *     @type string $mes      '01'..'12' o '' para todos.
+ *     @type int    $tipo     term_id tipo-udp.
+ *     @type int    $publico  term_id publico-udp.
+ *     @type int    $limit    Default 10, max 30.
+ * }
+ * @return array<int,array> Lista plana de entries (shape igual a udp_calendario_data_from_post).
+ */
+function udp_query_calendario_flat( array $filters ): array {
+    $year    = (int) ( $filters['year']    ?? (int) date( 'Y' ) );
+    $mes     = (string) ( $filters['mes']  ?? '' );
+    $tipo    = (int) ( $filters['tipo']    ?? 0 );
+    $publico = (int) ( $filters['publico'] ?? 0 );
+    $limit   = max( 1, min( 30, (int) ( $filters['limit'] ?? 10 ) ) );
+
+    // Build meta_query value: 'YYYY' or 'YYYYMM'
+    $meta_value = sprintf( '%04d', $year );
+    if ( $mes !== '' && preg_match( '/^(0[1-9]|1[0-2])$/', $mes ) ) {
+        $meta_value .= $mes;
+    }
+
+    $args = array(
+        'post_type'      => 'calendario',
+        'post_status'    => 'publish',
+        'posts_per_page' => $limit,
+        'meta_key'       => 'fecha',
+        'orderby'        => 'meta_value',
+        'order'          => 'ASC',
+        'no_found_rows'  => true,
+        'meta_query'     => array(
+            array(
+                'key'     => 'fecha',
+                'value'   => $meta_value,
+                'compare' => 'LIKE',
+            ),
+        ),
+    );
+
+    $tax_query = array();
+    if ( $tipo > 0 ) {
+        $tax_query[] = array( 'taxonomy' => 'tipo-udp', 'field' => 'term_id', 'terms' => array( $tipo ) );
+    }
+    if ( $publico > 0 ) {
+        $tax_query[] = array( 'taxonomy' => 'publico-udp', 'field' => 'term_id', 'terms' => array( $publico ) );
+    }
+    if ( count( $tax_query ) > 1 ) {
+        $tax_query['relation'] = 'AND';
+    }
+    if ( ! empty( $tax_query ) ) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    $q = new WP_Query( $args );
+
+    $entries = array();
+    foreach ( $q->posts as $post ) {
+        $entry = udp_calendario_data_from_post( $post );
+        if ( ! empty( $entry['fecha'] ) ) {
+            $entries[] = $entry;
+        }
+    }
+
+    return $entries;
+}
