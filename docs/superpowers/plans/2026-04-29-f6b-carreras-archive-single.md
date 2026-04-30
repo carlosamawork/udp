@@ -31,7 +31,7 @@
 
 **File:** `inc/udp-cards.php`
 
-- [ ] **Step 1: Append AT END**
+- [x] **Step 1: Append AT END**
 
 ```php
 
@@ -104,7 +104,7 @@ function udp_query_carreras( array $filters ): array {
 }
 ```
 
-- [ ] **Step 2: Validar + smoke**
+- [x] **Step 2: Validar + smoke**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -134,7 +134,7 @@ Expected: 42 carreras, primera tiene eyebrow facultad y href.
 
 **File:** `template-parts/archive/carreras-filters.php`
 
-- [ ] **Step 1: Crear**
+- [x] **Step 1: Crear**
 
 ```php
 <?php
@@ -184,7 +184,7 @@ if ( is_wp_error( $facultades ) ) { $facultades = array(); }
 </script>
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/archive/carreras-filters.php
@@ -196,7 +196,7 @@ if ( is_wp_error( $facultades ) ) { $facultades = array(); }
 
 **File:** `templates/page-carreras.php`
 
-- [ ] **Step 1: Crear**
+- [x] **Step 1: Crear**
 
 ```php
 <?php
@@ -276,7 +276,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Asignar a página 12**
+- [x] **Step 2: Asignar a página 12**
 
 ```bash
 export MYSQL_PWD=root
@@ -292,7 +292,7 @@ fi
 $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmeta WHERE post_id=12 AND meta_key='_wp_page_template';"
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templates/page-carreras.php
@@ -307,7 +307,7 @@ $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmet
 - Create: `template-parts/single/carrera-meta.php`
 - Create: `template-parts/single/carrera-links.php`
 
-- [ ] **Step 1: `single-carrera-udp.php`**
+- [x] **Step 1: `single-carrera-udp.php`**
 
 ```php
 <?php
@@ -382,7 +382,7 @@ endwhile;
 get_footer();
 ```
 
-- [ ] **Step 2: `template-parts/single/carrera-meta.php`**
+- [x] **Step 2: `template-parts/single/carrera-meta.php`**
 
 ```php
 <?php
@@ -446,7 +446,7 @@ $url_facultad = (string) get_post_meta( $post_id, 'url_facultad', true );
 </div>
 ```
 
-- [ ] **Step 3: `template-parts/single/carrera-links.php`**
+- [x] **Step 3: `template-parts/single/carrera-links.php`**
 
 ```php
 <?php
@@ -482,7 +482,7 @@ if ( ! is_array( $links ) || empty( $links ) ) return;
 </section>
 ```
 
-- [ ] **Step 4: Validar PHP**
+- [x] **Step 4: Validar PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -500,7 +500,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 - Create: `src/scss/templates/_carreras-single.scss`
 - Modify: `src/scss/main.scss`
 
-- [ ] **Step 1: `_carreras-archive.scss`** (similar a facultades-archive con filters dark)
+- [x] **Step 1: `_carreras-archive.scss`** (similar a facultades-archive con filters dark)
 
 ```scss
 // ==========================================================================
@@ -648,7 +648,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 2: `_carreras-single.scss`**
+- [x] **Step 2: `_carreras-single.scss`**
 
 ```scss
 // ==========================================================================
@@ -864,7 +864,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 3: Imports + build**
+- [x] **Step 3: Imports + build**
 
 Edit `src/scss/main.scss`. Añadir 2 imports después de los templates existentes:
 
@@ -883,7 +883,7 @@ cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run 
 
 ## Task 6: E2E + MEMORY + commit
 
-- [ ] **Step 1: Verify archive**
+- [x] **Step 1: Verify archive**
 
 ```bash
 TS=$(date +%s)
@@ -899,7 +899,7 @@ curl -sL "http://localhost:8888/udp/carreras/?nocache=$TS" | grep -cE 'class="ud
 
 Expected: HTTP 200 (after redirect), classes presentes, 42 cards.
 
-- [ ] **Step 2: Verify filtro facultad**
+- [x] **Step 2: Verify filtro facultad**
 
 ```bash
 export MYSQL_PWD=root
@@ -915,7 +915,7 @@ curl -sL "http://localhost:8888/udp/carreras/?udp_facultad=$FAC_ID&nocache=$TS" 
 
 Expected: número < 42.
 
-- [ ] **Step 3: Verify single**
+- [x] **Step 3: Verify single**
 
 ```bash
 SLUG=$(/Applications/MAMP/Library/bin/mysql80/bin/mysql --socket=/Applications/MAMP/tmp/mysql/mysql.sock -uroot udp -sN -e "
@@ -932,7 +932,7 @@ echo "=== Back + Atributos + Buttons ==="
 curl -sL "http://localhost:8888/udp/carrera-udp/$SLUG/?nocache=$TS" | grep -E "Volver a Carreras|Información de admisión|Sitio de la facultad|Enlaces relacionados" | head -5
 ```
 
-- [ ] **Step 4: Cleanup + MEMORY + commit**
+- [x] **Step 4: Cleanup + MEMORY + commit**
 
 ```bash
 rm -f /tmp/test-carreras.php
