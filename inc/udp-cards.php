@@ -703,6 +703,74 @@ function udp_card_data_from_facultad_term( WP_Term $term ): array {
 }
 
 /**
+ * Convierte WP_Post (carrera-udp) a Card mosaic shape con eyebrow facultad.
+ * href = link_directo si existe, sino permalink. Image opcional (placeholder).
+ */
+function udp_card_data_from_carrera( WP_Post $post ): array {
+    $thumb_id = (int) get_post_thumbnail_id( $post->ID );
+    $imagen_url = '';
+    $imagen_alt = '';
+    if ( $thumb_id > 0 ) {
+        $imagen_url = wp_get_attachment_image_url( $thumb_id, 'medium_large' ) ?: '';
+        $imagen_alt = (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+    }
+
+    $eyebrow_text = '';
+    $facultades = get_the_terms( $post->ID, 'facultad' );
+    if ( ! is_wp_error( $facultades ) && ! empty( $facultades ) ) {
+        $eyebrow_text = $facultades[0]->name;
+    }
+
+    $link_directo = (string) get_post_meta( $post->ID, 'link_directo', true );
+    $href   = $link_directo ?: get_permalink( $post );
+    $target = $link_directo ? '_blank' : '';
+
+    return array(
+        'post_id'   => (int) $post->ID,
+        'titulo'    => get_the_title( $post ),
+        'imagen'    => array( 'url' => $imagen_url, 'alt' => $imagen_alt ),
+        'has_image' => $imagen_url !== '',
+        'eyebrow'   => $eyebrow_text,
+        'href'      => $href,
+        'target'    => $target,
+    );
+}
+
+/**
+ * Wrapper sobre WP_Query para archive Carreras.
+ */
+function udp_query_carreras( array $filters ): array {
+    $facultad = (int) ( $filters['facultad'] ?? 0 );
+    $s        = trim( (string) ( $filters['s'] ?? '' ) );
+
+    $args = array(
+        'post_type'      => 'carrera-udp',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+        'no_found_rows'  => true,
+    );
+
+    if ( $facultad > 0 ) {
+        $args['tax_query'] = array(
+            array( 'taxonomy' => 'facultad', 'field' => 'term_id', 'terms' => array( $facultad ) ),
+        );
+    }
+    if ( $s !== '' ) {
+        $args['s'] = $s;
+    }
+
+    $q = new WP_Query( $args );
+
+    $cards = array();
+    foreach ( $q->posts as $post ) {
+        $cards[] = udp_card_data_from_carrera( $post );
+    }
+    return $cards;
+}
+
+/**
  * Devuelve cards de todos los términos de la taxonomía 'facultad'.
  * Order alfabético, hide_empty FALSE para incluir todos.
  *

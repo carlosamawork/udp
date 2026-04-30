@@ -554,7 +554,25 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - Mosaic primitive separado del archive container para reuso en F6b/F6c.
 
 **Pendientes**:
-- F6b: Archive Carreras (reusa mosaic + filtros legacy facultad+search) + single-carrera-udp.
+- F6b: COMPLETADO (ver entrada siguiente).
 - F6c: Archive Centros + single simple.
 - F6 extras: `block_facultades_mosaic` flex content (mismo mosaic insertable como widget) — diferido.
 - Subir las 12 imágenes de facultad faltantes en admin para que el placeholder se reemplace.
+
+### 2026-04-29 — F6b Carreras archive + single
+
+**Hechos**:
+- `templates/page-carreras.php` asignado a página "Carreras" (ID 12). Theme dark, mosaico 5-col reusando `card-mosaic` con eyebrow facultad. Filtros legacy: facultad dropdown + udp_s.
+- Helpers en `inc/udp-cards.php`: `udp_query_carreras` (no pagina, todos los 42 a la vez ASC por título) + `udp_card_data_from_carrera` (eyebrow facultad, href = link_directo target=_blank si existe sino permalink).
+- `single-carrera-udp.php` enrutado para CPT carrera-udp. Light theme, 2-col sidebar (atributos repeater + 2 buttons url_admision/url_facultad) + content con featured + post_content + links repeater al final. Reusa post-share.
+- 2 partials nuevos: `carrera-meta.php` (sidebar con atributos como definition list + buttons) y `carrera-links.php` (repeater de links extras al final).
+- 2 SCSS nuevos: `_carreras-archive.scss` (dark con filters dark inline) y `_carreras-single.scss` (light + sidebar 2-col + buttons pill outline/primary + links list).
+
+**Decisiones clave**:
+- `link_directo` con `target=_blank` mantiene comportamiento legacy: muchas carreras linkean a sitios externos del programa, no a una página dentro del CMS.
+- No pagination — 42 carreras caben en un scroll.
+- Atributos repeater (titulo + valor) se renderiza como definition list en sidebar — patrón consistente con event-meta.
+
+**Pendientes**:
+- F6c: Centros archive + single simple.
+- Algunas carreras pueden no tener link_directo — esas linkean a su single (donde aterrizan en single-carrera-udp.php).
