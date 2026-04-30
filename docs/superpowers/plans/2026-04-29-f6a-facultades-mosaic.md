@@ -28,7 +28,7 @@
 
 **File:** `inc/udp-cards.php`
 
-- [ ] **Step 1: Append AT END del archivo**
+- [x] **Step 1: Append AT END del archivo**
 
 ```php
 
@@ -98,7 +98,7 @@ function udp_query_facultades(): array {
 }
 ```
 
-- [ ] **Step 2: Validar PHP + smoke test**
+- [x] **Step 2: Validar PHP + smoke test**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -128,7 +128,7 @@ Expected: ~14 cards (10 facultades + Carreras Vespertinas + Centro para las Huma
 
 **File:** `template-parts/blocks/parts/card-mosaic.php`
 
-- [ ] **Step 1: Crear**
+- [x] **Step 1: Crear**
 
 ```php
 <?php
@@ -185,7 +185,7 @@ $media_class = 'udp-card-mosaic__media' . ( $has_img ? '' : ' udp-card-mosaic__m
 </a>
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/parts/card-mosaic.php
@@ -197,7 +197,7 @@ $media_class = 'udp-card-mosaic__media' . ( $has_img ? '' : ' udp-card-mosaic__m
 
 **File:** `templates/page-facultades.php`
 
-- [ ] **Step 1: Crear page template**
+- [x] **Step 1: Crear page template**
 
 ```php
 <?php
@@ -265,7 +265,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Asignar a página 14**
+- [x] **Step 2: Asignar a página 14**
 
 ```bash
 export MYSQL_PWD=root
@@ -281,7 +281,7 @@ fi
 $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmeta WHERE post_id=14 AND meta_key='_wp_page_template';"
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templates/page-facultades.php
@@ -296,7 +296,7 @@ $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmet
 - Create: `src/scss/templates/_facultades-archive.scss`
 - Modify: `src/scss/main.scss`
 
-- [ ] **Step 1: `_card-mosaic.scss`**
+- [x] **Step 1: `_card-mosaic.scss`**
 
 ```scss
 // ==========================================================================
@@ -388,7 +388,7 @@ $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmet
 }
 ```
 
-- [ ] **Step 2: `_facultades-archive.scss`**
+- [x] **Step 2: `_facultades-archive.scss`**
 
 ```scss
 // ==========================================================================
@@ -480,7 +480,7 @@ $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmet
 }
 ```
 
-- [ ] **Step 3: Imports en main.scss + build**
+- [x] **Step 3: Imports en main.scss + build**
 
 Edit `src/scss/main.scss`. Añadir después del último `@import "blocks/...";`:
 
@@ -504,7 +504,7 @@ cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run 
 
 ## Task 5: E2E + MEMORY + commit
 
-- [ ] **Step 1: Verify**
+- [x] **Step 1: Verify**
 
 ```bash
 TS=$(date +%s)
@@ -523,13 +523,13 @@ curl -s "http://localhost:8888/udp/facultades/?nocache=$TS" | grep -cE 'udp-card
 
 Expected: HTTP 200, classes presentes, ~14 cards (10-14 según data), ~12 placeholders.
 
-- [ ] **Step 2: Cleanup**
+- [x] **Step 2: Cleanup**
 
 ```bash
 rm -f /tmp/test-facultades.php
 ```
 
-- [ ] **Step 3: MEMORY + commit**
+- [x] **Step 3: MEMORY + commit**
 
 Append a MEMORY.md:
 
