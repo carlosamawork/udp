@@ -35,6 +35,7 @@ import { initScrollAnimations } from '@modules/scroll-animations';
 import { initMobileMenu } from '@modules/mobile-menu';
 import { initSectionLandingSwiper } from '@modules/section-landing-swiper';
 import { initSinglePostGallery } from '@modules/single-post-gallery';
+import { initCalendarioActiveMonth } from '@modules/calendario-active-month';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -55,6 +56,7 @@ domReady(() => {
     initMobileMenu();
     initSectionLandingSwiper();
     initSinglePostGallery();
+    initCalendarioActiveMonth();
 
     console.log('[StarterBS5] Theme initialized');
 });

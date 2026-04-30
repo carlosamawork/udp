@@ -155,12 +155,18 @@
             color: $white;
             text-decoration: none;
             border-bottom: 1px solid rgba($white, 0.08);
+            transition: color $transition-base;
         }
         a:hover, a:focus-visible {
             color: $brand-yellow;
             outline: none;
         }
         &--empty span { color: rgba($white, 0.3); cursor: default; }
+    }
+
+    &__month-link--active {
+        color: $brand-yellow !important;
+        font-weight: 600;
     }
 }
 

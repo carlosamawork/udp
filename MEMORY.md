@@ -509,3 +509,14 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 **Pendientes**:
 - F5 cerrado. Próxima fase opcional: F6 (Facultades + Carreras + Centros) o seguir según prioridad del cliente.
+
+### 2026-04-29 — F5c Active-month tracking en Calendario sidebar
+
+**Hechos**:
+- JS module `src/js/modules/calendario-active-month.js`: IntersectionObserver que marca el link del mes correspondiente con clase `udp-calendario-sidebar__month-link--active` cuando esa sección está visible. Si hay múltiples secciones visibles, la topmost (más arriba en viewport) gana.
+- `rootMargin: '-120px 0px -50% 0px'` ancla el "punto activo" justo bajo el sticky header.
+- Wire en `src/js/main.js`. SCSS modifier `--active` con color `$brand-yellow` y font-weight 600.
+
+**Decisiones clave**:
+- IntersectionObserver vs scroll listener: el observer es más performante (rAF interno) y no requiere debounce.
+- Topmost-wins logic: cuando dos meses son visibles a la vez (transition entre Enero y Febrero), el de arriba mantiene el active hasta que el de abajo cruza el rootMargin top.
