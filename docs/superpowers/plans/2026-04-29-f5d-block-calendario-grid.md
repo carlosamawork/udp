@@ -27,7 +27,7 @@
 
 **File:** `inc/udp-cards.php`
 
-- [ ] **Step 1: Append AT END del archivo**
+- [x] **Step 1: Append AT END del archivo**
 
 ```php
 
@@ -101,7 +101,7 @@ function udp_query_calendario_flat( array $filters ): array {
 }
 ```
 
-- [ ] **Step 2: Validar PHP + smoke test**
+- [x] **Step 2: Validar PHP + smoke test**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -133,7 +133,7 @@ Expected: count > 0 (entries de marzo 2026), todos count = 3.
 
 **File:** `acf-json/group_template_flexible_content.json`
 
-- [ ] **Step 1: Read current JSON to understand structure**
+- [x] **Step 1: Read current JSON to understand structure**
 
 ```bash
 jq '.fields[0].layouts | keys' /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_template_flexible_content.json
@@ -141,7 +141,7 @@ jq '.fields[0].layouts | keys' /Applications/MAMP/htdocs/udp/cms/wp-content/them
 
 Expected: `["layout_block_card_grid"]` (solo el de F4a). Añadiremos `layout_block_calendario_grid`.
 
-- [ ] **Step 2: Editar el JSON añadiendo el nuevo layout**
+- [x] **Step 2: Editar el JSON añadiendo el nuevo layout**
 
 Edit el archivo. Localizar el objeto `"layouts": { "layout_block_card_grid": { ... } }` y añadir un segundo key `"layout_block_calendario_grid"` con esta definición:
 
@@ -262,7 +262,7 @@ jq '.fields[0].layouts | keys' "$JSON_PATH"
 
 Expected: `["layout_block_calendario_grid", "layout_block_card_grid"]` (orden alfabético).
 
-- [ ] **Step 3: Sync via DB-direct UPSERT**
+- [x] **Step 3: Sync via DB-direct UPSERT**
 
 Crear `/tmp/acf-sync-flex.php`:
 
@@ -299,7 +299,7 @@ Expected: UPDATE existing.
 
 **File:** `template-parts/blocks/block-block_calendario_grid.php`
 
-- [ ] **Step 1: Crear el container**
+- [x] **Step 1: Crear el container**
 
 ```php
 <?php
@@ -376,7 +376,7 @@ $container_class = 'udp-block-calendario-grid udp-block-calendario-grid--' . $th
 </section>
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/blocks/block-block_calendario_grid.php
@@ -388,7 +388,7 @@ $container_class = 'udp-block-calendario-grid udp-block-calendario-grid--' . $th
 
 **File:** `src/scss/blocks/_block-calendario-grid.scss`
 
-- [ ] **Step 1: Crear**
+- [x] **Step 1: Crear**
 
 ```scss
 // ==========================================================================
@@ -480,7 +480,7 @@ $container_class = 'udp-block-calendario-grid udp-block-calendario-grid--' . $th
 }
 ```
 
-- [ ] **Step 2: Importar en main.scss**
+- [x] **Step 2: Importar en main.scss**
 
 Edit `src/scss/main.scss`. Localizar la sección de `@import "blocks/...";` y añadir:
 
@@ -488,7 +488,7 @@ Edit `src/scss/main.scss`. Localizar la sección de `@import "blocks/...";` y a�
 @import "blocks/block-calendario-grid";
 ```
 
-- [ ] **Step 3: Build**
+- [x] **Step 3: Build**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run build 2>&1 | tail -3
@@ -498,7 +498,7 @@ cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run 
 
 ## Task 5: E2E + MEMORY + commit
 
-- [ ] **Step 1: Crear página flex de prueba con bloque calendario**
+- [x] **Step 1: Crear página flex de prueba con bloque calendario**
 
 ```bash
 export MYSQL_PWD=root
@@ -538,7 +538,7 @@ echo $id;
 echo "PAGE_ID=$PAGE_ID"
 ```
 
-- [ ] **Step 2: Curl + verificar**
+- [x] **Step 2: Curl + verificar**
 
 ```bash
 TS=$(date +%s)
@@ -550,7 +550,7 @@ curl -s "http://localhost:8888/udp/test-block-calendario/?nocache=$TS" | grep -c
 
 Expected: classes presentes, entries > 0.
 
-- [ ] **Step 3: Borrar página de prueba + cleanup**
+- [x] **Step 3: Borrar página de prueba + cleanup**
 
 ```bash
 /Applications/MAMP/Library/bin/mysql80/bin/mysql --socket=$SOCK -uroot udp -e "
@@ -560,7 +560,7 @@ rm -f /tmp/test-flat.php /tmp/acf-sync-flex.php /tmp/new-cal-layout.json
 echo "Cleanup OK"
 ```
 
-- [ ] **Step 4: Update MEMORY.md**
+- [x] **Step 4: Update MEMORY.md**
 
 Append:
 
@@ -582,7 +582,7 @@ Append:
 - F5 cerrado (a + b + c + d). F6 en adelante.
 ```
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme
