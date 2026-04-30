@@ -537,3 +537,24 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 **Pendientes**:
 - F5 cerrado (a + b + c + d). F6 en adelante.
+
+### 2026-04-29 — F6a Facultades landing + mosaic primitive
+
+**Hechos**:
+- `templates/page-facultades.php` asignado a página "Facultades" (ID 14, hija de "Pregrado y Formación General"). Theme dark, mosaico 5-col responsive (5 → 3 en lg → 2 en mobile).
+- Helpers nuevos: `udp_query_facultades` (itera términos de tax facultad) + `udp_card_data_from_facultad_term` (mapea término a card mosaic shape, image desde ACF imagen_taxonomia, link via `get_page_by_title($term_name)` con fallback a term archive).
+- Card primitive `card-mosaic.php` reutilizable por Carreras (F6b con eyebrow) y Centros (F6c). Soporta theme dark/light + placeholder hatching cuando no hay imagen.
+- 2 SCSS nuevos: `_card-mosaic.scss` (primitive con dark/light variants) y `_facultades-archive.scss` (page con grid 5-col responsive).
+
+**Decisiones clave**:
+- 14 términos en taxonomía facultad pero solo 2 con `imagen_taxonomia` poblada en ACF — el placeholder hatching cubre los 12 restantes hasta que se carguen las imágenes.
+- ACF devuelve la URL como string plano (return format 'url') no como array — se añadió rama `elseif is_string()` al helper para manejar este caso correctamente.
+- Match término → página dedicada por exact title (`get_page_by_title`). Funciona para las 9-10 facultades que tienen su landing existente. Resto cae a term archive `/facultad/{slug}/`.
+- Página 14 vive bajo `/pregrado-y-formacion-general/facultades/` — WordPress redirige `/facultades/` ahí (301 esperado).
+- Mosaic primitive separado del archive container para reuso en F6b/F6c.
+
+**Pendientes**:
+- F6b: Archive Carreras (reusa mosaic + filtros legacy facultad+search) + single-carrera-udp.
+- F6c: Archive Centros + single simple.
+- F6 extras: `block_facultades_mosaic` flex content (mismo mosaic insertable como widget) — diferido.
+- Subir las 12 imágenes de facultad faltantes en admin para que el placeholder se reemplace.

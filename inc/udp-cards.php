@@ -660,6 +660,74 @@ function udp_query_calendario( array $filters ): array {
 }
 
 /**
+ * Convierte un término de taxonomía 'facultad' a Card mosaic shape.
+ * Image desde ACF imagen_taxonomia (puede ser null → placeholder).
+ * Link prefiere página dedicada (match por exact title); fallback a term archive.
+ *
+ * @return array { titulo, imagen, color, href, has_image }
+ */
+function udp_card_data_from_facultad_term( WP_Term $term ): array {
+    $imagen = function_exists( 'get_field' ) ? get_field( 'imagen_taxonomia', $term ) : null;
+    $color  = function_exists( 'get_field' ) ? (string) get_field( 'color', $term ) : '';
+
+    $imagen_url = '';
+    $imagen_alt = '';
+    if ( is_array( $imagen ) ) {
+        $imagen_url = $imagen['sizes']['medium_large'] ?? ( $imagen['url'] ?? '' );
+        $imagen_alt = $imagen['alt'] ?? '';
+    } elseif ( is_numeric( $imagen ) && (int) $imagen > 0 ) {
+        $imagen_url = wp_get_attachment_image_url( (int) $imagen, 'medium_large' ) ?: '';
+        $imagen_alt = (string) get_post_meta( (int) $imagen, '_wp_attachment_image_alt', true );
+    } elseif ( is_string( $imagen ) && filter_var( $imagen, FILTER_VALIDATE_URL ) ) {
+        // ACF may return a plain URL string when the field return format is 'url'.
+        $imagen_url = $imagen;
+    }
+
+    // Link: página dedicada exacta por título → fallback a term archive
+    $page = get_page_by_title( $term->name, OBJECT, 'page' );
+    if ( $page && $page->post_status === 'publish' ) {
+        $href = get_permalink( $page );
+    } else {
+        $term_link = get_term_link( $term );
+        $href = is_wp_error( $term_link ) ? '#' : $term_link;
+    }
+
+    return array(
+        'term_id'   => (int) $term->term_id,
+        'titulo'    => $term->name,
+        'imagen'    => array( 'url' => $imagen_url, 'alt' => $imagen_alt ),
+        'color'     => $color,
+        'href'      => $href,
+        'has_image' => $imagen_url !== '',
+    );
+}
+
+/**
+ * Devuelve cards de todos los términos de la taxonomía 'facultad'.
+ * Order alfabético, hide_empty FALSE para incluir todos.
+ *
+ * @return array<int,array>
+ */
+function udp_query_facultades(): array {
+    $terms = get_terms( array(
+        'taxonomy'   => 'facultad',
+        'hide_empty' => false,
+        'orderby'    => 'name',
+        'order'      => 'ASC',
+    ) );
+
+    if ( is_wp_error( $terms ) || empty( $terms ) ) {
+        return array();
+    }
+
+    $cards = array();
+    foreach ( $terms as $term ) {
+        $cards[] = udp_card_data_from_facultad_term( $term );
+    }
+    return $cards;
+}
+
+/**
  * Flat list de entries de calendario para uso en bloques (no agrupa por mes).
  *
  * @param array $filters {
