@@ -28,7 +28,7 @@
 
 **File:** `inc/udp-cards.php`
 
-- [ ] **Step 1: Append AT END**
+- [x] **Step 1: Append AT END**
 
 ```php
 
@@ -81,7 +81,7 @@ function udp_query_centros(): array {
 }
 ```
 
-- [ ] **Step 2: Validar PHP + smoke test**
+- [x] **Step 2: Validar PHP + smoke test**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/inc/udp-cards.php
@@ -111,7 +111,7 @@ Expected: 55 centros, primero con title.
 
 **File:** `templates/page-centros.php`
 
-- [ ] **Step 1: Crear**
+- [x] **Step 1: Crear**
 
 ```php
 <?php
@@ -175,7 +175,7 @@ get_header();
 get_footer();
 ```
 
-- [ ] **Step 2: Asignar a página 16**
+- [x] **Step 2: Asignar a página 16**
 
 ```bash
 export MYSQL_PWD=root
@@ -191,7 +191,7 @@ fi
 $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmeta WHERE post_id=16 AND meta_key='_wp_page_template';"
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templates/page-centros.php
@@ -203,7 +203,7 @@ $MYSQL --socket=$SOCK -uroot udp -sN -e "SELECT meta_value FROM wp_fnku4ypostmet
 
 **File:** `single-centro-udp.php`
 
-- [ ] **Step 1: Crear**
+- [x] **Step 1: Crear**
 
 ```php
 <?php
@@ -276,7 +276,7 @@ endwhile;
 get_footer();
 ```
 
-- [ ] **Step 2: Validar PHP**
+- [x] **Step 2: Validar PHP**
 
 ```bash
 /Applications/MAMP/bin/php/php8.4.1/bin/php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/single-centro-udp.php
@@ -291,7 +291,7 @@ get_footer();
 - Create: `src/scss/templates/_centros-single.scss`
 - Modify: `src/scss/main.scss`
 
-- [ ] **Step 1: `_centros-archive.scss`**
+- [x] **Step 1: `_centros-archive.scss`**
 
 ```scss
 // ==========================================================================
@@ -375,7 +375,7 @@ get_footer();
 }
 ```
 
-- [ ] **Step 2: `_centros-single.scss`**
+- [x] **Step 2: `_centros-single.scss`**
 
 ```scss
 // ==========================================================================
@@ -489,7 +489,7 @@ get_footer();
 }
 ```
 
-- [ ] **Step 3: Imports + build**
+- [x] **Step 3: Imports + build**
 
 Edit `src/scss/main.scss`. Añadir 2 imports después de `templates/carreras-single`:
 
@@ -508,7 +508,7 @@ cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run 
 
 ## Task 5: E2E + MEMORY + commit
 
-- [ ] **Step 1: Verify archive**
+- [x] **Step 1: Verify archive**
 
 ```bash
 TS=$(date +%s)
@@ -524,7 +524,7 @@ curl -sL "http://localhost:8888/udp/centros-interdisciplinarios/?nocache=$TS" | 
 
 Expected: HTTP 200 final, 55 cards.
 
-- [ ] **Step 2: Verify single**
+- [x] **Step 2: Verify single**
 
 ```bash
 export MYSQL_PWD=root
@@ -537,13 +537,13 @@ curl -sL "http://localhost:8888/udp/centro-udp/$SLUG/?nocache=$TS" | grep -oE "u
 curl -sL "http://localhost:8888/udp/centro-udp/$SLUG/?nocache=$TS" | grep -E "Volver a Centros|Visitar sitio del centro" | head -3
 ```
 
-- [ ] **Step 3: Cleanup**
+- [x] **Step 3: Cleanup**
 
 ```bash
 rm -f /tmp/test-centros.php
 ```
 
-- [ ] **Step 4: MEMORY + commit**
+- [x] **Step 4: MEMORY + commit**
 
 Append a MEMORY.md:
 
