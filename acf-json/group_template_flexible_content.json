@@ -1459,6 +1459,429 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_block_people_list": {
+                    "key": "layout_block_people_list",
+                    "name": "block_people_list",
+                    "label": "Lista de personas",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_people_titulo",
+                            "label": "Título (opcional)",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_people_eyebrow",
+                            "label": "Eyebrow (opcional)",
+                            "name": "eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_people_columnas",
+                            "label": "Columnas",
+                            "name": "columnas",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "3": "3",
+                                "4": "4",
+                                "5": "5"
+                            },
+                            "default_value": 4,
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_people_personas",
+                            "label": "Personas",
+                            "name": "personas",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 1,
+                            "layout": "block",
+                            "button_label": "Agregar persona",
+                            "max": 0,
+                            "rows_per_page": 20,
+                            "collapsed": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_people_persona_foto",
+                                    "label": "Foto",
+                                    "name": "foto",
+                                    "aria-label": "",
+                                    "type": "image",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "thumbnail",
+                                    "library": "all",
+                                    "min_width": 0,
+                                    "min_height": 0,
+                                    "min_size": 0,
+                                    "max_width": 0,
+                                    "max_height": 0,
+                                    "max_size": 0,
+                                    "mime_types": "",
+                                    "parent_repeater": "field_block_people_personas"
+                                },
+                                {
+                                    "key": "field_block_people_persona_nombre",
+                                    "label": "Nombre",
+                                    "name": "nombre",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_people_personas"
+                                },
+                                {
+                                    "key": "field_block_people_persona_cargo",
+                                    "label": "Cargo \/ Rol",
+                                    "name": "cargo",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_people_personas"
+                                },
+                                {
+                                    "key": "field_block_people_persona_descripcion",
+                                    "label": "Descripción (opcional, 1-2 líneas)",
+                                    "name": "descripcion",
+                                    "aria-label": "",
+                                    "type": "textarea",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "rows": 2,
+                                    "default_value": "",
+                                    "new_lines": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "parent_repeater": "field_block_people_personas"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_people_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "light",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_block_premios_list": {
+                    "key": "layout_block_premios_list",
+                    "name": "block_premios_list",
+                    "label": "Lista de premios",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_premios_titulo",
+                            "label": "Título (opcional)",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_premios_eyebrow",
+                            "label": "Eyebrow (opcional)",
+                            "name": "eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_premios_premios",
+                            "label": "Premios",
+                            "name": "premios",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 1,
+                            "layout": "block",
+                            "button_label": "Agregar premio",
+                            "max": 0,
+                            "rows_per_page": 20,
+                            "collapsed": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_premios_premio_ano",
+                                    "label": "Año",
+                                    "name": "ano",
+                                    "aria-label": "",
+                                    "type": "number",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "min": 1900,
+                                    "max": 2099,
+                                    "default_value": "",
+                                    "step": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_premios_premios"
+                                },
+                                {
+                                    "key": "field_block_premios_premio_titulo",
+                                    "label": "Título del premio",
+                                    "name": "titulo",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_premios_premios"
+                                },
+                                {
+                                    "key": "field_block_premios_premio_persona",
+                                    "label": "Persona \/ Recipient (opcional)",
+                                    "name": "persona",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_premios_premios"
+                                },
+                                {
+                                    "key": "field_block_premios_premio_descripcion",
+                                    "label": "Descripción (opcional)",
+                                    "name": "descripcion",
+                                    "aria-label": "",
+                                    "type": "textarea",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "rows": 3,
+                                    "default_value": "",
+                                    "new_lines": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "parent_repeater": "field_block_premios_premios"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_premios_orden",
+                            "label": "Orden",
+                            "name": "orden",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "desc": "Más recientes primero",
+                                "asc": "Más antiguos primero",
+                                "manual": "Manual (orden de captura)"
+                            },
+                            "default_value": "desc",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_premios_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "light",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "max": ""
@@ -1483,5 +1906,5 @@
     "description": "Campo content_blocks (flexible content) con el layout block_card_grid. Container del bloque y card primitive son template-parts.",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1777993799
+    "modified": 1778001053
 }

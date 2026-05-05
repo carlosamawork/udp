@@ -1,0 +1,147 @@
+// ==========================================================================
+// BLOCK PEOPLE LIST — grid de personas con foto + nombre + cargo + desc.
+// ==========================================================================
+
+.udp-block-people-list {
+    padding: $space-3xl 0;
+
+    &--dark  { background-color: $dark-1; color: $white; }
+    &--light { background-color: $white;  color: $dark-1; }
+
+    &__inner {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding-inline: $space-3xl;
+        @include media-down(md) { padding-inline: $space-sm; }
+    }
+
+    &__header {
+        margin-bottom: $space-xl;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+    }
+
+    &__eyebrow {
+        margin: 0;
+        font-family: $font-family-mono;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $white-70;
+        .udp-block-people-list--light & { color: $dark-2; }
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: $space-xl 30px;
+    }
+
+    &--cols-3 &__list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    &--cols-4 &__list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    &--cols-5 &__list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+    @include media-down(lg) {
+        &__list { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    }
+    @include media-down(md) {
+        &__list { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: $space-md; }
+    }
+    @include media-down(sm) {
+        &__list { grid-template-columns: 1fr !important; }
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+    }
+
+    &__media {
+        margin: 0;
+        overflow: hidden;
+        background: $dark-2;
+        aspect-ratio: 4 / 5;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        &--placeholder {
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    $dark-2,
+                    $dark-2 8px,
+                    rgba($white, 0.04) 8px,
+                    rgba($white, 0.04) 16px
+                );
+        }
+
+        .udp-block-people-list--light & {
+            background: rgba($dark-1, 0.06);
+
+            &--placeholder {
+                background:
+                    repeating-linear-gradient(
+                        45deg,
+                        rgba($dark-1, 0.05),
+                        rgba($dark-1, 0.05) 8px,
+                        rgba($dark-1, 0.1) 8px,
+                        rgba($dark-1, 0.1) 16px
+                    );
+            }
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding-top: $space-2xs;
+    }
+
+    &__nombre {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.3;
+        color: inherit;
+    }
+
+    &__cargo {
+        margin: 0;
+        font-family: $font-family-mono;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $white-70;
+
+        .udp-block-people-list--light & { color: $dark-2; }
+    }
+
+    &__desc {
+        margin: 0;
+        font-family: $font-family-body;
+        font-size: 13px;
+        line-height: 1.4;
+        color: $white-70;
+
+        .udp-block-people-list--light & { color: rgba($dark-1, 0.7); }
+    }
+}

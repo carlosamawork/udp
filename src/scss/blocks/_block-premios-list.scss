@@ -1,0 +1,108 @@
+// ==========================================================================
+// BLOCK PREMIOS LIST — lista cronológica de premios con año destacado.
+// Cada item: año (col grande izquierda) + body (premio + persona + desc).
+// ==========================================================================
+
+.udp-block-premios-list {
+    padding: $space-3xl 0;
+
+    &--dark  { background-color: $dark-1; color: $white; }
+    &--light { background-color: $white;  color: $dark-1; }
+
+    &__inner {
+        max-width: 1080px;
+        margin-inline: auto;
+        padding-inline: $space-3xl;
+        @include media-down(md) { padding-inline: $space-sm; }
+    }
+
+    &__header {
+        margin-bottom: $space-xl;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+    }
+
+    &__eyebrow {
+        margin: 0;
+        font-family: $font-family-mono;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: $white-70;
+        .udp-block-premios-list--light & { color: $dark-2; }
+    }
+
+    &__title {
+        margin: 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: $space-md;
+        padding: $space-md 0;
+        border-top: 1px solid currentColor;
+        opacity: 1;
+
+        &:last-child { border-bottom: 1px solid currentColor; }
+
+        @include media-down(md) {
+            grid-template-columns: 80px 1fr;
+            gap: $space-sm;
+        }
+    }
+
+    &__year {
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 1;
+        color: $brand-yellow;
+
+        @include media-down(md) { font-size: 24px; }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+    }
+
+    &__premio {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 1.3;
+        color: inherit;
+    }
+
+    &__persona {
+        margin: 0;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 14px;
+        color: inherit;
+    }
+
+    &__desc {
+        margin: 0;
+        font-family: $font-family-body;
+        font-size: 14px;
+        line-height: 1.4;
+        color: $white-70;
+
+        .udp-block-premios-list--light & { color: rgba($dark-1, 0.7); }
+    }
+}

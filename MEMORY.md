@@ -634,5 +634,27 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - Gallery duplica el patrón de single-post-gallery: `data-udp-block-gallery` selector, lazy import Swiper, navigation buttons custom UDP.
 
 **Pendientes**:
-- F7c: block_premios_list + block_people_list (repeaters estructurados con foto/cargo).
 - 11 landings de contenido en admin.
+
+---
+
+### 2026-04-29 — F7c block_people_list + block_premios_list
+
+**Hechos**:
+- 2 layouts añadidos al field flex `content_blocks`:
+  - `block_people_list`: repeater de personas (foto + nombre + cargo + descripcion). Grid responsive 3/4/5 → 3 → 2 → 1 cols. Foto aspect-ratio 4/5 con placeholder hatching cuando no hay foto.
+  - `block_premios_list`: repeater de premios (año + título + persona + descripción). Layout grid 2-col (año destacado izquierda, body derecha). Año en Arizona Flare 32px color `$brand-yellow`. Border-top entre items + border-bottom en el último.
+- Sort de premios server-side (PHP usort) según `orden` field: desc (default, recientes primero), asc, o manual (orden de captura).
+- Theme dark/light en ambos.
+- 2 SCSS nuevos: `_block-people-list.scss` (grid people responsive con placeholder consistent con F4-F6) y `_block-premios-list.scss` (table-like rows con año destacado yellow).
+
+**Decisiones clave**:
+- Default theme = light en ambos (van en páginas tipo Consejo Académico, Premios Nacionales que en Figma son fondo blanco).
+- `block_premios_list` no tiene CPT auto-source — los premios se gestionan manualmente vía repeater. Si en el futuro hay un CPT `premio`, se puede extender el helper como con noticias/agenda.
+- Año del premio en `$brand-yellow` es la única acentuación de color — match con la paleta UDP donde el yellow es para destacar.
+
+**F7 cerrado** (a + b + c). Total 7 bloques flex content nuevos: huincha + embed + big_buttons + image_gallery + accordion + people_list + premios_list. Más los 2 anteriores (card_grid F4a + calendario_grid F5d) = **9 layouts** en `group_template_flexible_content`.
+
+**Pendientes**:
+- 11 landings de contenido (Historia, Anuarios, Premios y Distinciones, Doctorado HC, Gobernanza, Forma de Gobierno, Consejo Académico, Premios Nacionales, Servicios, Webmail, Accesos Internos) — el cliente las llena desde admin combinando los 9 bloques flex + Section Landing template (F3).
+- F8: mega-menú real (panel multi-columna). F9: Home. F10: Polish.
