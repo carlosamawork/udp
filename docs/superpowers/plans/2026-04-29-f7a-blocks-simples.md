@@ -28,7 +28,7 @@
 
 **File:** `acf-json/group_template_flexible_content.json`
 
-- [ ] **Step 1: Read structure**
+- [x] **Step 1: Read structure**
 
 ```bash
 jq '.fields[0].layouts | keys' /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_template_flexible_content.json
@@ -36,7 +36,7 @@ jq '.fields[0].layouts | keys' /Applications/MAMP/htdocs/udp/cms/wp-content/them
 
 Expected: `["layout_block_calendario_grid", "layout_block_card_grid"]` (de F4a/F5d).
 
-- [ ] **Step 2: Crear los 3 layouts en /tmp y añadir vía jq**
+- [x] **Step 2: Crear los 3 layouts en /tmp y añadir vía jq**
 
 ```bash
 JSON_PATH="/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_template_flexible_content.json"
@@ -214,7 +214,7 @@ jq '.fields[0].layouts | keys' "$JSON_PATH"
 
 Expected: 5 layouts now (`block_big_buttons`, `block_calendario_grid`, `block_card_grid`, `block_embed`, `block_huincha`).
 
-- [ ] **Step 3: Sync DB-direct UPSERT**
+- [x] **Step 3: Sync DB-direct UPSERT**
 
 `/tmp/acf-sync-flex-f7a.php`:
 
@@ -246,7 +246,7 @@ Expected: UPDATE + Success.
 
 ## Task 2: 3 container partials
 
-- [ ] **Step 1: `template-parts/blocks/block-block_huincha.php`**
+- [x] **Step 1: `template-parts/blocks/block-block_huincha.php`**
 
 ```php
 <?php
@@ -313,7 +313,7 @@ $container_class = 'udp-block-huincha udp-block-huincha--' . $theme . ' udp-bloc
 </section>
 ```
 
-- [ ] **Step 2: `template-parts/blocks/block-block_embed.php`**
+- [x] **Step 2: `template-parts/blocks/block-block_embed.php`**
 
 ```php
 <?php
@@ -415,7 +415,7 @@ $container_class = 'udp-block-embed udp-block-embed--' . $theme . ' udp-block-em
 </section>
 ```
 
-- [ ] **Step 3: `template-parts/blocks/block-block_big_buttons.php`**
+- [x] **Step 3: `template-parts/blocks/block-block_big_buttons.php`**
 
 ```php
 <?php
@@ -486,7 +486,7 @@ $container_class = sprintf( 'udp-block-big-buttons udp-block-big-buttons--cols-%
 </section>
 ```
 
-- [ ] **Step 4: Validate PHP**
+- [x] **Step 4: Validate PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -499,7 +499,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 
 ## Task 3: SCSS
 
-- [ ] **Step 1: `_block-huincha.scss`**
+- [x] **Step 1: `_block-huincha.scss`**
 
 ```scss
 // ==========================================================================
@@ -605,7 +605,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 2: `_block-embed.scss`**
+- [x] **Step 2: `_block-embed.scss`**
 
 ```scss
 // ==========================================================================
@@ -665,7 +665,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 3: `_block-big-buttons.scss`**
+- [x] **Step 3: `_block-big-buttons.scss`**
 
 ```scss
 // ==========================================================================
@@ -794,7 +794,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 4: Imports + build**
+- [x] **Step 4: Imports + build**
 
 Edit `src/scss/main.scss`. Localizar la sección de `@import "blocks/...";` y AÑADIR (después de los existentes):
 
@@ -814,7 +814,7 @@ cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run 
 
 ## Task 4: E2E + commit
 
-- [ ] **Step 1: Crear página flex con los 3 bloques**
+- [x] **Step 1: Crear página flex con los 3 bloques**
 
 `/tmp/seed-f7a-test.php`:
 
@@ -895,7 +895,7 @@ PAGE_ID=$(/Applications/MAMP/bin/php/php8.4.1/bin/php /tmp/wp-cli.phar eval-file
 echo "PAGE_ID=$PAGE_ID"
 ```
 
-- [ ] **Step 2: Verify markup**
+- [x] **Step 2: Verify markup**
 
 ```bash
 TS=$(date +%s)
@@ -914,7 +914,7 @@ curl -s "http://localhost:8888/udp/test-f7a-bloques-simples/?nocache=$TS" | grep
 
 Expected: classes presentes, iframe youtube-nocookie, 3 big buttons, 6 huincha items.
 
-- [ ] **Step 3: Cleanup + MEMORY + commit**
+- [x] **Step 3: Cleanup + MEMORY + commit**
 
 ```bash
 export MYSQL_PWD=root
