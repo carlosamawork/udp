@@ -645,6 +645,551 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_block_huincha": {
+                    "key": "layout_block_huincha",
+                    "name": "block_huincha",
+                    "label": "Huincha (marquee)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_huincha_titulo",
+                            "label": "Título (opcional)",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_huincha_items",
+                            "label": "Items",
+                            "name": "items",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 1,
+                            "layout": "table",
+                            "button_label": "Agregar item",
+                            "max": 0,
+                            "rows_per_page": 20,
+                            "collapsed": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_huincha_item_text",
+                                    "label": "Texto",
+                                    "name": "text",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_huincha_items"
+                                },
+                                {
+                                    "key": "field_block_huincha_item_image",
+                                    "label": "Logo (opcional)",
+                                    "name": "image",
+                                    "aria-label": "",
+                                    "type": "image",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "preview_size": "thumbnail",
+                                    "library": "all",
+                                    "min_width": 0,
+                                    "min_height": 0,
+                                    "min_size": 0,
+                                    "max_width": 0,
+                                    "max_height": 0,
+                                    "max_size": 0,
+                                    "mime_types": "",
+                                    "parent_repeater": "field_block_huincha_items"
+                                },
+                                {
+                                    "key": "field_block_huincha_item_link",
+                                    "label": "Link (opcional)",
+                                    "name": "link",
+                                    "aria-label": "",
+                                    "type": "url",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "parent_repeater": "field_block_huincha_items"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_huincha_direccion",
+                            "label": "Dirección",
+                            "name": "direccion",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "left": "Izquierda",
+                                "right": "Derecha"
+                            },
+                            "default_value": "left",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_huincha_speed",
+                            "label": "Velocidad (segundos por ciclo)",
+                            "name": "speed",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "Tiempo en segundos para recorrer el ancho completo. Más alto = más lento.",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 30,
+                            "min": 10,
+                            "max": 120,
+                            "step": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_huincha_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "dark",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_block_embed": {
+                    "key": "layout_block_embed",
+                    "name": "block_embed",
+                    "label": "Embed (iframe)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_embed_titulo",
+                            "label": "Título (opcional)",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_embed_provider",
+                            "label": "Proveedor",
+                            "name": "provider",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "youtube": "YouTube",
+                                "vimeo": "Vimeo",
+                                "spotify": "Spotify",
+                                "maps": "Google Maps",
+                                "generic": "Genérico (URL completa)"
+                            },
+                            "default_value": "youtube",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_embed_url",
+                            "label": "URL o ID",
+                            "name": "url",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "URL completa del recurso o ID. Soporta: youtube.com\/watch?v=ID, youtu.be\/ID, vimeo.com\/ID, open.spotify.com\/episode\/ID, google.com\/maps\/embed?...",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_embed_aspect_ratio",
+                            "label": "Aspect ratio",
+                            "name": "aspect_ratio",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "16-9": "16:9 (video horizontal)",
+                                "4-3": "4:3",
+                                "1-1": "1:1 (cuadrado)",
+                                "9-16": "9:16 (vertical)"
+                            },
+                            "default_value": "16-9",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_embed_caption",
+                            "label": "Caption (opcional)",
+                            "name": "caption",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_embed_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "dark",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_block_big_buttons": {
+                    "key": "layout_block_big_buttons",
+                    "name": "block_big_buttons",
+                    "label": "Botones grandes",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_big_buttons_titulo",
+                            "label": "Título (opcional)",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_big_buttons_eyebrow",
+                            "label": "Eyebrow (opcional)",
+                            "name": "eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_big_buttons_columnas",
+                            "label": "Columnas",
+                            "name": "columnas",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "2": "2",
+                                "3": "3",
+                                "4": "4"
+                            },
+                            "default_value": 3,
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_big_buttons_buttons",
+                            "label": "Botones",
+                            "name": "buttons",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 1,
+                            "layout": "block",
+                            "button_label": "Agregar botón",
+                            "max": 0,
+                            "rows_per_page": 20,
+                            "collapsed": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_big_buttons_btn_label",
+                                    "label": "Label",
+                                    "name": "label",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_big_buttons_buttons"
+                                },
+                                {
+                                    "key": "field_block_big_buttons_btn_descripcion",
+                                    "label": "Descripción (opcional, 1 línea)",
+                                    "name": "descripcion",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_big_buttons_buttons"
+                                },
+                                {
+                                    "key": "field_block_big_buttons_btn_url",
+                                    "label": "URL",
+                                    "name": "url",
+                                    "aria-label": "",
+                                    "type": "url",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "parent_repeater": "field_block_big_buttons_buttons"
+                                },
+                                {
+                                    "key": "field_block_big_buttons_btn_target",
+                                    "label": "Abrir en pestaña nueva",
+                                    "name": "target_blank",
+                                    "aria-label": "",
+                                    "type": "true_false",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "message": "",
+                                    "ui_on_text": "",
+                                    "ui_off_text": "",
+                                    "parent_repeater": "field_block_big_buttons_buttons"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_big_buttons_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "dark",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "max": ""
@@ -669,5 +1214,5 @@
     "description": "Campo content_blocks (flexible content) con el layout block_card_grid. Container del bloque y card primitive son template-parts.",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1777558379
+    "modified": 1777986583
 }

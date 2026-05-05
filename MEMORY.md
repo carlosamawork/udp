@@ -593,3 +593,25 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 **Pendientes**:
 - F6 cerrado (a + b + c). F6 extras (`block_facultades_mosaic` flex content) sigue diferido.
 - Algunos centros pueden no tener featured image — el card mostrará placeholder hatching (consistente con facultades).
+
+---
+
+### 2026-04-29 — F7a 3 bloques simples (huincha + embed + big_buttons)
+
+**Hechos**:
+- 3 layouts añadidos al field flex `content_blocks` (group `group_template_flexible_content`):
+  - `block_huincha`: marquee CSS-only con items repeater (text + opcional logo + opcional link), dirección LTR/RTL, speed (segundos por ciclo), theme dark/light. Pause on hover + respeta `prefers-reduced-motion` (cae a flex-wrap centrado sin animación).
+  - `block_embed`: iframe wrapper con providers YouTube (con detection de ID desde varios formatos URL), Vimeo, Spotify (con conversion de URL a embed path), Google Maps (URL completa esperada), Generic. Aspect ratios 16:9 / 4:3 / 1:1 / 9:16. Iframe lazy + youtube-nocookie por defecto.
+  - `block_big_buttons`: grid de 2/3/4 columnas de botones grandes (label + opcional descripción + URL + target_blank toggle). Hover invierte a brand-blue.
+- 3 SCSS nuevos: `_block-huincha.scss` (con keyframes left/right + viewport mask gradient en bordes), `_block-embed.scss` (aspect-ratio responsive, max-width en 9:16 vertical), `_block-big-buttons.scss` (grid 2/3/4 cols con responsive cap a 2/1).
+- Verificación E2E con seed page que insertó los 3 bloques + curl confirmó: huincha items duplicados 2x para infinite scroll (6 total), embed iframe con youtube-nocookie URL (1), 3 big_buttons rendereados.
+
+**Decisiones clave**:
+- Marquee duplicado en HTML (2x items) en lugar de via CSS `content`. Más simple y accesible — el segundo set tiene `aria-hidden="true"`.
+- `youtube-nocookie.com` por defecto para embed YouTube (mejor privacidad GDPR-friendly sin cookies de tracking).
+- `prefers-reduced-motion` cae a `flex-wrap: wrap` con items centrados — no un `display: none` (queremos que el contenido siga siendo accesible visualmente, solo sin animación).
+
+**Pendientes**:
+- F7b: block_image_gallery (Swiper) + block_accordion (collapsibles con JS).
+- F7c: block_premios_list + block_people_list (repeaters estructurados).
+- 11 landings de contenido (Historia, Anuarios, Premios, etc.) las llena el cliente desde admin combinando estos bloques + Section Landing template (F3).

@@ -1,0 +1,101 @@
+// ==========================================================================
+// BLOCK HUINCHA — marquee horizontal CSS-only.
+// Items duplicados en el HTML (2x) para scroll infinito sin saltos.
+// Pause on hover + respeta prefers-reduced-motion.
+// ==========================================================================
+
+@keyframes udp-huincha-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@keyframes udp-huincha-right {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+}
+
+.udp-block-huincha {
+    padding: $space-2xl 0;
+    overflow: hidden;
+
+    &--dark  { background-color: $dark-1; color: $white; }
+    &--light { background-color: $white;  color: $dark-1; }
+
+    &__title {
+        max-width: 1440px;
+        margin: 0 auto $space-md;
+        padding: 0 $space-3xl;
+        font-family: $font-family-mono;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: $white-70;
+
+        .udp-block-huincha--light & { color: $dark-2; }
+
+        @include media-down(md) { padding: 0 $space-sm; }
+    }
+
+    &__viewport {
+        overflow: hidden;
+        mask-image: linear-gradient(90deg, transparent 0, $dark-1 60px, $dark-1 calc(100% - 60px), transparent 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, $dark-1 60px, $dark-1 calc(100% - 60px), transparent 100%);
+    }
+
+    &__track {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline-flex;
+        gap: $space-2xl;
+        align-items: center;
+        animation: udp-huincha-left var(--udp-huincha-speed, 30s) linear infinite;
+
+        .udp-block-huincha--right & {
+            animation-name: udp-huincha-right;
+        }
+    }
+
+    &:hover .udp-block-huincha__track,
+    &:focus-within .udp-block-huincha__track {
+        animation-play-state: paused;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .udp-block-huincha__track {
+            animation: none;
+            transform: translateX(0);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    }
+
+    &__item {
+        flex-shrink: 0;
+        display: inline-flex;
+    }
+
+    &__item-inner {
+        display: inline-flex;
+        align-items: center;
+        gap: $space-2xs;
+        color: inherit;
+        text-decoration: none;
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 500;
+        white-space: nowrap;
+
+        img {
+            max-height: 32px;
+            width: auto;
+            display: block;
+        }
+    }
+
+    a.udp-block-huincha__item-inner:hover,
+    a.udp-block-huincha__item-inner:focus-visible {
+        opacity: 0.7;
+        outline: none;
+    }
+}

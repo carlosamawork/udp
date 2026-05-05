@@ -1,0 +1,55 @@
+// ==========================================================================
+// BLOCK EMBED — iframe wrapper con aspect ratio responsive.
+// ==========================================================================
+
+.udp-block-embed {
+    padding: $space-3xl 0;
+
+    &--dark  { background-color: $dark-1; color: $white; }
+    &--light { background-color: $white;  color: $dark-1; }
+
+    &__inner {
+        max-width: 1080px;
+        margin-inline: auto;
+        padding-inline: $space-3xl;
+
+        @include media-down(md) { padding-inline: $space-sm; }
+    }
+
+    &__title {
+        margin: 0 0 $space-md;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    &__media {
+        position: relative;
+        width: 100%;
+        background: $dark-2;
+
+        iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+    }
+
+    &--ratio-16-9 .udp-block-embed__media { aspect-ratio: 16 / 9; }
+    &--ratio-4-3  .udp-block-embed__media { aspect-ratio: 4 / 3; }
+    &--ratio-1-1  .udp-block-embed__media { aspect-ratio: 1 / 1; }
+    &--ratio-9-16 .udp-block-embed__media { aspect-ratio: 9 / 16; max-width: 480px; margin-inline: auto; }
+
+    &__caption {
+        margin: $space-md 0 0;
+        font-family: $font-family-body;
+        font-size: 14px;
+        color: $white-70;
+
+        .udp-block-embed--light & { color: $dark-2; }
+    }
+}
