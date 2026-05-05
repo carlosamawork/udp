@@ -576,3 +576,20 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 **Pendientes**:
 - F6c: Centros archive + single simple.
 - Algunas carreras pueden no tener link_directo — esas linkean a su single (donde aterrizan en single-carrera-udp.php).
+
+### 2026-04-29 — F6c Centros archive + single
+
+**Hechos**:
+- `templates/page-centros.php` asignado a página "Centros Interdisciplinarios" (ID 16). Theme dark, mosaico 5-col reusando `card-mosaic` SIN eyebrow ni filtros.
+- Helpers en `inc/udp-cards.php`: `udp_query_centros` (no filtros, sort por title ASC) + `udp_card_data_from_centro` (href = link_externo target=_blank si existe sino permalink).
+- `single-centro-udp.php`: light theme simple (sin sidebar 2-col). Featured + post_content + button "Visitar sitio del centro" (target=_blank con link_externo si existe). Reusa post-share.
+- 2 SCSS nuevos: `_centros-archive.scss` (dark, idéntico al de facultades pero sin filtros) y `_centros-single.scss` (light single-column con featured + content + button).
+
+**Decisiones clave**:
+- No eyebrow en cards de centros — visualmente igual a facultades. La taxonomía facultad podría usarse como eyebrow pero se prefiere la simpleza del Figma de facultades.
+- Single layout 1-col centrado (no 2-col como carrera) — los centros tienen menos data estructurada (solo link_externo).
+- Card mosaic primitive de F6a se reutiliza sin modificar — ningún cambio retroactivo.
+
+**Pendientes**:
+- F6 cerrado (a + b + c). F6 extras (`block_facultades_mosaic` flex content) sigue diferido.
+- Algunos centros pueden no tener featured image — el card mostrará placeholder hatching (consistente con facultades).

@@ -1,0 +1,79 @@
+// ==========================================================================
+// CENTROS ARCHIVE — page template `page-centros.php`
+// Theme dark. Mosaico 5-col reusando card-mosaic. Sin filtros.
+// ==========================================================================
+
+.udp-centros-archive {
+    background-color: $dark-1;
+    color: $white;
+    padding-bottom: $space-3xl;
+
+    &__header {
+        max-width: 1440px;
+        margin-inline: auto;
+        padding: $space-2xl $space-3xl 0;
+        @include media-down(md) { padding: $space-xl $space-sm 0; }
+
+        .udp-breadcrumb__item,
+        .udp-breadcrumb__link,
+        .udp-breadcrumb__current { color: $white; }
+        .udp-breadcrumb__sep { color: $white-70; }
+    }
+
+    &__title {
+        margin: $space-md 0 0;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 64px;
+        line-height: 1.05;
+        color: $white;
+        @include media-down(md) { font-size: 40px; }
+    }
+
+    &__intro {
+        margin-top: $space-md;
+        font-family: $font-family-body;
+        font-size: 14px;
+        line-height: 20px;
+        color: $white-70;
+        max-width: 720px;
+        p { margin: 0 0 $space-2xs; }
+        p:last-child { margin-bottom: 0; }
+    }
+
+    &__separator {
+        max-width: 1360px;
+        margin: $space-2xl auto 0;
+        border: 0;
+        height: 1px;
+        background-color: rgba($white, 0.15);
+    }
+
+    &__list {
+        list-style: none;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        max-width: 1440px;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: $space-2xl 30px;
+
+        @include media-down(xl) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        @include media-down(md) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 0 $space-sm;
+            gap: $space-md;
+        }
+    }
+
+    &__item { display: block; }
+
+    &__empty {
+        max-width: 1440px;
+        margin: $space-2xl auto 0;
+        padding: 0 $space-3xl;
+        font-family: $font-family-body;
+        font-size: 16px;
+        color: $white-70;
+    }
+}

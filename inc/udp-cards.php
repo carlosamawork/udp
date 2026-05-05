@@ -796,6 +796,54 @@ function udp_query_facultades(): array {
 }
 
 /**
+ * Convierte WP_Post (centro-udp) a Card mosaic shape.
+ * href = link_externo (target=_blank) si existe, sino permalink.
+ */
+function udp_card_data_from_centro( WP_Post $post ): array {
+    $thumb_id = (int) get_post_thumbnail_id( $post->ID );
+    $imagen_url = '';
+    $imagen_alt = '';
+    if ( $thumb_id > 0 ) {
+        $imagen_url = wp_get_attachment_image_url( $thumb_id, 'medium_large' ) ?: '';
+        $imagen_alt = (string) get_post_meta( $thumb_id, '_wp_attachment_image_alt', true );
+    }
+
+    $link_externo = (string) get_post_meta( $post->ID, 'link_externo', true );
+    $href   = $link_externo ?: get_permalink( $post );
+    $target = $link_externo ? '_blank' : '';
+
+    return array(
+        'post_id'   => (int) $post->ID,
+        'titulo'    => get_the_title( $post ),
+        'imagen'    => array( 'url' => $imagen_url, 'alt' => $imagen_alt ),
+        'has_image' => $imagen_url !== '',
+        'eyebrow'   => '',
+        'href'      => $href,
+        'target'    => $target,
+    );
+}
+
+/**
+ * Wrapper sobre WP_Query para archive Centros. Sin filtros (como Facultades).
+ */
+function udp_query_centros(): array {
+    $q = new WP_Query( array(
+        'post_type'      => 'centro-udp',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'orderby'        => 'title',
+        'order'          => 'ASC',
+        'no_found_rows'  => true,
+    ) );
+
+    $cards = array();
+    foreach ( $q->posts as $post ) {
+        $cards[] = udp_card_data_from_centro( $post );
+    }
+    return $cards;
+}
+
+/**
  * Flat list de entries de calendario para uso en bloques (no agrupa por mes).
  *
  * @param array $filters {
