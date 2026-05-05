@@ -75,7 +75,7 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 							aria-expanded="<?php echo $is_active ? 'true' : 'false'; ?>"
 							aria-controls="udp-megamenu-panel-<?php echo (int) $idx; ?>"
 						>
-							<?php echo esc_html( $titulo ); ?>
+							<?php echo esc_html( wp_strip_all_tags( $titulo ) ); ?>
 						</button>
 					</li>
 				<?php endforeach; ?>
@@ -101,7 +101,7 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 							<li class="udp-megamenu__submenu-item udp-megamenu__submenu-item--main">
 								<a class="udp-megamenu__submenu-link" href="<?php echo esc_url( $main_link ); ?>"
 									<?php if ( $new_tab_main ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
-									<?php printf( esc_html__( 'Conoce %s', 'starter-theme' ), esc_html( $titulo ) ); ?>
+									<?php printf( esc_html__( 'Conoce %s', 'starter-theme' ), esc_html( wp_strip_all_tags( $titulo ) ) ); ?>
 									<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
 										<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
@@ -117,7 +117,7 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 							<li class="udp-megamenu__submenu-item">
 								<a class="udp-megamenu__submenu-link" href="<?php echo esc_url( $sub_link ); ?>"
 									<?php if ( $sub_new ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
-									<?php echo esc_html( $sub_titulo ); ?>
+									<?php echo esc_html( wp_strip_all_tags( $sub_titulo ) ); ?>
 									<?php if ( $sub_new ) : ?>
 										<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
 											<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -140,7 +140,7 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 						?>
 							<li class="udp-megamenu__externos-item">
 								<a class="udp-megamenu__externos-link" href="<?php echo esc_url( $ext_link ); ?>" target="_blank" rel="noopener noreferrer">
-									<?php echo esc_html( $ext_titulo ); ?>
+									<?php echo esc_html( wp_strip_all_tags( $ext_titulo ) ); ?>
 									<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
 										<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
 									</svg>
@@ -165,7 +165,7 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 				<li class="udp-megamenu__quick-item">
 					<a class="udp-megamenu__quick-link" href="<?php echo esc_url( $ql_link ); ?>"
 						<?php if ( $ql_new ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
-						<?php echo esc_html( $ql_titulo ); ?>
+						<?php echo esc_html( wp_strip_all_tags( $ql_titulo ) ); ?>
 						<?php if ( $ql_new ) : ?>
 							<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
 								<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
