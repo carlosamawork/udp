@@ -26,7 +26,7 @@
 
 ## Task 1: ACF JSON — 2 layouts
 
-- [ ] **Step 1: Layouts via jq**
+- [x] **Step 1: Layouts via jq**
 
 ```bash
 JSON_PATH="/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_template_flexible_content.json"
@@ -140,7 +140,7 @@ jq '.fields[0].layouts | keys' "$JSON_PATH"
 
 Expected: 9 layouts total.
 
-- [ ] **Step 2: Sync DB-direct UPSERT**
+- [x] **Step 2: Sync DB-direct UPSERT**
 
 `/tmp/acf-sync-flex-f7c.php`:
 
@@ -170,7 +170,7 @@ WP_CLI::success( 'id=' . $result['ID'] );
 
 ## Task 2: Container partials
 
-- [ ] **Step 1: `template-parts/blocks/block-block_people_list.php`**
+- [x] **Step 1: `template-parts/blocks/block-block_people_list.php`**
 
 ```php
 <?php
@@ -240,7 +240,7 @@ $container_class = sprintf( 'udp-block-people-list udp-block-people-list--cols-%
 </section>
 ```
 
-- [ ] **Step 2: `template-parts/blocks/block-block_premios_list.php`**
+- [x] **Step 2: `template-parts/blocks/block-block_premios_list.php`**
 
 ```php
 <?php
@@ -316,7 +316,7 @@ $container_class = 'udp-block-premios-list udp-block-premios-list--' . $theme;
 </section>
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -328,7 +328,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 
 ## Task 3: SCSS
 
-- [ ] **Step 1: `_block-people-list.scss`**
+- [x] **Step 1: `_block-people-list.scss`**
 
 ```scss
 // ==========================================================================
@@ -480,7 +480,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 2: `_block-premios-list.scss`**
+- [x] **Step 2: `_block-premios-list.scss`**
 
 ```scss
 // ==========================================================================
@@ -593,7 +593,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 }
 ```
 
-- [ ] **Step 3: Imports + build**
+- [x] **Step 3: Imports + build**
 
 Edit `src/scss/main.scss`:
 
@@ -612,7 +612,7 @@ cd /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme && npm run 
 
 ## Task 4: E2E + commit
 
-- [ ] **Step 1: Seed page**
+- [x] **Step 1: Seed page**
 
 `/tmp/seed-f7c-test.php`:
 
@@ -692,7 +692,7 @@ PAGE_ID=$(/Applications/MAMP/bin/php/php8.4.1/bin/php /tmp/wp-cli.phar eval-file
 echo "PAGE_ID=$PAGE_ID"
 ```
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 ```bash
 TS=$(date +%s)
@@ -711,7 +711,7 @@ curl -s "http://localhost:8888/udp/test-f7c-people-premios/?nocache=$TS" | grep 
 
 Expected: classes presentes, 4 people, 3 premios, primer año 2024.
 
-- [ ] **Step 3: Cleanup + MEMORY + commit**
+- [x] **Step 3: Cleanup + MEMORY + commit**
 
 ```bash
 export MYSQL_PWD=root
