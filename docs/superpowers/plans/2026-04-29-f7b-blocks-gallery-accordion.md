@@ -27,7 +27,7 @@
 
 ## Task 1: ACF JSON — 2 layouts nuevos
 
-- [ ] **Step 1: Layouts via jq**
+- [x] **Step 1: Layouts via jq**
 
 ```bash
 JSON_PATH="/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/acf-json/group_template_flexible_content.json"
@@ -122,7 +122,7 @@ jq '.fields[0].layouts | keys' "$JSON_PATH"
 
 Expected: 7 layouts (los 5 + image_gallery + accordion).
 
-- [ ] **Step 2: Sync DB-direct UPSERT**
+- [x] **Step 2: Sync DB-direct UPSERT**
 
 `/tmp/acf-sync-flex-f7b.php`:
 
@@ -152,7 +152,7 @@ WP_CLI::success( 'id=' . $result['ID'] );
 
 ## Task 2: Container partials
 
-- [ ] **Step 1: `template-parts/blocks/block-block_image_gallery.php`**
+- [x] **Step 1: `template-parts/blocks/block-block_image_gallery.php`**
 
 ```php
 <?php
@@ -228,7 +228,7 @@ $container_class = 'udp-block-image-gallery udp-block-image-gallery--' . $layout
 </section>
 ```
 
-- [ ] **Step 2: `template-parts/blocks/block-block_accordion.php`**
+- [x] **Step 2: `template-parts/blocks/block-block_accordion.php`**
 
 ```php
 <?php
@@ -286,7 +286,7 @@ $container_class = 'udp-block-accordion udp-block-accordion--' . $theme;
 </section>
 ```
 
-- [ ] **Step 3: Validar PHP**
+- [x] **Step 3: Validar PHP**
 
 ```bash
 PHP=/Applications/MAMP/bin/php/php8.4.1/bin/php
@@ -298,7 +298,7 @@ $PHP -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/templa
 
 ## Task 3: JS modules
 
-- [ ] **Step 1: `src/js/modules/block-image-gallery.js`**
+- [x] **Step 1: `src/js/modules/block-image-gallery.js`**
 
 ```javascript
 /**
@@ -338,7 +338,7 @@ export async function initBlockImageGallery() {
 }
 ```
 
-- [ ] **Step 2: `src/js/modules/block-accordion.js`**
+- [x] **Step 2: `src/js/modules/block-accordion.js`**
 
 ```javascript
 /**
@@ -393,7 +393,7 @@ export function initBlockAccordion() {
 }
 ```
 
-- [ ] **Step 3: Wire en main.js**
+- [x] **Step 3: Wire en main.js**
 
 Edit `src/js/main.js`. Localizar imports y AÑADIR:
 
@@ -413,7 +413,7 @@ initBlockAccordion();
 
 ## Task 4: SCSS
 
-- [ ] **Step 1: `_block-image-gallery.scss`**
+- [x] **Step 1: `_block-image-gallery.scss`**
 
 ```scss
 // ==========================================================================
@@ -537,7 +537,7 @@ initBlockAccordion();
 }
 ```
 
-- [ ] **Step 2: `_block-accordion.scss`**
+- [x] **Step 2: `_block-accordion.scss`**
 
 ```scss
 // ==========================================================================
@@ -639,7 +639,7 @@ initBlockAccordion();
 }
 ```
 
-- [ ] **Step 3: Imports + build**
+- [x] **Step 3: Imports + build**
 
 Edit `src/scss/main.scss`:
 
@@ -660,7 +660,7 @@ Expected: build OK.
 
 ## Task 5: E2E + commit
 
-- [ ] **Step 1: Seed page**
+- [x] **Step 1: Seed page**
 
 `/tmp/seed-f7b-test.php`:
 
@@ -723,7 +723,7 @@ PAGE_ID=$(/Applications/MAMP/bin/php/php8.4.1/bin/php /tmp/wp-cli.phar eval-file
 echo "PAGE_ID=$PAGE_ID"
 ```
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 ```bash
 TS=$(date +%s)
@@ -740,7 +740,7 @@ echo "=== First accordion item open (esperado 1) ==="
 curl -s "http://localhost:8888/udp/test-f7b-gallery-accordion/?nocache=$TS" | grep -cE 'udp-block-accordion__details" open'
 ```
 
-- [ ] **Step 3: Cleanup + MEMORY + commit**
+- [x] **Step 3: Cleanup + MEMORY + commit**
 
 ```bash
 export MYSQL_PWD=root
