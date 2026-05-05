@@ -1190,6 +1190,275 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_block_image_gallery": {
+                    "key": "layout_block_image_gallery",
+                    "name": "block_image_gallery",
+                    "label": "Galería de imágenes",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_gallery_titulo",
+                            "label": "Título (opcional)",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_gallery_eyebrow",
+                            "label": "Eyebrow (opcional)",
+                            "name": "eyebrow",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_gallery_images",
+                            "label": "Imágenes",
+                            "name": "images",
+                            "aria-label": "",
+                            "type": "gallery",
+                            "instructions": "Sube o selecciona imágenes desde la biblioteca. Mínimo 1.",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 1,
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "insert": "append",
+                            "library": "all",
+                            "max": 0,
+                            "min_width": 0,
+                            "min_height": 0,
+                            "min_size": 0,
+                            "max_width": 0,
+                            "max_height": 0,
+                            "max_size": 0,
+                            "mime_types": ""
+                        },
+                        {
+                            "key": "field_block_gallery_layout",
+                            "label": "Layout",
+                            "name": "layout",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "carousel": "Carrusel (Swiper)",
+                                "grid": "Grid 3 columnas"
+                            },
+                            "default_value": "carousel",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_block_gallery_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "dark",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_block_accordion": {
+                    "key": "layout_block_accordion",
+                    "name": "block_accordion",
+                    "label": "Acordeón",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_block_accordion_titulo",
+                            "label": "Título (opcional)",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_block_accordion_items",
+                            "label": "Items",
+                            "name": "items",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "min": 1,
+                            "layout": "block",
+                            "button_label": "Agregar item",
+                            "max": 0,
+                            "rows_per_page": 20,
+                            "collapsed": "",
+                            "sub_fields": [
+                                {
+                                    "key": "field_block_accordion_item_titulo",
+                                    "label": "Título del item",
+                                    "name": "titulo",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 1,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_block_accordion_items"
+                                },
+                                {
+                                    "key": "field_block_accordion_item_contenido",
+                                    "label": "Contenido",
+                                    "name": "contenido",
+                                    "aria-label": "",
+                                    "type": "wysiwyg",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "tabs": "visual",
+                                    "toolbar": "basic",
+                                    "media_upload": 0,
+                                    "delay": 0,
+                                    "default_value": "",
+                                    "parent_repeater": "field_block_accordion_items"
+                                },
+                                {
+                                    "key": "field_block_accordion_item_open_default",
+                                    "label": "Abierto por defecto",
+                                    "name": "open_default",
+                                    "aria-label": "",
+                                    "type": "true_false",
+                                    "instructions": "",
+                                    "required": false,
+                                    "conditional_logic": false,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "message": "",
+                                    "ui_on_text": "",
+                                    "ui_off_text": "",
+                                    "parent_repeater": "field_block_accordion_items"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_block_accordion_theme",
+                            "label": "Tema",
+                            "name": "theme",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": false,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "dark": "Dark",
+                                "light": "Light"
+                            },
+                            "default_value": "dark",
+                            "layout": "horizontal",
+                            "return_format": "value",
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "allow_null": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "max": ""
@@ -1214,5 +1483,5 @@
     "description": "Campo content_blocks (flexible content) con el layout block_card_grid. Container del bloque y card primitive son template-parts.",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1777986583
+    "modified": 1777993799
 }

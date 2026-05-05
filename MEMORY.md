@@ -615,3 +615,24 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - F7b: block_image_gallery (Swiper) + block_accordion (collapsibles con JS).
 - F7c: block_premios_list + block_people_list (repeaters estructurados).
 - 11 landings de contenido (Historia, Anuarios, Premios, etc.) las llena el cliente desde admin combinando estos bloques + Section Landing template (F3).
+
+---
+
+### 2026-04-29 — F7b block_image_gallery + block_accordion
+
+**Hechos**:
+- 2 layouts añadidos al field flex `content_blocks`:
+  - `block_image_gallery`: ACF gallery field + radio layout (carousel/grid). Carousel reusa Swiper lazy-loaded (mismo pattern que single-post-gallery F4 extras). Grid 3-col CSS native.
+  - `block_accordion`: repeater de items (titulo + wysiwyg contenido + open_default toggle). Markup nativo `<details><summary>` HTML5 — funciona sin JS pero JS añade smooth height animation.
+- 2 JS modules: `block-image-gallery.js` (lazy Swiper init) + `block-accordion.js` (smooth height transition con scrollHeight + transitionend listener). Ambos wired en main.js domReady.
+- 2 SCSS nuevos. Accordion con border-top en cada item + chevron rotating 180° on open. Gallery con nav buttons hover invertido.
+- E2E verificado: 3 gallery slides + 3 accordion items + 1 open_default.
+
+**Decisiones clave**:
+- `<details><summary>` nativo HTML5 en lugar de divs+aria — accesible por defecto, expandible vía teclado, funciona sin JS.
+- JS de accordion previene el toggle nativo (`event.preventDefault()`) y maneja apertura/cierre con animation. Si JS falla, el browser usa el toggle nativo (graceful degradation).
+- Gallery duplica el patrón de single-post-gallery: `data-udp-block-gallery` selector, lazy import Swiper, navigation buttons custom UDP.
+
+**Pendientes**:
+- F7c: block_premios_list + block_people_list (repeaters estructurados con foto/cargo).
+- 11 landings de contenido en admin.

@@ -1,0 +1,97 @@
+// ==========================================================================
+// BLOCK ACCORDION — collapsible list con <details><summary>.
+// JS añade height animation; sin JS funciona instantáneo via native.
+// ==========================================================================
+
+.udp-block-accordion {
+    padding: $space-3xl 0;
+
+    &--dark  { background-color: $dark-1; color: $white; }
+    &--light { background-color: $white;  color: $dark-1; }
+
+    &__inner {
+        max-width: 880px;
+        margin-inline: auto;
+        padding-inline: $space-3xl;
+
+        @include media-down(md) { padding-inline: $space-sm; }
+    }
+
+    &__title {
+        margin: 0 0 $space-xl;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__item {
+        border-top: 1px solid currentColor;
+
+        &:last-child { border-bottom: 1px solid currentColor; }
+    }
+
+    &__details {
+        // Override default browser styles
+        summary { list-style: none; }
+        summary::-webkit-details-marker { display: none; }
+    }
+
+    &__summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: $space-md;
+        padding: $space-md 0;
+        cursor: pointer;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 1.4;
+        color: inherit;
+        transition: color $transition-base;
+
+        &:hover, &:focus-visible {
+            color: $brand-blue;
+            outline: none;
+        }
+
+        .udp-block-accordion--light &:hover,
+        .udp-block-accordion--light &:focus-visible {
+            color: $brand-blue;
+        }
+    }
+
+    &__summary-icon {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+    }
+
+    &__details[open] &__summary-icon {
+        transform: rotate(180deg);
+    }
+
+    &__content {
+        padding: 0 0 $space-md;
+        font-family: $font-family-body;
+        font-size: 16px;
+        line-height: 24px;
+        color: inherit;
+        opacity: 0.9;
+        overflow: hidden;
+
+        p { margin: 0 0 $space-2xs; }
+        p:last-child { margin-bottom: 0; }
+        a { color: $brand-blue; text-decoration: underline; }
+        ul, ol { margin: 0 0 $space-2xs; padding-inline-start: $space-lg; }
+    }
+}

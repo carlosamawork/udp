@@ -36,6 +36,8 @@ import { initMobileMenu } from '@modules/mobile-menu';
 import { initSectionLandingSwiper } from '@modules/section-landing-swiper';
 import { initSinglePostGallery } from '@modules/single-post-gallery';
 import { initCalendarioActiveMonth } from '@modules/calendario-active-month';
+import { initBlockImageGallery } from '@modules/block-image-gallery';
+import { initBlockAccordion } from '@modules/block-accordion';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -57,6 +59,8 @@ domReady(() => {
     initSectionLandingSwiper();
     initSinglePostGallery();
     initCalendarioActiveMonth();
+    initBlockImageGallery();
+    initBlockAccordion();
 
     console.log('[StarterBS5] Theme initialized');
 });
