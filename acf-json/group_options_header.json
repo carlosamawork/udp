@@ -21,6 +21,7 @@
             "max": 0,
             "layout": "block",
             "button_label": "Agregar Grupo",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_60bdcb072d89e",
@@ -122,6 +123,8 @@
                     "max": 0,
                     "layout": "block",
                     "button_label": "Agregar Item Submenu",
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_60bdcaf92d89c",
                     "sub_fields": [
                         {
                             "key": "field_60bdcb222d8a1",
@@ -183,9 +186,7 @@
                             "ui_off_text": "",
                             "parent_repeater": "field_60bdcb182d8a0"
                         }
-                    ],
-                    "rows_per_page": 20,
-                    "parent_repeater": "field_60bdcaf92d89c"
+                    ]
                 },
                 {
                     "key": "field_60bdccb82d8a3",
@@ -232,6 +233,8 @@
                     "max": 0,
                     "layout": "block",
                     "button_label": "Agregar Link Externo",
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_60bdcaf92d89c",
                     "sub_fields": [
                         {
                             "key": "field_60bdcccd2d8a5",
@@ -272,15 +275,103 @@
                             "maxlength": "",
                             "parent_repeater": "field_60bdccc22d8a4"
                         }
-                    ],
-                    "rows_per_page": 20,
-                    "parent_repeater": "field_60bdcaf92d89c"
+                    ]
                 }
-            ],
-            "rows_per_page": 20
+            ]
+        },
+        {
+            "key": "field_options_header_mega_quick_links",
+            "label": "Mega-menú: Quick Links (footer)",
+            "name": "mega_menu_quick_links",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Links rápidos en el footer del mega-menú: Bibliotecas, Estudiantes, Alumni, Servicios, UDP University, etc.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "min": 0,
+            "layout": "table",
+            "button_label": "Agregar quick link",
+            "max": 0,
+            "rows_per_page": 20,
+            "collapsed": "",
+            "sub_fields": [
+                {
+                    "key": "field_options_header_mega_quick_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_options_header_mega_quick_links"
+                },
+                {
+                    "key": "field_options_header_mega_quick_link",
+                    "label": "URL",
+                    "name": "link",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_options_header_mega_quick_links"
+                },
+                {
+                    "key": "field_options_header_mega_quick_new_tab",
+                    "label": "Abrir en pestaña nueva",
+                    "name": "new_tab",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "ui": 1,
+                    "default_value": 0,
+                    "message": "",
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "parent_repeater": "field_options_header_mega_quick_links"
+                }
+            ]
         }
     ],
-    "location": [[{ "param": "options_page", "operator": "==", "value": "udp-options-header" }]],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "udp-options-header"
+            }
+        ]
+    ],
     "menu_order": 0,
     "position": "normal",
     "style": "default",
@@ -288,5 +379,8 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto)."
+    "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
+    "show_in_rest": false,
+    "display_title": "",
+    "modified": 1778004490
 }

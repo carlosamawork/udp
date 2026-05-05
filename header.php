@@ -25,4 +25,6 @@
 	<?php get_template_part( 'template-parts/header/top-bar' ); ?>
 </header>
 
+<?php get_template_part( 'template-parts/header/mega-menu' ); ?>
+
 <main id="main" class="udp-site-main" role="main">

@@ -658,3 +658,27 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 **Pendientes**:
 - 11 landings de contenido (Historia, Anuarios, Premios y Distinciones, Doctorado HC, Gobernanza, Forma de Gobierno, Consejo Académico, Premios Nacionales, Servicios, Webmail, Accesos Internos) — el cliente las llena desde admin combinando los 9 bloques flex + Section Landing template (F3).
 - F8: mega-menú real (panel multi-columna). F9: Home. F10: Polish.
+
+---
+
+### 2026-04-29 — F8 Mega-menú completo
+
+**Hechos**:
+- Partial nuevo `template-parts/header/mega-menu.php` insertado en `header.php` después del top-bar. Panel light fixed full-viewport con 3 columnas (items principales / submenu activo / links externos) + top-bar interno (Cerrar + logo) + footer (quick links + social).
+- ACF group `group_options_header` extendido con field `mega_menu_quick_links` (repeater titulo + link + new_tab) para los links del footer del mega-menú (Bibliotecas, Estudiantes, Alumni, Servicios, UDP University, etc.). Synced a DB (UPDATE id=55171).
+- JS module nuevo `src/js/modules/mega-menu.js` con state machine: open/close (toggle button, ESC key, close button), active item via click/hover/focus, lock body scroll, focus management básico (return to last focused on close).
+- Primer item activo por defecto cuando el panel se abre. Hover y focus sobre item de col 1 cambia el detail panel en cols 2 y 3 sin click necesario.
+- SCSS layout `_mega-menu.scss` con grid 3-col desktop → 1-col mobile (cols 2+3 collapsibles bajo el item activo).
+- Build limpio. E2E verificado: panel con `hidden` attr, 5 items en menú, todas las clases `udp-megamenu*` presentes en markup.
+
+**Decisiones clave**:
+- `display: contents` en `.udp-megamenu__detail--active` para que el detail panel "desaparezca" del flow del grid y sus children (submenu + externos) sean direct children del grid del parent — alinea col 2 y col 3 sin div intermediario.
+- Hover/focus sobre items col 1 cambia detail (UX moderna). Click sigue funcionando para keyboard users.
+- Body class `udp-megamenu-open` se añade al `<body>` y `<html>` para lock scroll + cualquier override de header z-index.
+- Primer item activo por defecto en lugar de "ningún item activo" → mejor UX, el usuario ve algo de contenido al abrir.
+- Quick links en footer del megamenú son separados del menu_principal — campo ACF nuevo `mega_menu_quick_links` evita reutilizar links_externos del menu_principal (cada item tiene los suyos).
+- SCSS usa selectores directos (`.udp-megamenu__primary-item .udp-megamenu__primary-btn`) en lugar del shorthand `&-btn` para evitar conflictos con el `&--active &-btn` pattern que SASS no siempre resuelve como se espera dentro de un contexto de `&__primary-item`.
+
+**Pendientes**:
+- El cliente debe cargar items en `Options → Header & Mega-menú → Menu Principal` y `Mega-menú: Quick Links`. Si no hay data, el panel muestra el empty state (actualmente hay 5 items de menu_principal en DB).
+- F9: Home. F10: Polish. F11: Switch local.

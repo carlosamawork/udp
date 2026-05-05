@@ -1,0 +1,297 @@
+// ==========================================================================
+// MEGA-MENU — panel light fixed full-viewport con 3 columnas + footer.
+// Top bar interno: × Cerrar + logo. Mobile: single-col.
+// ==========================================================================
+
+// Body lock cuando el menú está abierto
+body.udp-megamenu-open {
+    overflow: hidden;
+}
+
+.udp-megamenu {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: $white;  // light theme
+    color: $dark-1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+    &[hidden] { display: none; }
+
+    // ----------------------------------------------------------------------
+    // TOP BAR INTERNO (× Cerrar + logo)
+    // ----------------------------------------------------------------------
+    &__top {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: $space-md;
+        padding: $space-md $space-3xl;
+        border-bottom: 1px solid rgba($dark-1, 0.1);
+
+        @include media-down(md) {
+            padding: $space-sm $space-md;
+        }
+    }
+
+    &__close {
+        justify-self: start;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        font-family: $font-family-body;
+        font-size: 14px;
+        font-weight: 500;
+        color: $dark-1;
+
+        &-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 9999px;
+            border: 1px solid $dark-1;
+            transition: background-color $transition-base, color $transition-base;
+        }
+
+        &:hover &-circle,
+        &:focus-visible &-circle {
+            background-color: $dark-1;
+            color: $white;
+            outline: none;
+        }
+    }
+
+    &__logo {
+        justify-self: center;
+        display: inline-flex;
+        align-items: center;
+
+        img { height: 32px; width: auto; display: block; }
+        &-text {
+            font-family: $font-family-display;
+            font-size: 16px;
+            font-weight: 500;
+        }
+    }
+
+    // ----------------------------------------------------------------------
+    // BODY 3 COLUMNAS
+    // ----------------------------------------------------------------------
+    &__body {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0;
+        padding: $space-2xl $space-3xl;
+        max-width: 1440px;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        @include media-down(lg) {
+            grid-template-columns: 1fr;
+            padding: $space-md;
+            gap: $space-xl;
+        }
+    }
+
+    &__primary {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+
+        @include media-down(lg) {
+            border-bottom: 1px solid rgba($dark-1, 0.1);
+            padding-bottom: $space-md;
+        }
+    }
+
+    &__primary-item {
+        // Default: gris suave
+        .udp-megamenu__primary-btn,
+        .udp-megamenu__primary-btn[aria-expanded] {
+            background: transparent;
+            border: 0;
+            padding: $space-2xs 0;
+            text-align: left;
+            font-family: $font-family-display;
+            font-weight: 500;
+            font-size: 28px;
+            line-height: 1.15;
+            color: rgba($dark-1, 0.4);
+            cursor: pointer;
+            transition: color $transition-base;
+            width: 100%;
+
+            @include media-down(md) { font-size: 22px; }
+
+            &:hover, &:focus-visible {
+                color: $dark-1;
+                outline: none;
+            }
+        }
+
+        &--active .udp-megamenu__primary-btn {
+            color: $dark-1;
+            font-weight: 600;
+        }
+    }
+
+    // ----------------------------------------------------------------------
+    // DETAIL PANELS (col 2 + 3)
+    // ----------------------------------------------------------------------
+    &__detail {
+        display: none;
+
+        &--active {
+            display: contents;  // mantiene el grid del parent (col 2 = submenu, col 3 = externos)
+        }
+
+        &[hidden] { display: none !important; }
+
+        @include media-down(lg) {
+            grid-column: 1;
+            display: none;
+            flex-direction: column;
+            gap: $space-md;
+            padding-top: $space-md;
+            border-top: 1px solid rgba($dark-1, 0.1);
+
+            &--active { display: flex; }
+        }
+    }
+
+    &__submenu,
+    &__externos {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+    }
+
+    &__submenu-link,
+    &__externos-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: $space-2xs 0;
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 500;
+        color: $dark-1;
+        text-decoration: none;
+        transition: color $transition-base;
+
+        &:hover, &:focus-visible {
+            color: $brand-blue;
+            outline: none;
+        }
+
+        svg { flex-shrink: 0; }
+    }
+
+    &__submenu-item--main .udp-megamenu__submenu-link {
+        font-weight: 600;
+    }
+
+    &__externos-link {
+        font-size: 14px;
+        color: rgba($dark-1, 0.7);
+    }
+
+    // ----------------------------------------------------------------------
+    // FOOTER
+    // ----------------------------------------------------------------------
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: $space-md;
+        padding: $space-md $space-3xl;
+        border-top: 1px solid rgba($dark-1, 0.1);
+        flex-wrap: wrap;
+
+        @include media-down(md) {
+            padding: $space-md;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: $space-sm;
+        }
+    }
+
+    &__quick-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: $space-lg;
+        flex-wrap: wrap;
+
+        @include media-down(md) {
+            gap: $space-sm $space-md;
+        }
+    }
+
+    &__quick-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-family: $font-family-body;
+        font-size: 14px;
+        font-weight: 500;
+        color: $dark-1;
+        text-decoration: none;
+        transition: color $transition-base;
+
+        &:hover, &:focus-visible {
+            color: $brand-blue;
+            outline: none;
+        }
+    }
+
+    &__socials {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: $space-2xs;
+    }
+
+    &__social-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 9999px;
+        border: 1px solid $dark-1;
+        color: $dark-1;
+        text-decoration: none;
+        transition: background-color $transition-base, color $transition-base;
+
+        &:hover, &:focus-visible {
+            background-color: $dark-1;
+            color: $white;
+            outline: none;
+        }
+    }
+
+    &__empty {
+        padding: $space-2xl $space-3xl;
+        font-family: $font-family-body;
+        font-size: 14px;
+        color: rgba($dark-1, 0.6);
+    }
+}
