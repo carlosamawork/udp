@@ -15,17 +15,20 @@ $data   = $args['data']   ?? array();
 $anchor = $args['anchor'] ?? null;
 
 $target_url = trim( (string) ( $data['target'] ?? '' ) );
-$link_text  = trim( (string) ( $data['link_text'] ?? 'Volver' ) );
+$link_text  = trim( (string) ( $data['link_text'] ?? '' ) );
 
 $parent_id    = (int) wp_get_post_parent_id( get_the_ID() );
 $parent_title = $parent_id ? get_the_title( $parent_id ) : __( 'Inicio', 'starter-theme' );
 
 if ( $target_url === '' ) {
-    $target_url = $parent_id ? get_permalink( $parent_id ) : home_url( '/' );
+    $parent_url = $parent_id ? get_permalink( $parent_id ) : '';
+    $target_url = $parent_url ?: home_url( '/' );
 }
 
 $link_text = str_replace( '{parent_title}', $parent_title, $link_text );
-if ( $link_text === '' ) $link_text = __( 'Volver', 'starter-theme' );
+if ( $link_text === '' ) {
+    $link_text = __( 'Volver', 'starter-theme' );
+}
 
 $id = $anchor['id'] ?? '';
 ?>
