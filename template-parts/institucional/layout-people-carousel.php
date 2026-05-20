@@ -34,7 +34,7 @@ if ( empty( $personas ) ) return;
         <?php endif; ?>
 
         <div class="udp-inst-people__carousel">
-            <div class="swiper">
+            <div class="swiper" role="region" aria-label="<?php echo esc_attr( $title ? $title : __( 'Carrusel de personas', 'starter-theme' ) ); ?>">
                 <ul class="swiper-wrapper">
                     <?php foreach ( $personas as $persona ) :
                         $foto   = is_array( $persona['foto'] ?? null ) ? $persona['foto'] : array();

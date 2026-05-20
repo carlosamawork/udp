@@ -11,12 +11,12 @@ export async function initInstitucionalPeople() {
     if (!sections.length) return;
 
     const { default: Swiper } = await import('swiper');
-    const { Navigation, FreeMode, A11y } = await import('swiper/modules');
+    const { FreeMode, A11y } = await import('swiper/modules');
     await import('swiper/css');
 
     sections.forEach((swiperEl) => {
         new Swiper(swiperEl, {
-            modules: [Navigation, FreeMode, A11y],
+            modules: [FreeMode, A11y],
             slidesPerView: 'auto',
             spaceBetween: 24,
             slidesOffsetBefore: 40,
