@@ -180,6 +180,11 @@
     background: $dark-1;
     color: #fff;
 
+    // El border-top de .udp-inst-section + .udp-inst-section sobra cuando la
+    // banda oscura es vecina: el cambio de fondo ya separa visualmente.
+    &.udp-inst-section + .udp-inst-section,
+    .udp-inst-section + &.udp-inst-section { border-top: 0; }
+
     &__inner {
         max-width: 1440px;
         margin: 0 auto;
@@ -219,6 +224,7 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
+        position: relative; // ancla del stretched-link del title
 
         &-image {
             aspect-ratio: 16 / 10;
@@ -239,7 +245,20 @@
             font-weight: 700;
             margin: 0 0 $space-xs;
 
-            a { color: inherit; text-decoration: none; &:hover { color: $brand-accent; } }
+            a {
+                color: inherit;
+                text-decoration: none;
+
+                // Stretched link: el anchor cubre toda la card para hacerla clickable.
+                &::before {
+                    content: '';
+                    position: absolute;
+                    inset: 0;
+                    z-index: 1;
+                }
+
+                &:hover { color: $brand-accent; }
+            }
         }
 
         &-excerpt {
