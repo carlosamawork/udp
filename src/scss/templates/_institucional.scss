@@ -37,3 +37,63 @@
         }
     }
 }
+
+.udp-inst-share {
+    position: fixed;
+    right: 0;
+    top: 50vh;
+    transform: translateY(-50%);
+    z-index: 950;
+    display: none;
+
+    @include media-up(sm) { display: block; }
+
+    &__trigger {
+        background: $brand-blue;
+        color: #fff;
+        border: 0;
+        border-radius: 28px 0 0 28px;
+        padding: $space-md $space-sm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $space-xs;
+        cursor: pointer;
+        writing-mode: vertical-rl;
+        font-size: 0.875rem;
+        font-weight: 600;
+
+        svg { writing-mode: horizontal-tb; }
+
+        &:hover { background: darken($brand-blue, 10%); }
+    }
+
+    &__menu {
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-right: $space-xs;
+        background: #fff;
+        border-radius: $space-xs;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        padding: $space-xs 0;
+        list-style: none;
+        min-width: 180px;
+
+        a, button {
+            display: block;
+            width: 100%;
+            padding: $space-xs $space-md;
+            background: none;
+            border: 0;
+            text-align: left;
+            color: $dark-1;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            cursor: pointer;
+
+            &:hover { background: rgba($dark-1, 0.05); }
+        }
+    }
+}

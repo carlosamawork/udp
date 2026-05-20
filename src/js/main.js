@@ -39,6 +39,7 @@ import { initCalendarioActiveMonth } from '@modules/calendario-active-month';
 import { initBlockImageGallery } from '@modules/block-image-gallery';
 import { initBlockAccordion } from '@modules/block-accordion';
 import { initMegaMenu } from '@modules/mega-menu';
+import { initShareFloating } from '@modules/share-floating';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -63,6 +64,7 @@ domReady(() => {
     initBlockImageGallery();
     initBlockAccordion();
     initMegaMenu();
+    initShareFloating();
 
     console.log('[StarterBS5] Theme initialized');
 });
