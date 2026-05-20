@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * Se prepende un anchor "Inicio" que apunta al hero.
  *
  * @param int|null $post_id Post a consultar; null usa el actual.
- * @return array<int,array{id:string,label:string,icon:?array,order:int,layout_key:string}>
+ * @return array<int,array{id:string,label:string,icon:?array,order:int,layout_key:string,section_index:?int}>
  */
 function udp_institucional_collect_anchors( $post_id = null ) {
     if ( ! function_exists( 'get_field' ) ) {
@@ -32,16 +32,17 @@ function udp_institucional_collect_anchors( $post_id = null ) {
 
     // Anchor "Inicio" auto al inicio
     $anchors[] = array(
-        'id'         => 'section-inicio',
-        'label'      => __( 'Inicio', 'starter-theme' ),
-        'icon'       => null,
-        'order'      => 0,
-        'layout_key' => '__hero__',
+        'id'            => 'section-inicio',
+        'label'         => __( 'Inicio', 'starter-theme' ),
+        'icon'          => null,
+        'order'         => 0,
+        'layout_key'    => '__hero__',
+        'section_index' => null,
     );
     $used_ids['section-inicio'] = 1;
 
     $order = 1;
-    foreach ( $sections as $section ) {
+    foreach ( $sections as $i => $section ) {
         $layout = $section['acf_fc_layout'] ?? '';
         $label  = trim( (string) ( $section['anchor_label'] ?? '' ) );
 
@@ -68,11 +69,12 @@ function udp_institucional_collect_anchors( $post_id = null ) {
         }
 
         $anchors[] = array(
-            'id'         => $id,
-            'label'      => $label,
-            'icon'       => $icon,
-            'order'      => $order,
-            'layout_key' => $layout,
+            'id'            => $id,
+            'label'         => $label,
+            'icon'          => $icon,
+            'order'         => $order,
+            'layout_key'    => $layout,
+            'section_index' => $i,
         );
 
         $order++;
@@ -87,13 +89,19 @@ function udp_institucional_collect_anchors( $post_id = null ) {
  *
  * Útil dentro de cada partial layout-*.php para obtener su id sin re-derivar.
  *
+ * Hace match por `section_index` (índice real del flexible content), no por
+ * `order` — porque `order` solo se incrementa para secciones que pasaron los
+ * filtros (anchor_label no vacío; back_link visible). Si la sección fue
+ * filtrada, no tiene anchor y se devuelve null: el template debe renderizar
+ * la sección igual, pero sin id ni entrada en la rail/scrollspy.
+ *
  * @param array $anchors       Array completo devuelto por udp_institucional_collect_anchors().
  * @param int   $section_index Índice (0-based) de la sección dentro del flexible content.
  * @return array|null
  */
 function udp_institucional_anchor_for_index( array $anchors, $section_index ) {
     foreach ( $anchors as $a ) {
-        if ( $a['order'] === ( $section_index + 1 ) ) {
+        if ( ( $a['section_index'] ?? null ) === $section_index ) {
             return $a;
         }
     }
