@@ -1,0 +1,39 @@
+// =============================================================================
+// Template: page-institucional
+// =============================================================================
+//
+// Hero morado + breadcrumb + 4 layouts + chips + rail + share.
+// BEM prefix: udp-inst-*
+
+:root {
+    --udp-anchor-offset: calc(var(--header-h, 84px) + 84px); // header + chips bar
+}
+
+.udp-inst {
+    // Container general del template
+
+    &-hero {
+        background: $brand-blue;
+        color: #fff;
+        padding: $space-2xl $space-3xl;
+
+        &__inner {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        &__breadcrumb {
+            margin-bottom: $space-md;
+            color: rgba(255, 255, 255, 0.85);
+
+            a { color: inherit; }
+        }
+
+        &__title {
+            font-size: clamp(2.5rem, 5vw, 4.25rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin: 0;
+        }
+    }
+}
