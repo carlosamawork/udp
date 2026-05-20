@@ -682,3 +682,50 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 **Pendientes**:
 - El cliente debe cargar items en `Options → Header & Mega-menú → Menu Principal` y `Mega-menú: Quick Links`. Si no hay data, el panel muestra el empty state (actualmente hay 5 items de menu_principal en DB).
 - F9: Home. F10: Polish. F11: Switch local.
+
+### 2026-05-14 — Wordfence colgaba el admin local (HTTP 500 timeout 30s)
+
+**Hechos**:
+- `/wp-admin/` devolvía HTTP 500 después de **30s exactos** de timeout. Front-page funcionaba en 100ms.
+- Bisección de plugins: Wordfence aislado como única causa. Sin él: 200 OK en 150ms.
+- Wordfence movido a `wp-content/_disabled-plugins/wordfence/`. Resto de los 23 plugins activos sin problemas (incluido `wp-migrate-db` que se necesitará para migrar a staging).
+
+**Diagnóstico**:
+- Wordfence llama a `api.wordfence.com` en cada carga de admin (licencia, firmas WAF, live traffic). En local esa llamada se cuelga hasta timeout.
+- Confirmado por los errores `Cron unschedule event error for hook: wordfence_start_scheduled_scan, Error code: could_not_set` en debug.log — su sistema de cron no podía guardar eventos.
+
+**Decisiones clave**:
+- Wordfence se mantiene desactivado en local. En staging/producción se reactiva (red normal, hace su función real).
+- Si más adelante hace falta en local: borrar y reinstalar fresco, o añadir `define('WORDFENCE_DISABLE_LIVE_TRAFFIC', true)` en wp-config.
+
+**Pendientes**:
+- Subir tema al staging — ya está hecho según el usuario pero "no funciona": pendiente de diagnosticar (probablemente falta `dist/` o el `udp-core-loader.php` en mu-plugins raíz; ver entrada anterior).
+- Migración DB local → staging vía WP Migrate DB con find/replace `http://localhost:8888/udp` → URL staging.
+
+### 2026-05-20 — Fix build:prod path para producción
+
+- En `package.json` se añadió script `build:prod` que pasa `VITE_BASE_PATH=/cms/wp-content/themes/starter-theme/dist/` explícitamente. Para deploy hay que usar `npm run build:prod`, no `npm run build`.
+- Causa: Vite carga `.env.local` en TODOS los modes (incluido production), así que builds locales horneaban `/udp/cms/...` en los chunks dinámicos y rompían en producción.
+- `.env.local` ahora documenta este caveat en su comentario.
+
+### 2026-05-20 — F9 template page-institucional completado
+
+Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 6 fixes post-review).
+
+**Hechos**:
+- Nuevo template `templates/page-institucional.php` asignable desde WP-admin (Template Name "Institucional"). Sirve páginas tipo "Forma de Gobierno", "Consejo Académico", etc.
+- ACF flexible content `group_page_institucional` con 4 layouts: `rich_text_sidebar` (A — 3-col texto+sidebar), `cards_dark_row` (B — banda oscura full-width), `people_carousel` (C — Swiper personas), `back_link` (D — link a página padre).
+- Chips bar sticky superior (`top: 0` porque header del tema es position:relative) + rail vertical flotante izquierdo (≥992px) auto-derivados desde el helper `udp_institucional_collect_anchors()` en `inc/udp-institucional.php`.
+- Scrollspy en `src/js/modules/anchor-scrollspy.js` (IntersectionObserver, rootMargin '-30% 0px -60% 0px') sincroniza `.is-active` + `aria-current="location"` entre chips y rail.
+- Botón share flotante derecho con Web Share API + dropdown fallback (copiar, email, WhatsApp, LinkedIn, X, Facebook). Hidden <576px.
+- Anchor "Inicio" auto-prepended con icono de casa SVG cuando order=0 sin icon configurado.
+
+**Decisiones clave**:
+- BEM prefix `udp-inst-*`. Custom property `--udp-anchor-offset` declarada en :root pero NO usada (el `top:0` del chips bar la hace innecesaria).
+- `smooth-scroll.js` ahora excluye `.udp-inst-chips__link` y `.udp-inst-rail__link` del selector — evita que dos handlers compitan sobre el mismo click.
+- Cards del layout B implementan stretched-link (anchor del título cubre toda la card vía `&::before { inset: 0 }`) para hit-target a11y.
+- Layout D substituye `{parent_title}` en `link_text` en PHP antes de render.
+
+**Pendientes**:
+- QA manual del template: crear página de prueba con las 4 secciones, verificar desktop ≥1440, tablet 768-991, mobile <768, Lighthouse a11y ≥95. Está documentado en plan §12.
+- Mergear `feature/f9-page-institucional` a main cuando se valide visualmente.
