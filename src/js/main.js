@@ -40,6 +40,7 @@ import { initBlockImageGallery } from '@modules/block-image-gallery';
 import { initBlockAccordion } from '@modules/block-accordion';
 import { initMegaMenu } from '@modules/mega-menu';
 import { initShareFloating } from '@modules/share-floating';
+import { initInstitucionalPeople } from '@modules/institucional-people';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -65,6 +66,7 @@ domReady(() => {
     initBlockAccordion();
     initMegaMenu();
     initShareFloating();
+    initInstitucionalPeople();
 
     console.log('[StarterBS5] Theme initialized');
 });

@@ -268,3 +268,66 @@
         }
     }
 }
+
+.udp-inst-people {
+    &__inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 0 0 0;
+    }
+
+    &__header {
+        padding: 0 $space-3xl;
+        margin-bottom: $space-xl;
+
+        @include media-down(md) { padding: 0 $space-md; }
+    }
+
+    &__title {
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+        font-weight: 700;
+        margin: 0 0 $space-xs;
+    }
+
+    &__subtitle {
+        font-size: 1.125rem;
+        color: $gray-medium;
+        margin: 0;
+    }
+
+    &__carousel { overflow: hidden; }
+
+    &__card {
+        width: 289px;
+        background: transparent;
+        list-style: none;
+    }
+
+    &__photo {
+        aspect-ratio: 1 / 1;
+        background: rgba($dark-1, 0.1);
+        margin-bottom: $space-md;
+        overflow: hidden;
+        border-radius: $space-xs;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    &__name {
+        font-size: 1.125rem;
+        font-weight: 700;
+        margin: 0 0 $space-2xs;
+        color: $dark-1;
+    }
+
+    &__role {
+        font-size: 0.9375rem;
+        color: $gray-medium;
+        margin: 0;
+    }
+}
