@@ -12,7 +12,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$share_url   = esc_url( get_permalink() );
+$share_url   = esc_attr( esc_url( get_permalink() ) );
 $share_title = esc_attr( wp_strip_all_tags( get_the_title() ) );
 ?>
 <aside class="udp-inst-share" data-udp-share data-share-url="<?php echo $share_url; ?>" data-share-title="<?php echo $share_title; ?>" aria-label="<?php esc_attr_e( 'Compartir esta página', 'starter-theme' ); ?>">
