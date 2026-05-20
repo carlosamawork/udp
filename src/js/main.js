@@ -41,6 +41,7 @@ import { initBlockAccordion } from '@modules/block-accordion';
 import { initMegaMenu } from '@modules/mega-menu';
 import { initShareFloating } from '@modules/share-floating';
 import { initInstitucionalPeople } from '@modules/institucional-people';
+import { initAnchorScrollspy } from '@modules/anchor-scrollspy';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -67,6 +68,7 @@ domReady(() => {
     initMegaMenu();
     initShareFloating();
     initInstitucionalPeople();
+    initAnchorScrollspy();
 
     console.log('[StarterBS5] Theme initialized');
 });
