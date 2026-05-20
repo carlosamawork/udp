@@ -40,7 +40,7 @@ $id = $anchor['id'] ?? '';
                     $c_body  = $card['body']  ?? '';
                     $c_cta   = is_array( $card['cta'] ?? null ) ? $card['cta'] : array();
                     $c_url   = $c_cta['url']    ?? '';
-                    $c_label = $c_cta['title']  ?? __( 'Conoce más', 'starter-theme' );
+                    $c_label = ! empty( $c_cta['title'] ) ? $c_cta['title'] : __( 'Conoce más', 'starter-theme' );
                     $c_tgt   = $c_cta['target'] ?? '';
 
                     if ( ! $c_url ) continue;
@@ -52,7 +52,7 @@ $id = $anchor['id'] ?? '';
                         <?php if ( $c_body ) : ?>
                             <p class="udp-inst-rts__card-body"><?php echo esc_html( $c_body ); ?></p>
                         <?php endif; ?>
-                        <a class="udp-inst-rts__card-cta" href="<?php echo esc_url( $c_url ); ?>"<?php echo $c_tgt ? ' target="' . esc_attr( $c_tgt ) . '" rel="noopener"' : ''; ?>>
+                        <a class="udp-inst-rts__card-cta" href="<?php echo esc_url( $c_url ); ?>"<?php echo $c_tgt ? ' target="' . esc_attr( $c_tgt ) . '" rel="noopener noreferrer"' : ''; ?>>
                             <span><?php echo esc_html( $c_label ); ?></span>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
