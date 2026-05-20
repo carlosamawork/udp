@@ -359,8 +359,10 @@
 }
 
 .udp-inst-chips {
+    // Header del tema es position:relative, así que con top:0 los chips se
+    // pegan al borde superior del viewport una vez el header sale en scroll.
     position: sticky;
-    top: var(--header-h, 84px);
+    top: 0;
     z-index: 900;
     background: #fff;
     border-bottom: 1px solid rgba($dark-1, 0.1);
@@ -381,7 +383,7 @@
         flex-wrap: nowrap;
         gap: $space-xs;
         overflow-x: auto;
-        scroll-snap-type: x mandatory;
+        scroll-snap-type: x proximity;
 
         // Hide scrollbar visualmente
         scrollbar-width: none;
@@ -403,6 +405,11 @@
         transition: background 0.15s ease, color 0.15s ease;
 
         &:hover { background: rgba($dark-1, 0.1); }
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: 2px;
+        }
 
         &.is-active {
             background: $brand-blue;
