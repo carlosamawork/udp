@@ -682,3 +682,14 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 **Pendientes**:
 - El cliente debe cargar items en `Options → Header & Mega-menú → Menu Principal` y `Mega-menú: Quick Links`. Si no hay data, el panel muestra el empty state (actualmente hay 5 items de menu_principal en DB).
 - F9: Home. F10: Polish. F11: Switch local.
+
+### 2026-05-21 — Cierre de sesión — Arranque F9 Home
+
+- Sesión de orientación: se cargó contexto completo del proyecto desde docs/superpowers y MEMORY.md.
+- F8 (mega-menú) es el último feature completo. Repo limpio en rama `main`.
+- **Próxima tarea: F9 — Home page.**
+- Acuerdo de trabajo para F9:
+  - Flujo sección a sección desde Figma (MCP de Figma instalado y conectado).
+  - ACF via JSON + script UPSERT (`wp eval-file`), mismo patrón que F1–F8.
+  - Template PHP: previsiblemente `front-page.php` o `templates/page-home.php`.
+  - La sesión se reinició para activar el MCP de Figma — al retomar, Elsa compartirá la primera sección del Home.
