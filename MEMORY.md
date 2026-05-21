@@ -683,13 +683,30 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - El cliente debe cargar items en `Options → Header & Mega-menú → Menu Principal` y `Mega-menú: Quick Links`. Si no hay data, el panel muestra el empty state (actualmente hay 5 items de menu_principal en DB).
 - F9: Home. F10: Polish. F11: Switch local.
 
-### 2026-05-21 — Cierre de sesión — Arranque F9 Home
+### 2026-05-21 — F9 Home — Brainstorming en curso (pausado)
 
-- Sesión de orientación: se cargó contexto completo del proyecto desde docs/superpowers y MEMORY.md.
-- F8 (mega-menú) es el último feature completo. Repo limpio en rama `main`.
-- **Próxima tarea: F9 — Home page.**
-- Acuerdo de trabajo para F9:
-  - Flujo sección a sección desde Figma (MCP de Figma instalado y conectado).
-  - ACF via JSON + script UPSERT (`wp eval-file`), mismo patrón que F1–F8.
-  - Template PHP: previsiblemente `front-page.php` o `templates/page-home.php`.
-  - La sesión se reinició para activar el MCP de Figma — al retomar, Elsa compartirá la primera sección del Home.
+**Estado**: Brainstorming a medias. Esperando confirmación del jefe sobre arquitectura.
+
+**Secciones clarificadas** (10 de 11):
+1. **Portada**: título Arizona Flare + CTA (ACF) + imagen estática con animación scroll (clip-path CSS scroll-driven + vanilla JS fallback).
+2. **Buscador carreras**: dropdown facultad + select "Todas las carreras" (estático) + búsqueda texto → `/carreras/?udp_facultad=&udp_s=`. Extender `udp_query_carreras()` para buscar también por nombre de facultad.
+3. **Noticias**: últimas noticias `post_type=post`, Swiper horizontal.
+4. **Facultades**: taxonomía `facultad`, display marquee/texto escalonado.
+5. **Próximos eventos**: `post_type=agenda` fecha ≥ hoy, 2 cards grandes + lista 5 eventos tabla.
+6. **Destacado azul + foto**: ACF manual (título largo, descripción, link, imagen). "Postítulos" en Figma.
+7. **Vida Universitaria**: ACF manual (título, texto, 3 links, imagen o embed video).
+8. **Cultura UDP**: ACF repeater (nombre_categoria + contador + imagen + link). Layout 2-col: imagen izq (cambia al hover con fade CSS) + lista derecha fondo `#232323`, Arizona Flare 48px, activo en `#FF7064`.
+9. **Cultura Digital**: **APLAZADA** — depende de taxonomía `fondo` que puede no existir. Confirmar con compañero.
+10. **Innovación e Investigación**: `post_type=post` filtrado por categorías "Investigación" y/o "Innovación". Eyebrow = siglas facultad → **añadir campo ACF `siglas` a taxonomía `facultad`**.
+11. **Cifras**: **PENDIENTE** — ACF repeater probable (números + descripción + ranking). Confirmar si el cliente lo gestiona desde admin o es hardcoded.
+
+**Arquitectura propuesta** (pendiente confirmación jefe):
+- **Opción B recomendada**: `front-page.php` como orquestador + `get_template_part()` para cada sección en `template-parts/home/section-*.php`. ACF group `group_template_home` con location `page_type == front_page`.
+- Opción A (monolítico) descartada. Opción C (flex content) descartada por overkill.
+
+**Pendiente antes de escribir spec**:
+- Confirmación arquitectura Opción B por jefe.
+- Aclarar sección 11 (Cifras): ¿admin o hardcoded?
+- Sección 9 (Cultura Digital): confirmar con compañero.
+
+**Sesión de brainstorm pausada para avanzar con otras páginas.**
