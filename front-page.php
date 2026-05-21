@@ -20,7 +20,7 @@ if ($hero_title || $hero_image) :
     $hero_cta_url  = starter_get_field('hero_cta_url');
     ?>
 
-    <section class="hero-section position-relative overflow-hidden text-white"
+    <!-- <section class="hero-section position-relative overflow-hidden text-white"
              <?php if ($hero_image) : ?>
              style="background-image: url('<?php echo esc_url($hero_image['sizes']['hero-banner'] ?? $hero_image['url']); ?>');
                     background-size: cover; background-position: center; min-height: 80vh;"
@@ -46,12 +46,16 @@ if ($hero_title || $hero_image) :
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
 <?php endif; ?>
 
+<div class="content">
+    <img src="<?php echo bloginfo('template_url'); ?>/inc/home-image.png" alt="home" style="width: 100%;">
+</div>
+
 <!-- Contenido del editor -->
-<div class="container py-5">
+<!-- <div class="container py-5">
     <?php while (have_posts()) : the_post(); ?>
         <?php
         $content = get_the_content();
@@ -73,7 +77,7 @@ if ($hero_title || $hero_image) :
             ?>
         </div>
     <?php endif; ?>
-</div>
+</div> -->
 
 <?php
 get_footer();
