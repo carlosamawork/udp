@@ -3,6 +3,7 @@
   "useTabs": false,
   "singleQuote": false,
   "printWidth": 120,
+  "endOfLine": "lf",
   "overrides": [
     {
       "files": "*.php",
