@@ -863,3 +863,87 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 1. Retomar F9 Home cuando llegue confirmación del jefe
 2. Retomar Anuarios cuando llegue respuesta del jefe
 3. Fase posterior Simple Accordion: tarjetas laterales (ACF repeater, 3 tipos, desarrolla compañero)
+
+### 2026-05-22 — F9 Home — Plan escrito
+
+**Confirmaciones recibidas**:
+- Sección 11 (Cifras): nuevos ACFs (repeater admin-editable)
+- Sección 9 (Cultura Digital): campo ACF llamado `fondo` (name exacto), sin CPT ni taxonomía
+- Orden secciones hardcodeado (sin reordenación por cliente) → confirma Opción B
+
+**Plan**: `docs/superpowers/plans/2026-05-22-f9-home.md`
+- 15 tasks: 1 infraestructura + 1 ACF JSON + 1 extensión udp_query_agenda + 11 secciones + 1 smoke test
+- Archivos nuevos: front-page.php, 11 template-parts/home/section-*.php, _home.scss, 3 módulos JS, group_template_home.json
+- Archivos modificados: main.scss, main.js, group_tax_facultad_meta.json (siglas), inc/udp-cards.php (fecha_desde+order en udp_query_agenda)
+
+**Estado**: Pendiente de ejecutar.
+
+### 2026-05-22 — F9 Home Task 4: S1 Portada
+
+**Hechos**:
+- Creado directorio `template-parts/home/` (nuevo).
+- Creado `template-parts/home/section-portada.php` — PHP linted (no syntax errors).
+- Añadido bloque S1 Portada al final de `src/scss/templates/_home.scss` — grid 2-col, `clamp()` para `font-size`, clip-path reveal animation con fallback `@supports animation-timeline`.
+- Reemplazado stub `src/js/modules/home-portada.js` — IntersectionObserver fallback para browsers sin `animation-timeline: scroll()`. Usa `qs` de `@utils/dom`.
+- Build: ✓ 607ms sin errores.
+- Commit: `3db0252` feat(home): S1 Portada — template, SCSS, JS clip-path reveal
+
+**Pendientes**:
+- Tasks 5+: secciones restantes de la Home (S2 Postítulos, S3 Vida Universitaria, etc.)
+- `initHomePortada()` todavía no está importado en `main.js` — se añadirá cuando se creen todos los módulos de la home en el task de infraestructura o al final.
+
+### 2026-05-22 — Task 2 completada: ACF JSON group_template_home + siglas
+
+- Creado `acf-json/group_template_home.json` — 7 tabs, 30+ campos (portada, postítulos, vida universitaria, cultura UDP, cultura digital, cifras). Location: `front_page`.
+- Añadido campo `siglas` (text, maxlength 10) a `acf-json/group_tax_facultad_meta.json`.
+- Ambos JSONs validados (JSON OK). Sincronizados a DB vía `acf_import_field_group` / `acf_update_field_group` con WP-CLI.
+- Nota técnica: WP-CLI (Homebrew PHP 8.5) no conecta con `localhost:8889`; solución: symlink `/tmp/mysql.sock → /Applications/MAMP/tmp/mysql/mysql.sock`. También `acf_add_field_group()` no existe en WP-CLI context → usar `acf_import_field_group()` para crear.
+- ACF normalizó los JSONs al sincronizar (añadió defaults de campos — comportamiento normal).
+- Commit: `1ba9297` feat(home/acf): group_template_home + siglas en facultad
+
+### 2026-05-22 — F9 Home S3 Noticias completada
+
+**Hechos**:
+- Creado `template-parts/home/section-noticias.php` — llama `udp_query_noticias(['limit'=>8])`, early-return si vacío, renderiza Swiper con 8 cards (imagen 4/3 + eyebrow + título + fecha `date_i18n`). Navegación prev/next con aria-labels.
+- Reemplazado stub `src/js/modules/home-noticias.js` — lazy import Swiper + Navigation + Keyboard + FreeMode, `slidesPerView:'auto'`, breakpoints: `spaceBetween: 12/24`, `slidesOffsetBefore: 16/40`.
+- Añadido bloque S3 al final de `src/scss/templates/_home.scss` — slides 280px (320px en md), hover scale 1.04 en imagen, underline en título al hover.
+- PHP lint: sin errores. Build: ✓ 482ms. Commit: `bdd18bf`.
+
+**Decisiones**:
+- `udp_query_noticias()` ya acepta `limit` como argumento (documentado en inc/udp-cards.php). Se reutiliza sin modificar.
+- `limit: 8` (no `posts_per_page`) — consistente con el contrato de la función helper.
+- Lazy import de Swiper idéntico al patrón de `section-landing-swiper.js` y `home-buscador-carreras.js` — chunk separado, no entra en main bundle.
+
+**Pendientes F9 Home**:
+- S4 Facultades, S5 Próximos Eventos, S6 Postítulos (destacado azul), S7 Vida Universitaria, S8 Cultura UDP, S9 Cultura Digital, S10 Innovación e Investigación, S11 Cifras.
+- Wiring de `initHomeNoticias()` en `main.js` (se añade cuando se consoliden todos los módulos home).
+
+### 2026-05-22 — F9 Home S4 Facultades completada
+
+**Hechos**:
+- Creado `template-parts/home/section-facultades.php` — llama `get_terms('facultad')`, early-return si vacío, renderiza marquee CSS (doble copia para loop sin salto) + `<nav>` con lista de links a cada facultad.
+- Añadido bloque S4 al final de `src/scss/templates/_home.scss` — marquee `animation: marquee-scroll 30s linear infinite`, `translateX(-50%)` sobre doble copia, `prefers-reduced-motion` desactiva la animación. Lista en 2 columnas (3 en md+), links con border-bottom `$gray-200` y hover `var(--udp-color-primary)`.
+- PHP lint: sin errores. Build: ✓ 609ms. Commit: `c051a87`.
+
+**Decisiones**:
+- `get_term_link()` con fallback a `home_url('/')` si devuelve WP_Error — defensivo.
+- `aria-hidden="true"` en la segunda copia del marquee y en el `&__marquee` wrapper entero (contenido decorativo).
+- `marquee-scroll` keyframe: `translateX(0) → translateX(-50%)`. Con doble copia el 50% equivale a exactamente 1 copia completa, creando el loop visual perfecto.
+
+**Pendientes F9 Home**:
+- S6 Postítulos (destacado azul), S7 Vida Universitaria, S8 Cultura UDP, S9 Cultura Digital, S10 Innovación e Investigación, S11 Cifras.
+- Wiring de todos los módulos JS home en `main.js`.
+
+### 2026-05-22 — F9 Home S5 Próximos Eventos completada
+
+**Hechos**:
+- Creado `template-parts/home/section-eventos.php` — llama `udp_query_agenda(['fecha_desde'=>hoy, 'order'=>'ASC', 'limit'=>7])`, early-return si vacío. Slice: 2 destacados (cards 16/9) + 5 lista (tabla BEM).
+- Añadido bloque S5 al final de `src/scss/templates/_home.scss` — `.udp-home-eventos` con bg `$gray-100`, cards `$white` con hover scale 1.04 en imagen, tabla con `border-collapse` + separadores `$gray-200`.
+- PHP lint: sin errores. Build: ✓ 490ms.
+- Commit: ver SHA del commit inmediato siguiente.
+
+**Decisiones**:
+- `udp_query_agenda()` ya soporta `fecha_desde` y `order` desde T3 (documentado en spec). No se modificó `inc/udp-cards.php`.
+- Cards sin imagen: `udp_card_data_from_agenda` devuelve `imagen.url=''` — la card simplemente omite el bloque `__card-img` (condicional PHP). No hay placeholder en esta sección (a diferencia del archive).
+- La tabla usa `<caption class="visually-hidden">` para accesibilidad (screenreaders anuncian el contexto de la tabla).
+- `lugar` condicional tanto en cards como en filas de tabla — algunos eventos no tienen lugar configurado.
