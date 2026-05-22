@@ -447,3 +447,82 @@
         overflow: hidden;
     }
 }
+
+// -----------------------------------------------------------------------------
+// S8 — Cultura UDP
+// -----------------------------------------------------------------------------
+.udp-home-cultura-udp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 560px;
+
+    @include media-breakpoint-down(md) {
+        grid-template-columns: 1fr;
+    }
+
+    &__media {
+        position: relative;
+        overflow: hidden;
+        background: $gray-200;
+    }
+
+    &__img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+
+        &.is-active {
+            opacity: 1;
+        }
+    }
+
+    &__panel {
+        background-color: #232323;
+        color: $white;
+        display: flex;
+        align-items: center;
+        padding: 3rem 2.5rem;
+    }
+
+    &__lista {
+        width: 100%;
+    }
+
+    &__item {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+
+        &:last-child { border-bottom: none; }
+
+        &.is-active &__nombre,
+        &:hover &__nombre {
+            color: #FF7064;
+        }
+    }
+
+    &__link {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 0;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &__nombre {
+        font-family: $font-family-display;
+        font-size: clamp(1.75rem, 3.5vw, 3rem);
+        transition: color 0.25s ease;
+        line-height: 1.1;
+    }
+
+    &__contador {
+        font-size: 0.875rem;
+        color: rgba(255,255,255,0.5);
+        flex-shrink: 0;
+    }
+}
