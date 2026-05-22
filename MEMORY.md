@@ -710,3 +710,13 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - Sección 9 (Cultura Digital): confirmar con compañero.
 
 **Sesión de brainstorm pausada para avanzar con otras páginas.**
+
+### 2026-05-22 — Anuarios UDP — Brainstorming en curso (pausado)
+
+**Diseño**: Grid 4 columnas de cards anuario (imagen portada portrait 317×391 + título + fecha). 14 anuarios en Figma (2025→2011). Breadcrumb + título "Anuarios UDP". Share button flotante derecha. Sin barra lateral dots (era error del Figma, pertenece a otra página).
+
+**Pendiente confirmar con jefe**:
+- Fuente de datos: ¿CPT existente de la DB antigua o ACF repeater (el cliente sube cada anuario manualmente)?
+- Acción del card: ¿descarga PDF, URL externa, o página de detalle?
+
+**Decisiones tomadas**: Sin sidebar dots. Share button = reusar `post-share.php` partial de F4b.
