@@ -2,3 +2,69 @@
 // HOME — Estilos de la front page UDP
 // Cada sección tiene su bloque BEM .udp-home-{nombre}.
 // =============================================================================
+
+// -----------------------------------------------------------------------------
+// S1 — Portada
+// -----------------------------------------------------------------------------
+.udp-home-portada {
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+
+    &__inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+
+        @include media-breakpoint-down(md) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__titulo {
+        font-family: $font-family-display;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        line-height: 1.05;
+        color: $black;
+    }
+
+    &__subtitulo {
+        font-size: 1.25rem;
+        margin-top: 1rem;
+        max-width: 40ch;
+    }
+
+    &__cta {
+        margin-top: 2rem;
+    }
+
+    &__media {
+        clip-path: inset(0 100% 0 0);
+        animation: portada-reveal 0.8s ease-out forwards;
+        animation-play-state: paused;
+
+        &.is-visible {
+            animation-play-state: running;
+        }
+
+        @supports (animation-timeline: scroll()) {
+            animation-timeline: view();
+            animation-range: entry 0% entry 40%;
+            animation-play-state: running;
+        }
+    }
+
+    &__imagen {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+}
+
+@keyframes portada-reveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+}
