@@ -367,3 +367,33 @@
         text-align: right;
     }
 }
+
+// -----------------------------------------------------------------------------
+// S6 — Postítulos (Destacado azul + foto)
+// -----------------------------------------------------------------------------
+.udp-home-posttitulos {
+    padding: 5rem 0;
+    background-color: var(--udp-color-primary, #0033a0); // Azul UDP institucional
+    color: $white;
+
+    &__titulo {
+        font-family: $font-family-display;
+        font-size: clamp(1.75rem, 4vw, 3rem);
+        color: $white;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+
+    &__descripcion {
+        font-size: 1rem;
+        line-height: 1.7;
+        opacity: 0.9;
+
+        p { margin-bottom: 1rem; }
+        a { color: $white; }
+    }
+
+    &__imagen {
+        border-radius: 2px;
+    }
+}
