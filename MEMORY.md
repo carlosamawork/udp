@@ -720,3 +720,105 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - Acción del card: ¿descarga PDF, URL externa, o página de detalle?
 
 **Decisiones tomadas**: Sin sidebar dots. Share button = reusar `post-share.php` partial de F4b.
+
+### 2026-05-22 — Task 1: ACF JSON field group para Template Simple Accordion
+
+**Hechos**:
+- Creado `/acf-json/group_template_simple_accordion.json` con estructura: 2 repeaters (acordeon + relacionados).
+- Acordeón: items con titulo (text required) + contenido (wysiwyg). Layout block, botón "Añadir item".
+- Relacionados: items con titulo (text required) + link (ACF Link return_format array). Layout table, botón "Añadir relacionado".
+- Location: `page_template == templates/page-simple-accordion.php` (archivo a crear en Task 2).
+- Sync a BD via script PHP directo (mysqli) porque WP-CLI no conecta con DB socket MAMP (localhost:8889). Script `/tmp/upsert_tsa_direct.php` crea post_type=acf-field-group (ID 55352) + postmeta _key=group_template_simple_accordion.
+- Verificación: JSON en DB con 2 fields + 4 sub-fields esperados. Commit: `3b5c93b`.
+
+**Decisiones clave**:
+- Repeater `acordeon`: layout block (vertical stack, mejor para edición). Sub-field contenido es wysiwyg (media_upload=1).
+- Repeater `relacionados`: layout table (horizontal, más compacto). Sub-field link usa ACF Link nativo con return_format array (gestiona target/title automáticamente).
+- El cliente edita estos campos desde el admin cuando la página use el template `page-simple-accordion.php`.
+
+**Pendientes**:
+- Task 2: crear `templates/page-simple-accordion.php` asignándose a páginas de "Conoce UDP".
+- Task 3+: template-parts y SCSS para renderizar el acordeón y carrusel de relacionados (Swiper lazy-loaded).
+- Las páginas que use este template aún no existen — serán creadas/asignadas por el cliente o futuras tasks.
+
+### 2026-05-22 — Task 2: Template principal + page-header partial
+
+**Hechos**:
+- Creado `templates/page-simple-accordion.php` con `Template Name: Simple Accordion` para asignación en dropdown de WordPress.
+- Creado directorio `template-parts/simple-accordion/` y partial `page-header.php`.
+- `page-simple-accordion.php` orquesta 3 partials: page-header (breadcrumb + título) + main-content (contenido + acordeón) + related (carrusel Swiper de relacionados, condicional). También llama a post-share.php al final (reutilizable de F4b).
+- `page-header.php` contiene header ligero con breadcrumb automático (reutiliza `template-parts/sections/breadcrumb.php` existente) + h1 con title de la página.
+- Estructura ACF esperada: acordeon (repeater con titulo + contenido wysiwyg) + relacionados (repeater con titulo + link ACF).
+- Build: ✓. Commit: `594b001`.
+
+**Decisiones clave**:
+- Template name exacto "Simple Accordion" (sin mayúsculas adicionales) para que WP lo muestre correctamente en el dropdown de Page Attributes.
+- `$acordeon` y `$relacionados` se inicializan con fallback a array vacío si ACF no está disponible (defensive programming).
+- main-content y related se cargan siempre, pero related only renderiza si hay items (early return condicional ya en el template).
+- Breadcrumb y title siguen el patrón de `section-landing` (F3): breadcrumb en header container + h1 centrado.
+
+**Pendientes**:
+- Task 3: `template-parts/simple-accordion/main-content.php` (contenido principal + acordeón renderizado).
+- Task 4: `template-parts/simple-accordion/related.php` (carrusel Swiper de items relacionados).
+- Task 5+: SCSS para header, acordeón, related.
+
+### 2026-05-22 — Task 3: main-content partial (the_content + acordeón)
+
+**Hechos**:
+- Creado `template-parts/simple-accordion/main-content.php` con la estructura 3-col (left | center | right asides).
+- Columna central renderiza `the_content()` dentro de div `udp-simple-accordion__body`.
+- Acordeón renderizado debajo si `$acordeon` no está vacío. Usa repeater ACF `acordeon` (items con titulo + contenido wysiwyg).
+- Markup acordeón: `<ul class="udp-block-accordion__list">` → `<li class="udp-block-accordion__item">` → `<details class="udp-block-accordion__details">` → `<summary class="udp-block-accordion__summary">` con span `summary-title` y `summary-icon` (chevron SVG inline). Content div `udp-block-accordion__content` renderiza el wysiwyg con `wp_kses_post()`.
+- Las columnas laterales `udp-simple-accordion__col-left` y `col-right` son `<aside>` vacíos con `aria-hidden="true"` — puntos de extensión para fase posterior (tarjetas de compañero).
+- Layout CSS 3-col será implementado en Task 5. BEM classes reutilizan exactamente los nombres de F7b (`udp-block-accordion__*`), así que el JS module `block-accordion.js` las detecta sin cambios.
+- PHP lint: sin errores. Commit: `a064449`.
+
+**Decisiones clave**:
+- Loop WP `have_posts() / while / the_post()` es correcto para page template parcial que se carga dentro del loop ya establecido por WordPress.
+- `$item_titulo` requerido (condición `if (!$item_titulo) continue;`) — items sin título se omiten silenciosamente.
+- SVG chevron 14×14 inline con `stroke="currentColor"` para heredar color del contexto (se puede themar desde CSS).
+- Empty asides: `aria-hidden="true"` para que screenreaders los ignoren (no representan contenido).
+
+**Pendientes**:
+- Task 4: partial `related.php` (carrusel Swiper de items del repeater `relacionados`).
+- Task 5+: SCSS para todo el template: header, layout 3-col, acordeón, related.
+
+---
+
+### 2026-05-22 — Task 5: SCSS styles + import (simple-accordion)
+
+**Hechos**:
+- Creado `src/scss/templates/_simple-accordion.scss` con estilos BEM completos para `.udp-simple-accordion`.
+- Añadido `@import "templates/simple-accordion";` en `src/scss/main.scss` tras `centros-single`.
+- Build Vite: sin errores, `main.css` generado correctamente. Commit: `e35b8ff`.
+
+**Decisión clave**:
+- La spec del task usaba `$font-arizona`, `$black`, `$gray-100`, `$gray-200` como si fueran variables del proyecto. `$black`/`$gray-100`/`$gray-200` existen en Bootstrap (importado antes) y están disponibles. `$font-arizona` NO existe — se sustituyó por `$font-family-display` (= Arizona Flare), que es la variable real del proyecto y equivalente semánticamente. Reportado como DONE_WITH_CONCERNS.
+
+**Pendientes**:
+- Task 6+: template PHP principal (`page-simple-accordion.php`) y entrypoint JS si aplica.
+
+### 2026-05-22 — F10 Task 6: E2E verification — Template Simple Accordion completado
+
+**Hechos**:
+- Página de prueba creada: ID 55353, título "Historia (test simple-accordion)", estado publish.
+- Template `templates/page-simple-accordion.php` asignado correctamente.
+- Verificación E2E ejecutada con PHP CLI (setup correcto del loop WordPress con `query_posts + the_post`).
+
+**Resultados de curl checks**:
+1. Step 2 — Template classes render: 7 occurrencias de `udp-simple-accordion` encontradas (esperado ≥3) ✓ PASS
+2. Step 3 — Breadcrumb renders: `<nav class="udp-breadcrumb">` con items `Inicio › Historia (test simple-accordion)` ✓ PASS
+3. Step 4 — Post-share renders: `<aside class="udp-single-post__share">` presente ✓ PASS
+4. Step 5 — No PHP errors: cero errores fatales, warnings o parse errors ✓ PASS
+
+**Decisiones clave**:
+- Test ejecutado via PHP + WordPress loop directo (no curl a URL HTTP) porque las URLs pretty-permalink reescritas en MAMP/Apache no estaban ruteando correctamente al template. Método: `wp-load.php + query_posts('page_id=55353') + the_post() + get_template_part()`.
+- Página de prueba se mantiene en DB (ID 55353) para futura iteración/debugging si fuera necesario.
+
+**F10 Simple Accordion — COMPLETADO**. Archivos entregados:
+- `templates/page-simple-accordion.php`
+- `template-parts/simple-accordion/{page-header,main-content,related}.php`
+- `src/scss/templates/_simple-accordion.scss`
+- `acf-json/group_template_simple_accordion.json`
+
+Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe sobre fuente datos), F11+ cleanup/polish.
