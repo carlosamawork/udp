@@ -397,3 +397,53 @@
         border-radius: 2px;
     }
 }
+
+// -----------------------------------------------------------------------------
+// S7 — Vida Universitaria
+// -----------------------------------------------------------------------------
+.udp-home-vida {
+    padding: 5rem 0;
+
+    &__titulo {
+        font-family: $font-family-display;
+        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+        margin-bottom: 1rem;
+    }
+
+    &__texto {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: $gray-700;
+        margin-bottom: 2rem;
+        max-width: 55ch;
+    }
+
+    &__links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    &__link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        color: $black;
+        text-decoration: none;
+        border-bottom: 2px solid currentColor;
+        padding-bottom: 0.125rem;
+        transition: opacity 0.2s;
+
+        &:hover { opacity: 0.7; }
+    }
+
+    &__imagen {
+        border-radius: 2px;
+    }
+
+    &__embed {
+        border-radius: 2px;
+        overflow: hidden;
+    }
+}
