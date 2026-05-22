@@ -541,38 +541,123 @@
 // S9 — Cultura Digital
 // -----------------------------------------------------------------------------
 .udp-home-cultura-digital {
-    position: relative;
-    padding: 6rem 0;
-    background-size: cover;
-    background-position: center;
-    background-color: $gray-900;
+    background-color: #1a1a1a;
     color: $white;
+    overflow: hidden;
 
-    &__overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.55);
+    &__layout {
+        display: flex;
+        align-items: center;
+        min-height: 502px;
     }
 
-    &__inner {
-        position: relative;
-        z-index: 1;
-        max-width: 680px;
+    &__sidebar {
+        flex-shrink: 0;
+        width: 400px;
+        padding: 3rem 2.5rem;
+
+        @include media-breakpoint-down(lg) {
+            width: 280px;
+            padding: 2rem 1.5rem;
+        }
+
+        @include media-breakpoint-down(md) {
+            width: 100%;
+            padding: 2.5rem 1.5rem 1.5rem;
+        }
     }
 
     &__titulo {
-        font-family: $font-family-display;
-        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-family: $font-family-sans-serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 2rem;
         color: $white;
         margin-bottom: 1rem;
     }
 
     &__texto {
-        font-size: 1.125rem;
-        line-height: 1.7;
-        opacity: 0.9;
-        margin-bottom: 2rem;
-        max-width: 55ch;
+        font-size: 1rem;
+        line-height: 1.625;
+        opacity: 0.85;
+        margin-bottom: 0;
+    }
+
+    &__slider {
+        flex: 1;
+        min-width: 0;
+        overflow: visible;
+
+        .swiper-wrapper {
+            align-items: flex-start;
+        }
+    }
+
+    &__slide {
+        width: auto !important; // slidesPerView: 'auto' requiere width explícito o auto
+    }
+
+    &__card {
+        display: block;
+        text-decoration: none;
+        color: $white;
+        width: 320px; // ancho fijo por card; la imagen se recorta a este ancho
+
+        @include media-breakpoint-down(sm) {
+            width: 240px;
+        }
+    }
+
+    &__card-img {
+        height: 372px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+    }
+
+    &__card:hover &__card-img img {
+        transform: scale(1.03);
+    }
+
+    &__card-footer {
+        background-color: #232323;
+        padding: 1.5rem;
+        min-height: 130px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__card-titulo {
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 1.4;
+        margin-bottom: 0.75rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    &__card-recuento {
+        font-family: $font-family-monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 0;
+    }
+
+    @include media-breakpoint-down(md) {
+        &__layout {
+            flex-direction: column;
+        }
     }
 }
 

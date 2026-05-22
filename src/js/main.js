@@ -42,6 +42,7 @@ import { initMegaMenu } from '@modules/mega-menu';
 import { initHomePortada }    from '@modules/home-portada';
 import { initHomeNoticias }   from '@modules/home-noticias';
 import { initHomeCulturaUdp } from '@modules/home-cultura-udp';
+import { initHomeCulturaDigital } from '@modules/home-cultura-digital';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -69,6 +70,7 @@ domReady(() => {
     initHomePortada();
     initHomeNoticias();
     initHomeCulturaUdp();
+    initHomeCulturaDigital();
 
     console.log('[StarterBS5] Theme initialized');
 });
