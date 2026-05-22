@@ -29,14 +29,14 @@
         margin-inline: auto;
         padding-inline: $space-xl;
 
-        @include media-breakpoint-down(lg) {
+        @include media-down(lg) {
             grid-template-columns: 1fr;
         }
     }
 
     &__col-left,
     &__col-right {
-        @include media-breakpoint-down(lg) {
+        @include media-down(lg) {
             display: none;
         }
     }
@@ -90,7 +90,7 @@
         text-decoration: none;
         color: $black;
         width: 240px; // Swiper slidesPerView: auto — el ancho fijo define el slide
-        transition: background-color 0.15s ease, color 0.15s ease;
+        transition: background-color $transition-fast, color $transition-fast;
 
         &:hover,
         &:focus-visible {
