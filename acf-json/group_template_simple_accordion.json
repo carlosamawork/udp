@@ -1,0 +1,98 @@
+{
+    "key": "group_template_simple_accordion",
+    "title": "Template — Simple Accordion",
+    "fields": [
+        {
+            "key": "field_tsa_acordeon",
+            "label": "Acordeón",
+            "name": "acordeon",
+            "type": "repeater",
+            "instructions": "Items del acordeón que aparecen debajo del texto principal.",
+            "required": 0,
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Añadir item",
+            "sub_fields": [
+                {
+                    "key": "field_tsa_acordeon_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "type": "text",
+                    "required": 1,
+                    "instructions": "Texto visible en el header del item.",
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_tsa_acordeon_contenido",
+                    "label": "Contenido",
+                    "name": "contenido",
+                    "type": "wysiwyg",
+                    "required": 0,
+                    "instructions": "Cuerpo del item. Admite formato rico.",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "default_value": "",
+                    "delay": 0
+                }
+            ]
+        },
+        {
+            "key": "field_tsa_relacionados",
+            "label": "También te puede interesar",
+            "name": "relacionados",
+            "type": "repeater",
+            "instructions": "Links manuales que aparecen en el carrusel inferior.",
+            "required": 0,
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Añadir relacionado",
+            "sub_fields": [
+                {
+                    "key": "field_tsa_relacionados_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "type": "text",
+                    "required": 1,
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_tsa_relacionados_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "required": 1,
+                    "instructions": "Acepta URLs internas y externas. El campo ACF Link gestiona target automáticamente.",
+                    "return_format": "array"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates/page-simple-accordion.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Template Simple Accordion: texto editorial + acordeón ACF + links relacionados en Swiper. Usado en páginas de la sección Conoce UDP."
+}
