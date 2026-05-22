@@ -526,3 +526,42 @@
         flex-shrink: 0;
     }
 }
+
+// -----------------------------------------------------------------------------
+// S9 — Cultura Digital
+// -----------------------------------------------------------------------------
+.udp-home-cultura-digital {
+    position: relative;
+    padding: 6rem 0;
+    background-size: cover;
+    background-position: center;
+    background-color: $gray-900;
+    color: $white;
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+    }
+
+    &__inner {
+        position: relative;
+        z-index: 1;
+        max-width: 680px;
+    }
+
+    &__titulo {
+        font-family: $font-family-display;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        color: $white;
+        margin-bottom: 1rem;
+    }
+
+    &__texto {
+        font-size: 1.125rem;
+        line-height: 1.7;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+        max-width: 55ch;
+    }
+}
