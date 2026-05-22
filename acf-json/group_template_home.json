@@ -127,7 +127,7 @@
             "aria-label": "",
             "type": "text",
             "instructions": "Opcional. Si se deja vacío la sección no muestra encabezado.",
-            "required": false,
+            "required": 1,
             "conditional_logic": false,
             "wrapper": {
                 "width": "",
@@ -165,7 +165,7 @@
             "aria-label": "",
             "type": "text",
             "instructions": "Deja vacío para usar el valor por defecto: «Noticias».",
-            "required": false,
+            "required": 1,
             "conditional_logic": false,
             "wrapper": {
                 "width": "",
@@ -203,7 +203,7 @@
             "aria-label": "",
             "type": "text",
             "instructions": "Opcional. Si se deja vacío la sección no muestra encabezado.",
-            "required": false,
+            "required": 1,
             "conditional_logic": false,
             "wrapper": {
                 "width": "",
@@ -241,7 +241,7 @@
             "aria-label": "",
             "type": "text",
             "instructions": "Deja vacío para usar el valor por defecto: «Próximos eventos».",
-            "required": false,
+            "required": 1,
             "conditional_logic": false,
             "wrapper": {
                 "width": "",
@@ -880,7 +880,7 @@
             "aria-label": "",
             "type": "text",
             "instructions": "Deja vacío para usar el valor por defecto: «Innovación e Investigación».",
-            "required": false,
+            "required": 1,
             "conditional_logic": false,
             "wrapper": {
                 "width": "",
@@ -918,7 +918,7 @@
             "aria-label": "",
             "type": "text",
             "instructions": "Opcional. Encabezado visible sobre las cifras.",
-            "required": false,
+            "required": 1,
             "conditional_logic": false,
             "wrapper": {
                 "width": "",
@@ -954,8 +954,6 @@
                     "name": "numero",
                     "label": "Número",
                     "display": "block",
-                    "min": 0,
-                    "max": 0,
                     "sub_fields": [
                         {
                             "key": "field_home_cifra_numero",
@@ -1017,15 +1015,15 @@
                             "prepend": "",
                             "append": ""
                         }
-                    ]
+                    ],
+                    "min": 0,
+                    "max": 0
                 },
                 {
                     "key": "layout_home_cifra_testimonio",
                     "name": "testimonio",
                     "label": "Testimonio",
                     "display": "block",
-                    "min": 0,
-                    "max": 0,
                     "sub_fields": [
                         {
                             "key": "field_home_cifra_cita",
@@ -1112,7 +1110,9 @@
                             "max_size": 0,
                             "mime_types": ""
                         }
-                    ]
+                    ],
+                    "min": 0,
+                    "max": 0
                 }
             ]
         }
@@ -1136,5 +1136,5 @@
     "description": "Contenido editable de la Home por sección. Location: front_page.",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1748001000
+    "modified": 1748002000
 }

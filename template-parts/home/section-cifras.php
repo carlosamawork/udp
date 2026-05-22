@@ -17,7 +17,7 @@ if ( empty( $bloques ) ) {
     return;
 }
 
-$titulo_seccion = get_field( 'cifras_titulo' );
+$titulo_seccion = get_field( 'cifras_titulo' ) ?: 'Cifras';
 
 // Separar números de testimonios para layouts distintos.
 $numeros     = array_filter( $bloques, fn( $b ) => $b['acf_fc_layout'] === 'numero' );
@@ -25,9 +25,7 @@ $testimonios = array_filter( $bloques, fn( $b ) => $b['acf_fc_layout'] === 'test
 ?>
 <section class="udp-home-cifras">
     <div class="container">
-        <?php if ( $titulo_seccion ) : ?>
-            <h2 class="udp-home-cifras__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
-        <?php endif; ?>
+        <h2 class="udp-home-cifras__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
 
         <?php if ( ! empty( $numeros ) ) : ?>
             <ul class="udp-home-cifras__grid list-unstyled row g-4" role="list">

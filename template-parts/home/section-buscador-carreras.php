@@ -22,13 +22,11 @@ if ( is_wp_error( $facultades ) ) {
 $carreras_page = get_page_by_path( 'carreras' );
 $carreras_url  = $carreras_page ? get_permalink( $carreras_page ) : home_url( '/carreras/' );
 
-$titulo_seccion = get_field( 'buscador_titulo' );
+$titulo_seccion = get_field( 'buscador_titulo' ) ?: 'Buscador de Carreras';
 ?>
 <section class="udp-home-buscador">
     <div class="container">
-        <?php if ( $titulo_seccion ) : ?>
-            <h2 class="udp-home-buscador__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
-        <?php endif; ?>
+        <h2 class="udp-home-buscador__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
         <form
             class="udp-home-buscador__form"
             method="get"
