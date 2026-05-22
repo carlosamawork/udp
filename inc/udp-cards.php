@@ -364,6 +364,8 @@ function udp_query_agenda( array $filters ): array {
     $paged    = max( 1, (int) ( $filters['paged'] ?? 1 ) );
     $limit    = max( 1, (int) ( $filters['limit'] ?? 6 ) );
     $exclude  = isset( $filters['exclude'] ) && is_array( $filters['exclude'] ) ? array_map( 'intval', $filters['exclude'] ) : array();
+    $order       = strtoupper( (string) ( $filters['order']       ?? 'DESC' ) );
+    $fecha_desde = trim( (string)       ( $filters['fecha_desde'] ?? '' ) );
 
     $args = array(
         'post_type'      => 'agenda',
@@ -372,7 +374,7 @@ function udp_query_agenda( array $filters ): array {
         'paged'          => $paged,
         'meta_key'       => 'fecha',
         'orderby'        => 'meta_value',
-        'order'          => 'DESC',
+        'order'          => in_array( $order, [ 'ASC', 'DESC' ], true ) ? $order : 'DESC',
     );
 
     $tax_query = array();
@@ -383,14 +385,26 @@ function udp_query_agenda( array $filters ): array {
         $args['tax_query'] = $tax_query;
     }
 
+    $meta_q = [];
     if ( $year > 0 ) {
-        $args['meta_query'] = array(
-            array(
-                'key'     => 'fecha',
-                'value'   => sprintf( '%04d', $year ),
-                'compare' => 'LIKE',
-            ),
-        );
+        $meta_q[] = [
+            'key'     => 'fecha',
+            'value'   => sprintf( '%04d', $year ),
+            'compare' => 'LIKE',
+        ];
+    }
+    if ( $fecha_desde !== '' ) {
+        $meta_q[] = [
+            'key'     => 'fecha',
+            'value'   => $fecha_desde,
+            'compare' => '>=',
+            'type'    => 'CHAR',
+        ];
+    }
+    if ( ! empty( $meta_q ) ) {
+        $args['meta_query'] = count( $meta_q ) > 1
+            ? array_merge( [ 'relation' => 'AND' ], $meta_q )
+            : $meta_q;
     }
 
     if ( $s !== '' ) {
