@@ -19,11 +19,9 @@ $acordeon = isset( $args['acordeon'] ) ? $args['acordeon'] : array();
 
 	<div class="udp-simple-accordion__col-center">
 
-		<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-			<div class="udp-simple-accordion__body">
-				<?php the_content(); ?>
-			</div>
-		<?php endwhile; endif; ?>
+		<div class="udp-simple-accordion__body">
+			<?php the_content(); ?>
+		</div>
 
 		<?php if ( ! empty( $acordeon ) ) : ?>
 			<div class="udp-simple-accordion__accordion">

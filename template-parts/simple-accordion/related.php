@@ -34,13 +34,14 @@ if ( empty( $relacionados ) ) {
 						continue;
 					}
 					$target = ! empty( $link['target'] ) ? $link['target'] : '_self';
+					$rel    = '_blank' === $target ? 'noopener noreferrer' : '';
 				?>
 					<div class="swiper-slide">
 						<a
 							class="udp-simple-accordion__related-card"
 							href="<?php echo esc_url( $link['url'] ); ?>"
 							target="<?php echo esc_attr( $target ); ?>"
-							<?php if ( '_blank' === $target ) echo 'rel="noopener noreferrer"'; ?>
+							<?php if ( $rel ) : ?>rel="<?php echo esc_attr( $rel ); ?>"<?php endif; ?>
 						>
 							<span class="udp-simple-accordion__related-card-title">
 								<?php echo esc_html( $titulo ); ?>
