@@ -1,0 +1,112 @@
+// ─── Simple Accordion Template ─────────────────────────────────────────────
+
+.udp-simple-accordion {
+
+    // Header — breadcrumb + título
+    &__header {
+        background-color: $white;
+        padding-top: $space-xl;
+        padding-bottom: $space-xl;
+    }
+
+    &__title {
+        font-family: $font-family-display;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        color: $black;
+        margin-top: $space-sm;
+        margin-bottom: 0;
+    }
+
+    // Layout 3-col: 318px | 1fr | 318px
+    &__layout {
+        display: grid;
+        grid-template-columns: 318px 1fr 318px;
+        gap: 30px;
+        padding-top: $space-2xl;
+        padding-bottom: $space-2xl;
+        max-width: var(--bs-container-width, 1320px);
+        margin-inline: auto;
+        padding-inline: $space-xl;
+
+        @include media-breakpoint-down(lg) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__col-left,
+    &__col-right {
+        @include media-breakpoint-down(lg) {
+            display: none;
+        }
+    }
+
+    &__col-center {
+        min-width: 0; // evita desbordamiento en grid
+    }
+
+    // Prose content (the_content)
+    &__body {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: $black;
+        margin-bottom: $space-xl;
+
+        p:last-child { margin-bottom: 0; }
+
+        a { color: $primary; }
+    }
+
+    // Accordion wrapper (usa clases BEM de udp-block-accordion — F7b)
+    &__accordion {
+        margin-top: $space-xl;
+    }
+
+    // Sección relacionados
+    &__related {
+        background-color: $gray-100;
+        padding-top: $space-2xl;
+        padding-bottom: $space-2xl;
+    }
+
+    &__related-title {
+        font-family: $font-family-display;
+        font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+        font-weight: 700;
+        color: $black;
+        margin-bottom: $space-lg;
+    }
+
+    // Card individual dentro del Swiper
+    &__related-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-sm;
+        padding: $space-md $space-lg;
+        background-color: $white;
+        border: 1px solid $gray-200;
+        border-radius: 4px;
+        text-decoration: none;
+        color: $black;
+        width: 240px; // Swiper slidesPerView: auto — el ancho fijo define el slide
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $primary;
+            color: $white;
+        }
+    }
+
+    &__related-card-title {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+
+    &__related-card-arrow {
+        flex-shrink: 0;
+        display: flex;
+    }
+}
