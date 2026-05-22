@@ -1036,3 +1036,12 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 
 **Patrón actualizado**:
 - Todos los `*_titulo` de S1–S11: `required=1`, fallback en PHP, `<h2>` siempre presente.
+
+### 2026-05-22 — F9 Home: build final ✅
+
+**Hechos**:
+- `front-page.php` y wiring JS (`main.js`) ya estaban completos desde sesiones anteriores.
+- Build producción: `npm run build` → 608ms, 0 errores. 20 chunks generados (main.js 92.8kB, main.css 367kB).
+- F9 Home page: **COMPLETADA**. Las 11 secciones están implementadas, testeadas y buildeadas.
+
+**Próximo**: F10 Polish (SVGs sociales, eyebrow color) → F11 Switch tema activo.
