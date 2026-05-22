@@ -987,6 +987,24 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - S9 Cultura Digital, S10 Innovación e Investigación, S11 Cifras.
 - Wiring de todos los módulos JS home en `main.js` (consolidado al final).
 
+### 2026-05-22 — F9 Home: Títulos editables + reorden tabs ACF
+
+**Hechos**:
+- `acf-json/group_template_home.json` reestructurado con Python: ahora tiene 11 tabs en orden de página (Portada → Buscador de Carreras → Noticias → Facultades → Próximos Eventos → Destacado azul → Vida Universitaria → Cultura UDP → Cultura Digital → Innovación e Investigación → Cifras).
+- 6 nuevos campos `text` añadidos (uno por sección que no tenía):
+  - `buscador_titulo` — opcional, sin fallback (no muestra h2 si vacío)
+  - `noticias_titulo` — fallback "Noticias"
+  - `facultades_titulo` — opcional, sin fallback
+  - `eventos_titulo` — fallback "Próximos eventos"
+  - `innovacion_titulo` — fallback "Innovación e Investigación"
+  - `cifras_titulo` — opcional, sin fallback
+- 6 template-parts actualizados para leer el campo y renderizar el heading editable.
+- PHP lint: 6/6 sin errores. Commit: `d5a4ece`.
+
+**Patrón aplicado**:
+- Secciones con título fijo (semántico/obligatorio): fallback con `?: 'Texto por defecto'` → siempre renderiza el `<h2>`.
+- Secciones con título opcional: `get_field(...)` sin fallback → el `<h2>` solo aparece si hay valor en ACF.
+
 ### 2026-05-22 — F9 Home S11 Cifras completada
 
 **Hechos**:
@@ -1006,3 +1024,15 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 **Estado F9 Home**:
 - Todas las secciones implementadas: S1 Portada, S2 Buscador, S3 Noticias, S4 Facultades, S5 Eventos, S6 Postítulos, S7 Vida Universitaria, S8 Cultura UDP, S9 Cultura Digital, S10 Innovación, **S11 Cifras**.
 - Pendiente: wiring de módulos JS en `main.js` + `front-page.php` orquestador + smoke test final.
+
+### 2026-05-22 — F9 Home: Títulos sección → obligatorios (required=1)
+
+**Hechos**:
+- Todos los campos `*_titulo` del grupo `group_template_home` cambiados a `required: 1` en el ACF JSON.
+- La entrada anterior ("Títulos editables + reorden tabs ACF") describía campos opcionales sin fallback para S2/S4/S11. Eso se revierte: ahora **todos** los títulos son obligatorios y los templates usan siempre `get_field() ?: 'Fallback'` para garantizar el h2.
+- Corregido: `endif` huérfano en `section-cifras.php` (quedó por un edit incompleto en la sesión anterior).
+- ACF sincronizado con la BD: `acf_import_field_group()` → ID=55453.
+- PHP lint: 3/3 sin errores. Commit: `d10d767`.
+
+**Patrón actualizado**:
+- Todos los `*_titulo` de S1–S11: `required=1`, fallback en PHP, `<h2>` siempre presente.
