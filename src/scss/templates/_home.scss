@@ -192,3 +192,63 @@
         color: $gray-600;
     }
 }
+
+// -----------------------------------------------------------------------------
+// S4 — Facultades
+// -----------------------------------------------------------------------------
+.udp-home-facultades {
+    padding: 4rem 0;
+    overflow: hidden;
+
+    &__marquee {
+        overflow: hidden;
+        margin-bottom: 3rem;
+        white-space: nowrap;
+    }
+
+    &__track {
+        display: inline-flex;
+        gap: 3rem;
+        animation: marquee-scroll 30s linear infinite;
+
+        @media (prefers-reduced-motion: reduce) {
+            animation: none;
+        }
+    }
+
+    &__marquee-item {
+        font-family: $font-family-display;
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        color: $gray-300;
+        text-transform: uppercase;
+        flex-shrink: 0;
+    }
+
+    &__lista {
+        column-count: 2;
+        column-gap: 2rem;
+
+        @include media-breakpoint-up(md) {
+            column-count: 3;
+        }
+    }
+
+    &__link {
+        display: block;
+        padding: 0.375rem 0;
+        color: $black;
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px solid $gray-200;
+        transition: color 0.2s;
+
+        &:hover {
+            color: var(--udp-color-primary, #0033a0);
+        }
+    }
+}
+
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
