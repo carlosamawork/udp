@@ -947,3 +947,62 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Cards sin imagen: `udp_card_data_from_agenda` devuelve `imagen.url=''` — la card simplemente omite el bloque `__card-img` (condicional PHP). No hay placeholder en esta sección (a diferencia del archive).
 - La tabla usa `<caption class="visually-hidden">` para accesibilidad (screenreaders anuncian el contexto de la tabla).
 - `lugar` condicional tanto en cards como en filas de tabla — algunos eventos no tienen lugar configurado.
+
+### 2026-05-22 — F9 Home S10 Innovación e Investigación completada
+
+**Hechos**:
+- Creado `template-parts/home/section-innovacion.php` — query `post_type=post` por categorías con slugs `investigacion`/`innovacion` (OR). IDs resueltos dinámicamente con `get_term_by`. Early return si las categorías no existen. 4 posts DESC por fecha.
+- Eyebrow: `get_field('siglas', 'facultad_' . $fac_id)` del primer término de taxonomía `facultad` del post. Omitido silenciosamente si no hay términos o ACF vacío.
+- `wp_reset_postdata()` llamado después de acceder a `$query->posts` (correctamente, antes del loop de render).
+- Appended bloque S10 SCSS al final de `src/scss/templates/_home.scss` — 4 columnas Bootstrap (`col-md-6 col-lg-3`), aspect-ratio 4/3 en imagen, `$gray-100` bg, underline en título al hover.
+- PHP lint: ✓. Commit: `45008a6`.
+
+**Pendientes F9 Home**:
+- S11 Cifras (ACF repeater admin-editable, configurar en `group_template_home`).
+- Wiring de todos los módulos JS home en `main.js` (consolidado al final).
+- Smoke test final de la home completa.
+
+### 2026-05-22 — F9 Home S9 Cultura Digital completada
+
+**Hechos**:
+- Reescrito `template-parts/home/section-cultura-digital.php` — sustituye el diseño anterior (fondo imagen + overlay + CTA) por layout sidebar fijo + Swiper horizontal freeMode. Campos ACF: `cd_titulo`, `cd_texto`, `cd_items` repeater (sub-fields: `cd_item_titulo`, `cd_item_imagen`, `cd_item_recuento`, `cd_item_url`). Early return si todo vacío.
+- Creado `src/js/modules/home-cultura-digital.js` — lazy import de Swiper + FreeMode. Selector `.js-cultura-digital-swiper`. Sin loop ni navigation.
+- `src/js/main.js` actualizado — import y llamada a `initHomeCulturaDigital()` tras `initHomeCulturaUdp()`.
+- `src/scss/templates/_home.scss` — bloque S9 completamente reemplazado: sidebar 400px, slider flex, cards 320px con imagen 372px object-fit cover, footer #232323 con título Work Sans y recuento monoespaciado uppercase 70% opacidad. Hover scale(1.03) en imagen. Responsive: sidebar colapsa a columna en md-.
+- PHP lint: ✓. Build: ✓ 615ms. Commit: `bc647b1`.
+
+**Pendientes F9 Home**:
+- S11 Cifras (ACF repeater admin-editable).
+- Smoke test final de la home completa.
+
+### 2026-05-22 — F9 Home S8 Cultura UDP completada
+
+**Hechos**:
+- Creado `template-parts/home/section-cultura-udp.php` — repeater `cultura_udp_items` con sub-fields `cu_nombre`, `cu_contador`, `cu_imagen`, `cu_link`. Layout 2-col: media (stack de imágenes con fade) + panel oscuro con lista de items. Primera imagen/item `is-active` por defecto.
+- Reemplazado stub `src/js/modules/home-cultura-udp.js` — `mouseenter` en cada item activa la imagen correspondiente vía `classList.toggle('is-active', ...)`. Compara `dataset.index` (string). Usa `qsa()` de `@utils/dom`.
+- Añadido bloque S8 al final de `src/scss/templates/_home.scss` — grid 2-col, imágenes `position: absolute; inset: 0` con `opacity: 0/1 + transition 0.4s`, panel `#232323`, nombre con `clamp(1.75rem, 3.5vw, 3rem)` Arizona Flare, hover/active nombre → `#FF7064`.
+- Build: ✓ 490ms. Commit: `22cb1df`.
+
+**Pendientes F9 Home**:
+- S9 Cultura Digital, S10 Innovación e Investigación, S11 Cifras.
+- Wiring de todos los módulos JS home en `main.js` (consolidado al final).
+
+### 2026-05-22 — F9 Home S11 Cifras completada
+
+**Hechos**:
+- Creado `template-parts/home/section-cifras.php` — flexible_content `cifras_items` con dos layouts:
+  - `numero`: cifra_numero (text) + cifra_titulo (text) + cifra_subtitulo (text). Grid Bootstrap col-6/col-md-4/col-lg-3 con justify-content: center.
+  - `testimonio`: cifra_cita (wysiwyg, wp_kses_post) + cifra_autor_nombre + cifra_autor_descripcion + cifra_autor_imagen (array). Col-md-6, border-left blanca semitransparente, autor con foto 48px circular + info.
+- PHP filtra `$bloques` en `$numeros` y `$testimonios` con `array_filter` + `fn()`. Renderiza grid de números primero y testimonios debajo (con `mt-5` si ambos presentes).
+- Añadido bloque S11 al final de `src/scss/templates/_home.scss` — fondo `var(--udp-color-primary, #0033a0)`, color `$white`, número en Arizona Flare `clamp(2.5rem, 6vw, 4.5rem)`, testimonio border-left rgba white 0.3, foto autor circular.
+- PHP lint: ✓. Build: ✓ 581ms. Commit: `c752974`.
+
+**Decisiones clave**:
+- `array_filter()` con arrow function PHP 7.4+ — compatible con PHP 8.4.
+- Imagen del autor: usa las claves del array ACF (`url`, `alt`, `width`, `height`) que ya retorna directamente cuando return_format=array.
+- Sección usa `<section>` semántico (igual que el resto de secciones home). No tiene heading propio — el número grande ES el elemento titular visualmente.
+- Sin JS — la sección es puramente estática (números + testimonios sin interacción).
+
+**Estado F9 Home**:
+- Todas las secciones implementadas: S1 Portada, S2 Buscador, S3 Noticias, S4 Facultades, S5 Eventos, S6 Postítulos, S7 Vida Universitaria, S8 Cultura UDP, S9 Cultura Digital, S10 Innovación, **S11 Cifras**.
+- Pendiente: wiring de módulos JS en `main.js` + `front-page.php` orquestador + smoke test final.
