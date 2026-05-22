@@ -151,6 +151,7 @@ require_once STARTER_BS5_DIR . '/inc/helpers.php';
 require_once STARTER_BS5_DIR . '/inc/template-helpers.php';
 require_once STARTER_BS5_DIR . '/inc/udp-cards.php';
 require_once STARTER_BS5_DIR . '/inc/udp-ics.php';
+require_once STARTER_BS5_DIR . '/inc/migration-simple-accordion.php';
 
 
 // =============================================================================
