@@ -47,11 +47,13 @@ if ( ! $query->have_posts() ) {
 
 $posts = $query->posts;
 wp_reset_postdata();
+
+$titulo_seccion = get_field( 'innovacion_titulo' ) ?: 'Innovación e Investigación';
 ?>
 <section class="udp-home-innovacion">
     <div class="container">
         <div class="udp-home-innovacion__header">
-            <h2 class="udp-home-innovacion__titulo">Innovación e Investigación</h2>
+            <h2 class="udp-home-innovacion__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
             <a href="<?php echo esc_url( home_url( '/noticias/' ) ); ?>" class="udp-home-innovacion__ver-mas">
                 Ver todas
             </a>

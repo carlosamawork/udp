@@ -103,6 +103,158 @@
             "mime_types": ""
         },
         {
+            "key": "field_home_tab_buscador",
+            "label": "Buscador de Carreras",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_home_buscador_titulo",
+            "label": "Título",
+            "name": "buscador_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Opcional. Si se deja vacío la sección no muestra encabezado.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_home_tab_noticias",
+            "label": "Noticias",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_home_noticias_titulo",
+            "label": "Título",
+            "name": "noticias_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Deja vacío para usar el valor por defecto: «Noticias».",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_home_tab_facultades",
+            "label": "Facultades",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_home_facultades_titulo",
+            "label": "Título",
+            "name": "facultades_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Opcional. Si se deja vacío la sección no muestra encabezado.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_home_tab_eventos",
+            "label": "Próximos Eventos",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_home_eventos_titulo",
+            "label": "Título",
+            "name": "eventos_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Deja vacío para usar el valor por defecto: «Próximos eventos».",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_home_tab_posttitulos",
             "label": "Destacado azul",
             "name": "",
@@ -624,7 +776,11 @@
                     "instructions": "",
                     "required": false,
                     "conditional_logic": false,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": "",
@@ -641,7 +797,11 @@
                     "instructions": "",
                     "required": false,
                     "conditional_logic": false,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
                     "return_format": "array",
                     "library": "all",
                     "preview_size": "medium",
@@ -663,7 +823,11 @@
                     "instructions": "Ej: 1205 tomos, +200 archivos",
                     "required": false,
                     "conditional_logic": false,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": "",
@@ -680,12 +844,54 @@
                     "instructions": "",
                     "required": false,
                     "conditional_logic": false,
-                    "wrapper": { "width": "", "class": "", "id": "" },
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
                     "default_value": "",
                     "placeholder": "",
                     "parent_repeater": "field_home_cd_items"
                 }
             ]
+        },
+        {
+            "key": "field_home_tab_innovacion",
+            "label": "Innovación e Investigación",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_home_innovacion_titulo",
+            "label": "Título",
+            "name": "innovacion_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Deja vacío para usar el valor por defecto: «Innovación e Investigación».",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_home_tab_cifras",
@@ -704,6 +910,26 @@
             "placement": "top",
             "endpoint": 0,
             "selected": 0
+        },
+        {
+            "key": "field_home_cifras_titulo",
+            "label": "Título de sección",
+            "name": "cifras_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Opcional. Encabezado visible sobre las cifras.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_home_cifras_items",
@@ -740,7 +966,11 @@
                             "instructions": "Ej: 15.000",
                             "required": false,
                             "conditional_logic": false,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "maxlength": "",
                             "placeholder": "",
@@ -756,7 +986,11 @@
                             "instructions": "",
                             "required": false,
                             "conditional_logic": false,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "maxlength": "",
                             "placeholder": "",
@@ -772,7 +1006,11 @@
                             "instructions": "",
                             "required": false,
                             "conditional_logic": false,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "maxlength": "",
                             "placeholder": "",
@@ -798,7 +1036,11 @@
                             "instructions": "",
                             "required": false,
                             "conditional_logic": false,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "tabs": "all",
                             "media_upload": 0,
                             "toolbar": "basic",
@@ -814,7 +1056,11 @@
                             "instructions": "",
                             "required": false,
                             "conditional_logic": false,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "maxlength": "",
                             "placeholder": "",
@@ -830,7 +1076,11 @@
                             "instructions": "",
                             "required": false,
                             "conditional_logic": false,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "default_value": "",
                             "maxlength": "",
                             "placeholder": "",
@@ -846,7 +1096,11 @@
                             "instructions": "",
                             "required": false,
                             "conditional_logic": false,
-                            "wrapper": { "width": "", "class": "", "id": "" },
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
                             "return_format": "array",
                             "library": "all",
                             "preview_size": "thumbnail",
@@ -882,5 +1136,5 @@
     "description": "Contenido editable de la Home por sección. Location: front_page.",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1748000000
+    "modified": 1748001000
 }

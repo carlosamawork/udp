@@ -23,13 +23,15 @@ if ( empty( $cards ) ) {
     return;
 }
 
+$titulo_seccion = get_field( 'eventos_titulo' ) ?: 'Próximos eventos';
+
 $destacados = array_slice( $cards, 0, 2 );
 $lista      = array_slice( $cards, 2, 5 );
 ?>
 <section class="udp-home-eventos">
     <div class="container">
         <div class="udp-home-eventos__header">
-            <h2 class="udp-home-eventos__titulo">Próximos eventos</h2>
+            <h2 class="udp-home-eventos__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
             <a href="<?php echo esc_url( home_url( '/agenda/' ) ); ?>" class="udp-home-eventos__ver-mas">
                 Ver agenda completa
             </a>

@@ -18,8 +18,15 @@ $facultades = get_terms( [
 if ( is_wp_error( $facultades ) || empty( $facultades ) ) {
     return;
 }
+
+$titulo_seccion = get_field( 'facultades_titulo' );
 ?>
 <section class="udp-home-facultades">
+    <?php if ( $titulo_seccion ) : ?>
+        <div class="container">
+            <h2 class="udp-home-facultades__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
+        </div>
+    <?php endif; ?>
     <div class="udp-home-facultades__marquee" aria-hidden="true">
         <div class="udp-home-facultades__track">
             <?php foreach ( $facultades as $fac ) : ?>
