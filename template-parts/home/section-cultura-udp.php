@@ -2,7 +2,7 @@
 /**
  * Home — Sección 8: Cultura UDP
  *
- * ACF field: cultura_udp_items (repeater).
+ * ACF fields: cultura_titulo (text), cultura_texto (textarea), cultura_udp_items (repeater).
  * Sub-fields: cu_nombre, cu_contador (number), cu_imagen (array), cu_link (url).
  *
  * JS: home-cultura-udp.js maneja el hover fade de imágenes.
@@ -11,6 +11,8 @@
  */
 
 $items = get_field( 'cultura_udp_items' );
+$cultura_titulo = get_field( 'cultura_titulo' );
+$cultura_texto  = get_field( 'cultura_texto' );
 
 if ( empty( $items ) ) {
     return;
@@ -19,6 +21,16 @@ if ( empty( $items ) ) {
 $first = $items[0];
 ?>
 <section class="udp-home-cultura-udp js-cultura-udp">
+    <?php if ( $cultura_titulo || $cultura_texto ) : ?>
+        <div class="udp-home-cultura-udp__header container">
+            <?php if ( $cultura_titulo ) : ?>
+                <h2 class="udp-home-cultura-udp__section-titulo"><?php echo esc_html( $cultura_titulo ); ?></h2>
+            <?php endif; ?>
+            <?php if ( $cultura_texto ) : ?>
+                <p class="udp-home-cultura-udp__section-texto"><?php echo esc_html( $cultura_texto ); ?></p>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
     <div class="udp-home-cultura-udp__media" aria-hidden="true">
         <?php foreach ( $items as $i => $item ) : ?>
             <?php

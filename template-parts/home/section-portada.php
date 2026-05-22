@@ -2,14 +2,13 @@
 /**
  * Home — Sección 1: Portada
  *
- * ACF fields: portada_titulo, portada_subtitulo, portada_cta_texto,
+ * ACF fields: portada_titulo, portada_cta_texto,
  *             portada_cta_url, portada_imagen (array).
  *
  * @package starter-bs5
  */
 
 $titulo    = get_field( 'portada_titulo' );
-$subtitulo = get_field( 'portada_subtitulo' );
 $cta_texto = get_field( 'portada_cta_texto' );
 $cta_url   = get_field( 'portada_cta_url' );
 $imagen    = get_field( 'portada_imagen' );
@@ -25,9 +24,6 @@ $img_alt = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
     <div class="udp-home-portada__inner container">
         <div class="udp-home-portada__content">
             <h1 class="udp-home-portada__titulo"><?php echo esc_html( $titulo ); ?></h1>
-            <?php if ( $subtitulo ) : ?>
-                <p class="udp-home-portada__subtitulo"><?php echo esc_html( $subtitulo ); ?></p>
-            <?php endif; ?>
             <?php if ( $cta_texto && $cta_url ) : ?>
                 <a href="<?php echo esc_url( $cta_url ); ?>" class="udp-home-portada__cta btn btn-primary">
                     <?php echo esc_html( $cta_texto ); ?>

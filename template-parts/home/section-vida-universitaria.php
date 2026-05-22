@@ -3,8 +3,7 @@
  * Home — Sección 7: Vida Universitaria
  *
  * ACF fields: vida_titulo, vida_texto, vida_links (repeater),
- *             vida_imagen (array), vida_embed (oembed string).
- * La imagen tiene prioridad sobre el embed.
+ *             vida_imagen (array).
  *
  * @package starter-bs5
  */
@@ -13,7 +12,6 @@ $titulo  = get_field( 'vida_titulo' );
 $texto   = get_field( 'vida_texto' );
 $links   = get_field( 'vida_links' );
 $imagen  = get_field( 'vida_imagen' );
-$embed   = get_field( 'vida_embed' );
 
 if ( ! $titulo && ! $texto ) {
     return;
@@ -21,7 +19,7 @@ if ( ! $titulo && ! $texto ) {
 
 $img_url  = ! empty( $imagen['url'] ) ? $imagen['url'] : '';
 $img_alt  = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
-$has_media = $img_url || $embed;
+$has_media = (bool) $img_url;
 ?>
 <section class="udp-home-vida">
     <div class="container">
@@ -59,10 +57,6 @@ $has_media = $img_url || $embed;
                             width="<?php echo esc_attr( $imagen['width'] ?? '' ); ?>"
                             height="<?php echo esc_attr( $imagen['height'] ?? '' ); ?>"
                         >
-                    <?php elseif ( $embed ) : ?>
-                        <div class="udp-home-vida__embed ratio ratio-16x9">
-                            <?php echo wp_oembed_get( esc_url_raw( $embed ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- oembed output is safe ?>
-                        </div>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>

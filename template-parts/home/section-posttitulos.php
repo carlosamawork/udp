@@ -2,7 +2,7 @@
 /**
  * Home — Sección 6: Postítulos (Destacado azul + foto)
  *
- * ACF fields: posttitulos_titulo, posttitulos_descripcion (wysiwyg),
+ * ACF fields: posttitulos_titulo (wysiwyg), posttitulos_descripcion (wysiwyg),
  *             posttitulos_link_texto, posttitulos_link_url,
  *             posttitulos_imagen (array).
  *
@@ -27,7 +27,7 @@ $img_alt = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
         <div class="udp-home-posttitulos__inner row align-items-center g-5">
             <div class="col-lg-6 udp-home-posttitulos__content">
                 <?php if ( $titulo ) : ?>
-                    <h2 class="udp-home-posttitulos__titulo"><?php echo esc_html( $titulo ); ?></h2>
+                    <div class="udp-home-posttitulos__titulo"><?php echo wp_kses_post( $titulo ); ?></div>
                 <?php endif; ?>
                 <?php if ( $descripcion ) : ?>
                     <div class="udp-home-posttitulos__descripcion">
