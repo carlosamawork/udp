@@ -822,3 +822,44 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - `acf-json/group_template_simple_accordion.json`
 
 Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe sobre fuente datos), F11+ cleanup/polish.
+
+### 2026-05-22 — Bugfix: Template Simple Accordion — the_content() + rel escaping
+
+**Hechos**:
+- **Fix 1 (Crítico)**: `template-parts/simple-accordion/main-content.php` líneas 22-26 tenía un loop innecesario `have_posts() / while / the_post()` envolviendo `the_content()`. WordPress ya ha ejecutado el loop global antes de cargar el template — `have_posts()` retorna false y `the_content()` quedaba vacío.
+  - **Solución**: removidas las líneas del loop. `the_content()` ahora se renderiza directamente en el div `udp-simple-accordion__body`.
+  - **Cambio**: Líneas 22-26 reemplazadas por 2 líneas (div container + the_content).
+  
+- **Fix 2 (Security)**: `template-parts/simple-accordion/related.php` línea 43 echaba `rel="noopener noreferrer"` como literalmente unescaped.
+  - **Solución**: Introducida variable `$rel` en el loop (línea 37) que contiene string vacío o "noopener noreferrer" según target. En el atributo `rel`, el valor se emite con `esc_attr()`.
+  - **Cambio**: Línea 37 añadida (`$rel = ...`), línea 43 modificada para usar ternario condicional con `esc_attr()`.
+
+**Verificación**:
+- PHP lint: ✓ sin errores de sintaxis.
+- Git status: 2 files modified.
+- Commit: `ea94dc1` — "fix(simple-accordion): the_content() directo (sin loop), rel con esc_attr()".
+
+**Impacto**:
+- Pages asignadas a `templates/page-simple-accordion.php` ahora renderizarán correctamente el contenido principal (`the_content()`) en lugar de ocultarlo.
+- Atributo `rel` en links relacionados ahora se escapa correctamente (XSS prevention), consistente con el estándar project de usar `esc_attr()` en todos los atributos HTML.
+
+**Archivos modificados**:
+- `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/simple-accordion/main-content.php`
+- `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/simple-accordion/related.php`
+
+### 2026-05-22 — Lazy migration + guía cliente — Cierre de sesión
+
+**Añadido al template Simple Accordion**:
+- `inc/migration-simple-accordion.php` — hook `save_post_page` que copia `secciones → desplegable` al campo `acordeon` cuando se asigna el template por primera vez. Idempotente, no destructivo. `link_externo` / `titulo_de_link` omitidos (deferred a fase tarjetas laterales).
+- `docs/guia-cliente-simple-accordion.md` — guía de uso para el cliente (en español).
+
+**Estado actual**:
+- F10 Simple Accordion: **COMPLETADO** al 100% (template + SCSS + ACF + migración lazy + docs cliente)
+- F9 Home page: **PAUSADO** — pendiente confirmación jefe sobre arquitectura (Option B: front-page.php + template-parts por sección). 10 de 11 secciones clarificadas; falta sección 11 (Cifras) y sección 9 (Cultura Digital, pendiente compañero sobre taxonomía "fondo").
+- Anuarios: **PAUSADO** — pendiente respuesta jefe sobre (1) fuente datos: CPT o ACF repeater, (2) acción del card: PDF/URL/detalle.
+- PHP en MAMP: usar `/Applications/MAMP/bin/php/php8.4.17/bin/php` (no php8.4.1 que ya no existe). WP-CLI disponible como `wp` (homebrew, `/opt/homebrew/bin/wp`) pero no conecta a DB fuera de MAMP.
+
+**Próximos pasos**:
+1. Retomar F9 Home cuando llegue confirmación del jefe
+2. Retomar Anuarios cuando llegue respuesta del jefe
+3. Fase posterior Simple Accordion: tarjetas laterales (ACF repeater, 3 tipos, desarrolla compañero)
