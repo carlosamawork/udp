@@ -565,3 +565,68 @@
         max-width: 55ch;
     }
 }
+
+// -----------------------------------------------------------------------------
+// S10 — Innovación e Investigación
+// -----------------------------------------------------------------------------
+.udp-home-innovacion {
+    padding: 4rem 0;
+    background-color: $gray-100;
+
+    &__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+
+    &__titulo {
+        font-family: $font-family-display;
+        font-size: 2rem;
+    }
+
+    &__ver-mas {
+        font-size: 0.875rem;
+        text-decoration: underline;
+    }
+
+    &__card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        height: 100%;
+
+        &:hover &-titulo {
+            text-decoration: underline;
+        }
+    }
+
+    &__card-img {
+        aspect-ratio: 4/3;
+        overflow: hidden;
+        margin-bottom: 1rem;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__eyebrow {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    &__card-titulo {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.35;
+        margin-bottom: 0.5rem;
+    }
+
+    &__fecha {
+        font-size: 0.8125rem;
+        color: $gray-600;
+    }
+}
