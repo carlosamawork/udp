@@ -25,9 +25,7 @@ $img_alt = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
         <div class="udp-home-portada__content">
             <h1 class="udp-home-portada__titulo"><?php echo esc_html( $titulo ); ?></h1>
             <?php if ( $cta_texto && $cta_url ) : ?>
-                <a href="<?php echo esc_url( $cta_url ); ?>" class="udp-home-portada__cta btn btn-primary">
-                    <?php echo esc_html( $cta_texto ); ?>
-                </a>
+                <a href="<?php echo esc_url( $cta_url ); ?>" class="udp-home-portada__cta btn btn-outline-light"><?php echo esc_html( $cta_texto ); ?></a>
             <?php endif; ?>
         </div>
         <?php if ( $img_url ) : ?>

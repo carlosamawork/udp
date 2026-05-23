@@ -4,10 +4,19 @@
 // ==========================================================================
 
 .udp-site-header {
+    height: 84px;
     background: $dark-1;
-    color: $white;
-    position: relative;
-    z-index: 100;
+
+    &__inner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 84px;
+        width: 100%;
+        background: $dark-1;
+        color: $white;
+        z-index: 100;
+    }
 }
 
 .udp-top-bar {
@@ -15,7 +24,7 @@
 
     &__inner {
         min-height: 84px;
-        padding-inline: $space-3xl;  // 40px (sin container max-width)
+        padding-inline: $space-3xl; // 40px (sin container max-width)
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -37,8 +46,8 @@
 
         img {
             width: auto;
-            height: 40px;       // Wordmark UDP altura del Figma
-            max-width: 220px;   // Cap para evitar logos enormes
+            height: 40px; // Wordmark UDP altura del Figma
+            max-width: 220px; // Cap para evitar logos enormes
             display: block;
         }
     }
@@ -55,7 +64,7 @@
     &__menu {
         display: inline-flex;
         align-items: center;
-        gap: $space-2xs;  // 8px entre círculo y label
+        gap: $space-2xs; // 8px entre círculo y label
         background: transparent;
         border: none;
         color: $white;
@@ -73,7 +82,7 @@
         width: 50px;
         height: 50px;
         border-radius: 9999px;
-        border: 1px solid $gray-high;  // #454545
+        border: 1px solid $gray-high; // #454545
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -81,14 +90,14 @@
     }
 
     &__menu-label {
-        font-family: $font-family-body;  // Work Sans
+        font-family: $font-family-body; // Work Sans
         font-weight: 500;
         font-size: 16px;
         line-height: 24px;
         color: $white;
 
         @include media-down(md) {
-            display: none;  // Solo el círculo en mobile
+            display: none; // Solo el círculo en mobile
         }
     }
 
@@ -120,7 +129,7 @@
         color: $white;
 
         @include media-down(md) {
-            display: none;  // Solo el círculo en mobile
+            display: none; // Solo el círculo en mobile
         }
     }
 

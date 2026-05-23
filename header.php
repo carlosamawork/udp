@@ -22,7 +22,9 @@
 </a>
 
 <header class="udp-site-header" role="banner">
-	<?php get_template_part( 'template-parts/header/top-bar' ); ?>
+	<div class="udp-site-header__inner">
+		<?php get_template_part( 'template-parts/header/top-bar' ); ?>
+	</div>
 </header>
 
 <?php get_template_part( 'template-parts/header/mega-menu' ); ?>
