@@ -49,11 +49,19 @@
 
     &__media {
         clip-path: inset(0 100% 0 0);
-        animation: portada-reveal 0.8s ease-out 0.3s forwards;
+        animation: portada-reveal 0.8s ease-out forwards;
         animation-play-state: paused;
 
         &.is-visible {
             animation-play-state: running;
+        }
+
+        @supports (animation-timeline: scroll()) {
+            animation-duration: auto;
+            animation-timing-function: linear;
+            animation-play-state: running;
+            animation-timeline: scroll(root);
+            animation-range: 0px 50vh;
         }
     }
 

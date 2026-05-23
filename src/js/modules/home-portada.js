@@ -1,6 +1,9 @@
 import { qs } from '@utils/dom';
 
 export function initHomePortada() {
+    // Scroll-driven animations handle this natively — only run fallback for Firefox.
+    if ( CSS.supports( 'animation-timeline', 'scroll()' ) ) return;
+
     const media = qs( '.js-portada-media' );
     if ( ! media ) return;
 
