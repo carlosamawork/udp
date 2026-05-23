@@ -24,7 +24,7 @@ $first = $items[0];
     <?php if ( $cultura_titulo || $cultura_texto ) : ?>
         <div class="udp-home-cultura-udp__header container">
             <?php if ( $cultura_titulo ) : ?>
-                <h2 class="udp-home-cultura-udp__section-titulo"><?php echo esc_html( $cultura_titulo ); ?></h2>
+                <h2 class="udp-home__titulo"><?php echo esc_html( $cultura_titulo ); ?></h2>
             <?php endif; ?>
             <?php if ( $cultura_texto ) : ?>
                 <p class="udp-home-cultura-udp__section-texto"><?php echo esc_html( $cultura_texto ); ?></p>

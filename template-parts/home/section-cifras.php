@@ -25,7 +25,7 @@ $testimonios = array_filter( $bloques, fn( $b ) => $b['acf_fc_layout'] === 'test
 ?>
 <section class="udp-home-cifras">
     <div class="container">
-        <h2 class="udp-home-cifras__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
+        <h2 class="udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
 
         <?php if ( ! empty( $numeros ) ) : ?>
             <ul class="udp-home-cifras__grid list-unstyled row g-4" role="list">

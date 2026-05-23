@@ -20,7 +20,7 @@ $titulo_seccion = get_field( 'noticias_titulo' ) ?: 'Noticias';
 <section class="udp-home-noticias">
     <div class="container">
         <div class="udp-home-noticias__header">
-            <h2 class="udp-home-noticias__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
+            <h2 class="udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
             <a href="<?php echo esc_url( home_url( '/noticias/' ) ); ?>" class="udp-home-noticias__ver-mas">
                 Ver todas
             </a>

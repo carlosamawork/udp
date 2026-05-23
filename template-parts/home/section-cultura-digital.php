@@ -23,7 +23,7 @@ if ( ! $titulo && ! $texto && empty( $items ) ) {
     <div class="udp-home-cultura-digital__layout">
         <div class="udp-home-cultura-digital__sidebar">
             <?php if ( $titulo ) : ?>
-                <h2 class="udp-home-cultura-digital__titulo"><?php echo esc_html( $titulo ); ?></h2>
+                <h2 class="udp-home__titulo"><?php echo esc_html( $titulo ); ?></h2>
             <?php endif; ?>
             <?php if ( $texto ) : ?>
                 <p class="udp-home-cultura-digital__texto"><?php echo esc_html( $texto ); ?></p>

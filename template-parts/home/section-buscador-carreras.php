@@ -26,7 +26,7 @@ $titulo_seccion = get_field( 'buscador_titulo' ) ?: 'Buscador de Carreras';
 ?>
 <section class="udp-home-buscador">
     <div class="container">
-        <h2 class="udp-home-buscador__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
+        <h2 class="udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
         <form
             class="udp-home-buscador__form"
             method="get"

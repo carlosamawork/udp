@@ -23,7 +23,7 @@ $titulo_seccion = get_field( 'facultades_titulo' ) ?: 'Facultades';
 ?>
 <section class="udp-home-facultades">
     <div class="container">
-        <h2 class="udp-home-facultades__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
+        <h2 class="udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
     </div>
     <div class="udp-home-facultades__marquee" aria-hidden="true">
         <div class="udp-home-facultades__track">

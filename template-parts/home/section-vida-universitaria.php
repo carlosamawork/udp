@@ -26,7 +26,7 @@ $has_media = (bool) $img_url;
         <div class="udp-home-vida__inner row g-5 align-items-center">
             <div class="col-lg-<?php echo $has_media ? '5' : '12'; ?> udp-home-vida__content">
                 <?php if ( $titulo ) : ?>
-                    <h2 class="udp-home-vida__titulo"><?php echo esc_html( $titulo ); ?></h2>
+                    <h2 class="udp-home__titulo"><?php echo esc_html( $titulo ); ?></h2>
                 <?php endif; ?>
                 <?php if ( $texto ) : ?>
                     <p class="udp-home-vida__texto"><?php echo esc_html( $texto ); ?></p>
