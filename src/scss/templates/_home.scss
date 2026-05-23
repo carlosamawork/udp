@@ -48,7 +48,7 @@
     }
 
     &__media {
-        clip-path: inset(0 100% 0 0);
+        clip-path: rect(0 594px 50% 0);
         animation: portada-reveal 0.8s ease-out forwards;
         animation-play-state: paused;
 
@@ -61,7 +61,7 @@
             animation-timing-function: linear;
             animation-play-state: running;
             animation-timeline: scroll(root);
-            animation-range: 0px 50vh;
+            animation-range: 0px 25vh;
         }
     }
 
@@ -74,11 +74,11 @@
 
 @keyframes portada-reveal {
     from {
-        clip-path: inset(0 100% 0 0);
+        clip-path: rect(0 594px 50% 0);
     }
 
     to {
-        clip-path: inset(0 0% 0 0);
+        clip-path: rect(0 100% 100% 0);
     }
 }
 
