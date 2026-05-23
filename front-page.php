@@ -18,7 +18,7 @@ get_header();
         'noticias',
         'facultades',
         'eventos',
-        'posttitulos',
+        'destacado',
         'vida-universitaria',
         'cultura-udp',
         'cultura-digital',

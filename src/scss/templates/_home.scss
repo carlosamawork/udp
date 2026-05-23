@@ -6,6 +6,18 @@
 // -----------------------------------------------------------------------------
 // S1 — Portada
 // -----------------------------------------------------------------------------
+
+.udp-home {
+    &__titulo {
+        color: var(--Common-Neutral-Lowest, #FFF);
+        font-family: var(--Font-family-sans, "Work Sans");
+        font-size: var(--font-size-15-rem-24-px, 24px);
+        font-style: normal;
+        font-weight: var(--font-weight-font-weight-600, 600);
+        line-height: var(--font-line-height-2-rem-32-px, 32px);
+    }
+}
+
 .udp-home-portada {
     position: relative;
     overflow: hidden;
@@ -87,7 +99,6 @@
 // -----------------------------------------------------------------------------
 .udp-home-buscador {
     padding: 3rem 0;
-    background-color: $gray-100;
 
     &__form {
         max-width: 860px;
@@ -395,7 +406,7 @@
 // -----------------------------------------------------------------------------
 // S6 — Postítulos (Destacado azul + foto)
 // -----------------------------------------------------------------------------
-.udp-home-posttitulos {
+.udp-home-destacado {
     padding: 5rem 0;
     background-color: var(--udp-color-primary, #0033a0); // Azul UDP institucional
     color: $white;
