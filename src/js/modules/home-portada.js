@@ -1,12 +1,6 @@
-/**
- * Home — Portada: clip-path reveal via IntersectionObserver
- * Fallback para browsers sin soporte de animation-timeline: scroll().
- */
 import { qs } from '@utils/dom';
 
 export function initHomePortada() {
-    if ( CSS.supports( 'animation-timeline', 'scroll()' ) ) return;
-
     const media = qs( '.js-portada-media' );
     if ( ! media ) return;
 
