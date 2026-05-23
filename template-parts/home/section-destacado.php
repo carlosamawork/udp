@@ -2,18 +2,18 @@
 /**
  * Home — Sección 6: Destacado azul (foto + texto)
  *
- * ACF fields: posttitulos_titulo (wysiwyg), posttitulos_descripcion (wysiwyg),
- *             posttitulos_link_texto, posttitulos_link_url,
- *             posttitulos_imagen (array).
+ * ACF fields: destacado_titulo (wysiwyg), destacado_descripcion (wysiwyg),
+ *             destacado_link_texto, destacado_link_url,
+ *             destacado_imagen (array).
  *
  * @package starter-bs5
  */
 
-$titulo      = get_field( 'posttitulos_titulo' );
-$descripcion = get_field( 'posttitulos_descripcion' );
-$link_texto  = get_field( 'posttitulos_link_texto' );
-$link_url    = get_field( 'posttitulos_link_url' );
-$imagen      = get_field( 'posttitulos_imagen' );
+$titulo      = get_field( 'destacado_titulo' );
+$descripcion = get_field( 'destacado_descripcion' );
+$link_texto  = get_field( 'destacado_link_texto' );
+$link_url    = get_field( 'destacado_link_url' );
+$imagen      = get_field( 'destacado_imagen' );
 
 if ( ! $titulo && ! $descripcion ) {
     return;

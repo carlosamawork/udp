@@ -255,7 +255,7 @@
             "append": ""
         },
         {
-            "key": "field_home_tab_posttitulos",
+            "key": "field_home_tab_destacado",
             "label": "Destacado azul",
             "name": "",
             "aria-label": "",
@@ -275,7 +275,7 @@
         {
             "key": "field_home_post_titulo",
             "label": "Título",
-            "name": "posttitulos_titulo",
+            "name": "destacado_titulo",
             "aria-label": "",
             "type": "wysiwyg",
             "instructions": "Puedes usar negrita para destacar palabras clave.",
@@ -295,7 +295,7 @@
         {
             "key": "field_home_post_desc",
             "label": "Descripción",
-            "name": "posttitulos_descripcion",
+            "name": "destacado_descripcion",
             "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
@@ -315,7 +315,7 @@
         {
             "key": "field_home_post_link_texto",
             "label": "Texto del link",
-            "name": "posttitulos_link_texto",
+            "name": "destacado_link_texto",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -335,7 +335,7 @@
         {
             "key": "field_home_post_link_url",
             "label": "URL del link",
-            "name": "posttitulos_link_url",
+            "name": "destacado_link_url",
             "aria-label": "",
             "type": "url",
             "instructions": "",
@@ -352,7 +352,7 @@
         {
             "key": "field_home_post_imagen",
             "label": "Imagen",
-            "name": "posttitulos_imagen",
+            "name": "destacado_imagen",
             "aria-label": "",
             "type": "image",
             "instructions": "",
@@ -1136,5 +1136,5 @@
     "description": "Contenido editable de la Home por sección. Location: front_page.",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1779470708
+    "modified": 1779499578
 }
