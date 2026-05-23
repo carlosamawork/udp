@@ -755,7 +755,15 @@ function udp_card_data_from_carrera( WP_Post $post ): array {
  */
 function udp_query_carreras( array $filters ): array {
     $facultad = (int) ( $filters['facultad'] ?? 0 );
+    $carrera  = (int) ( $filters['carrera'] ?? '' );
     $s        = trim( (string) ( $filters['s'] ?? '' ) );
+
+    if ( $carrera ) {
+        $post = get_post($carrera);
+        $cards = array();
+        $cards[] = udp_card_data_from_carrera( $post );
+        return $cards;
+    }
 
     $args = array(
         'post_type'      => 'carrera-udp',

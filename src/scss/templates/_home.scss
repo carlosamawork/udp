@@ -4,10 +4,14 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// S1 — Portada
+// Common
 // -----------------------------------------------------------------------------
 
 .udp-home {
+    section {
+        margin-bottom: 120px;
+    }
+
     &__titulo {
         color: var(--Common-Neutral-Lowest, #FFF);
         font-family: var(--Font-family-sans, "Work Sans");
@@ -19,6 +23,10 @@
     }
 }
 
+// -----------------------------------------------------------------------------
+// S1 — Portada
+// -----------------------------------------------------------------------------
+
 .udp-home-portada {
     position: relative;
     overflow: hidden;
@@ -26,7 +34,6 @@
     display: flex;
     align-items: center;
     margin-top: 50px;
-    margin-bottom: 80px;
     width: 100%;
 
     &__inner {
@@ -99,29 +106,60 @@
 // S2 — Buscador de Carreras
 // -----------------------------------------------------------------------------
 .udp-home-buscador {
-    padding: 3rem 0;
-
     &__form {
-        max-width: 860px;
         margin: 0 auto;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+        padding: 30px 0;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
     }
 
     &__fields {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 1rem;
         align-items: center;
+        justify-content: stretch;
+        width: 100%;
 
         @include media-breakpoint-down(md) {
             flex-direction: column;
         }
     }
 
-    &__select {
-        flex: 0 0 260px;
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
-        @include media-breakpoint-down(md) {
-            flex: 1 1 auto;
-            width: 100%;
+    &__select {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    }
+
+    &__input {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.5 17.5L13.9166 13.9166M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position-x: calc(100% - 8px);
+        background-position-y: center;
+        background-size: 20px;
+        padding-right: 34px;
+    }
+
+    &__select,
+    &__input,
+    &__input:focus {
+        height: 48px;
+        background-color: transparent;
+        color: #B0B0B0 !important;
+        border-color: #B0B0B0 !important;
+        box-shadow: none !important;
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue !important;
+            outline-offset: 2px;
         }
     }
 
@@ -130,10 +168,13 @@
     }
 
     &__btn {
+        margin-top: 1rem;
         flex: 0 0 auto;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        padding: 0 64px;
+        height: 48px;
     }
 }
 
@@ -141,8 +182,6 @@
 // S3 — Noticias
 // -----------------------------------------------------------------------------
 .udp-home-noticias {
-    padding: 4rem 0;
-
     &__header {
         display: flex;
         align-items: baseline;
@@ -217,53 +256,28 @@
 // S4 — Facultades
 // -----------------------------------------------------------------------------
 .udp-home-facultades {
-    padding: 4rem 0;
     overflow: hidden;
 
-    &__marquee {
-        overflow: hidden;
-        margin-bottom: 3rem;
-        white-space: nowrap;
-    }
-
-    &__track {
-        display: inline-flex;
-        gap: 3rem;
-        animation: marquee-scroll 30s linear infinite;
-
-        @media (prefers-reduced-motion: reduce) {
-            animation: none;
-        }
-    }
-
-    &__marquee-item {
-        font-family: $font-family-display;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        color: $gray-300;
-        text-transform: uppercase;
-        flex-shrink: 0;
-    }
-
-    &__lista {
-        column-count: 2;
-        column-gap: 2rem;
-
-        @include media-breakpoint-up(md) {
-            column-count: 3;
-        }
+    &__lista li {
+        display: inline;
     }
 
     &__link {
-        display: block;
-        padding: 0.375rem 0;
-        color: $black;
+        display: inline;
+
+        font-family: $font-family-display;
+        font-size: var(--font-size-3-rem-48-px, 48px);
+        font-style: normal;
+        font-weight: var(--font-weight-font-weight-500, 500);
+        line-height: 48px;
         text-decoration: none;
-        font-weight: 500;
-        border-bottom: 1px solid $gray-200;
-        transition: color 0.2s;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &:hover {
-            color: var(--udp-color-primary, #0033a0);
+            color: var(--udp-color-primary, #0033a0) !important;
         }
     }
 }
@@ -282,8 +296,6 @@
 // S5 — Próximos Eventos
 // -----------------------------------------------------------------------------
 .udp-home-eventos {
-    padding: 4rem 0;
-
     &__header {
         display: flex;
         align-items: baseline;
@@ -397,7 +409,6 @@
 // S6 — Postítulos (Destacado azul + foto)
 // -----------------------------------------------------------------------------
 .udp-home-destacado {
-    padding: 5rem 0;
     background-color: var(--udp-color-primary, #0033a0); // Azul UDP institucional
     color: $white;
 
@@ -432,8 +443,6 @@
 // S7 — Vida Universitaria
 // -----------------------------------------------------------------------------
 .udp-home-vida {
-    padding: 5rem 0;
-
     &__texto {
         font-size: 1rem;
         line-height: 1.7;
@@ -482,7 +491,7 @@
     }
 
     &__header {
-        padding: 3rem 0 2rem;
+        padding: 0 0 2rem 3rem;
         color: $white;
     }
 
@@ -690,8 +699,6 @@
 // S10 — Innovación e Investigación
 // -----------------------------------------------------------------------------
 .udp-home-innovacion {
-    padding: 4rem 0;
-
     &__header {
         display: flex;
         align-items: baseline;
@@ -749,7 +756,6 @@
 // S11 — Cifras
 // -----------------------------------------------------------------------------
 .udp-home-cifras {
-    padding: 5rem 0;
     background-color: var(--udp-color-primary, #0033a0);
     color: $white;
 

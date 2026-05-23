@@ -1045,3 +1045,19 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - F9 Home page: **COMPLETADA**. Las 11 secciones están implementadas, testeadas y buildeadas.
 
 **Próximo**: F10 Polish (SVGs sociales, eyebrow color) → F11 Switch tema activo.
+
+### 2026-05-23 — Cierre de sesión
+
+**Lo trabajado**:
+- **Editor config**: creados `.editorconfig`, `.prettierrc` y `.vscode/settings.json` para alinear el formato de SCSS/JS (2 espacios) con el output de Prettier. A partir de ahora Claude escribe SCSS en estilo Prettier (sin single-liners, `rgba()` con espacios).
+- **Fix animación portada**: corregida la scroll-driven animation de S1. El problema era `animation-timeline: view()` que no funciona para elementos above-fold. Solución: `animation-timeline: scroll(root)` con `animation-range: 0px 25vh`. Fallback JS (IntersectionObserver) para Firefox.
+- **Renombrado S6**: `section-posttitulos` → `section-destacado` en template, clases BEM, `front-page.php` y campos ACF (`posttitulos_*` → `destacado_*`). BD sincronizada (ID=55509). Los datos previos de esa sección quedan desvinculados — hay que reintroducirlos en el admin.
+
+**Estado actual**:
+- Rama activa: `home` (no mergeada a `main` aún).
+- F9 completada. F10 (Polish) y F11 (Switch tema) pendientes.
+
+**Próximos pasos sugeridos**:
+- Reintroducir datos de la sección Destacado en el admin WP.
+- Continuar con F10: SVGs sociales reales, eyebrow color por término de facultad.
+- Merge `home` → `main` cuando esté lista.
