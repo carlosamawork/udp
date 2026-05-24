@@ -1061,3 +1061,25 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Reintroducir datos de la sección Destacado en el admin WP.
 - Continuar con F10: SVGs sociales reales, eyebrow color por término de facultad.
 - Merge `home` → `main` cuando esté lista.
+
+### 2026-05-24 — Abstracción y centralización de form controls
+
+**Hechos**:
+- Creado `src/scss/components/_form-controls.scss` con todas las clases reutilizables de formulario. Importado en `main.scss` tras `_button.scss`.
+- Clases definidas:
+  - `.udp-form-select` (dark, 48px) + `--slim` (40px) + `--dim` (gris) + `--light`
+  - `.udp-form-input` (dark, 48px) + `--slim` + `--dim` + `--light` + `--search-icon` (lupa como bg-image)
+  - `.udp-form-filterbar` — contenedor flex (`max-width: 1440px; padding: 0 40px; margin-inline: auto`) para barras de filtros de archivo. `__group` (320px) y `__group--search` (380px). Concursos lo sobreescribe con `padding: 20px 40px; border-bottom: 1px solid black`.
+  - `.udp-form-search-group` — wrapper con botón lupa absoluto a la **izquierda** (`left: 0`, `padding-left: 48px` en el input). Modificador `--light` para tema claro.
+- Eliminados bloques de grid layout `.udp-archive-filters {}` de `_noticias-archive.scss`, `_carreras-archive.scss`, `_concursos-archive.scss`.
+- Renombrado `udp-archive-filters` → `udp-form-filterbar` (pasando por `udp-form-filtersgroup`) en los 5 PHP de filtros: noticias, eventos, carreras, concursos, calendario. JS selectors actualizados. Eliminado modificador muerto `--light` del form de concursos.
+- Bootstrap `form-select`/`form-control` eliminados del home buscador PHP. Home usa `--dim` para color gris.
+- Build: ✓ sin errores.
+
+**URLs para verificar el resultado**:
+- Home buscador: http://localhost:8888/udp/
+- Noticias: http://localhost:8888/udp/noticias/
+- Agenda/Eventos: http://localhost:8888/udp/agenda-udp/
+- Calendario académico: http://localhost:8888/udp/calendario-academico/
+- Carreras: http://localhost:8888/udp/pregrado-y-formacion-general/carreras/
+- Concursos académicos: http://localhost:8888/udp/docentes/concursos-academicos/

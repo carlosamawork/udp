@@ -135,38 +135,6 @@
         gap: 8px;
     }
 
-    &__select {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-    }
-
-    &__input {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.5 17.5L13.9166 13.9166M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z'/%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position-x: calc(100% - 8px);
-        background-position-y: center;
-        background-size: 20px;
-        padding-right: 34px;
-    }
-
-    &__select,
-    &__input,
-    &__input:focus {
-        height: 48px;
-        background-color: transparent;
-        color: #B0B0B0 !important;
-        border-color: #B0B0B0 !important;
-        box-shadow: none !important;
-
-        &:focus-visible {
-            outline: 2px solid $brand-blue !important;
-            outline-offset: 2px;
-        }
-    }
-
-    &__input {
-        flex: 1 1 auto;
-    }
-
     &__btn {
         margin-top: 1rem;
         flex: 0 0 auto;

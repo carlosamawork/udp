@@ -52,7 +52,7 @@ $titulo_seccion = get_field( 'buscador_titulo' ) ?: 'Buscador de Carreras';
                     <select
                         id="udp_facultad"
                         name="udp_facultad"
-                        class="udp-home-buscador__select form-select"
+                        class="udp-form-select udp-form-select--dim"
                         aria-label="Filtrar por facultad"
                     >
                         <option value="">Selecciona una facultad</option>
@@ -68,7 +68,7 @@ $titulo_seccion = get_field( 'buscador_titulo' ) ?: 'Buscador de Carreras';
                     <select
                         id="udp_carrera"
                         name="udp_carrera"
-                        class="udp-home-buscador__select form-select"
+                        class="udp-form-select udp-form-select--dim"
                         aria-label="Filtrar por carrera"
                     >
                         <option value="">Selecciona una carrera</option>
@@ -85,7 +85,7 @@ $titulo_seccion = get_field( 'buscador_titulo' ) ?: 'Buscador de Carreras';
                         type="search"
                         id="udp_s"
                         name="udp_s"
-                        class="udp-home-buscador__input form-control"
+                        class="udp-form-input udp-form-input--dim udp-form-input--search-icon"
                         placeholder="Escribe aquí lo que quieras buscar"
                         aria-label="Buscar carrera por nombre"
                         value=""
