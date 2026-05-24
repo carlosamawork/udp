@@ -20,8 +20,6 @@ export async function initHomeNoticias() {
         spaceBetween: 30,
         keyboard: { enabled: true },
         grabCursor: true,
-        slidesOffsetBefore: 40,
-        slidesOffsetAfter: 40,
         navigation: {
             nextEl: section ? section.querySelector('.js-noticias-next') : null,
             prevEl: section ? section.querySelector('.js-noticias-prev') : null,

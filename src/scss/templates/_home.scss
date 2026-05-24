@@ -161,9 +161,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        max-width: 1440px;
-        padding: 0 40px;
-        margin-inline: auto;
         margin-bottom: 25px;
     }
 
@@ -214,12 +211,13 @@
 
     // --- Featured slide ---
     &__slide--featured {
-        width: 694px !important;
+        width: fit-content !important;
     }
 
     &__featured {
         display: grid;
         grid-template-columns: 6fr 4fr;
+        width: 694px;
 
         gap: 30px;
         height: $swiper-h;
@@ -330,14 +328,17 @@
 
     // --- Regular pair slides ---
     &__slide--pair {
-        width: 694px !important;
+        width: fit-content !important;
+
     }
 
     &__card {
+        width: 463px;
+        height: 275px;
+
         display: grid;
         grid-template-columns: 43% 1fr;
         gap: 30px;
-        height: 275px;
         text-decoration: none;
         color: inherit;
 
@@ -392,24 +393,6 @@
         font-weight: 400;
         color: $white;
         line-height: 20px;
-    }
-
-    // --- Hide inactive cards ---
-    .swiper-slide > div {
-        opacity: 1;
-        transition: opacity 0.3s ease-in margin-right 0.2 linear margin-left 0.2 linear;
-    }
-
-    .swiper-slide-prev > div {
-        opacity: 0;
-    }
-
-    .swiper-slide-active > div {
-        margin-left: calc((100dvw - 1440px)/2);
-    }
-
-    .swiper-slide-next:last-child > div {
-        margin-right: calc((100dvw - 1440px)/2);
     }
 
     // --- "Ver todas" button ---
