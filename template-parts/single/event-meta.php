@@ -18,9 +18,9 @@ if ( ! $post_id ) {
 }
 
 $eyebrow_text = '';
-$tags = get_the_terms( $post_id, 'post_tag' );
-if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
-    $eyebrow_text = $tags[0]->name;
+$tipos = get_the_terms( $post_id, 'tipo-evento' );
+if ( ! is_wp_error( $tipos ) && ! empty( $tipos ) ) {
+    $eyebrow_text = $tipos[0]->name;
 }
 
 // Raw postmeta (Ymd / time strings)

@@ -1084,6 +1084,16 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Carreras: http://localhost:8888/udp/pregrado-y-formacion-general/carreras/
 - Concursos académicos: http://localhost:8888/udp/docentes/concursos-academicos/
 
+### 2026-05-24 — Rediseño sección Home Eventos (S5) según Figma + taxonomía tipo-evento
+
+**Hechos**:
+- Reescrito `template-parts/home/section-eventos.php` según Figma 3706:20036: 2 cards destacadas (imagen 232px + cuerpo #232323, altura 250px) con footer (eyebrow Necto Mono + fecha+lugar + botón círculo flecha 48px). Lista de hasta 5 eventos: grid 3 cols (eyebrow 200px | título 1fr | fecha 200px), separadores `#3d3d3d`.
+- Botón "Ver todos los eventos" pill outline `rgba(white, 0.7)`.
+- Taxonomía `tipo-evento` creada (jerárquica = checkboxes, exclusiva CPT `agenda`). Términos: Charlas, Cátedras, Otras actividades, Exposiciones, Congresos (IDs 4309–4313).
+- Los 3 puntos que renderizan el eyebrow de agenda leen ahora `tipo-evento`: `udp_card_data_from_agenda()` (cubre home S5 + archivo), `event-meta.php` (single).
+- `post_tag` eliminado del array `taxonomies` del CPT `agenda` en mu-plugin (ya no aparece en el admin). Comentario corregido en `udp-cards.php`.
+- Refactor SCSS: mixin `udp-media-placeholder($theme)` en `_mixins.scss` + clase standalone `.udp-media-placeholder` en `components/_media-placeholder.scss`. Elimina 5 bloques `repeating-linear-gradient` duplicados en `_card-evento`, `_card-mosaic` y `_block-people-list`.
+
 ### 2026-05-24 — Rediseño sección Home Noticias (S3)
 
 **Hechos**:
@@ -1098,18 +1108,22 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 ### 2026-05-24 — Cierre de sesión
 
 **Lo trabajado**:
-- Centralización completa de form controls en `_form-controls.scss`: select, input, filterbar, search-group
-- Renombrado `udp-archive-filters` → `udp-form-filterbar` en los 5 PHP de filtros y SCSS
-- Rediseño total de la sección Home Noticias (S3) según Figma
+- Centralización form controls en `_form-controls.scss`; renombrado `udp-archive-filters` → `udp-form-filterbar`
+- Rediseño S3 Noticias según Figma
+- Rediseño S5 Eventos según Figma 3706:20036 (cards imagen+cuerpo oscuro + lista 3 cols)
+- Taxonomía `tipo-evento` (checkboxes, exclusiva agenda): 5 términos creados en BD
+- Eyebrow de agenda unificado a `tipo-evento` en los 3 puntos: helper, single, archivo
+- `post_tag` ocultado del admin de agenda (eliminado del CPT `taxonomies`)
+- Refactor SCSS: mixin `udp-media-placeholder` + clase standalone, elimina gradientes duplicados
 
 **Estado actual**:
 - Rama activa: `home` (no mergeada a `main`).
-- S3 Noticias implementada — pendiente revisar en navegador (http://localhost:8888/udp/).
-- Siguientes secciones del home pendientes de revisar/implementar según Figma.
+- S3 y S5 home implementadas según Figma — pendiente revisar en navegador.
+- Resto de secciones del home pendientes de revisar/ajustar contra Figma.
 
 **Próximos pasos sugeridos**:
-- Verificar S3 Noticias en navegador y ajustar si es necesario.
-- Continuar con las secciones restantes del home.
+- Revisar en navegador S3 y S5 y ajustar si es necesario.
+- Continuar revisión sección a sección del home contra Figma.
 - Merge `home` → `main` cuando el home esté completo.
 
 ### 2026-05-24 — Rediseño sección Home Eventos (S5) según Figma 3706:20036

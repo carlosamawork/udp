@@ -281,7 +281,7 @@ function udp_query_noticias( array $filters ): array {
  *   - fecha_display: human readable "10 de Marzo de 2026"
  *   - hora_display:  del ACF hora_inicio "12:00 hrs"
  *   - lugar:         ACF lugar
- * Eyebrow viene del primer post_tag (case original) — uppercase via CSS.
+ * Eyebrow viene del primer término de taxonomía tipo-evento.
  */
 function udp_card_data_from_agenda( WP_Post $post ): ?array {
     $thumb_id = (int) get_post_thumbnail_id( $post->ID );
@@ -297,9 +297,9 @@ function udp_card_data_from_agenda( WP_Post $post ): ?array {
     }
 
     $eyebrow_text = '';
-    $tags = get_the_terms( $post->ID, 'post_tag' );
-    if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
-        $eyebrow_text = $tags[0]->name;
+    $tipos = get_the_terms( $post->ID, 'tipo-evento' );
+    if ( ! is_wp_error( $tipos ) && ! empty( $tipos ) ) {
+        $eyebrow_text = $tipos[0]->name;
     }
 
     // get_field('fecha') returns the ACF "Return Format" (human-readable string like "3 Octubre 2017").
