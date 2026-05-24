@@ -44,6 +44,7 @@ import { initHomeNoticias }   from '@modules/home-noticias';
 import { initHomeCulturaUdp } from '@modules/home-cultura-udp';
 import { initHomeCulturaDigital } from '@modules/home-cultura-digital';
 import { initHomeInnovacion }     from '@modules/home-innovacion';
+import { initHomeCifras }        from '@modules/home-cifras';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -73,6 +74,7 @@ domReady(() => {
     initHomeCulturaUdp();
     initHomeCulturaDigital();
     initHomeInnovacion();
+    initHomeCifras();
 
     console.log('[StarterBS5] Theme initialized');
 });
