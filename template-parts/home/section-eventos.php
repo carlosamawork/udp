@@ -48,7 +48,11 @@ $arrow_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" vie
 				}
 			?>
 			<a href="<?php echo esc_url( $card['href'] ); ?>" class="udp-home-eventos__card">
-				<?php if ( ! empty( $card['imagen']['url'] ) ) : ?>
+				<?php if ( empty( $card['imagen']['url'] ) ) : ?>
+				<div class="udp-home-eventos__card-img">
+					<figure class="udp-home-eventos__card-img-placeholder"></figure>
+				</div>
+				<?php else : ?>
 				<div class="udp-home-eventos__card-img">
 					<img
 						src="<?php echo esc_url( $card['imagen']['url'] ); ?>"
@@ -98,7 +102,7 @@ $arrow_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" vie
 				}
 			?>
 			<a href="<?php echo esc_url( $card['href'] ); ?>" class="udp-home-eventos__lista-row" role="listitem">
-				<span class="udp-home-eventos__lista-tipo"><?php echo esc_html( $card['eyebrow'] ?? '' ); ?></span>
+				<span class="udp-home-eventos__lista-eyebrow"><?php echo esc_html( $card['eyebrow'] ?? '' ); ?></span>
 				<span class="udp-home-eventos__lista-titulo"><?php echo esc_html( $card['titulo'] ); ?></span>
 				<span class="udp-home-eventos__lista-fecha"><?php echo esc_html( $fecha_corta ); ?></span>
 			</a>
