@@ -1111,3 +1111,12 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Verificar S3 Noticias en navegador y ajustar si es necesario.
 - Continuar con las secciones restantes del home.
 - Merge `home` → `main` cuando el home esté completo.
+
+### 2026-05-24 — Rediseño sección Home Eventos (S5) según Figma 3706:20036
+
+**Hechos**:
+- Reescrito `template-parts/home/section-eventos.php` — estructura nueva: 2 cards destacadas (imagen 232px fija + cuerpo oscuro #232323, altura 250px) + lista de hasta 5 eventos.
+- Card: `display:flex`, imagen fija izquierda, cuerpo derecho con título arriba (Work Sans Medium 20px, height 150px overflow) + footer (eyebrow Necto Mono + fecha+lugar + botón círculo flecha 48px border #4f4f4f).
+- Lista: filas `display:grid` 3 cols (eyebrow 200px | título 1fr | fecha 200px), separadas por `border-top: 1px solid #3d3d3d`.
+- Botón "Ver todos los eventos" — pill outline `border: rgba(white, 0.7)`, 230×44px.
+- Build: ✓ 591ms sin errores.
