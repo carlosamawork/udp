@@ -43,6 +43,7 @@ import { initHomePortada }    from '@modules/home-portada';
 import { initHomeNoticias }   from '@modules/home-noticias';
 import { initHomeCulturaUdp } from '@modules/home-cultura-udp';
 import { initHomeCulturaDigital } from '@modules/home-cultura-digital';
+import { initHomeInnovacion }     from '@modules/home-innovacion';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -71,6 +72,7 @@ domReady(() => {
     initHomeNoticias();
     initHomeCulturaUdp();
     initHomeCulturaDigital();
+    initHomeInnovacion();
 
     console.log('[StarterBS5] Theme initialized');
 });

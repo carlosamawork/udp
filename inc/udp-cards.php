@@ -222,6 +222,10 @@ function udp_get_post_years(): array {
  */
 function udp_query_noticias( array $filters ): array {
     $cat   = (int) ( $filters['cat']   ?? 0 );
+    // $cats acepta array de IDs; tiene precedencia sobre $cat si no está vacío.
+    $cats  = isset( $filters['cats'] ) && is_array( $filters['cats'] )
+        ? array_values( array_filter( array_map( 'intval', $filters['cats'] ) ) )
+        : array();
     $year  = (int) ( $filters['year']  ?? 0 );
     $s     = trim( (string) ( $filters['s'] ?? '' ) );
     $paged = max( 1, (int) ( $filters['paged'] ?? 1 ) );
@@ -237,9 +241,10 @@ function udp_query_noticias( array $filters ): array {
         'order'          => 'DESC',
     );
 
-    if ( $cat > 0 ) {
+    $term_ids = ! empty( $cats ) ? $cats : ( $cat > 0 ? array( $cat ) : array() );
+    if ( ! empty( $term_ids ) ) {
         $args['tax_query'] = array(
-            array( 'taxonomy' => 'category', 'field' => 'term_id', 'terms' => array( $cat ) ),
+            array( 'taxonomy' => 'category', 'field' => 'term_id', 'terms' => $term_ids, 'operator' => 'IN' ),
         );
     }
 
