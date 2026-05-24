@@ -8,10 +8,12 @@
  * @package starter-bs5
  */
 
-$titulo    = get_field( 'portada_titulo' );
-$cta_texto = get_field( 'portada_cta_texto' );
-$cta_url   = get_field( 'portada_cta_url' );
-$imagen    = get_field( 'portada_imagen' );
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
+$titulo    = get_field( 'portada_titulo', $post_id );
+$cta_texto = get_field( 'portada_cta_texto', $post_id );
+$cta_url   = get_field( 'portada_cta_url', $post_id );
+$imagen    = get_field( 'portada_imagen', $post_id );
 
 if ( ! $titulo ) {
     return;

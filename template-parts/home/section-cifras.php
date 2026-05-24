@@ -11,13 +11,15 @@
  * @package starter-bs5
  */
 
-$bloques = get_field( 'cifras_items' );
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
+$bloques = get_field( 'cifras_items', $post_id );
 
 if ( empty( $bloques ) ) {
     return;
 }
 
-$titulo_seccion = get_field( 'cifras_titulo' ) ?: 'Cifras';
+$titulo_seccion = get_field( 'cifras_titulo', $post_id ) ?: 'Cifras';
 
 // Separar números de testimonios para layouts distintos.
 $numeros     = array_filter( $bloques, fn( $b ) => $b['acf_fc_layout'] === 'numero' );

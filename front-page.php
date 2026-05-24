@@ -26,8 +26,10 @@ get_header();
         'cifras',
     ];
 
+    $home_args = [ 'post_id' => (int) get_option( 'page_on_front' ) ];
+
     foreach ( $sections as $sec ) {
-        get_template_part( 'template-parts/home/section', $sec );
+        get_template_part( 'template-parts/home/section', $sec, $home_args );
     }
     ?>
 </main>

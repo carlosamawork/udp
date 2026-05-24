@@ -399,8 +399,8 @@
             "aria-label": "",
             "type": "text",
             "instructions": "",
-            "required": false,
-            "conditional_logic": false,
+            "required": 1,
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -408,6 +408,7 @@
             },
             "default_value": "",
             "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -539,13 +540,13 @@
         },
         {
             "key": "field_home_cultura_titulo",
-            "label": "Título de sección",
+            "label": "Título",
             "name": "cultura_titulo",
             "aria-label": "",
             "type": "text",
             "instructions": "",
-            "required": false,
-            "conditional_logic": false,
+            "required": 1,
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -553,6 +554,7 @@
             },
             "default_value": "",
             "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
             "append": ""
@@ -1131,10 +1133,10 @@
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": [],
+    "hide_on_screen": "",
     "active": true,
     "description": "Contenido editable de la Home por sección. Location: front_page.",
-    "show_in_rest": false,
+    "show_in_rest": 0,
     "display_title": "",
-    "modified": 1779499578
+    "modified": 1779653406
 }

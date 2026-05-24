@@ -8,6 +8,8 @@
  * @package starter-bs5
  */
 
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
 $facultades = get_terms( [
     'taxonomy'   => 'facultad',
     'hide_empty' => false,
@@ -19,7 +21,7 @@ if ( is_wp_error( $facultades ) || empty( $facultades ) ) {
     return;
 }
 
-$titulo_seccion = get_field( 'facultades_titulo' ) ?: 'Facultades';
+$titulo_seccion = get_field( 'facultades_titulo', $post_id ) ?: 'Facultades';
 ?>
 <section class="udp-home-facultades">
     <div class="container">

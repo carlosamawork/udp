@@ -761,36 +761,116 @@
 }
 
 // -----------------------------------------------------------------------------
-// S6 — Postítulos (Destacado azul + foto)
+// S6 — Destacado azul (panel $brand-blue + foto cuadrada)
 // -----------------------------------------------------------------------------
 .udp-home-destacado {
-    background-color: var(--udp-color-primary, #0033a0); // Azul UDP institucional
-    color: $white;
+    max-width: 1440px;
+    padding: 0 40px;
+    margin-inline: auto;
+
+    &__inner {
+        display: flex;
+        align-items: stretch;
+
+        @include media-breakpoint-down(lg) {
+            flex-direction: column;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        min-width: 0;
+        background-color: $brand-blue;
+        color: $white;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 432px;
+
+        @include media-breakpoint-down(lg) {
+            min-height: 0;
+            padding: 2rem;
+        }
+    }
 
     &__titulo {
+        max-width: 600px;
         font-family: $font-family-display;
-        font-size: clamp(1.75rem, 4vw, 3rem);
+        font-weight: 300;
+        font-size: clamp(2rem, 3.33vw, 3rem);
+        line-height: 1;
         color: $white;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
+
+        p {
+            margin-bottom: 0;
+        }
+
+        strong,
+        b {
+            font-weight: 500;
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 2rem;
+
+        @include media-breakpoint-down(lg) {
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
     }
 
     &__descripcion {
         font-size: 1rem;
-        line-height: 1.7;
-        opacity: 0.9;
+        line-height: 1.25;
+        max-width: 433px;
 
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 0;
+        }
+    }
+
+    &__cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: $white;
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+
+        svg {
+            flex-shrink: 0;
         }
 
-        a {
+        &:hover {
             color: $white;
+            opacity: 0.75;
+        }
+    }
+
+    &__media {
+        flex: 0 0 432px;
+        width: 432px;
+        overflow: hidden;
+
+        @include media-breakpoint-down(lg) {
+            flex: none;
+            width: 100%;
+            aspect-ratio: 16 / 9;
         }
     }
 
     &__imagen {
-        border-radius: 2px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
 }
 

@@ -11,9 +11,11 @@
  * @package starter-bs5
  */
 
-$titulo = get_field( 'cd_titulo' );
-$texto  = get_field( 'cd_texto' );
-$items  = get_field( 'cd_items' );
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
+$titulo = get_field( 'cd_titulo', $post_id );
+$texto  = get_field( 'cd_texto', $post_id );
+$items  = get_field( 'cd_items', $post_id );
 
 if ( ! $titulo && ! $texto && empty( $items ) ) {
     return;

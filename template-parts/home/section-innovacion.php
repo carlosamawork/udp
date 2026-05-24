@@ -9,6 +9,8 @@
  * @package starter-bs5
  */
 
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
 // Resolver IDs dinámicamente para no hardcodear.
 $slugs   = [ 'investigacion', 'innovacion' ];
 $cat_ids = [];
@@ -48,7 +50,7 @@ if ( ! $query->have_posts() ) {
 $posts = $query->posts;
 wp_reset_postdata();
 
-$titulo_seccion = get_field( 'innovacion_titulo' ) ?: 'Innovación e Investigación';
+$titulo_seccion = get_field( 'innovacion_titulo', $post_id ) ?: 'Innovación e Investigación';
 ?>
 <section class="udp-home-innovacion">
     <div class="container">

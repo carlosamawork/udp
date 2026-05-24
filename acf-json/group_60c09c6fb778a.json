@@ -1658,6 +1658,11 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "page"
+            },
+            {
+                "param": "page_type",
+                "operator": "!=",
+                "value": "front_page"
             }
         ],
         [
@@ -1665,16 +1670,7 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "post"
-            }
-        ],
-        [
-            {
-                "param": "page",
-                "operator": "!=",
-                "value": "55394"
-            }
-        ],
-        [
+            },
             {
                 "param": "page_type",
                 "operator": "!=",
@@ -1692,5 +1688,5 @@
     "description": "",
     "show_in_rest": 0,
     "display_title": "",
-    "modified": 1779494740
+    "modified": 1779653248
 }

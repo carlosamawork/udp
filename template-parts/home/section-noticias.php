@@ -8,6 +8,8 @@
  * @package starter-bs5
  */
 
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
 $result   = udp_query_noticias( [ 'limit' => 9 ] );
 $cards    = $result['cards'] ?? [];
 
@@ -15,7 +17,7 @@ if ( empty( $cards ) ) {
     return;
 }
 
-$titulo_seccion = get_field( 'noticias_titulo' ) ?: 'UDP hoy / Noticias';
+$titulo_seccion = get_field( 'noticias_titulo', $post_id ) ?: 'UDP hoy / Noticias';
 $noticias_url   = home_url( '/noticias/' );
 
 $featured = array_shift( $cards );

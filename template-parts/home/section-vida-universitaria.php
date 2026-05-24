@@ -8,10 +8,12 @@
  * @package starter-bs5
  */
 
-$titulo  = get_field( 'vida_titulo' );
-$texto   = get_field( 'vida_texto' );
-$links   = get_field( 'vida_links' );
-$imagen  = get_field( 'vida_imagen' );
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
+$titulo  = get_field( 'vida_titulo', $post_id );
+$texto   = get_field( 'vida_texto', $post_id );
+$links   = get_field( 'vida_links', $post_id );
+$imagen  = get_field( 'vida_imagen', $post_id );
 
 if ( ! $titulo && ! $texto ) {
     return;

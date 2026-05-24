@@ -8,6 +8,8 @@
  * @package starter-bs5
  */
 
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
 $hoy    = current_time( 'Ymd' );
 $result = udp_query_agenda( [
 	'fecha_desde' => $hoy,
@@ -21,7 +23,7 @@ if ( empty( $cards ) ) {
 	return;
 }
 
-$titulo_seccion = get_field( 'eventos_titulo' ) ?: 'Próximos eventos';
+$titulo_seccion = get_field( 'eventos_titulo', $post_id ) ?: 'Próximos eventos';
 
 $destacados = array_slice( $cards, 0, 2 );
 $lista      = array_slice( $cards, 2, 5 );

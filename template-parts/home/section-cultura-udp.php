@@ -10,9 +10,11 @@
  * @package starter-bs5
  */
 
-$items = get_field( 'cultura_udp_items' );
-$cultura_titulo = get_field( 'cultura_titulo' );
-$cultura_texto  = get_field( 'cultura_texto' );
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
+$items = get_field( 'cultura_udp_items', $post_id );
+$cultura_titulo = get_field( 'cultura_titulo', $post_id );
+$cultura_texto  = get_field( 'cultura_texto', $post_id );
 
 if ( empty( $items ) ) {
     return;
