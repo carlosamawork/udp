@@ -33,7 +33,7 @@ $arrow_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" vie
 	<div class="container">
 
 		<header class="udp-home-eventos__header">
-			<h2 class="udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
+			<h2 class="udp-home-eventos__titulo udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
 			<a href="<?php echo esc_url( $agenda_url ); ?>" class="udp-home-eventos__ver-mas">
 				Ver todos los eventos
 			</a>
@@ -91,14 +91,17 @@ $arrow_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" vie
 		<?php if ( $lista ) : ?>
 		<div class="udp-home-eventos__lista" role="list">
 			<?php foreach ( $lista as $card ) :
-				$fecha_corta = '';
-				if ( ! empty( $card['fecha'] ) ) {
-					$ts = strtotime( $card['fecha'] );
-					$fecha_corta = $ts ? date_i18n( 'j F Y', $ts ) : ( $card['fecha_display'] ?? '' );
+				$fecha_corta = $card['fecha_display'];
+				if ( empty($fecha_corta) ) {
+					$fecha_corta = get_the_date('j F Y', get_post($card->post_id) );
+				}
+				$eyebrow = $card['eyebrow'];
+				if ( empty($eyebrow) ) {
+					$eyebrow = get_terms($card, 'tipo-contenido')->name;
 				}
 			?>
 			<a href="<?php echo esc_url( $card['href'] ); ?>" class="udp-home-eventos__lista-row" role="listitem">
-				<span class="udp-home-eventos__lista-eyebrow"><?php echo esc_html( $card['eyebrow'] ?? '' ); ?></span>
+				<span class="udp-home-eventos__lista-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
 				<span class="udp-home-eventos__lista-titulo"><?php echo esc_html( $card['titulo'] ); ?></span>
 				<span class="udp-home-eventos__lista-fecha"><?php echo esc_html( $fecha_corta ); ?></span>
 			</a>

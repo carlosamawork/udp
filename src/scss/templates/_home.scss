@@ -492,6 +492,10 @@
 .udp-home-eventos {
 
     // --- Header ---
+    &__titulo {
+        margin-bottom: 0;
+    }
+
     &__header {
         display: flex;
         align-items: center;
@@ -523,11 +527,13 @@
 
     // --- Cards destacadas ---
     &__destacados {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 30px;
+        margin-bottom: 30px;
 
         @include media-breakpoint-down(md) {
-            flex-direction: column;
+            grid-template-columns: 1fr;
         }
     }
 
@@ -674,7 +680,6 @@
     &__lista {
         display: flex;
         flex-direction: column;
-        margin-top: 10px;
     }
 
     &__lista-row {
