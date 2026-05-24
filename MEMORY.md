@@ -1083,3 +1083,31 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Calendario académico: http://localhost:8888/udp/calendario-academico/
 - Carreras: http://localhost:8888/udp/pregrado-y-formacion-general/carreras/
 - Concursos académicos: http://localhost:8888/udp/docentes/concursos-academicos/
+
+### 2026-05-24 — Rediseño sección Home Noticias (S3)
+
+**Hechos**:
+- Rediseñada `template-parts/home/section-noticias.php` según Figma (node `3706:19949`):
+  - 1 slide destacado: imagen 432×580px con overlay blanco 60%, badge "Destacado" (#FFE210, Necto Mono), fecha top-right, título serif 48px centrado + columna de texto Work Sans 30px + "Leer más ↗"
+  - Slides regulares: pares de 2 cards (201×275px, imagen + título 18px + fecha + "Leer más ↗")
+  - Botón "Ver todas las noticias" pill outline bottom-right (216×44px)
+- Actualizado `_home.scss` bloque `.udp-home-noticias` con todas las dimensiones del Figma: swiper 580px, slide featured 694px, slide pair 463px, nav circular (#4539F2 / #2B2788)
+- Actualizado `home-noticias.js`: nav apunta a `.js-noticias-prev/next` del header, spaceBetween: 30, sin freeMode
+- Build: ✓ sin errores. Commit: `6131f7b`
+
+### 2026-05-24 — Cierre de sesión
+
+**Lo trabajado**:
+- Centralización completa de form controls en `_form-controls.scss`: select, input, filterbar, search-group
+- Renombrado `udp-archive-filters` → `udp-form-filterbar` en los 5 PHP de filtros y SCSS
+- Rediseño total de la sección Home Noticias (S3) según Figma
+
+**Estado actual**:
+- Rama activa: `home` (no mergeada a `main`).
+- S3 Noticias implementada — pendiente revisar en navegador (http://localhost:8888/udp/).
+- Siguientes secciones del home pendientes de revisar/implementar según Figma.
+
+**Próximos pasos sugeridos**:
+- Verificar S3 Noticias en navegador y ajustar si es necesario.
+- Continuar con las secciones restantes del home.
+- Merge `home` → `main` cuando el home esté completo.
