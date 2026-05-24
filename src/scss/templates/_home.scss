@@ -324,6 +324,11 @@
         color: $white;
         text-decoration: none;
         line-height: 24px;
+        transition: opacity $transition-base;
+
+        &:hover {
+            opacity: 0.5;
+        }
     }
 
     // --- Regular pair slides ---
