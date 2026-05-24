@@ -150,45 +150,206 @@
 // S3 — Noticias
 // -----------------------------------------------------------------------------
 .udp-home-noticias {
+    $swiper-h: 580px;
+
+    // --- Header ---
+    &__title {
+        margin-bottom: 0;
+    }
+
     &__header {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        max-width: 1440px;
+        padding: 0 40px;
+        margin-inline: auto;
+        margin-bottom: 25px;
     }
 
-    &__ver-mas {
-        font-size: 0.875rem;
-        text-decoration: underline;
+    &__nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
     }
 
-    &__swiper-wrap {
-        overflow: hidden;
-    }
+    &__nav-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 0;
+        background: $brand-blue;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.2s;
 
-    &__slide {
-        width: 280px;
+        &--prev {
+            background: #2b2788;
+        }
 
-        @include media-breakpoint-up(md) {
-            width: 320px;
+        &.swiper-button-disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: 2px;
         }
     }
 
-    &__card {
-        display: block;
+    // --- Swiper ---
+    &__swiper-wrap {
+        overflow: hidden;
+        height: $swiper-h;
+    }
+
+    .swiper {
+        height: $swiper-h;
+    }
+
+    // --- Featured slide ---
+    &__slide--featured {
+        width: 694px !important;
+    }
+
+    &__featured {
+        display: grid;
+        grid-template-columns: 6fr 4fr;
+
+        gap: 30px;
+        height: $swiper-h;
         text-decoration: none;
         color: inherit;
-        height: 100%;
+    }
 
-        &:hover .udp-home-noticias__card-titulo {
-            text-decoration: underline;
+    &__featured-img {
+        position: relative;
+        height: $swiper-h;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: $white;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    }
+
+    &__badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 2;
+        background: #ffe210;
+        color: $dark-1;
+        font-family: $font-family-mono;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        padding: 2px 6px;
+        line-height: 20px;
+    }
+
+    &__featured-date {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 2;
+        font-size: 15px;
+        font-weight: 400;
+        color: $dark-1;
+        line-height: 20px;
+    }
+
+    &__featured-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 56px;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    &__featured-overlay-title {
+        font-family: $font-family-display;
+        font-size: 48px;
+        font-weight: 500;
+        line-height: 48px;
+        color: $dark-1;
+        margin: 0;
+    }
+
+    &__featured-body {
+        height: $swiper-h;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 82px 0 0;
+    }
+
+    &__featured-text {
+        font-family: $font-family-body;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 34px;
+        color: $white;
+        margin: 0;
+    }
+
+    // --- Leer más (shared) ---
+    &__leer-mas {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 600;
+        color: $white;
+        text-decoration: none;
+        line-height: 24px;
+    }
+
+    // --- Regular pair slides ---
+    &__slide--pair {
+        width: 694px !important;
+    }
+
+    &__card {
+        display: grid;
+        grid-template-columns: 43% 1fr;
+        gap: 30px;
+        height: 275px;
+        text-decoration: none;
+        color: inherit;
+
+        &:first-child {
+            margin-bottom: 30px;
         }
     }
 
     &__card-img {
-        aspect-ratio: 4/3;
+        height: 275px;
+        flex-shrink: 0;
         overflow: hidden;
-        margin-bottom: 1rem;
 
         img {
             width: 100%;
@@ -199,24 +360,89 @@
     }
 
     &__card:hover &__card-img img {
-        transform: scale(1.04);
+        transform: scale(1.03);
     }
 
-    &__card-eyebrow {
-        display: block;
-        margin-bottom: 0.5rem;
+    &__card-body {
+        height: 275px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__card-text {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
     &__card-titulo {
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.35;
-        margin-bottom: 0.5rem;
+        font-family: $font-family-body;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+        color: $white;
+        margin: 0;
     }
 
     &__card-fecha {
-        font-size: 0.8125rem;
-        color: $gray-600;
+        font-family: $font-family-body;
+        font-size: 13px;
+        font-weight: 400;
+        color: $white;
+        line-height: 20px;
+    }
+
+    // --- Hide inactive cards ---
+    .swiper-slide > div {
+        opacity: 1;
+        transition: opacity 0.3s ease-in, padding-right 0.2 linear, padding-left 0.2 linear;
+    }
+
+    .swiper-slide-prev > div {
+        opacity: 0;
+    }
+
+    .swiper-slide-active > div {
+        padding-left: calc((100dvw - 1440px)/2);
+    }
+
+    .swiper-slide-next:last-child > div {
+        padding-right: calc((100dvw - 1440px)/2);
+    }
+
+    // --- "Ver todas" button ---
+    &__ver-todas {
+        max-width: 1440px;
+        padding: 20px 40px;
+        margin-inline: auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    &__ver-todas-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 216px;
+        height: 44px;
+        border: 1px solid rgba($white, 0.7);
+        border-radius: 9999px;
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 600;
+        color: $white;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background 0.2s, border-color 0.2s;
+
+        &:hover {
+            background: rgba($white, 0.1);
+            border-color: $white;
+        }
     }
 }
 
