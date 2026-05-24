@@ -1194,3 +1194,26 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Resumen: fix completo de S7 Vida Universitaria — colores (fondo oscuro, texto blanco, links blancos con ↗) + nuevo campo video con fallback a imagen.
 - Estado actual: sección S7 alineada con Figma, campo ACF listo para que el admin suba video.
 - Próximos pasos: revisar el resto de secciones pendientes (S9–S11 según memory) contra Figma.
+
+### 2026-05-24 — S8 Cultura UDP: refactor campos ACF + contenido
+- `cu_contador` (number) → `cu_subtitulo` (text) en ACF JSON. Campo `cu_link` eliminado del repeater.
+- Template PHP: `<a href>` reemplazado por `<div class="__row">` (sin links). Clases actualizadas: `__link` → `__row`, `__contador` → `__subtitulo`.
+- SCSS: mismos renombres, `cursor: default` en `__row`.
+- JS sin cambios (fade ya funcionaba sobre el `<li>`).
+- Contenido cargado vía WP-CLI (post 55394): 6 ítems con subtítulos del Figma. Imagen asignada solo en Conferencias (ID 54829); las otras 5 categorías pendientes de imagen.
+
+### 2026-05-24 — Cierre de sesión
+- Resumen: S8 Cultura UDP alineada con Figma — campos ACF refactorizados, links eliminados, contenido de las 6 categorías cargado.
+- Estado actual: sección funcional, hover fade operativo. Faltan imágenes para Publicaciones, Exposiciones, Documentales, Podcasts y Especiales.
+- Próximos pasos: subir imágenes para los 5 ítems restantes desde el admin; revisar S3, S5, S6 contra Figma.
+
+### 2026-05-24 — S8 Cultura UDP: fixes hover + subtítulo + placeholder
+- **Bug hover CSS (BEM)**: `&.is-active &__nombre` dentro de `&__item` compilaba como doble BEM (`__item__nombre`). Movido un nivel arriba: `&__item.is-active &__nombre` funciona correctamente.
+- **Subtítulo**: añadidos `font-family: $font-family-mono`, `text-transform: uppercase`, `letter-spacing: 0.05em`, `line-height: 1.25rem` — alineado con Figma (Necto Mono 14px).
+- **Row**: `align-items: baseline` → `flex-end`; gap `12px` → `18px` (según Figma).
+- **Media placeholder**: cuando no hay imagen el PHP renderiza `<div class="__placeholder js-cultura-img">` en lugar de `<img>`. SCSS: `__img` y `__placeholder` comparten fade styles; `__placeholder` usa `@include udp-media-placeholder()`.
+
+### 2026-05-24 — Cierre de sesión (final)
+- Resumen: S8 Cultura UDP completamente alineada con Figma. ACF refactorizado, hover naranja corregido, subtítulos con fuente mono correcta, placeholder con mixin para ítems sin imagen.
+- Estado actual: build limpio, sección lista. Los 5 ítems sin imagen muestran tramado diagonal.
+- Próximos pasos: subir imágenes para Publicaciones–Especiales desde el admin; revisar S3, S5, S6 contra Figma.

@@ -928,16 +928,12 @@
 // S8 — Cultura UDP
 // -----------------------------------------------------------------------------
 .udp-home-cultura-udp {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 560px;
-
-    @include media-breakpoint-down(md) {
-        grid-template-columns: 1fr;
-    }
+    max-width: 1440px;
+    padding: 0 40px;
+    margin-inline: auto;
 
     &__header {
-        padding: 0 0 2rem 3rem;
+        padding-bottom: 30px;
         color: $white;
     }
 
@@ -957,24 +953,42 @@
         margin-bottom: 0;
     }
 
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        @include media-breakpoint-down(md) {
+            grid-template-columns: 1fr;
+        }
+    }
+
     &__media {
         position: relative;
         overflow: hidden;
+        height: 620px;
         background: $gray-200;
     }
 
-    &__img {
+    &__img,
+    &__placeholder {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
         opacity: 0;
         transition: opacity 0.4s ease;
 
         &.is-active {
             opacity: 1;
         }
+    }
+
+    &__img {
+        object-fit: cover;
+    }
+
+    &__placeholder {
+        @include udp-media-placeholder();
     }
 
     &__panel {
@@ -987,42 +1001,49 @@
 
     &__lista {
         width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 0;
     }
 
     &__item {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-        &:last-child {
-            border-bottom: none;
-        }
-
-        &.is-active &__nombre,
-        &:hover &__nombre {
-            color: #FF7064;
-        }
+        cursor: default;
     }
 
-    &__link {
+    &__item.is-active &__nombre,
+    &__item.is-active &__subtitulo,
+    &__item:hover &__nombre,
+    &__item:hover &__subtitulo {
+        color: #FF7064;
+    }
+
+    &__row {
         display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1rem 0;
-        text-decoration: none;
-        color: inherit;
+        align-items: flex-end;
+        justify-content: space-start;
+        gap: 18px;
     }
 
     &__nombre {
+        transition: color 0.25s ease;
+
         font-family: $font-family-display;
         font-size: clamp(1.75rem, 3.5vw, 3rem);
-        transition: color 0.25s ease;
         line-height: 1.1;
     }
 
-    &__contador {
-        font-size: 0.875rem;
+    &__subtitulo {
+        transition: color 0.25s ease;
+
+        font-family: $font-family-mono;
+        font-size: $font-size-label-md;
+        line-height: 1.25rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
         color: rgba(255, 255, 255, 0.5);
         flex-shrink: 0;
+        margin-bottom: 6px;
     }
 }
 
