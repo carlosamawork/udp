@@ -1126,6 +1126,48 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Continuar revisión sección a sección del home contra Figma.
 - Merge `home` → `main` cuando el home esté completo.
 
+### 2026-05-24 (tarde) — Rediseño S6 Destacado azul + fix sistémico get_field()
+
+**Hechos**:
+- Rediseñada `template-parts/home/section-destacado.php` según Figma `3706:20079`:
+  - Sin Bootstrap container — ancho completo.
+  - Panel izquierdo `$brand-blue` (#4539F2), `flex: 1`, `min-height: 432px`, padding 40px.
+  - Imagen derecha `flex: 0 0 432px`, `object-fit: cover`.
+  - Título: serif, `font-weight: 300` (Light) por defecto; `strong/b` → 500 (Medium). Tamaño `clamp(2rem, 3.33vw, 3rem)`, `line-height: 1`.
+  - CTA: texto + SVG flecha (arrow-up-right), Work Sans SemiBold 16px blanco.
+  - Responsive `<lg`: flex-column, imagen `aspect-ratio: 16/9`.
+- Bloque SCSS `.udp-home-destacado` completamente reescrito en `_home.scss`.
+
+**Fix crítico — get_field() sin post_id en template parts**:
+- Causa raíz: `get_template_part()` se ejecuta fuera del loop de WP. `get_the_ID()` devuelve vacío. `get_field()` sin segundo argumento no puede determinar qué post leer.
+- El título S6 aparecía solo gracias al fallback hardcoded, no desde la BD. La descripción y todos los demás campos sin fallback no se renderizaban.
+- Fix: `front-page.php` ahora pasa `['post_id' => get_option('page_on_front')]` como `$args` a los 11 templates via `get_template_part()`.
+- Los 11 templates añaden `$post_id = $args['post_id'] ?? (int) get_option('page_on_front');` y pasan `$post_id` explícito a todos sus `get_field()`. Las llamadas con post_id propio (ej. `get_field('color', $fac)`) no fueron tocadas.
+
+**Limpieza BD ACF**:
+- Había 4 entradas duplicadas de `group_template_home` en `wp_posts`. ACF cargaba todos y `get_field()` entraba en conflicto.
+- Eliminados IDs 55354, 55396, 55453 via `wp post delete --force`. Queda solo el 55509 (más reciente, 37 campos correctos).
+
+**Commit**: `d314464`
+
+### 2026-05-24 — Cierre de sesión
+
+**Lo trabajado hoy (sesión completa)**:
+- S3 Noticias: rediseño según Figma
+- S5 Eventos: rediseño según Figma; taxonomía `tipo-evento`; eyebrow unificado
+- S6 Destacado azul: rediseño según Figma; fix get_field() en todos los templates home
+
+**Estado actual**:
+- Rama activa: `home` (no mergeada a `main`).
+- S6 implementada y funcionando con contenido real desde ACF.
+- S3 y S5 implementadas — pendiente revisar en navegador.
+- Resto de secciones del home pendientes de revisión visual contra Figma.
+
+**Próximos pasos sugeridos**:
+- Continuar revisión sección a sección del home contra Figma (S7–S11).
+- Revisar S3 y S5 en navegador.
+- Merge `home` → `main` cuando el home esté completo.
+
 ### 2026-05-24 — Rediseño sección Home Eventos (S5) según Figma 3706:20036
 
 **Hechos**:
