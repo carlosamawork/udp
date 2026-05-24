@@ -1308,7 +1308,10 @@
 .udp-home-cifras {
     background-color: $dark-1;
     color: $white;
-    padding-block: $space-5xl;
+
+    &__titulo {
+        margin-bottom: 30px;
+    }
 
     &__wrap {
         overflow: hidden;
