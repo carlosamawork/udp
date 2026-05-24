@@ -4,7 +4,7 @@
  *
  * ACF fields: cd_titulo, cd_texto, cd_items (repeater).
  * Sub-fields de cd_items: cd_item_titulo, cd_item_imagen (array),
- *                         cd_item_recuento (text), cd_item_url (url).
+ *                         cd_item_recuento (text), cd_item_url (url), cd_item_externo (bool).
  *
  * JS: home-cultura-digital.js — Swiper freeMode con drag libre.
  *
@@ -45,8 +45,7 @@ if ( ! $titulo && ! $texto && empty( $items ) ) {
                             <a
                                 href="<?php echo esc_url( $card_url ); ?>"
                                 class="udp-home-cultura-digital__card"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                <?php if ( ! empty( $item['cd_item_externo'] ) ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
                             >
                                 <?php if ( $img_url ) : ?>
                                     <div class="udp-home-cultura-digital__card-img">

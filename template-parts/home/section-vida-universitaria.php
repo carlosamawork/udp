@@ -4,6 +4,7 @@
  *
  * ACF fields: vida_titulo, vida_texto, vida_links (repeater),
  *             vida_imagen (array).
+ * Sub-fields vida_links: link_texto, link_url, link_externo (bool).
  *
  * @package starter-bs5
  */
@@ -40,7 +41,11 @@ $has_media = (bool) ( $video_url || $img_url );
                         <?php foreach ( $links as $item ) : ?>
                             <?php if ( empty( $item['link_url'] ) ) continue; ?>
                             <li class="udp-home-vida__links-item">
-                                <a href="<?php echo esc_url( $item['link_url'] ); ?>" class="udp-home-vida__link">
+                                <a
+                                    href="<?php echo esc_url( $item['link_url'] ); ?>"
+                                    class="udp-home-vida__link"
+                                    <?php if ( ! empty( $item['link_externo'] ) ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
+                                >
                                     <?php echo esc_html( $item['link_texto'] ); ?>
                                 </a>
                             </li>
