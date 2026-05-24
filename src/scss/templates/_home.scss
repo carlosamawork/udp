@@ -9,7 +9,11 @@
 
 .udp-home {
     section {
-        margin-bottom: 120px;
+        margin-bottom: $space-5xl;
+
+        @include media-breakpoint-down(md) {
+            margin-bottom: $space-3xl;
+        }
     }
 
     &__titulo {
@@ -1062,7 +1066,7 @@
     &__slider {
         flex: 1;
         min-width: 0;
-        overflow: visible;
+        overflow: hidden;
 
         .swiper-wrapper {
             align-items: flex-start;
@@ -1138,7 +1142,7 @@
 .udp-home-innovacion {
     background-color: $dark-1;
     color: $white;
-    padding-block: $space-5xl;
+    overflow: hidden;
 
     // Container acota el carousel — overflow hidden recorta slides fuera del ancho
     &__wrap {
@@ -1266,10 +1270,8 @@
         transition: opacity $transition-base;
     }
 
-    // Mobile
+    // Mobile    
     @include media-breakpoint-down(md) {
-        padding-block: $space-3xl;
-
         &__swiper .swiper-slide {
             width: 280px !important;
         }
