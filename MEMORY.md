@@ -1176,3 +1176,21 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Lista: filas `display:grid` 3 cols (eyebrow 200px | título 1fr | fecha 200px), separadas por `border-top: 1px solid #3d3d3d`.
 - Botón "Ver todos los eventos" — pill outline `border: rgba(white, 0.7)`, 230×44px.
 - Build: ✓ 591ms sin errores.
+
+### 2026-05-24 — Fix S7 Vida Universitaria: colores y estilos
+- `.udp-home-vida` añadido `background-color: $dark-1` y `padding-block: 80px` — la sección no tenía fondo oscuro.
+- `__texto` corregido de `color: $gray-700` a `color: $white`.
+- `__link` corregido de `color: $black` a `color: $white`; eliminado `border-bottom`; añadido `::after { content: '↗' }` para ícono flecha según Figma.
+- Build: ✓ sin errores.
+
+### 2026-05-24 — S7 Vida Universitaria: campo video con fallback a imagen
+- Nuevo campo ACF `vida_video` (tipo File, mime mp4/webm) añadido al JSON `group_template_home.json` antes de `vida_imagen`.
+- `vida_imagen` renombrado a "Imagen (fallback si no hay video)" con instrucción actualizada — para que el admin entienda la jerarquía.
+- Template PHP: si hay `vida_video` → `<video autoplay muted loop playsinline>`; si no → `<img>` existente.
+- SCSS: `__video` y `__imagen` comparten estilos (`object-fit: cover`, `border-radius: 2px`).
+- Build: ✓ sin errores.
+
+### 2026-05-24 — Cierre de sesión
+- Resumen: fix completo de S7 Vida Universitaria — colores (fondo oscuro, texto blanco, links blancos con ↗) + nuevo campo video con fallback a imagen.
+- Estado actual: sección S7 alineada con Figma, campo ACF listo para que el admin suba video.
+- Próximos pasos: revisar el resto de secciones pendientes (S9–S11 según memory) contra Figma.

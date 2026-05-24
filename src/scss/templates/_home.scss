@@ -878,10 +878,12 @@
 // S7 — Vida Universitaria
 // -----------------------------------------------------------------------------
 .udp-home-vida {
+    background-color: $dark-1;
+
     &__texto {
         font-size: 1rem;
-        line-height: 1.7;
-        color: $gray-700;
+        line-height: 1.625;
+        color: $white;
         margin-bottom: 2rem;
         max-width: 55ch;
     }
@@ -895,20 +897,29 @@
     &__link {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 6px;
         font-weight: 600;
-        color: $black;
+        color: $white;
         text-decoration: none;
-        border-bottom: 2px solid currentColor;
-        padding-bottom: 0.125rem;
         transition: opacity 0.2s;
 
+        &::after {
+            content: '↗';
+            font-size: 1em;
+        }
+
         &:hover {
+            color: $white;
             opacity: 0.7;
         }
     }
 
+    &__video,
     &__imagen {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         border-radius: 2px;
     }
 }

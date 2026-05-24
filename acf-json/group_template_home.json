@@ -496,12 +496,32 @@
             ]
         },
         {
+            "key": "field_home_vida_video",
+            "label": "Video",
+            "name": "vida_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Sube el video que se reproduce en loop con autoplay. Si no se sube video, se usará la imagen de fallback.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": 0,
+            "max_size": 0,
+            "mime_types": "mp4,webm"
+        },
+        {
             "key": "field_home_vida_imagen",
-            "label": "Imagen",
+            "label": "Imagen (fallback si no hay video)",
             "name": "vida_imagen",
             "aria-label": "",
             "type": "image",
-            "instructions": "Si hay imagen no se muestra el embed, y viceversa.",
+            "instructions": "Se muestra únicamente si no se ha subido un video.",
             "required": false,
             "conditional_logic": false,
             "wrapper": {

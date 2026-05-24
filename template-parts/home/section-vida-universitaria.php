@@ -13,15 +13,17 @@ $post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
 $titulo  = get_field( 'vida_titulo', $post_id );
 $texto   = get_field( 'vida_texto', $post_id );
 $links   = get_field( 'vida_links', $post_id );
+$video   = get_field( 'vida_video', $post_id );
 $imagen  = get_field( 'vida_imagen', $post_id );
 
 if ( ! $titulo && ! $texto ) {
     return;
 }
 
-$img_url  = ! empty( $imagen['url'] ) ? $imagen['url'] : '';
-$img_alt  = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
-$has_media = (bool) $img_url;
+$video_url = ! empty( $video['url'] ) ? $video['url'] : '';
+$img_url   = ! empty( $imagen['url'] ) ? $imagen['url'] : '';
+$img_alt   = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
+$has_media = (bool) ( $video_url || $img_url );
 ?>
 <section class="udp-home-vida">
     <div class="container">
@@ -49,7 +51,18 @@ $has_media = (bool) $img_url;
 
             <?php if ( $has_media ) : ?>
                 <div class="col-lg-7 udp-home-vida__media">
-                    <?php if ( $img_url ) : ?>
+                    <?php if ( $video_url ) : ?>
+                        <video
+                            class="udp-home-vida__video"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            preload="none"
+                        >
+                            <source src="<?php echo esc_url( $video_url ); ?>" type="<?php echo esc_attr( $video['mime_type'] ?? 'video/mp4' ); ?>">
+                        </video>
+                    <?php elseif ( $img_url ) : ?>
                         <img
                             src="<?php echo esc_url( $img_url ); ?>"
                             alt="<?php echo esc_attr( $img_alt ); ?>"
