@@ -22,7 +22,7 @@ if ( ! $titulo && ! $texto && empty( $items ) ) {
 }
 ?>
 <section class="udp-home-cultura-digital">
-    <div class="udp-home-cultura-digital__layout">
+    <div class="udp-home-cultura-digital__layout container">
         <div class="udp-home-cultura-digital__sidebar">
             <?php if ( $titulo ) : ?>
                 <h2 class="udp-home__titulo"><?php echo esc_html( $titulo ); ?></h2>

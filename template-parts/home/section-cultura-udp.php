@@ -22,7 +22,7 @@ if ( empty( $items ) ) {
 
 $first = $items[0];
 ?>
-<section class="udp-home-cultura-udp js-cultura-udp">
+<section class="udp-home-cultura-udp js-cultura-udp container">
     <?php if ( $cultura_titulo || $cultura_texto ) : ?>
         <div class="udp-home-cultura-udp__header">
             <?php if ( $cultura_titulo ) : ?>

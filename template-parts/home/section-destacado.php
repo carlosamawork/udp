@@ -3,7 +3,7 @@
  * Home — Sección 6: Destacado azul (panel + foto)
  *
  * Layout: panel azul $brand-blue a izquierda (flex:1) + imagen cuadrada a derecha.
- * Sin Bootstrap container — la sección va a ancho completo.
+ * Container en __inner — consistente con el resto de secciones home.
  *
  * ACF fields: destacado_titulo (wysiwyg), destacado_descripcion (wysiwyg),
  *             destacado_link_texto, destacado_link_url,
@@ -29,7 +29,7 @@ $img_url = ! empty( $imagen['url'] ) ? $imagen['url'] : '';
 $img_alt = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
 ?>
 <section class="udp-home-destacado">
-    <div class="udp-home-destacado__inner">
+    <div class="udp-home-destacado__inner container">
 
         <div class="udp-home-destacado__content">
             <div class="udp-home-destacado__titulo">

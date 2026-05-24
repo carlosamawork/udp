@@ -397,9 +397,7 @@
 
     // --- "Ver todas" button ---
     &__ver-todas {
-        max-width: 1440px;
-        padding: 20px 40px;
-        margin-inline: auto;
+        padding-block: 20px;
 
         display: flex;
         align-items: center;
@@ -747,10 +745,6 @@
 // S6 — Destacado azul (panel $brand-blue + foto cuadrada)
 // -----------------------------------------------------------------------------
 .udp-home-destacado {
-    max-width: 1440px;
-    padding: 0 40px;
-    margin-inline: auto;
-
     &__inner {
         display: flex;
         align-items: stretch;
@@ -911,10 +905,6 @@
 // S8 — Cultura UDP
 // -----------------------------------------------------------------------------
 .udp-home-cultura-udp {
-    max-width: 1440px;
-    padding: 0 40px;
-    margin-inline: auto;
-
     &__header {
         padding-bottom: 30px;
         color: $white;
@@ -1034,10 +1024,6 @@
 // S9 — Cultura Digital
 // -----------------------------------------------------------------------------
 .udp-home-cultura-digital {
-    max-width: 1440px;
-    padding: 0 40px;
-    margin-inline: auto;
-
     &__layout {
         display: flex;
         align-items: center;

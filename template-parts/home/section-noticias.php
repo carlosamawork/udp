@@ -119,7 +119,7 @@ $pares    = array_chunk( $cards, 2 );
             </div>
         </div>
 
-        <div class="udp-home-noticias__ver-todas">
+        <div class="udp-home-noticias__ver-todas container">
             <a href="<?php echo esc_url( $noticias_url ); ?>" class="udp-home-noticias__ver-todas-btn">
                 Ver todas las noticias
             </a>
