@@ -297,9 +297,9 @@ function udp_card_data_from_agenda( WP_Post $post ): ?array {
     }
 
     $eyebrow_text = '';
-    $tipos = get_the_terms( $post->ID, 'tipo-evento' );
-    if ( ! is_wp_error( $tipos ) && ! empty( $tipos ) ) {
-        $eyebrow_text = $tipos[0]->name;
+    $tags = get_the_terms( $post->ID, 'post_tag' );
+    if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
+        $eyebrow_text = $tags[0]->name;
     }
 
     // get_field('fecha') returns the ACF "Return Format" (human-readable string like "3 Octubre 2017").
