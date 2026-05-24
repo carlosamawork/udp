@@ -1055,10 +1055,6 @@
     padding: 0 40px;
     margin-inline: auto;
 
-    background-color: #1a1a1a;
-    color: $white;
-    overflow: hidden;
-
     &__layout {
         display: flex;
         align-items: center;
@@ -1069,7 +1065,7 @@
         flex-shrink: 0;
         width: 434px;
         max-width: 100%;
-        padding: 3rem 2.5rem;
+        padding: 3rem 30px 3rem 0;
 
         @include media-breakpoint-down(lg) {
             width: 280px;
