@@ -91,17 +91,14 @@ $arrow_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" vie
 		<?php if ( $lista ) : ?>
 		<div class="udp-home-eventos__lista" role="list">
 			<?php foreach ( $lista as $card ) :
-				$fecha_corta = $card['fecha_display'];
-				if ( empty($fecha_corta) ) {
-					$fecha_corta = get_the_date('j F Y', get_post($card->post_id) );
-				}
-				$eyebrow = $card['eyebrow'];
-				if ( empty($eyebrow) ) {
-					$eyebrow = get_terms($card, 'tipo-contenido')->name;
+				$fecha_corta = $card['fecha_display'] ?? '';
+				if ( empty( $fecha_corta ) && ! empty( $card['fecha'] ) ) {
+					$ts = strtotime( $card['fecha'] );
+					$fecha_corta = $ts ? date_i18n( 'j F Y', $ts ) : '';
 				}
 			?>
 			<a href="<?php echo esc_url( $card['href'] ); ?>" class="udp-home-eventos__lista-row" role="listitem">
-				<span class="udp-home-eventos__lista-eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
+				<span class="udp-home-eventos__lista-tipo"><?php echo esc_html( $card['eyebrow'] ?? '' ); ?></span>
 				<span class="udp-home-eventos__lista-titulo"><?php echo esc_html( $card['titulo'] ); ?></span>
 				<span class="udp-home-eventos__lista-fecha"><?php echo esc_html( $fecha_corta ); ?></span>
 			</a>
