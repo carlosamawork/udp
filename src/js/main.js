@@ -42,6 +42,7 @@ import { initMegaMenu } from '@modules/mega-menu';
 import { initShareFloating } from '@modules/share-floating';
 import { initInstitucionalPeople } from '@modules/institucional-people';
 import { initAnchorScrollspy } from '@modules/anchor-scrollspy';
+import { initFeaturedDrag } from '@modules/featured-drag';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -69,6 +70,7 @@ domReady(() => {
     initShareFloating();
     initInstitucionalPeople();
     initAnchorScrollspy();
+    initFeaturedDrag();
 
     console.log('[StarterBS5] Theme initialized');
 });

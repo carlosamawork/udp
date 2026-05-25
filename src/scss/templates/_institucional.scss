@@ -40,61 +40,46 @@
 
 .udp-inst-share {
     position: fixed;
-    right: 0;
-    top: 50vh;
+    right: 24px;
+    top: 50%;
     transform: translateY(-50%);
     z-index: 950;
     display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 16px;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    border-radius: 9999px;
 
-    @include media-up(sm) { display: block; }
+    @include media-up(sm) { display: flex; }
 
-    &__trigger {
-        background: $brand-blue;
-        color: #fff;
-        border: 0;
-        border-radius: 28px 0 0 28px;
-        padding: $space-md $space-sm;
-        display: flex;
-        flex-direction: column;
+    &__btn {
+        display: inline-flex;
         align-items: center;
-        gap: $space-xs;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        background: none;
+        border: 0;
+        color: $dark-1;
         cursor: pointer;
-        writing-mode: vertical-rl;
-        font-size: 0.875rem;
-        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.15s ease, transform 0.15s ease;
 
-        svg { writing-mode: horizontal-tb; }
+        svg { width: 20px; height: 20px; display: block; }
 
-        &:hover { background: darken($brand-blue, 10%); }
-    }
+        &:hover { color: $brand-blue; transform: scale(1.12); }
 
-    &__menu {
-        position: absolute;
-        right: 100%;
-        top: 50%;
-        transform: translateY(-50%);
-        margin-right: $space-xs;
-        background: #fff;
-        border-radius: $space-xs;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        padding: $space-xs 0;
-        list-style: none;
-        min-width: 180px;
-
-        a, button {
-            display: block;
-            width: 100%;
-            padding: $space-xs $space-md;
-            background: none;
-            border: 0;
-            text-align: left;
-            color: $dark-1;
-            text-decoration: none;
-            font-size: 0.9375rem;
-            cursor: pointer;
-
-            &:hover { background: rgba($dark-1, 0.05); }
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: 4px;
+            border-radius: 4px;
         }
+
+        &.is-copied { color: $brand-blue; }
     }
 }
 
@@ -418,62 +403,496 @@
     }
 }
 
-.udp-inst-rail {
-    display: none;
+// Rail vertical fijo eliminado (decisión de diseño: solo chips bar superior).
 
-    @include media-up(lg) {
-        display: block;
-        position: fixed;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 940;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(6px);
-        border-radius: 0 $space-xs $space-xs 0;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-        padding: $space-xs;
+// Layout: stats (números destacados) — banda oscura con cifras grandes.
+.udp-inst-stats {
+    background: $dark-1;
+    color: #fff;
+
+    &.udp-inst-section + .udp-inst-section,
+    .udp-inst-section + &.udp-inst-section { border-top: 0; }
+
+    &__list {
+        list-style: none;
+        margin: 0 auto;
+        padding: 0 $space-3xl;
+        max-width: 1440px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $space-xl;
+
+        @include media-up(md) { grid-template-columns: repeat(4, 1fr); }
+        @include media-down(md) { padding: 0 $space-md; }
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        gap: $space-2xs;
+    }
+
+    &__num {
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        line-height: 1;
+        color: $brand-yellow;
+    }
+
+    &__title { font-size: 1.125rem; font-weight: 600; }
+    &__sub { font-size: 0.9375rem; color: rgba(#fff, 0.7); }
+}
+
+// Layout: featured_carousel (destacados carrusel) — scroll-snap de cards con imagen.
+.udp-inst-featured {
+    &__inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 $space-3xl;
+
+        @include media-down(md) { padding: 0 $space-md; }
+    }
+
+    &__title {
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0 0 $space-lg;
     }
 
     &__list {
         list-style: none;
         margin: 0;
         padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: $space-2xs;
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 285px;
+        gap: $space-md;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        cursor: grab;
+
+        // Barra de scroll oculta (drag + swipe para desplazar).
+        scrollbar-width: none;          // Firefox
+        -ms-overflow-style: none;       // IE/Edge legacy
+        &::-webkit-scrollbar { display: none; } // WebKit
+
+        // Mientras se arrastra con el mouse: sin snap y sin selección de texto.
+        &.is-dragging {
+            cursor: grabbing;
+            scroll-snap-type: none;
+            user-select: none;
+        }
+
+        @include media-down(md) { grid-auto-columns: 80%; }
     }
 
-    &__link {
+    &__item { scroll-snap-align: start; }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: $dark-1;
+        height: 100%;
+    }
+
+    &__media {
+        display: block;
+        aspect-ratio: 285 / 200;
+        overflow: hidden;
+        background: rgba($dark-1, 0.08);
+        margin-bottom: $space-sm;
+
+        img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+
+        &--placeholder {
+            background-image: repeating-linear-gradient(45deg, rgba($dark-1, 0.05), rgba($dark-1, 0.05) 10px, rgba($dark-1, 0.09) 10px, rgba($dark-1, 0.09) 20px);
+        }
+    }
+
+    &__name {
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 1.125rem;
+        line-height: 1.3;
+    }
+
+    a.udp-inst-featured__card:hover {
+        .udp-inst-featured__name { color: $brand-blue; }
+        .udp-inst-featured__media img { transform: scale(1.04); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .udp-inst-featured__media img,
+        a.udp-inst-featured__card:hover .udp-inst-featured__media img { transition: none; transform: none; }
+    }
+}
+
+// Botones (botones_con_links_externos) en el aside derecho — pills verticales.
+.udp-inst-sidebar-btns {
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+}
+
+.udp-inst-sidebar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-sm;
+    padding: $space-sm $space-md;
+    border: 1px solid rgba($dark-1, 0.2);
+    border-radius: 9999px;
+    color: $dark-1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+    &__icon { flex-shrink: 0; }
+
+    &:hover {
+        background: $brand-blue;
+        border-color: $brand-blue;
+        color: #fff;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $brand-blue;
+        outline-offset: 2px;
+    }
+}
+
+// Widget "Noticias" del sidebar (post más reciente). Tarjeta beige clickable.
+.udp-inst-news {
+    display: block;
+    background: #f8f7f4;
+    padding: $space-md;
+    color: $dark-1;
+    text-decoration: none;
+
+    &__eyebrow {
         display: flex;
         align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        border-radius: $space-xs;
-        background: rgba($dark-1, 0.05);
+        gap: $space-2xs;
+        font-family: $font-family-body;
+        font-weight: 500;
+        font-size: 0.875rem;
+        margin-bottom: $space-md;
+
+        svg { flex-shrink: 0; }
+    }
+
+    &__media {
+        display: block;
+        aspect-ratio: 318 / 196;
+        overflow: hidden;
+        margin-bottom: $space-md;
+
+        img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
+    }
+
+    &__title {
+        display: block;
+        font-family: $font-family-display;
+        font-weight: 500;
+        font-size: 1.25rem;
+        line-height: 1.3;
+        margin-bottom: $space-xs;
+    }
+
+    &__date {
+        display: block;
+        font-size: 0.875rem;
         color: $dark-1;
-        text-decoration: none;
-        transition: background 0.15s ease, color 0.15s ease;
+        margin-bottom: $space-md;
+    }
 
-        img { display: block; }
+    &__cat {
+        display: inline-block;
+        font-family: $font-family-mono;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #2135d4;
+        background: #dce5fd;
+        border: 1px solid #95b6fb;
+        border-radius: 16px;
+        padding: 4px 12px;
+    }
 
-        &:hover { background: rgba($dark-1, 0.1); }
+    &:hover {
+        .udp-inst-news__title { color: $brand-blue; }
+        .udp-inst-news__media img { transform: scale(1.04); }
+    }
+
+    &:focus-visible { outline: 2px solid $brand-blue; outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .udp-inst-news__media img { transition: none; }
+        &:hover .udp-inst-news__media img { transform: none; }
+    }
+}
+
+// Banda "También te puede interesar" (páginas hermanas, reusa cards de Section Landing).
+.udp-inst-related {
+    background: $dark-1;
+
+    &.udp-inst-section + .udp-inst-section,
+    .udp-inst-section + &.udp-inst-section { border-top: 0; }
+
+    &__head {
+        max-width: 1440px;
+        margin: 0 auto $space-lg;
+        padding: 0 $space-3xl;
+
+        @include media-down(md) { padding: 0 $space-md; }
+    }
+
+    &__title {
+        font-family: $font-family-display;
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+        font-weight: 500;
+        line-height: 1.1;
+        color: #fff;
+        margin: 0;
+        max-width: 340px;
+    }
+
+    // El contenedor de cards de Section Landing ya es oscuro; lo hacemos
+    // transparente aquí para heredar el fondo de la banda sin doble padding.
+    .udp-section-cards {
+        background: transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+// Fallback de page.php para páginas modernas (sin contenido legacy): contenido nativo.
+.udp-inst-plain {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $space-3xl;
+    color: $dark-1;
+    line-height: 1.6;
+
+    @include media-down(md) { padding: 0 $space-md; }
+
+    > * { margin-top: 0; }
+    p, ul, ol { margin: 0 0 $space-md; }
+    ul, ol { padding-left: $space-md; }
+    h2, h3, h4 { margin: $space-lg 0 $space-sm; line-height: 1.2; }
+    img { max-width: 100%; height: auto; }
+    a { color: $brand-blue; }
+}
+
+// -----------------------------------------------------------------------------
+// Layout: premio_block (laureado — retrato + nombre + premio + links + bio)
+// -----------------------------------------------------------------------------
+.udp-inst-premio {
+    &__inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 $space-3xl;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $space-xl;
+
+        @include media-down(md) { padding: 0 $space-md; }
+
+        @include media-up(lg) {
+            grid-template-columns: 318px minmax(0, 664px);
+            gap: $space-4xl;
+            align-items: start;
+        }
+    }
+
+    &__media {
+        aspect-ratio: 318 / 435;
+        background: rgba($dark-1, 0.08);
+        border-radius: $space-xs;
+        overflow: hidden;
+
+        img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        // Sin retrato: hatching sutil (consistente con cards sin imagen del tema).
+        &--placeholder {
+            background-image: repeating-linear-gradient(
+                45deg,
+                rgba($dark-1, 0.05),
+                rgba($dark-1, 0.05) 10px,
+                rgba($dark-1, 0.09) 10px,
+                rgba($dark-1, 0.09) 20px
+            );
+        }
+    }
+
+    &__name {
+        font-family: $font-family-display;
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        font-weight: 500;
+        line-height: 1.1;
+        margin: 0 0 $space-md;
+        color: $dark-1;
+    }
+
+    &__head {
+        display: flex;
+        flex-direction: column;
+        gap: $space-md;
+        padding-bottom: $space-lg;
+        margin-bottom: $space-lg;
+        border-bottom: 1px solid $dark-1;
+    }
+
+    &__award {
+        font-size: 1.25rem;
+        line-height: 1.4;
+        color: $dark-1;
+        margin: 0;
+    }
+
+    &__links { display: flex; gap: $space-2xs; }
+
+    &__link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 1px solid rgba($dark-1, 0.15);
+        border-radius: 9999px;
+        color: $dark-1;
+        transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+        &:hover {
+            background: $dark-1;
+            border-color: $dark-1;
+            color: #fff;
+        }
 
         &:focus-visible {
             outline: 2px solid $brand-blue;
             outline-offset: 2px;
         }
+    }
 
-        &.is-active {
-            background: $brand-blue;
-            color: #fff;
+    &__bio {
+        color: $dark-1;
+        line-height: 1.6;
+
+        p { margin: 0 0 $space-md; &:last-child { margin-bottom: 0; } }
+        ul, ol { margin: 0 0 $space-md $space-md; }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Layout: text_accordion (título + intro + acordeón <details> + sidebar)
+// -----------------------------------------------------------------------------
+.udp-inst-accordion {
+    &__inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 $space-3xl;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $space-xl;
+
+        @include media-down(md) { padding: 0 $space-md; }
+
+        @include media-up(lg) {
+            grid-template-columns: 318px 664px 318px;
+            gap: $space-3xl;
+            justify-content: space-between;
         }
     }
 
-    &__num {
-        font-size: 1.125rem;
+    &__title {
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
         font-weight: 700;
-        font-variant-numeric: tabular-nums;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    &__intro {
+        color: $dark-1;
+        line-height: 1.6;
+        margin-bottom: $space-lg;
+
+        p { margin: 0 0 $space-md; &:last-child { margin-bottom: 0; } }
+    }
+
+    &__list { border-top: 1px solid rgba($dark-1, 0.15); }
+
+    &__item { border-bottom: 1px solid rgba($dark-1, 0.15); }
+
+    &__summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-md;
+        padding: $space-md 0;
+        cursor: pointer;
+        list-style: none;
+        font-weight: 600;
+        font-size: 1.125rem;
+        color: $dark-1;
+
+        &::-webkit-details-marker { display: none; }
+
+        &:hover { color: $brand-blue; }
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: 2px;
+        }
+    }
+
+    &__chevron {
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+    }
+
+    &__item[open] &__chevron { transform: rotate(180deg); }
+
+    &__content {
+        padding: 0 0 $space-md;
+        color: $dark-1;
+        line-height: 1.6;
+
+        p { margin: 0 0 $space-md; &:last-child { margin-bottom: 0; } }
+        ul, ol { margin: 0 0 $space-md $space-md; }
+    }
+
+    // Reutiliza el patrón de tarjeta del rich_text_sidebar.
+    &__sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: $space-md;
+    }
+
+    &__card {
+        background: rgba($dark-1, 0.05);
+        padding: $space-md;
+        border-radius: $space-xs;
+
+        &-title { font-size: 1.125rem; font-weight: 700; margin: 0 0 $space-xs; }
+        &-body { font-size: 0.9375rem; color: $gray-medium; margin: 0 0 $space-md; }
+
+        &-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: $space-xs;
+            color: $brand-blue;
+            font-weight: 600;
+            text-decoration: none;
+
+            &:hover { color: $brand-accent; svg { transform: translateX(4px); } }
+            svg { transition: transform 0.2s ease; }
+        }
     }
 }

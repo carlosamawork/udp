@@ -15,7 +15,9 @@ $anchor = $args['anchor'] ?? null;
 
 $title         = $data['title']         ?? '';
 $body          = $data['body']          ?? '';
-$sidebar_cards = is_array( $data['sidebar_cards'] ?? null ) ? $data['sidebar_cards'] : array();
+$sidebar_cards   = is_array( $data['sidebar_cards'] ?? null ) ? $data['sidebar_cards'] : array();
+$sidebar_buttons = is_array( $data['sidebar_buttons'] ?? null ) ? $data['sidebar_buttons'] : array();
+$show_news       = ! empty( $data['show_news'] );
 
 $id = $anchor['id'] ?? '';
 ?>
@@ -26,15 +28,17 @@ $id = $anchor['id'] ?? '';
 >
     <div class="udp-inst-rts__inner">
         <header class="udp-inst-rts__title-col">
-            <h2 class="udp-inst-rts__title"><?php echo esc_html( $title ); ?></h2>
+            <?php if ( $title ) : ?><h2 class="udp-inst-rts__title"><?php echo esc_html( $title ); ?></h2><?php endif; ?>
         </header>
 
         <div class="udp-inst-rts__body-col">
             <div class="udp-inst-rts__body"><?php echo wp_kses_post( $body ); ?></div>
         </div>
 
-        <?php if ( ! empty( $sidebar_cards ) ) : ?>
+        <?php if ( ! empty( $sidebar_cards ) || $show_news || ! empty( $sidebar_buttons ) ) : ?>
             <aside class="udp-inst-rts__sidebar">
+                <?php if ( $show_news ) { get_template_part( 'template-parts/institucional/news-widget' ); } ?>
+                <?php if ( ! empty( $sidebar_buttons ) ) { get_template_part( 'template-parts/institucional/sidebar-buttons', null, array( 'buttons' => $sidebar_buttons ) ); } ?>
                 <?php foreach ( $sidebar_cards as $card ) :
                     $c_title = $card['title'] ?? '';
                     $c_body  = $card['body']  ?? '';

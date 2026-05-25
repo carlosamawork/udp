@@ -729,3 +729,185 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 **Pendientes**:
 - QA manual del template: crear página de prueba con las 4 secciones, verificar desktop ≥1440, tablet 768-991, mobile <768, Lighthouse a11y ≥95. Está documentado en plan §12.
 - Mergear `feature/f9-page-institucional` a main cuando se valide visualmente.
+
+### 2026-05-25 — F9: migración de contenido viejo (`secciones`) al template Institucional
+
+El usuario reportó que la página institucional "no aprovechaba las secciones que ya había". Diagnóstico: el template solo renderiza el campo ACF nuevo `sections` (no `the_content()` ni el campo viejo `secciones` del tema legacy). El contenido vivía en el campo viejo `secciones` (group "Secciones" ID 313, aún activo) + `post_content`.
+
+**Hechos**:
+- **Forma de Gobierno (ID 62)** ya estaba migrada (curada a mano) pero incompleta. Completado: la banda oscura `cards_dark_row` pasó de 1 a **3 cards** (se habían perdido *Consejos de Facultad y Escuela* 564 y *Consejo Asesor Externo* 43486 del viejo `links_cuadrados`), y se recuperó el link "Más información" → `/docentes/carrera-academica/` en la sección Carrera Académica. Cards sin imagen (solo título + URL), como pidió el usuario (estilo página Posgrado).
+- **Migradas las 3 hijas de Forma de Gobierno** al template Institucional (decisión de alcance del usuario): Consejo Académico (558), Consejos de Facultad y Escuela (564), Consejo Asesor Externo Ampliado (43486). Script `/tmp/udp-migrate-institucional.php` (idempotente, --dry, lee old `secciones` vía `get_field`, borra meta `sections*` previa y reescribe con field keys + reference keys).
+- **No se creó ningún layout nuevo** — los 3 Figma compartidos por el usuario confirmaron que los rosters de personas usan el `people_carousel` EXISTENTE (foto opcional + nombre + cargo), no un listado estático.
+
+**Mapeo viejo → nuevo (layouts existentes)**:
+- `desplegable` (acordeón: titulo/contenido/link_externo/titulo_de_link) → `rich_text_sidebar` (1 por item; si hay link → sidebar card con CTA).
+- `contenido` (cabecera `<h3>…`) + `listado_de_informacion` siguiente → un `people_carousel` (title = h3, subtitle = resto del contenido; personas: nombre=titulo, cargo=subtitulo; **se descarta `descripcion`** y van sin foto).
+- `contenido` suelto → `rich_text_sidebar`.
+- `post_content` → `rich_text_sidebar` "Introducción" al inicio (con `wpautop`).
+- `back_link` al final: `target` vacío (el partial resuelve al padre vía `wp_get_post_parent_id`), `link_text="Volver a {parent_title}"`, `display_in_anchors=0` (no aparece como chip).
+
+**Verificación E2E** (curl `?theme=new`, HTTP 200):
+- 558: 7 chips/rail, 3 rich_text, 3 people_carousel, **14 personas**, back_link "Volver a Forma de Gobierno", breadcrumb. Calza 1:1 con Figma `3722:43026`.
+- 564: 3 chips, 2 rich_text, back_link. 43486: 12 chips, 11 rich_text (Introducción + 10 facultades), back_link.
+
+**Cosas que descubrí**:
+- En la BD hay **81 páginas** con el campo viejo `secciones` poblado. La mayoría (~30) son "especiales" (`page-template-expeciales.php`, carruseles/campañas) que NO mapean al template Institucional. El subconjunto institucional usa: `desplegable`, `contenido`, `links_cuadrados(_externos)`, `listado_de_informacion`, `atributos`.
+- `get_field('secciones')` devuelve el wysiwyg ya formateado (wpautop aplicado); al reescribir en el campo nuevo, ACF re-aplica wpautop en output (idempotente para HTML bien formado).
+- ACF `page_link` del `back_link`: dejar `target` vacío es lo más robusto — el partial cae al padre automáticamente.
+
+**Pendientes**:
+- **Premios Nacionales** (Figma `4394:22894`) y **Doctorado Honoris Causa** (Figma `4398:21365`) son archetipos DISTINTOS fuera de este alcance: Premios necesita un **layout nuevo** (bloque grande foto vertical + nombre + premio/año + 2 botones + bio larga, uno por laureado); Doctorado HC es rich_text con **acordeón dentro del body**. Construir cuando se aborden esas páginas.
+- Subir **fotos** de los integrantes (Consejo Académico) desde el admin — el people_carousel renderiza sin foto por ahora.
+- El group viejo "Secciones" (ID 313) sigue activo y visible en el editor de estas páginas; se conserva como backup. Desactivar/limpiar post-validación.
+- Backups de meta de Forma de Gobierno en `/tmp/udp-fdg-backup.json`.
+
+### 2026-05-25 — F9: 2 layouts nuevos (premio_block + text_accordion) + migración Premios/Distinciones
+
+El usuario pidió construir los layouts faltantes y migrar las páginas que tuvieran datos. Referencias Figma: Consejo Académico `3722:43026` (rosters = people_carousel existente), Premios Nacionales `4394:22894` (bloque laureado), Doctorado Honoris Causa `4398:21365` (acordeón).
+
+**Layouts nuevos añadidos al flex `sections` de group_page_institucional**:
+- `premio_block` (Layout E): retrato izq + nombre (H2 Arizona Flare) + premio/año con border-bottom + 2 botones circulares (LinkedIn + globo/web) + biografía. Campos: `field_inst_pn_*` (anchor_label, anchor_icon, nombre, premio, imagen, linkedin, web, bio). Un bloque por laureado → cada uno es su propio anchor/chip (calza con el Figma de Premios).
+- `text_accordion` (Layout F): 3-col (título / intro + acordeón / sidebar) con `<details><summary>` NATIVO (sin JS, accesible, chevron rota con `[open]`). Campos: `field_inst_acc_*` (anchor_label, anchor_icon, title, intro, items[titulo+contenido], sidebar_cards[title+body+cta]).
+- Partials: `layout-premio-block.php`, `layout-text-accordion.php`. SCSS `.udp-inst-premio` + `.udp-inst-accordion` en `_institucional.scss`. Whitelist `$allowed` en `page-institucional.php` ampliado a 6 layouts.
+
+**Migraciones** (script `/tmp/udp-migrate-premios-distinciones.php`):
+- **Premios Nacionales (828)**: `listado_de_informacion` (5) → 5× `premio_block` (nombre=titulo, premio=subtitulo, bio=descripcion). Sin foto ni links (no hay data). + back_link al padre (46). E2E: 6 chips, 5 bloques, bios ~2500ch. ✓
+- **Distinciones (831)**: 3× (`contenido` heading+intro + `desplegable`) → 3× `text_accordion` (Doctorado Honoris Causa 8 items, Profesor Emérito 15, Profesor Honorario 12 = 35 items). + back_link. E2E: 4 chips, 3 acordeones, 35 `<details>`. ✓ Calza con Figma Doctorado HC.
+
+**⚠️ INCIDENTE Y LECCIÓN CRÍTICA (ACF + save_json/load_json)**:
+Al intentar sincronizar el JSON con `acf_import_field_group()`, se generó un duplicado del field group (porque con local JSON `acf_get_field_group()` devuelve ID:0 y el import crea nuevo en vez de actualizar — ya documentado en F4a). Al limpiar el duplicado con `acf_delete_field_group()`, **ACF borró también el archivo `acf-json/group_page_institucional.json`** (hook de save_json on delete). Los re-imports siguientes hicieron `json_decode()` del archivo ya borrado → `null` → crearon grupos vacíos con keys aleatorias (`group_6a14...`). El grupo original se perdió de BD **y** de JSON.
+**Recuperación**: reconstruí el field group COMPLETO en PHP (`/tmp/udp-acf-rebuild.php`, 3 layouts originales + 2 nuevos + back_link, basado en el contenido que ya había leído del JSON) e importé una sola vez → grupo limpio ID 55435, JSON regenerado por save_json. Datos de las páginas intactos (meta keys idénticos, solo se reconstruyeron las DEFINICIONES). Verificado: 62/558/564/43486 siguen renderizando.
+**Reglas para el futuro**:
+1. NUNCA usar `acf_delete_field_group()` sobre un grupo que tiene JSON local sin respaldar el archivo antes — borra el .json.
+2. Para sincronizar JSON→BD evitando duplicados: borrar primero TODOS los grupos de BD con ese key (force delete + hijos recursivos), respaldar/recrear el .json, e importar UNA vez con un array válido (no leer un archivo que puede haber sido borrado en el mismo flujo).
+3. El group_page_institucional ahora es ID 55435 (antes 55346).
+
+**Pendientes**:
+- Subir fotos: laureados de Premios (premio_block sin retrato → placeholder hatching) e integrantes de Consejo (people_carousel sin foto).
+- Verificación visual en navegador (desktop/tablet/mobile) de premio_block y text_accordion — solo verificado por estructura HTML, no pixel-perfect.
+- El group viejo "Secciones" (313) sigue activo como backup de los datos legacy.
+
+### 2026-05-25 — F9 ajustes UI: quitar rail lateral + rediseñar share (Figma 3706:24477)
+
+- **Rail vertical fijo izquierdo eliminado** (decisión del usuario): quitado el `get_template_part('nav-rail')` de `page-institucional.php` y el bloque SCSS `.udp-inst-rail`. La navegación queda solo en la **chips bar** superior (sticky). El partial `nav-rail.php` queda en disco pero sin uso. `anchor-scrollspy.js` sigue OK (`railLinks` resuelve a array vacío, solo sincroniza chips).
+- **Botón compartir rediseñado** según Figma `3706:24477`: de trigger+dropdown+Web Share API → **píldora vertical blanca** (border #e7e7e7, rounded-full, padding 20/16, gap 16) con 5 iconos de acción directa: copiar enlace, email, Facebook, X, WhatsApp (sin LinkedIn). `share-floating.php` reescrito (5 `<a>/<button>` con SVG inline), `share-floating.js` simplificado (sin dropdown/native share; solo set de hrefs + clipboard con feedback `.is-copied`), SCSS `.udp-inst-share` reescrito. Sigue oculto <576px.
+- E2E: 558 y 828 HTTP 200, 0 markup de rail, share con 5 botones, chips intactos. Build OK.
+
+### 2026-05-25 — F9: render institucional por defecto en page.php (auto-transforma legacy)
+
+Objetivo del usuario: que **todas las páginas que NO usan un template propio** rendericen con estilo institucional aprovechando sus secciones existentes, sin migración manual. Referencias Figma: Historia `3706:20493` y Accesos Internos `4418:26400` (hero morado + intro + acordeón + sidebar + back link).
+
+**Clave de enrutado**: `page.php` es el fallback de WP para toda página sin template válido. Los "especiales" legacy tienen `_wp_page_template=page-template-expeciales.php` pero ese archivo NO existe en el tema → también caen a `page.php`. Así que **reescribir `page.php` cubre exactamente "todas las que no usan nuestros templates"**, sin `template_include` filter.
+
+**Implementación (render-time, sin tocar datos)**:
+- `inc/udp-institucional.php`:
+  - `udp_institucional_sections_from_legacy($pid)`: transforma el campo viejo `secciones` + `post_content` al shape de `get_field('sections')`. Mapeo: `desplegable`→`text_accordion` (¡acordeón, como los Figma — distinto de la migración manual de las hijas de FdG que las separó en rich_text!); `contenido`+desplegable/listado/links → accordion/people_carousel/cards_dark_row; `contenido` suelto → rich_text; `listado`→people_carousel; `links_cuadrados(_externos)`→cards_dark_row; `post_content`→intro del primer acordeón (con título "Sobre {título}") o rich_text suelto; otros layouts legacy (carruseles, video, mozaico…) **se omiten**; + `back_link` al padre.
+  - `udp_institucional_get_sections($pid)`: devuelve ACF `sections` si está poblado, si no el transformador legacy.
+  - `collect_anchors($pid, $sections=null)`: ahora acepta el array de secciones (evita recomputar) y usa get_sections por defecto.
+- `template-parts/institucional/article.php` (NUEVO): render compartido (hero+breadcrumb+chips+share+loop de layouts). Lo usan `page-institucional.php` (refactorizado a delegar) y `page.php`.
+- `page.php` reescrito: si la página tiene `secciones` legacy → render institucional transformado; si es moderna (solo post_content) → hero institucional + `the_content()` nativo en `.udp-inst-plain`.
+- Partials `rich_text_sidebar` y `text_accordion`: saltan el `<h2>` si el título está vacío.
+
+**E2E** (`?theme=new`, HTTP 200):
+- Historia (64): 1 acordeón (Autonomía/Plan de crecimiento/Fortalecimiento) + intro 491ch + "Sobre Historia" + share + volver. Calza con Figma `3706:20493`.
+- Accesos Internos (107): 1 acordeón (4 items) + intro + volver. Calza con `4418:26400`.
+- Consejo Directivo Superior (328, listado): → people_carousel. Consejo Académico (558, migrada con ACF): intacta (3 rts + 3 people). Revista Santiago (7051, moderna): hero + contenido nativo en `.udp-inst-plain`.
+
+**Notas / pendientes**:
+- Páginas "especiales" (campañas con `destacados_carrusel`, `video`, `mozaico`, `numeros_destacados`, etc.): esos layouts se omiten → muestran solo hero + lo mapeable + volver. Construir esos layouts si se quieren soportar.
+- No portado de los Figma: widget "Noticias" lateral derecho (Design Historia) y banda "También te puede interesar" (relacionadas por hermanas). El back_link cubre el "volver a {padre}".
+- Convención divergente intencional: la migración manual de las 3 hijas de FdG dejó `desplegable`→rich_text separados; el render por defecto usa `desplegable`→acordeón. Si se quiere unificar, re-migrar o borrar el campo `sections` de esas 3 (para que caigan al transformador).
+
+### 2026-05-25 — F9: banda "También te puede interesar" (páginas hermanas)
+
+Añadida la banda relacionada del Figma de Historia (`3706:20493`, nodo `3706:20540`): un carrusel de páginas hermanas al pie del render institucional.
+
+- Layout `related` (auto-generado, no editable): partial `template-parts/institucional/layout-related.php` = encabezado "También te puede interesar" + **reutiliza** el sistema de cards + swiper de Section Landing (`section-landing-cards.php`, display=swiper). La card "Volver a {padre}" se antepone vía `parent_id` (variante back, ícono undo); las hermanas son cards default (ícono arrow-up-right). El swiper auto-inicializa (`initSectionLandingSwiper` ya cableado en main.js).
+- El transformador legacy (`udp_institucional_sections_from_legacy`) ahora, en vez de un `back_link` fijo, añade: si la página tiene **hermanas** → sección `related` (incluye el "Volver" como primera card); si tiene padre pero **sin hermanas** → `back_link` simple. (Coincide con los dos Figma: Historia=banda, Accesos Internos con pocas hermanas=banda; páginas hoja=back link.)
+- `related` añadido al whitelist de `article.php`. SCSS `.udp-inst-related` (banda oscura `$dark-1` + heading Arizona Flare blanco; el contenedor de cards se hace transparente para heredar el fondo).
+- E2E: Historia (64) → banda con "Volver a Universidad" + 9 hermanas en swiper, sin back_link duplicado. Accesos Internos (107) → "Volver a Servicios" + 4 hermanas. Consejo Académico (558, migrada ACF) → intacta, conserva su back_link explícito, sin banda (el transformador no aplica a páginas con `sections` ACF).
+
+**Pendiente**: para que las páginas migradas (page-institucional) también muestren la banda relacionada habría que añadir `related` como layout ACF o auto-inyectarlo en `article.php`. Hoy solo aparece en el render por defecto (page.php).
+
+### 2026-05-25 — F9: widget "Noticias" en sidebar institucional (Figma 3706:20539)
+
+Añadida la tarjeta de noticias del sidebar derecho del Figma de Historia.
+
+- Helper `udp_institucional_latest_noticia()`: devuelve el post más reciente con featured image (title, url, image medium_large, date 'd / m / Y', category). Cacheado 1h en transient `udp_inst_latest_noticia` (array vacío = "no hay", para no re-consultar).
+- Partial `template-parts/institucional/news-widget.php`: `<a>` envolvente (toda la tarjeta clickable) — eyebrow "Noticias" con ícono broadcast + imagen (aspect 318/196) + título (Arizona Flare 20px) + fecha + chip de categoría. SCSS `.udp-inst-news`: bg beige `#f8f7f4`, chip cerulean (`#dce5fd`/`#95b6fb`/`#2135d4`, Necto Mono uppercase) — colores literales del Figma (no están en la paleta). Hover: título azul + zoom imagen (respeta prefers-reduced-motion).
+- Inyección: el transformador legacy marca `show_news=true` en la **primera** sección `rich_text_sidebar`/`text_accordion`; esos partials renderizan el widget al inicio de su `<aside>` (y ahora abren el aside aunque no haya sidebar_cards).
+- E2E: Historia (64) y Accesos Internos (107) → widget con el post más reciente (imagen + título + fecha + categoría). Consejo Académico (558, migrada ACF) → sin widget (el transformador no aplica; `show_news` solo lo pone el render por defecto).
+
+**Pendiente**: igual que la banda relacionada, el widget hoy solo aparece en el render por defecto (page.php). Para migradas habría que setear `show_news` o un sidebar_card especial en su ACF.
+
+### 2026-05-25 — F9: layouts de "especiales" (carrusel, botones, números, video)
+
+⚠️ **El Figma NO tiene mockups de los especiales** (campañas) — solo Home + las páginas institucionales. Estos layouts se hicieron **best-effort** con el lenguaje visual existente; pendiente confirmación visual del cliente.
+
+Introspección del flex viejo `secciones` (field_60c09c7877e03): 18 layouts. Ya se manejaban 5 (desplegable, contenido, listado_de_informacion, links_cuadrados, links_cuadrados_externos). Añadidos 4 más al transformador (`udp_institucional_sections_from_legacy`), los más usados y self-contained (sin queries relationship):
+
+- `destacados_carrusel` (3395 usos, el #1) → layout `featured_carousel`: carrusel scroll-snap CSS (sin JS) de cards imagen+título. Partial + SCSS nuevos (`.udp-inst-featured`).
+- `botones_con_links_externos` (824) → layout `buttons`: **reusa** las clases del bloque F7 `.udp-block-big-buttons` (SCSS existente). url = link_externo o el archivo de descarga.
+- `numeros_destacados` (225) → layout `stats`: banda oscura con cifras grandes (número en `$brand-yellow` Arizona Flare). Partial + SCSS nuevos (`.udp-inst-stats`).
+- `video` (113, oembed) → layout `video`: **reusa** `.udp-block-embed` (SCSS existente); emite el HTML oembed.
+
+Los 4 añadidos al `$allowed` de `article.php`. Como video/buttons emiten clases de bloques F7, no requirieron SCSS nuevo (esos `_block-*.scss` ya están importados en main.scss).
+
+**E2E** (especiales publicados, page.php fallback):
+- Ricardo Lagos (43079): 2 videos (iframe), carrusel 5 cards con imágenes+títulos reales, 2 botones, secciones de texto. ✓
+- Aniversario (40919): 2 bandas de números (3°/1°/4400/10…), carrusel 8 cards. ✓
+- Vargas Llosa (41303): video + carrusel + texto. ✓
+
+**Layouts legacy DIFERIDOS** (no soportados aún — se omiten en el render):
+- Nicho / nested repeaters: `links_en_tabs`, `directorio_de_redes_sociales`, `atributos`.
+- `color_de_fondo` (color picker por sección) se ignora — los layouts usan los temas dark/light por defecto.
+
+### 2026-05-25 — F9: especiales relationship-based (mozaico, destacados, páginas/eventos destacados)
+
+Añadidos al transformador los layouts legacy basados en campo `relationship`, resolviéndolos a items del **`featured_carousel` existente** (sin partial/SCSS nuevos):
+- Resolver `$featured_from_rel($value)`: mapea IDs/WP_Post (publicados) → `{titulo: post title, imagen: featured image large, link: permalink}`.
+- `paginas_destacadas`, `destacados`, `mozaico` → leen el campo `destacados` (relationship) → `featured_carousel` (title = `titulo` de la sección si existe).
+- `eventos_destacados` → lee el campo `eventos` (relationship) → `featured_carousel`.
+- `link_ver_mas`/`texto_link_ver_mas` de mozaico se ignoran (sin CTA "ver más" por ahora).
+
+**E2E**: Investigación en UDP (636) → 4 carruseles (3 destacados_carrusel + 1 mozaico), 57 cards (55 con imagen), títulos de sección reales (Entrevistas, Videos, Revistas Especializadas, Conoce más). Acreditación 2023 (33809) → 2 carruseles + banda de números. Facultad de Derecho (269) → paginas_destacadas + botones. Todos HTTP 200 con datos reales de los posts relacionados.
+
+**Quedan sin soportar** (nicho): `links_en_tabs`, `directorio_de_redes_sociales`, `atributos`. Cubren poca superficie y/o necesitan diseño dedicado.
+
+### 2026-05-25 — F9 fixes de revisión (especiales)
+
+- **Título duplicado**: un `contenido` suelto se mapeaba a `rich_text_sidebar` con `title` = encabezado extraído Y `body` = HTML completo (que incluía el mismo encabezado) → el título salía 2 veces (columna izquierda + cuerpo). Fix: `body = $rest` (contenido sin el primer heading) en `udp_institucional_sections_from_legacy`.
+- **Video con fondo oscuro**: `layout-video.php` usaba `.udp-block-embed--dark`; cambiado a `--light` (fondo blanco) por feedback del cliente.
+- Nota: un `contenido` que solo es un encabezado (ej. "Galería de Imágenes" que precedía a un `galeria_de_imagenes` aún no soportado) queda como título suelto sin cuerpo — no es el bug de duplicación; se resolvería al soportar el layout `galeria_de_imagenes`.
+
+### 2026-05-25 — F9: botones (botones_con_links_externos) al aside derecho
+
+Por feedback del cliente, los botones dejan de ser una banda full-width y van al **aside derecho** de la primera sección de texto, como las tarjetas.
+- Transformador: acumula los botones en `$pending_buttons` y los adjunta como `sidebar_buttons` a la primera sección `rich_text_sidebar`/`text_accordion`. Si la página no tiene sección de texto, fallback a la banda full-width `buttons` (layout-buttons.php sigue existiendo para ese caso).
+- Partial nuevo `template-parts/institucional/sidebar-buttons.php`: pills verticales (label + ícono arrow-up-right, outline → azul en hover). Renderizado en el `<aside>` de rich_text/text_accordion (tras news widget y antes de las tarjetas).
+- SCSS `.udp-inst-sidebar-btns` / `.udp-inst-sidebar-btn`.
+- E2E: Ricardo Lagos (43079) → 2 botones en aside, 0 full-width. Facultad de Derecho (269) → 1 botón en aside + paginas_destacadas.
+
+### 2026-05-25 — F9: soporte `galeria_de_imagenes`
+
+El cliente notó que faltaban las imágenes (la galería estaba diferida). Añadido:
+- Resolver `$gallery_from()` en el transformador: campo `gallery` (attachments/IDs) → `{url (size large), alt}`.
+- `galeria_de_imagenes` → layout `gallery`. `contenido` + `galeria_de_imagenes` → gallery con el encabezado como título (consume el contenido, sin título huérfano ni duplicado).
+- Partial `layout-gallery.php`: **reutiliza** las clases del bloque F7 `.udp-block-image-gallery--grid --light` (grid CSS, sin JS). `gallery` añadido al `$allowed`.
+- E2E: Ricardo Lagos (43079) → grid de 4 imágenes con título "GALERÍA DE IMÁGENES" (1 vez).
+
+**Layouts legacy que quedan sin soportar**: `links_en_tabs`, `directorio_de_redes_sociales`, `atributos`.
+
+### 2026-05-25 — F9: `contenido` suelto a una sola columna (no 2-col)
+
+Feedback del cliente: el `contenido` no debe ir con título en columna lateral (2-col), sino todo seguido en una columna.
+- Transformador: el `contenido` suelto (rama else) deja de mapearse a `rich_text_sidebar` (3-col) y pasa a layout nuevo `rich_text` (una columna). El `body` lleva el contenido COMPLETO (con su encabezado inline, no se separa). `anchor_label` usa el encabezado solo si el contenido tenía un `<h1-6>` (para el chip), si no queda sin chip.
+- Partial `layout-rich-text.php`: reutiliza `.udp-inst-plain` (columna legible centrada, sin SCSS nuevo). `rich_text` añadido al `$allowed`.
+- Scope: solo afecta al render legacy (page.php). Las páginas migradas (page-institucional) siguen usando `rich_text_sidebar` 3-col con su sidebar a propósito (verificado: Consejo Académico mantiene 3 secciones 2-col).
+- E2E: Ricardo Lagos (43079) → contenido en `.udp-inst-text` (1 col), 0 `.udp-inst-rts`.
+
+### 2026-05-25 — F9: featured_carousel drag-to-scroll + scrollbar oculta
+
+- SCSS `.udp-inst-featured__list`: `scrollbar-width:none` + `-ms-overflow-style:none` + `::-webkit-scrollbar{display:none}` (barra oculta). `cursor:grab`; `.is-dragging` → `grabbing` + `scroll-snap-type:none` + `user-select:none`.
+- JS nuevo `src/js/modules/featured-drag.js` (cableado en main.js): drag-to-scroll con pointer events para mouse (touch usa scroll nativo). Si hubo arrastre (>4px), cancela el click para no disparar el enlace de la card. Selector `.udp-inst-featured__list`.
+- **Permisos `dist/`**: el build falló porque `dist/js` quedó propiedad de `root` (sudo previo, ver F0/F3). Workaround sin sudo: `mv dist .dist-root-bak` (renombrar solo requiere permiso en el padre) y `npm run build` crea un `dist/` limpio del usuario. **Pendiente**: borrar `.dist-root-bak` con `sudo rm -rf .dist-root-bak` (root-owned, ambos gitignored).
