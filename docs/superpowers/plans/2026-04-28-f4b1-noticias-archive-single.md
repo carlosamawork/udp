@@ -1303,12 +1303,13 @@ Create `wp-content/themes/starter-theme/src/scss/templates/_noticias-single.scss
     }
 
     &__content {
-        max-width: 480px;
+        max-width: 100%;
         margin-inline: auto;
         font-family: $font-family-body;
         font-size: 16px;
         line-height: 24px;
         color: $dark-1;
+        
 
         p { margin: 0 0 $space-md; }
         p:last-child { margin-bottom: 0; }

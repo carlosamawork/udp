@@ -7,7 +7,9 @@
 import { qsa, qs } from '@utils/dom';
 
 export function initSmoothScroll() {
-    qsa('a[href^="#"]').forEach(anchor => {
+    // Excluir anchors gestionados por anchor-scrollspy (chips/rail del template
+    // institucional) para no encimar dos scrolls sobre el mismo click.
+    qsa('a[href^="#"]:not(.udp-inst-chips__link):not(.udp-inst-rail__link)').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             const targetId = anchor.getAttribute('href');
             if (targetId === '#' || targetId === '#!') return;

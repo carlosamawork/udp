@@ -114,6 +114,7 @@
         overflow: hidden;
         background: $dark-2;
         aspect-ratio: 4 / 3;
+        height: 100%;
 
         img {
             width: 100%;
@@ -295,6 +296,8 @@
         inset: 0;
         margin: 0;
         background: $dark-2;
+        height: 100%;
+
 
         img {
             width: 100%;
