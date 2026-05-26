@@ -23,7 +23,7 @@ $show_breadcrumb = isset( $args['show_breadcrumb'] ) ? (bool) $args['show_breadc
 $page_title      = $args['page_title'] ?? get_the_title();
 $show_nav        = count( $anchors ) >= 2; // mínimo "Inicio" + 1 sección real
 
-$allowed = array( 'rich_text_sidebar', 'rich_text', 'cards_dark_row', 'people_carousel', 'premio_block', 'text_accordion', 'featured_carousel', 'buttons', 'stats', 'video', 'gallery', 'related', 'back_link' );
+$allowed = array( 'rich_text_sidebar', 'rich_text', 'cards_dark_row', 'link_cards', 'people_carousel', 'premio_block', 'text_accordion', 'featured_carousel', 'buttons', 'stats', 'video', 'gallery', 'related', 'back_link' );
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'udp-inst' ); ?>>
 
