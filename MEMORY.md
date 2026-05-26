@@ -911,3 +911,33 @@ Feedback del cliente: el `contenido` no debe ir con título en columna lateral (
 - SCSS `.udp-inst-featured__list`: `scrollbar-width:none` + `-ms-overflow-style:none` + `::-webkit-scrollbar{display:none}` (barra oculta). `cursor:grab`; `.is-dragging` → `grabbing` + `scroll-snap-type:none` + `user-select:none`.
 - JS nuevo `src/js/modules/featured-drag.js` (cableado en main.js): drag-to-scroll con pointer events para mouse (touch usa scroll nativo). Si hubo arrastre (>4px), cancela el click para no disparar el enlace de la card. Selector `.udp-inst-featured__list`.
 - **Permisos `dist/`**: el build falló porque `dist/js` quedó propiedad de `root` (sudo previo, ver F0/F3). Workaround sin sudo: `mv dist .dist-root-bak` (renombrar solo requiere permiso en el padre) y `npm run build` crea un `dist/` limpio del usuario. **Pendiente**: borrar `.dist-root-bak` con `sudo rm -rf .dist-root-bak` (root-owned, ambos gitignored).
+
+### 2026-05-26 — PENDIENTE (próxima sesión): traer la Home de la otra dev a esta BD
+
+**Contexto**: hay otra persona trabajando en el proyecto. Ella hizo **la Home** (front page); este usuario hizo **todo lo demás** (F9 institucional/especiales/migraciones). Ambas BDs son **locales**. Solo se quiere traer **la Home** de ella a esta base (sus otros cambios NO). No es un merge de BD completo — es traer una feature acotada. WordPress no fusiona BDs (los IDs autoincrementales chocan), así que el plan evita sobrescribir: solo **inserta** la home con remapeo de IDs.
+
+**Estado de ESTA BD**: `show_on_front = posts`, `page_on_front = 0` → NO hay home configurada. Esta base solo **recibe** (no hay nada que se pise). `front-page.php` actual es el scaffold viejo (Bootstrap hero + flexible content leyendo ACF `hero_title`, etc.).
+
+**Qué se le pidió a la otra dev (artefactos completos; nosotros extraemos solo la home)**:
+- **A) Código**: commit+push de su rama (front-page.php + partials/SCSS/JS de la home + archivos `acf-json/` del/los field groups de la home). Si no hay remoto: zip del tema. `dist/` no (se regenera con `npm run build`). Los field groups ACF viajan por `acf-json/` (git) + *Custom Fields → Sync*, NO por BD.
+- **B) Dump completo de su BD local**: `mysqldump ... udp | gzip > db-home-de-ella.sql.gz`. De aquí se extrae quirúrgicamente la home.
+- **C) Sus `wp-content/uploads/`** (imágenes de la home), zip.
+- **D) Datos**: cuál es la página Home (título/ID) y cómo la armó (página estática con flexible content ACF **vs** front-page.php + options page ACF) — define si la home está en `postmeta` de una página o en `wp_options`.
+
+**Plan de ejecución (próxima sesión, cuando lleguen A+B+C+D)**:
+1. Respaldar ESTA BD primero (`mysqldump` comprimido, patrón F0).
+2. Merge del código por git + `npm run build` + sync ACF en admin.
+3. Copiar sus `uploads/` sobre los nuestros (carpetas por fecha, rara vez chocan) ANTES de insertar contenido.
+4. Del dump de ella, extraer e **insertar** en nuestra BD (con remapeo de IDs, sin sobrescribir): la página Home + su `postmeta` (valores ACF) + attachments + options de la home si usó options page.
+5. Ajustes → Lectura → portada estática = Home importada (`show_on_front=page`, `page_on_front`).
+6. Verificar `/` (home) + páginas institucionales/especiales.
+
+**NO usar** WP Migrate DB (sobrescribe, no fusiona) ni editar IDs a mano en SQL (rompe relaciones).
+
+### 2026-05-26 — F9 fix: links_cuadrados con estilo de cards "te podría interesar"
+
+Feedback: el módulo `cards_dark_row` de `links_cuadrados` se veía mal (cards solo-título, vacías, sobre fondo oscuro). El cliente quiere que se vean como las cards de "También te puede interesar" (Section Landing: gris → azul, ícono flecha, sin imagen).
+- Transformador: `links_cuadrados`/`links_cuadrados_externos` ahora mapean a layout nuevo `link_cards` (antes `cards_dark_row`). Nuevo resolver `$linkcards_from()` → cards `{titulo, link}` (formato Section Landing). Maneja link_externo+titulo y link_relacionado (relationship → permalink/título).
+- Partial `layout-link-cards.php`: reutiliza la banda `.udp-inst-related` + `section-landing-cards.php` (display swiper, `parent_id=0` → sin card "Volver"). Sin SCSS/JS nuevos (swiper ya cableado).
+- `link_cards` añadido al `$allowed`. El layout `cards_dark_row` sigue existiendo para la página migrada Forma de Gobierno (ACF) — esa NO cambió (sus cards también son sin imagen; si el cliente quiere el mismo estilo ahí, habría que re-migrarla a link_cards o ajustar su layout).
+- E2E: Autoridades (58) → 3 link cards (Consejo Directivo Superior / Dirección Superior / Decanatos) estilo Section Landing, 0 `udp-inst-dark__card`, sin back-card en ese módulo (el back-card solo en la banda "te podría interesar").

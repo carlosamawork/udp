@@ -280,6 +280,43 @@ function udp_institucional_sections_from_legacy( $post_id = null ) {
         return $rows;
     };
 
+    // Resuelve links_cuadrados(_externos) a cards estilo Section Landing
+    // ({titulo, link}) — las mismas de "También te puede interesar".
+    $linkcards_from = static function ( $section ) {
+        $cards = array();
+        $rows  = $section['links_cuadrados'] ?? ( $section['links_cuadrados_externos'] ?? array() );
+        foreach ( (array) $rows as $row ) {
+            $url   = '';
+            $title = '';
+            if ( ! empty( $row['link_externo'] ) ) {
+                $url   = (string) $row['link_externo'];
+                $title = trim( (string) ( $row['titulo'] ?? '' ) );
+            }
+            if ( '' === $url && ! empty( $row['link_relacionado'] ) ) {
+                $rel   = $row['link_relacionado'];
+                $first = is_array( $rel ) ? reset( $rel ) : $rel;
+                $rid   = is_object( $first ) ? (int) $first->ID : (int) $first;
+                if ( $rid ) {
+                    $url = get_permalink( $rid );
+                    if ( '' === $title ) {
+                        $title = get_the_title( $rid );
+                    }
+                }
+            }
+            if ( '' === $title && '' !== $url ) {
+                $title = $url;
+            }
+            if ( '' === $url || '' === $title ) {
+                continue;
+            }
+            $cards[] = array(
+                'titulo' => $title,
+                'link'   => array( 'url' => $url, 'title' => $title, 'target' => '' ),
+            );
+        }
+        return $cards;
+    };
+
     // Resuelve un campo gallery (attachments / IDs) a {url, alt}.
     $gallery_from = static function ( $value ) {
         $imgs = array();
@@ -366,11 +403,11 @@ function udp_institucional_sections_from_legacy( $post_id = null ) {
                 $i++;
             } elseif ( 'links_cuadrados' === $next || 'links_cuadrados_externos' === $next ) {
                 $out[] = array(
-                    'acf_fc_layout' => 'cards_dark_row',
+                    'acf_fc_layout' => 'link_cards',
                     'anchor_label'  => $t,
                     'anchor_icon'   => null,
                     'title'         => $t,
-                    'cards'         => $cards_from( $secs[ $i + 1 ] ),
+                    'cards'         => $linkcards_from( $secs[ $i + 1 ] ),
                 );
                 $i++;
             } elseif ( 'galeria_de_imagenes' === $next ) {
@@ -416,13 +453,16 @@ function udp_institucional_sections_from_legacy( $post_id = null ) {
                 'personas'      => $personas_from( $s['listado_de_informacion'] ?? array() ),
             );
         } elseif ( 'links_cuadrados' === $lay || 'links_cuadrados_externos' === $lay ) {
-            $out[] = array(
-                'acf_fc_layout' => 'cards_dark_row',
-                'anchor_label'  => __( 'Enlaces', 'starter-theme' ),
-                'anchor_icon'   => null,
-                'title'         => '',
-                'cards'         => $cards_from( $s ),
-            );
+            $cards = $linkcards_from( $s );
+            if ( $cards ) {
+                $out[] = array(
+                    'acf_fc_layout' => 'link_cards',
+                    'anchor_label'  => __( 'Enlaces', 'starter-theme' ),
+                    'anchor_icon'   => null,
+                    'title'         => '',
+                    'cards'         => $cards,
+                );
+            }
         } elseif ( 'destacados_carrusel' === $lay ) {
             $items = array();
             foreach ( (array) ( $s['destacado'] ?? array() ) as $d ) {
