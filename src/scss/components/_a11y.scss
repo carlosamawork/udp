@@ -1,0 +1,53 @@
+// =============================================================================
+// Botón de Accesibilidad (plugin Pojo / One Click Accessibility) — estilo UDP
+// =============================================================================
+//
+// El plugin desliza el contenedor #pojo-a11y-toolbar desde el lado configurado
+// (posición = "right" en sus ajustes → clase .pojo-a11y-toolbar-right, que va de
+// right:-180px a right:0 con la clase .pojo-a11y-toolbar-open). NO tocamos su
+// posición horizontal/width para no romper ese colapso/expansión.
+//
+// Solo: bajamos el toolbar bajo la línea del header y reestilamos el toggle
+// (círculo amarillo gold-medium + ícono oscuro + sombra del Figma 3706:21202),
+// en vez del círculo rojo #c23633 por defecto.
+
+#pojo-a11y-toolbar {
+    top: 124px !important; // más abajo de la línea del header (~85px)
+
+    @include media-down(md) {
+        top: 104px !important;
+    }
+
+    // Insetar el botón colapsado el mismo margen que el buscador (40px).
+    // El plugin lo coloca a right:180px (ancho del panel); +40px lo separa del
+    // borde sin revelar el panel (el contenedor sigue colapsado en right:-180px).
+    .pojo-a11y-toolbar-toggle {
+        right: calc(180px + #{$space-3xl}) !important;
+    }
+
+    .pojo-a11y-toolbar-toggle a {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        padding: 0 !important;
+        background-color: #fcd303 !important; // gold-medium (= $brand-yellow)
+        color: $dark-1 !important;            // ícono oscuro
+        border-radius: 50%;
+        box-shadow: 0 8px 5px rgba(0, 0, 0, 0.25);
+
+        svg {
+            width: 26px;
+            height: 26px;
+            fill: $dark-1 !important;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: #fcd303 !important;
+            color: $dark-1 !important;
+            box-shadow: 0 8px 5px rgba(0, 0, 0, 0.3);
+        }
+    }
+}
