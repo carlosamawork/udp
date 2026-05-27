@@ -924,15 +924,24 @@ Feedback del cliente: el `contenido` no debe ir con título en columna lateral (
 - **C) Sus `wp-content/uploads/`** (imágenes de la home), zip.
 - **D) Datos**: cuál es la página Home (título/ID) y cómo la armó (página estática con flexible content ACF **vs** front-page.php + options page ACF) — define si la home está en `postmeta` de una página o en `wp_options`.
 
-**Plan de ejecución (próxima sesión, cuando lleguen A+B+C+D)**:
-1. Respaldar ESTA BD primero (`mysqldump` comprimido, patrón F0).
-2. Merge del código por git + `npm run build` + sync ACF en admin.
-3. Copiar sus `uploads/` sobre los nuestros (carpetas por fecha, rara vez chocan) ANTES de insertar contenido.
-4. Del dump de ella, extraer e **insertar** en nuestra BD (con remapeo de IDs, sin sobrescribir): la página Home + su `postmeta` (valores ACF) + attachments + options de la home si usó options page.
-5. Ajustes → Lectura → portada estática = Home importada (`show_on_front=page`, `page_on_front`).
-6. Verificar `/` (home) + páginas institucionales/especiales.
-
 **NO usar** WP Migrate DB (sobrescribe, no fusiona) ni editar IDs a mano en SQL (rompe relaciones).
+
+### 2026-05-27 — Merge de la Home (de elsa_udp) COMPLETADO (parte BD)
+
+La BD de la compañera está en el mismo servidor MySQL: **`elsa_udp`** (mismo prefijo `wp_fnku4y`, misma URL `localhost:8888/udp/cms`, mismo tema). Ambas son **forks del mismo WordPress**. La nuestra es **`udp`**.
+
+**Diagnóstico**: en elsa la Home es página estática **ID 55394** ("Inicio", `_wp_page_template=default` → la renderiza `front-page.php`). Usa el field group nuevo **`group_template_home`** (~92 campos: portada/hero, destacado, postítulos, facultades, eventos, noticias, innovación, cultura UDP, cultura digital, cifras, vida universitaria, buscador). Referencia 13 adjuntos: **9 ya existían en udp** (mismo fork; solo difería el dominio del guid — no afecta) y **4 nuevos** (55565, 55577, 55578, 55579) cuyos **archivos ya estaban** en `uploads/2026/05`.
+
+**Código del tema**: está en el branch **`origin/home`** (61 archivos: front-page.php nuevo, `template-parts/home/section-*.php`, `src/js/modules/home-*.js`, `_home.scss`, `acf-json/group_template_home.json`). El usuario lo **mergeó a main** (no tocar ramas).
+
+**Hecho (solo BD `udp`, sin sobrescribir nada)**:
+1. Backup: `~/Backups/udp/udp-pre-home-merge-20260527-124611.sql.gz` (25 MB). (mysqldump real está en `/Applications/MAMP/Library/bin/mysql80/bin/`, vía socket `/Applications/MAMP/tmp/mysql/mysql.sock` — la ruta `Library/bin/mysqldump` NO existe.)
+2. Registrado `group_template_home` en BD udp vía `git show origin/home:acf-json/...json` + `acf_import_field_group` (ID 55495, sin duplicados). En este install los grupos ACF deben estar en BD (el JSON local solo no basta).
+3. Copiados de elsa_udp→udp (IDs 55394 libre + 4 adjuntos libres; idempotente; guid de dominio capitanproject→localhost solo en wp_posts, NO en meta_value para no romper serializados): página 55394 +187 metas, 4 attachments +2 metas c/u.
+4. `update_option(show_on_front=page, page_on_front=55394)` + cache flush.
+5. Verificado: ACF resuelve (portada_titulo, cifras 3 filas, cultura_udp 6, portada_imagen→URL localhost válida).
+
+**Pendiente**: el render solo se ve en **main** (front-page.php nuevo + partials + `_home.scss` + JS están en main, no en feature/f9-page-institucional cuyo front-page.php es el scaffold viejo). Estando en main: `npm run build` y ver `/`. Los datos ya están en la BD compartida (no dependen de la rama).
 
 ### 2026-05-26 — F9 fix: links_cuadrados con estilo de cards "te podría interesar"
 
