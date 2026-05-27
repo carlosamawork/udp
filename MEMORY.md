@@ -1217,3 +1217,17 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Resumen: S8 Cultura UDP completamente alineada con Figma. ACF refactorizado, hover naranja corregido, subtítulos con fuente mono correcta, placeholder con mixin para ítems sin imagen.
 - Estado actual: build limpio, sección lista. Los 5 ítems sin imagen muestran tramado diagonal.
 - Próximos pasos: subir imágenes para Publicaciones–Especiales desde el admin; revisar S3, S5, S6 contra Figma.
+
+### 2026-05-27 — Cierre de sesión
+
+**Lo trabajado hoy**:
+- Revertido el template `page-simple-accordion` (Historia) completo — el compañero lo implementa por su lado.
+- Commit `dd7b828`: eliminados 6 archivos (template principal, 3 partials, SCSS, ACF JSON) + import en `main.scss`.
+- Build limpio tras el borrado.
+
+**Estado actual**:
+- Rama `home` activa, sin el template de Historia. El resto del home (S1–S11) intacto.
+
+**Pendiente**:
+- Borrar manualmente la página de prueba ID 55353 "Historia (test simple-accordion)" desde WP Admin → Páginas (requiere MAMP corriendo).
+- Continuar con los pendientes habituales: imágenes S8, contenido S9, revisar S3/S5/S6 contra Figma, F10 polish, merge home → main.
