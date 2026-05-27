@@ -39,10 +39,14 @@ import { initCalendarioActiveMonth } from '@modules/calendario-active-month';
 import { initBlockImageGallery } from '@modules/block-image-gallery';
 import { initBlockAccordion } from '@modules/block-accordion';
 import { initMegaMenu } from '@modules/mega-menu';
-import { initHomePortada }    from '@modules/home-portada';
-import { initHomeNoticias }   from '@modules/home-noticias';
+import { initHomePortada } from '@modules/home-portada';
+import { initHomeNoticias } from '@modules/home-noticias';
 import { initHomeCulturaUdp } from '@modules/home-cultura-udp';
 import { initHomeCulturaDigital } from '@modules/home-cultura-digital';
+import { initShareFloating } from '@modules/share-floating';
+import { initInstitucionalPeople } from '@modules/institucional-people';
+import { initAnchorScrollspy } from '@modules/anchor-scrollspy';
+import { initFeaturedDrag } from '@modules/featured-drag';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -71,6 +75,10 @@ domReady(() => {
     initHomeNoticias();
     initHomeCulturaUdp();
     initHomeCulturaDigital();
+    initShareFloating();
+    initInstitucionalPeople();
+    initAnchorScrollspy();
+    initFeaturedDrag();
 
     console.log('[StarterBS5] Theme initialized');
 });

@@ -1,0 +1,99 @@
+<h2>F4a — Layouts del bloque</h2>
+<p class="subtitle">El spec menciona <code>3col / 4col / lista</code>. Mirando Home + Noticias, también veo uso a 2col. ¿Qué layouts soporta F4a?</p>
+
+<div class="cards">
+  <div class="card" data-choice="2col" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a1a;padding:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>2 columnas</h3>
+      <p>Cards más grandes (image arriba, todo el texto debajo). Ideal para destacar pocos items en una sección.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="3col" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a1a;padding:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>3 columnas (default)</h3>
+      <p>El más usado en Home. Equilibrio entre densidad y legibilidad.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="4col" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a1a;padding:12px">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+        <div style="background:#333;aspect-ratio:1"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>4 columnas</h3>
+      <p>Cards compactas, más densidad. Útil para listados de muchas piezas.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="list" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a1a;padding:12px">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;gap:6px;align-items:center"><div style="background:#333;width:40px;height:30px"></div><div style="background:#444;height:6px;flex:1"></div></div>
+        <div style="display:flex;gap:6px;align-items:center"><div style="background:#333;width:40px;height:30px"></div><div style="background:#444;height:6px;flex:1"></div></div>
+        <div style="display:flex;gap:6px;align-items:center"><div style="background:#333;width:40px;height:30px"></div><div style="background:#444;height:6px;flex:1"></div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>List (apilado)</h3>
+      <p>Image pequeña a la izquierda + texto a la derecha, una fila por item. Para sidebars o secciones secundarias.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Recomendación</h3>
+  <p>F4a soporta <strong>3col (default) + 4col + list</strong> — los 3 del spec original. <em>2col se puede añadir más adelante si Home u otro Figma lo pide explícitamente.</em></p>
+  <p class="label">Opciones</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="spec" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>3col + 4col + list (recomendado)</h3>
+      <p>Cumple el spec. Ya cubre Home y bloques en landings.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="all" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>2col + 3col + 4col + list</h3>
+      <p>Más flexibilidad desde día 1.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="minimal" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Solo 3col</h3>
+      <p>Mínimo viable. Añadir el resto cuando algún Figma lo pida.</p>
+    </div>
+  </div>
+</div>
