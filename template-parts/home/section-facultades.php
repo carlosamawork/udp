@@ -4,7 +4,8 @@
  *
  * Marquee de nombres de facultades (CSS loop, doble copia) + lista de links.
  * Data: términos de taxonomía 'facultad' (nombre, color). Links resueltos a las
- * páginas hijas de pregrado-y-formacion-general/facultades/ por slug del término.
+ * páginas de WordPress cuyo post_name coincida con el slug del término (independiente
+ * de la jerarquía de URLs). Fallback a get_term_link() si no existe la página.
  *
  * @package starter-bs5
  */
@@ -22,22 +23,21 @@ if ( is_wp_error( $facultades ) || empty( $facultades ) ) {
     return;
 }
 
-// Pre-fetch páginas hijas de .../facultades/, indexadas por post_name (slug).
-$parent_page    = get_page_by_path( 'pregrado-y-formacion-general/facultades' );
-$urls_by_slug   = [];
-if ( $parent_page ) {
-    $children = get_posts( [
-        'post_type'      => 'page',
-        'post_parent'    => $parent_page->ID,
-        'posts_per_page' => -1,
-        'post_status'    => 'publish',
-        'fields'         => 'ids',
-        'no_found_rows'  => true,
-    ] );
-    foreach ( $children as $child_id ) {
-        $slug                  = get_post_field( 'post_name', $child_id );
-        $urls_by_slug[ $slug ] = get_permalink( $child_id );
-    }
+// Pre-fetch páginas cuyo slug coincide con el slug de algún término de facultad.
+// Se busca por post_name directamente (sin depender de la jerarquía de URLs).
+$term_slugs   = wp_list_pluck( $facultades, 'slug' );
+$pages        = get_posts( [
+    'post_type'      => 'page',
+    'post_status'    => 'publish',
+    'posts_per_page' => -1,
+    'no_found_rows'  => true,
+    'post_name__in'  => $term_slugs,
+    'fields'         => 'ids',
+] );
+$urls_by_slug = [];
+foreach ( $pages as $page_id ) {
+    $slug                  = get_post_field( 'post_name', $page_id );
+    $urls_by_slug[ $slug ] = get_permalink( $page_id );
 }
 
 $titulo_seccion = get_field( 'facultades_titulo', $post_id ) ?: 'Facultades';
