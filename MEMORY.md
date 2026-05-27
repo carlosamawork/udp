@@ -1658,6 +1658,23 @@ Feedback del cliente: el `contenido` no debe ir con título en columna lateral (
 
 **NO usar** WP Migrate DB (sobrescribe, no fusiona) ni editar IDs a mano en SQL (rompe relaciones).
 
+### 2026-05-27 — Merge de la Home (de elsa_udp) COMPLETADO (parte BD)
+
+La BD de la compañera está en el mismo servidor MySQL: **`elsa_udp`** (mismo prefijo `wp_fnku4y`, misma URL `localhost:8888/udp/cms`, mismo tema). Ambas son **forks del mismo WordPress**. La nuestra es **`udp`**.
+
+**Diagnóstico**: en elsa la Home es página estática **ID 55394** ("Inicio", `_wp_page_template=default` → la renderiza `front-page.php`). Usa el field group nuevo **`group_template_home`** (~92 campos: portada/hero, destacado, postítulos, facultades, eventos, noticias, innovación, cultura UDP, cultura digital, cifras, vida universitaria, buscador). Referencia 13 adjuntos: **9 ya existían en udp** (mismo fork; solo difería el dominio del guid — no afecta) y **4 nuevos** (55565, 55577, 55578, 55579) cuyos **archivos ya estaban** en `uploads/2026/05`.
+
+**Código del tema**: está en el branch **`origin/home`** (61 archivos: front-page.php nuevo, `template-parts/home/section-*.php`, `src/js/modules/home-*.js`, `_home.scss`, `acf-json/group_template_home.json`). El usuario lo **mergeó a main** (no tocar ramas).
+
+**Hecho (solo BD `udp`, sin sobrescribir nada)**:
+1. Backup: `~/Backups/udp/udp-pre-home-merge-20260527-124611.sql.gz` (25 MB). (mysqldump real está en `/Applications/MAMP/Library/bin/mysql80/bin/`, vía socket `/Applications/MAMP/tmp/mysql/mysql.sock` — la ruta `Library/bin/mysqldump` NO existe.)
+2. Registrado `group_template_home` en BD udp vía `git show origin/home:acf-json/...json` + `acf_import_field_group` (ID 55495, sin duplicados). En este install los grupos ACF deben estar en BD (el JSON local solo no basta).
+3. Copiados de elsa_udp→udp (IDs 55394 libre + 4 adjuntos libres; idempotente; guid de dominio capitanproject→localhost solo en wp_posts, NO en meta_value para no romper serializados): página 55394 +187 metas, 4 attachments +2 metas c/u.
+4. `update_option(show_on_front=page, page_on_front=55394)` + cache flush.
+5. Verificado: ACF resuelve (portada_titulo, cifras 3 filas, cultura_udp 6, portada_imagen→URL localhost válida).
+
+**Pendiente**: el render solo se ve en **main** (front-page.php nuevo + partials + `_home.scss` + JS están en main, no en feature/f9-page-institucional cuyo front-page.php es el scaffold viejo). Estando en main: `npm run build` y ver `/`. Los datos ya están en la BD compartida (no dependen de la rama).
+
 ### 2026-05-26 — F9 fix: links_cuadrados con estilo de cards "te podría interesar" _(Cacho)_
 
 Feedback: el módulo `cards_dark_row` de `links_cuadrados` se veía mal (cards solo-título, vacías, sobre fondo oscuro). El cliente quiere que se vean como las cards de "También te puede interesar" (Section Landing: gris → azul, ícono flecha, sin imagen).
@@ -1702,3 +1719,11 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 
 - Borrar manualmente la página de prueba ID 55353 "Historia (test simple-accordion)" desde WP Admin → Páginas (requiere MAMP corriendo).
 - Continuar con los pendientes habituales: imágenes S8, contenido S9, revisar S3/S5/S6 contra Figma, F10 polish, merge home → main.
+
+### 2026-05-27 — Colores de facultad de elsa_udp + fix JS (build perms)
+
+(Tras el merge del código home a main + el merge de datos de la home desde elsa_udp.)
+
+- **Colores de facultad**: la compañera personalizó el color de cada facultad (term meta `color`, campo ACF `field_60c07f1c20f2f`, taxonomía `facultad`). En `udp` todas tenían el default `#cca843`; en `elsa_udp` había 11 distintos. Traspasados a udp con `update_term_meta` (`/tmp/udp-import-faculty-colors.php`): Arquitectura #FC684A, Admin&Econ #6B85FA, CCSS&Hum #D9737F, Comunic&Letras #39AAAA, Derecho #C07DC5, Educación #FA8B14, Ingeniería #0EC881, Medicina #4193F6, Psicología #E8B717, Salud&Odont #14BDFF, Vespertinas #7A6454. (Reversible: el valor viejo uniforme era #cca843.)
+- **JS no cargaba**: `npm run build` fallaba por permisos (`dist/.vite/manifest.json` era de root) → quedaba un dist viejo sin los módulos home → JS roto. Resuelto con `mv dist .dist-root-bak* && npm run build`. Tras rebuild: `main.js` + chunks devuelven 200 y el manifest apunta al build nuevo.
+- **Recurrente sin resolver**: `dist/` (o `.vite/`) se vuelve propiedad de root repetidamente y rompe cada build. Sin proceso node root activo al revisar → causa probable: algún `sudo npm` o script de deploy externo. **Arreglo permanente pendiente**: `sudo chown -R 501:20 dist` + evitar build/watch con sudo. Borrar `.dist-root-bak*` acumuladas.

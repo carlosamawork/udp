@@ -14,7 +14,12 @@
       "Bash(php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/home/section-buscador-carreras.php)",
       "Bash(php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/home/section-facultades.php)",
       "Bash(awk '{print $1}')",
-      "Bash(xargs -I{} git branch -a --contains {})"
+      "Bash(xargs -I{} git branch -a --contains {})",
+      "Bash([ -f \"src/js/modules/$m.js\" ])",
+      "Bash(curl -s -k -o /tmp/home.html -w '__TRACKED_VAR__ → HTTP %{http_code}\\\\n' '__TRACKED_VAR__&cb=__TRACKED_VAR__')",
+      "Bash(xargs -n1 basename)",
+      "Bash(awk '$1==\"root\" && /node|npm|vite/ {print}')",
+      "Bash(/Applications/MAMP/bin/php/php8.4.1/bin/php *)"
     ],
     "deny": [
       "Bash(rm -rf *)",
