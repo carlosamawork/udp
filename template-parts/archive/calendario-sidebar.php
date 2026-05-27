@@ -19,7 +19,7 @@ $action_url = get_permalink( get_the_ID() );
     <?php if ( $s !== '' ): ?><input type="hidden" name="udp_s" value="<?php echo esc_attr( $s ); ?>"><?php endif; ?>
 
     <label for="udp-calendario-year" class="visually-hidden"><?php esc_html_e( 'Selecciona año', 'starter-theme' ); ?></label>
-    <select id="udp-calendario-year" name="udp_year" class="udp-calendario-sidebar__year-select" data-udp-autosubmit>
+    <select id="udp-calendario-year" name="udp_year" class="udp-calendario-sidebar__year-select udp-form-select udp-form-select--slim" data-udp-autosubmit>
         <?php foreach ( $years as $y ) : ?>
             <option value="<?php echo esc_attr( $y ); ?>" <?php selected( $year, $y ); ?>>
                 <?php echo esc_html( $y ); ?>

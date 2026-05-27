@@ -23,7 +23,7 @@
     &__inner {
         max-width: 1440px;
         margin-inline: auto;
-        padding-inline: $space-3xl;  // 40px
+        padding-inline: $space-3xl; // 40px
 
         @include media-down(md) {
             padding-inline: $space-sm;
@@ -64,10 +64,10 @@
         margin: 0;
         padding: 0;
         display: grid;
-        gap: $space-md;  // 18px
+        gap: $space-md; // 18px
 
         @include media-down(md) {
-            grid-template-columns: 1fr !important;  // forzar 1 col en mobile
+            grid-template-columns: 1fr !important; // forzar 1 col en mobile
         }
     }
 
@@ -126,6 +126,7 @@
     }
 
     @media (prefers-reduced-motion: no-preference) {
+
         &:hover .udp-card-noticia__media img,
         &:focus-visible .udp-card-noticia__media img {
             transform: scale(1.03);
@@ -148,6 +149,7 @@
 
     &__eyebrow {
         display: inline-block;
+        width: fit-content;
         padding: 2px 8px;
         font-family: $font-family-mono;
         font-size: 11px;
@@ -158,9 +160,20 @@
         color: $dark-1;
         background-color: $brand-yellow;
 
-        &--yellow { background-color: $brand-yellow; color: $dark-1; }
-        &--red    { background-color: $brand-red;    color: $white; }
-        &--blue   { background-color: $brand-blue;   color: $white; }
+        &--yellow {
+            background-color: $brand-yellow;
+            color: $dark-1;
+        }
+
+        &--red {
+            background-color: $brand-red;
+            color: $white;
+        }
+
+        &--blue {
+            background-color: $brand-blue;
+            color: $white;
+        }
     }
 
     &__date {
@@ -188,8 +201,13 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
 
-        .udp-card-grid--4col & { font-size: 16px; }
-        .udp-card-grid--list & { font-size: 16px; }
+        .udp-card-grid--4col & {
+            font-size: 16px;
+        }
+
+        .udp-card-grid--list & {
+            font-size: 16px;
+        }
     }
 
     &__more {
@@ -245,7 +263,7 @@
 // --------------------------------------------------------------------------
 .udp-card-noticia--horizontal {
     flex-direction: row;
-    gap: 30px;  // Spec Figma: 30px entre image y texto
+    gap: 30px; // Spec Figma: 30px entre image y texto
     align-items: flex-start;
 
     .udp-card-noticia__media {
@@ -311,12 +329,10 @@
     .udp-card-noticia__overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-            180deg,
-            rgba($dark-1, 0.25) 0%,
-            rgba($dark-1, 0.45) 50%,
-            rgba($dark-1, 0.65) 100%
-        );
+        background: linear-gradient(180deg,
+                rgba($dark-1, 0.25) 0%,
+                rgba($dark-1, 0.45) 50%,
+                rgba($dark-1, 0.65) 100%);
     }
 
     .udp-card-noticia__featured-meta {
@@ -363,6 +379,7 @@
     }
 
     @media (prefers-reduced-motion: no-preference) {
+
         &:hover .udp-card-noticia__media--featured img,
         &:focus-visible .udp-card-noticia__media--featured img {
             transform: scale(1.04);

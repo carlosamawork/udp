@@ -12,10 +12,11 @@
 defined( 'ABSPATH' ) || exit;
 
 $facultad = isset( $_GET['udp_facultad'] ) ? (int) $_GET['udp_facultad'] : 0;
+$carrera  = isset( $_GET['udp_carrera'] ) ? (int) $_GET['udp_carrera'] : '';
 $s        = isset( $_GET['udp_s'] )        ? sanitize_text_field( wp_unslash( $_GET['udp_s'] ) ) : '';
 
 $cards = function_exists( 'udp_query_carreras' )
-    ? udp_query_carreras( array( 'facultad' => $facultad, 's' => $s ) )
+    ? udp_query_carreras( array( 'facultad' => $facultad, 'carrera' => $carrera, 's' => $s ) )
     : array();
 
 get_header();

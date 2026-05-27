@@ -222,6 +222,10 @@ function udp_get_post_years(): array {
  */
 function udp_query_noticias( array $filters ): array {
     $cat   = (int) ( $filters['cat']   ?? 0 );
+    // $cats acepta array de IDs; tiene precedencia sobre $cat si no está vacío.
+    $cats  = isset( $filters['cats'] ) && is_array( $filters['cats'] )
+        ? array_values( array_filter( array_map( 'intval', $filters['cats'] ) ) )
+        : array();
     $year  = (int) ( $filters['year']  ?? 0 );
     $s     = trim( (string) ( $filters['s'] ?? '' ) );
     $paged = max( 1, (int) ( $filters['paged'] ?? 1 ) );
@@ -237,9 +241,10 @@ function udp_query_noticias( array $filters ): array {
         'order'          => 'DESC',
     );
 
-    if ( $cat > 0 ) {
+    $term_ids = ! empty( $cats ) ? $cats : ( $cat > 0 ? array( $cat ) : array() );
+    if ( ! empty( $term_ids ) ) {
         $args['tax_query'] = array(
-            array( 'taxonomy' => 'category', 'field' => 'term_id', 'terms' => array( $cat ) ),
+            array( 'taxonomy' => 'category', 'field' => 'term_id', 'terms' => $term_ids, 'operator' => 'IN' ),
         );
     }
 
@@ -281,7 +286,7 @@ function udp_query_noticias( array $filters ): array {
  *   - fecha_display: human readable "10 de Marzo de 2026"
  *   - hora_display:  del ACF hora_inicio "12:00 hrs"
  *   - lugar:         ACF lugar
- * Eyebrow viene del primer post_tag (case original) — uppercase via CSS.
+ * Eyebrow viene del primer término de taxonomía tipo-evento.
  */
 function udp_card_data_from_agenda( WP_Post $post ): ?array {
     $thumb_id = (int) get_post_thumbnail_id( $post->ID );
@@ -297,9 +302,9 @@ function udp_card_data_from_agenda( WP_Post $post ): ?array {
     }
 
     $eyebrow_text = '';
-    $tags = get_the_terms( $post->ID, 'post_tag' );
-    if ( ! is_wp_error( $tags ) && ! empty( $tags ) ) {
-        $eyebrow_text = $tags[0]->name;
+    $tipos = get_the_terms( $post->ID, 'tipo-evento' );
+    if ( ! is_wp_error( $tipos ) && ! empty( $tipos ) ) {
+        $eyebrow_text = $tipos[0]->name;
     }
 
     // get_field('fecha') returns the ACF "Return Format" (human-readable string like "3 Octubre 2017").
@@ -364,6 +369,8 @@ function udp_query_agenda( array $filters ): array {
     $paged    = max( 1, (int) ( $filters['paged'] ?? 1 ) );
     $limit    = max( 1, (int) ( $filters['limit'] ?? 6 ) );
     $exclude  = isset( $filters['exclude'] ) && is_array( $filters['exclude'] ) ? array_map( 'intval', $filters['exclude'] ) : array();
+    $order       = strtoupper( (string) ( $filters['order']       ?? 'DESC' ) );
+    $fecha_desde = trim( (string)       ( $filters['fecha_desde'] ?? '' ) );
 
     $args = array(
         'post_type'      => 'agenda',
@@ -372,7 +379,7 @@ function udp_query_agenda( array $filters ): array {
         'paged'          => $paged,
         'meta_key'       => 'fecha',
         'orderby'        => 'meta_value',
-        'order'          => 'DESC',
+        'order'          => in_array( $order, [ 'ASC', 'DESC' ], true ) ? $order : 'DESC',
     );
 
     $tax_query = array();
@@ -383,14 +390,26 @@ function udp_query_agenda( array $filters ): array {
         $args['tax_query'] = $tax_query;
     }
 
+    $meta_q = [];
     if ( $year > 0 ) {
-        $args['meta_query'] = array(
-            array(
-                'key'     => 'fecha',
-                'value'   => sprintf( '%04d', $year ),
-                'compare' => 'LIKE',
-            ),
-        );
+        $meta_q[] = [
+            'key'     => 'fecha',
+            'value'   => sprintf( '%04d', $year ),
+            'compare' => 'LIKE',
+        ];
+    }
+    if ( $fecha_desde !== '' ) {
+        $meta_q[] = [
+            'key'     => 'fecha',
+            'value'   => $fecha_desde,
+            'compare' => '>=',
+            'type'    => 'CHAR',
+        ];
+    }
+    if ( ! empty( $meta_q ) ) {
+        $args['meta_query'] = count( $meta_q ) > 1
+            ? array_merge( [ 'relation' => 'AND' ], $meta_q )
+            : $meta_q;
     }
 
     if ( $s !== '' ) {
@@ -741,7 +760,15 @@ function udp_card_data_from_carrera( WP_Post $post ): array {
  */
 function udp_query_carreras( array $filters ): array {
     $facultad = (int) ( $filters['facultad'] ?? 0 );
+    $carrera  = (int) ( $filters['carrera'] ?? '' );
     $s        = trim( (string) ( $filters['s'] ?? '' ) );
+
+    if ( $carrera ) {
+        $post = get_post($carrera);
+        $cards = array();
+        $cards[] = udp_card_data_from_carrera( $post );
+        return $cards;
+    }
 
     $args = array(
         'post_type'      => 'carrera-udp',

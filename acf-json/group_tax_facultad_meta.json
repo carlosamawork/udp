@@ -6,20 +6,78 @@
             "key": "field_60c07f1c20f2f",
             "label": "Color de facultad",
             "name": "color",
+            "aria-label": "",
             "type": "color_picker",
             "instructions": "Color identificativo de esta facultad. Se inyecta como CSS custom property --faculty-color en cards y plantillas relacionadas.",
-            "return_format": "string"
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "string",
+            "default_value": "",
+            "enable_opacity": false,
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
         },
         {
             "key": "field_60df346525d22",
             "label": "Imagen de la facultad",
             "name": "imagen_taxonomia",
+            "aria-label": "",
             "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
             "return_format": "url",
-            "library": "all"
+            "library": "all",
+            "preview_size": "medium",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_tax_facultad_siglas",
+            "label": "Siglas",
+            "name": "siglas",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ej: FAD, FIA, FCD. Se usa como eyebrow en tarjetas de Innovación e Investigación.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "maxlength": 10,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
-    "location": [[{ "param": "taxonomy", "operator": "==", "value": "facultad" }]],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "facultad"
+            }
+        ]
+    ],
     "menu_order": 0,
     "position": "normal",
     "style": "default",
@@ -27,5 +85,8 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Color y foto representativa de cada facultad. El color alimenta el sistema cromático del front."
+    "description": "Color y foto representativa de cada facultad. El color alimenta el sistema cromático del front.",
+    "show_in_rest": false,
+    "display_title": "",
+    "modified": 1779465515
 }

@@ -1,0 +1,200 @@
+<h2>Sección 8 — Cultura UDP: animación al hover</h2>
+<p class="subtitle">Layout: imagen izquierda (680px) + lista de categorías derecha. Al hover: item → naranja, imagen → cambia.</p>
+
+<style>
+.cultura-demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+.demo-box {
+  background: #111;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.demo-box.option { border: 2px solid transparent; }
+.demo-box.option.selected { border-color: #4539F2 !important; }
+.demo-label {
+  background: #1a1a2e;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #aaa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.demo-tag { font-size: 10px; padding: 2px 8px; border-radius: 9999px; }
+.rec-tag { background: #4539F2; color: white; }
+.alt-tag { background: #333; color: #aaa; }
+
+.cultura-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 260px;
+}
+.img-panel {
+  position: relative;
+  overflow: hidden;
+  background: #222;
+}
+.img-block {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+.img-block.img-1 { background: #4539F2; }
+.img-block.img-2 { background: #C81C0D; }
+.img-block.img-3 { background: #2a7a2a; }
+
+/* FADE demo */
+.fade-demo .img-block { opacity: 0; transition: opacity 0.4s ease; }
+.fade-demo .img-block.active { opacity: 1; }
+.fade-demo .img-block.exiting { opacity: 0; }
+
+/* SLIDE demo */
+.slide-demo .img-block { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s; opacity: 0; }
+.slide-demo .img-block.active { transform: translateX(0); opacity: 1; }
+.slide-demo .img-block.exiting { transform: translateX(-100%); opacity: 0; }
+
+.list-panel {
+  background: #232323;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 20px;
+  gap: 4px;
+}
+.list-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: color 0.2s;
+  color: rgba(255,255,255,0.4);
+}
+.list-item.active { color: #FF7064; }
+.list-item:hover { color: #FF7064; }
+.item-name { font-size: 18px; font-weight: 700; font-family: serif; }
+.item-count { font-size: 10px; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+
+.note-box {
+  background: #1a1a2e;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 4px;
+  border-left: 3px solid #4539F2;
+  line-height: 1.6;
+}
+.note-box strong { color: #fff; }
+
+.verdict {
+  background: #0f1a0f;
+  border: 1px solid #2a4a2a;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #6ee7b7;
+  line-height: 1.6;
+}
+</style>
+
+<div class="cultura-demo">
+
+  <!-- FADE -->
+  <div class="demo-box option" data-choice="fade" onclick="toggleSelect(this); runDemo('fade', this)">
+    <div class="demo-label">
+      <span>A — Fade (cross-dissolve)</span>
+      <span class="demo-tag rec-tag">Recomendado</span>
+    </div>
+    <div class="letter" style="display:none">A</div>
+    <div class="content" style="display:none"><h3>Fade</h3></div>
+    <div class="cultura-inner fade-demo" id="fade-demo">
+      <div class="img-panel">
+        <div class="img-block img-1 active">Imagen 1<br><small>Conferencias</small></div>
+        <div class="img-block img-2">Imagen 2<br><small>Publicaciones</small></div>
+        <div class="img-block img-3">Imagen 3<br><small>Exposiciones</small></div>
+      </div>
+      <div class="list-panel">
+        <div class="list-item active" data-idx="0" onclick="selectItem(event, 'fade', 0)"><span class="item-name">Conferencias</span><span class="item-count">+1600 archivos</span></div>
+        <div class="list-item" data-idx="1" onclick="selectItem(event, 'fade', 1)"><span class="item-name">Publicaciones</span><span class="item-count">+200 archivos</span></div>
+        <div class="list-item" data-idx="2" onclick="selectItem(event, 'fade', 2)"><span class="item-name">Exposiciones</span><span class="item-count">8 archivos</span></div>
+        <div class="list-item" data-idx="3" onclick="selectItem(event, 'fade', 3)"><span class="item-name">Documentales</span><span class="item-count">38 archivos</span></div>
+        <div class="list-item" data-idx="4" onclick="selectItem(event, 'fade', 4)"><span class="item-name">Podcasts</span><span class="item-count">+300 archivos</span></div>
+      </div>
+    </div>
+    <div class="note-box" style="border-radius:0;border-left:none;border-top:1px solid #222">
+      Imágenes apiladas (<code>position:absolute</code>). La activa pasa de <code>opacity:0</code> a <code>opacity:1</code>. Simple, elegante, sin saltos.
+    </div>
+  </div>
+
+  <!-- SLIDE -->
+  <div class="demo-box option" data-choice="slide" onclick="toggleSelect(this); runDemo('slide', this)">
+    <div class="demo-label">
+      <span>B — Slide (entrada lateral)</span>
+      <span class="demo-tag alt-tag">Alternativa</span>
+    </div>
+    <div class="letter" style="display:none">B</div>
+    <div class="content" style="display:none"><h3>Slide</h3></div>
+    <div class="cultura-inner slide-demo" id="slide-demo">
+      <div class="img-panel">
+        <div class="img-block img-1 active">Imagen 1<br><small>Conferencias</small></div>
+        <div class="img-block img-2">Imagen 2<br><small>Publicaciones</small></div>
+        <div class="img-block img-3">Imagen 3<br><small>Exposiciones</small></div>
+      </div>
+      <div class="list-panel">
+        <div class="list-item active" data-idx="0" onclick="selectItem(event, 'slide', 0)"><span class="item-name">Conferencias</span><span class="item-count">+1600 archivos</span></div>
+        <div class="list-item" data-idx="1" onclick="selectItem(event, 'slide', 1)"><span class="item-name">Publicaciones</span><span class="item-count">+200 archivos</span></div>
+        <div class="list-item" data-idx="2" onclick="selectItem(event, 'slide', 2)"><span class="item-name">Exposiciones</span><span class="item-count">8 archivos</span></div>
+        <div class="list-item" data-idx="3" onclick="selectItem(event, 'slide', 3)"><span class="item-name">Documentales</span><span class="item-count">38 archivos</span></div>
+        <div class="list-item" data-idx="4" onclick="selectItem(event, 'slide', 4)"><span class="item-name">Podcasts</span><span class="item-count">+300 archivos</span></div>
+      </div>
+    </div>
+    <div class="note-box" style="border-radius:0;border-left:none;border-top:1px solid #222">
+      Nueva imagen entra desde la derecha con <code>translateX</code>. Más dinámico, pero puede sentirse brusco si se hace hover rápido entre items.
+    </div>
+  </div>
+
+</div>
+
+<div class="verdict">
+  <strong>Recomendación:</strong> <strong>Fade</strong> — más elegante con imágenes que cambian en lista. El slide queda bien en sliders horizontales pero puede chocar visualmente al cambiar entre items de lista vertical. Ambos son CSS puro + ~20 líneas de vanilla JS.
+</div>
+
+<p style="margin-top:16px;font-size:13px;color:#666">Haz click en los items de la lista para ver la animación. Selecciona la opción que prefieras.</p>
+
+<script>
+function selectItem(e, type, idx) {
+  e.stopPropagation();
+  const demo = document.getElementById(type + '-demo');
+  if (!demo) return;
+  // Update list items
+  demo.querySelectorAll('.list-item').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  // Update images
+  const imgs = demo.querySelectorAll('.img-panel .img-block');
+  const imgIdx = idx % imgs.length;
+  imgs.forEach((img, i) => {
+    img.classList.remove('active', 'exiting');
+  });
+  imgs[imgIdx].classList.add('active');
+}
+function runDemo(type, box) {}
+</script>

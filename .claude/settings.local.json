@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Applications/MAMP/bin/php/php8.4.17/bin/php *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(npm run *)",
+      "Bash(sed -n '70,90p' /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/src/scss/templates/_home.scss)",
+      "Bash(sed -n '255,270p' /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/src/scss/templates/_home.scss)",
+      "Bash(sed -n '370,385p' /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/src/scss/templates/_home.scss)",
+      "mcp__plugin_figma_figma__get_design_context",
+      "Bash(python3 *)",
+      "Bash(php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/home/section-cifras.php)",
+      "Bash(php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/home/section-buscador-carreras.php)",
+      "Bash(php -l /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/home/section-facultades.php)",
+      "Bash(awk '{print $1}')",
+      "Bash(xargs -I{} git branch -a --contains {})"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -fd *)",
+      "Bash(git push --force *)",
+      "Bash(git push * --force *)",
+      "Bash(git push *--force*)",
+      "Bash(npm publish *)",
+      "Bash(npm publish)",
+      "Bash(docker system prune *)",
+      "Bash(docker system prune)"
+    ],
+    "defaultMode": "bypassPermissions"
+  }
+}
