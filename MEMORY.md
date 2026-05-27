@@ -1719,3 +1719,11 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 
 - Borrar manualmente la página de prueba ID 55353 "Historia (test simple-accordion)" desde WP Admin → Páginas (requiere MAMP corriendo).
 - Continuar con los pendientes habituales: imágenes S8, contenido S9, revisar S3/S5/S6 contra Figma, F10 polish, merge home → main.
+
+### 2026-05-27 — Colores de facultad de elsa_udp + fix JS (build perms)
+
+(Tras el merge del código home a main + el merge de datos de la home desde elsa_udp.)
+
+- **Colores de facultad**: la compañera personalizó el color de cada facultad (term meta `color`, campo ACF `field_60c07f1c20f2f`, taxonomía `facultad`). En `udp` todas tenían el default `#cca843`; en `elsa_udp` había 11 distintos. Traspasados a udp con `update_term_meta` (`/tmp/udp-import-faculty-colors.php`): Arquitectura #FC684A, Admin&Econ #6B85FA, CCSS&Hum #D9737F, Comunic&Letras #39AAAA, Derecho #C07DC5, Educación #FA8B14, Ingeniería #0EC881, Medicina #4193F6, Psicología #E8B717, Salud&Odont #14BDFF, Vespertinas #7A6454. (Reversible: el valor viejo uniforme era #cca843.)
+- **JS no cargaba**: `npm run build` fallaba por permisos (`dist/.vite/manifest.json` era de root) → quedaba un dist viejo sin los módulos home → JS roto. Resuelto con `mv dist .dist-root-bak* && npm run build`. Tras rebuild: `main.js` + chunks devuelven 200 y el manifest apunta al build nuevo.
+- **Recurrente sin resolver**: `dist/` (o `.vite/`) se vuelve propiedad de root repetidamente y rompe cada build. Sin proceso node root activo al revisar → causa probable: algún `sudo npm` o script de deploy externo. **Arreglo permanente pendiente**: `sudo chown -R 501:20 dist` + evitar build/watch con sudo. Borrar `.dist-root-bak*` acumuladas.
