@@ -1,83 +1,36 @@
 <?php
 /**
- * Front Page Template
+ * Front Page — Home UDP
  *
- * Se usa cuando tienes una "Página de inicio" estática en Ajustes > Lectura.
- * Combina Hero (si tiene ACF) + contenido del editor + Flexible Content.
+ * Orquestador de 11 secciones en orden fijo.
+ * El contenido de cada sección vive en template-parts/home/section-*.php.
  *
- * @package Starter_BS5
+ * @package starter-bs5
  */
 
 get_header();
-
-// Hero (si hay campos rellenados)
-$hero_title = starter_get_field('hero_title');
-$hero_image = starter_get_field('hero_image');
-
-if ($hero_title || $hero_image) :
-    $hero_subtitle = starter_get_field('hero_subtitle');
-    $hero_cta_text = starter_get_field('hero_cta_text');
-    $hero_cta_url  = starter_get_field('hero_cta_url');
-    ?>
-
-    <!-- <section class="hero-section position-relative overflow-hidden text-white"
-             <?php if ($hero_image) : ?>
-             style="background-image: url('<?php echo esc_url($hero_image['sizes']['hero-banner'] ?? $hero_image['url']); ?>');
-                    background-size: cover; background-position: center; min-height: 80vh;"
-             <?php else : ?>
-             style="background: linear-gradient(135deg, #0d6efd, #6610f2); min-height: 80vh;"
-             <?php endif; ?>>
-
-        <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"
-             style="background: rgba(0,0,0,0.45);"></div>
-
-        <div class="container position-relative d-flex align-items-center" style="min-height: 80vh;">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h1 class="display-2 fw-bold mb-3"><?php echo esc_html($hero_title); ?></h1>
-                    <?php if ($hero_subtitle) : ?>
-                        <p class="lead text-white text-opacity-90 mb-4"><?php echo esc_html($hero_subtitle); ?></p>
-                    <?php endif; ?>
-                    <?php if ($hero_cta_text && $hero_cta_url) : ?>
-                        <a href="<?php echo esc_url($hero_cta_url); ?>" class="btn btn-light btn-lg">
-                            <?php echo esc_html($hero_cta_text); ?>
-                        </a>
-                    <?php endif; ?>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-<?php endif; ?>
-
-<div class="content">
-    <img src="<?php echo bloginfo('template_url'); ?>/inc/home-image.png" alt="home" style="width: 100%;">
-</div>
-
-<!-- Contenido del editor -->
-<!-- <div class="container py-5">
-    <?php while (have_posts()) : the_post(); ?>
-        <?php
-        $content = get_the_content();
-        if ($content) : ?>
-            <div class="entry-content">
-                <?php the_content(); ?>
-            </div>
-        <?php endif; ?>
-    <?php endwhile; ?>
-
+?>
+<main id="main" class="udp-home">
     <?php
-    // Flexible Content (si está asignado a esta página)
-    if (have_rows('content_blocks')) : ?>
-        <div class="flexible-blocks mt-3">
-            <?php
-            while (have_rows('content_blocks')) : the_row();
-                get_template_part('template-parts/blocks/block', get_row_layout());
-            endwhile;
-            ?>
-        </div>
-    <?php endif; ?>
-</div> -->
+    $sections = [
+        'portada',
+        'buscador-carreras',
+        'noticias',
+        'facultades',
+        'eventos',
+        'destacado',
+        'vida-universitaria',
+        'cultura-udp',
+        'cultura-digital',
+        'innovacion',
+        'cifras',
+    ];
 
-<?php
-get_footer();
+    $home_args = [ 'post_id' => (int) get_option( 'page_on_front' ) ];
+
+    foreach ( $sections as $sec ) {
+        get_template_part( 'template-parts/home/section', $sec, $home_args );
+    }
+    ?>
+</main>
+<?php get_footer(); ?>

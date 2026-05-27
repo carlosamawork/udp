@@ -26,14 +26,7 @@
         }
 
         &--placeholder {
-            background:
-                repeating-linear-gradient(
-                    45deg,
-                    $dark-2,
-                    $dark-2 8px,
-                    rgba($white, 0.04) 8px,
-                    rgba($white, 0.04) 16px
-                );
+            @include udp-media-placeholder();
         }
     }
 
@@ -74,14 +67,7 @@
         .udp-card-mosaic__title { color: $dark-1; }
         .udp-card-mosaic__eyebrow { color: $dark-2; }
         .udp-card-mosaic__media--placeholder {
-            background:
-                repeating-linear-gradient(
-                    45deg,
-                    rgba($dark-1, 0.05),
-                    rgba($dark-1, 0.05) 8px,
-                    rgba($dark-1, 0.1) 8px,
-                    rgba($dark-1, 0.1) 16px
-                );
+            @include udp-media-placeholder('light');
         }
     }
 }

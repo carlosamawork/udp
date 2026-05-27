@@ -1,0 +1,90 @@
+<h2>Anuarios UDP — Lectura del Figma</h2>
+<p class="subtitle">Página de archivo de anuarios. Confirma o corrígeme.</p>
+
+<style>
+.layout-diagram { display: grid; grid-template-columns: 60px 1fr 44px; gap: 0; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid #222; margin: 20px 0; }
+.layout-header { grid-column: 1 / -1; background: #1a1a2e; padding: 10px 16px; font-size: 12px; color: #888; border-bottom: 1px solid #222; display: flex; align-items: center; gap: 8px; }
+.layout-sidenav { background: #0d0d1a; border-right: 1px solid #222; display: flex; flex-direction: column; align-items: center; padding: 16px 0; gap: 12px; }
+.nav-dot { width: 10px; height: 10px; border-radius: 50%; background: #333; border: 1px solid #555; }
+.nav-dot.active { background: #4539F2; }
+.layout-main { padding: 20px; }
+.page-title { font-size: 22px; font-weight: 700; color: #fff; font-family: serif; margin-bottom: 6px; }
+.breadcrumb { font-size: 11px; color: #555; margin-bottom: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.anuario-card { background: #1a1a1a; border-radius: 4px; overflow: hidden; }
+.anuario-cover { aspect-ratio: 317/391; background: linear-gradient(135deg, #C81C0D 0%, #4539F2 100%); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; color: white; font-family: serif; }
+.anuario-body { padding: 8px; }
+.anuario-title { font-size: 11px; color: #ccc; margin-bottom: 3px; }
+.anuario-date { font-size: 10px; color: #666; }
+.layout-share { background: #0d0d1a; border-left: 1px solid #222; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 8px; }
+.share-btn { width: 28px; height: 28px; border-radius: 50%; background: #1a1a2e; border: 1px solid #333; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #888; }
+.layout-footer { grid-column: 1 / -1; background: #000; padding: 12px 16px; font-size: 11px; color: #444; border-top: 1px solid #111; }
+
+.questions { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.q-item { background: #1a1a2e; border-radius: 6px; padding: 12px 16px; border-left: 3px solid #FCD303; }
+.q-item .q-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #FCD303; margin-bottom: 4px; font-weight: 700; }
+.q-item p { font-size: 13px; color: #ccc; margin: 0; line-height: 1.5; }
+
+.observation { background: #0f1a0f; border: 1px solid #2a4a2a; border-radius: 6px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #6ee7b7; }
+</style>
+
+<div class="layout-diagram">
+  <div class="layout-header">
+    <span style="color:#4539F2">■</span> Header (standard — componente global)
+  </div>
+
+  <div class="layout-sidenav">
+    <div class="nav-dot active" title="inicio"></div>
+    <div class="nav-dot" title="sección 2"></div>
+    <div class="nav-dot" title="sección 3"></div>
+    <div class="nav-dot" title="sección 4"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+  </div>
+
+  <div class="layout-main">
+    <div class="breadcrumb">Inicio › Conoce UDP › Anuarios UDP</div>
+    <div class="page-title">Anuarios UDP</div>
+    <p style="font-size:11px;color:#555;margin:0 0 14px">Subtítulo o descripción (si existe en Figma)</p>
+
+    <div class="grid-4">
+      <div class="anuario-card"><div class="anuario-cover">2025</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Diciembre 2025</div></div></div>
+      <div class="anuario-card"><div class="anuario-cover">2023</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Octubre 2023</div></div></div>
+      <div class="anuario-card"><div class="anuario-cover">2022</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Octubre 2022</div></div></div>
+      <div class="anuario-card"><div class="anuario-cover">2021</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Octubre 2021</div></div></div>
+      <div class="anuario-card"><div class="anuario-cover">2020</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Octubre 2020</div></div></div>
+      <div class="anuario-card"><div class="anuario-cover">2019</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Octubre 2019</div></div></div>
+      <div class="anuario-card"><div class="anuario-cover">2018</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Octubre 2018</div></div></div>
+      <div class="anuario-card"><div class="anuario-cover">2017</div><div class="anuario-body"><div class="anuario-title">Anuario UDP</div><div class="anuario-date">Octubre 2017</div></div></div>
+    </div>
+    <p style="font-size:11px;color:#444;margin:10px 0 0">… más filas hasta 2011 (14 anuarios total en Figma)</p>
+  </div>
+
+  <div class="layout-share">
+    <div class="share-btn">↗</div>
+    <div class="share-btn">f</div>
+    <div class="share-btn">in</div>
+    <div class="share-btn">✉</div>
+  </div>
+
+  <div class="layout-footer">Footer (componente global)</div>
+</div>
+
+<div class="observation">
+  <strong>Lo que veo:</strong> Página de archivo simple. Grid 4 columnas, cards con imagen de portada (portrait 317×391) + título + fecha. 14 anuarios en Figma (2025 → 2011). Barra lateral izquierda con dots de navegación in-page (posiblemente componente reutilizado de otras páginas). Botón de compartir flotante derecha.
+</div>
+
+<div class="questions">
+  <div class="q-item">
+    <div class="q-label">Pregunta 1 — Fuente de datos</div>
+    <p>¿Los anuarios son un <strong>CPT existente</strong> en la DB del WP antiguo, o los cargamos como <strong>ACF repeater</strong> (el cliente sube cada anuario manualmente desde el admin)?</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">Pregunta 2 — Acción del card</div>
+    <p>Al hacer click en un anuario, ¿<strong>descarga/abre un PDF</strong>, va a una <strong>URL externa</strong>, o hay una <strong>página de detalle</strong> dentro del CMS?</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">Pregunta 3 — Barra lateral dots</div>
+    <p>¿La barra de navegación lateral (dots circulares) aplica a esta página, o es un componente de otras páginas (Gobernanza, Consejo Académico) que en Anuarios no tiene sentido?</p>
+  </div>
+</div>

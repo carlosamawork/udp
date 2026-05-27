@@ -1,0 +1,10 @@
+.udp-media-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    @include udp-media-placeholder('dark');
+
+    &--light {
+        @include udp-media-placeholder('light');
+    }
+}
