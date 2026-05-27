@@ -1,0 +1,132 @@
+<h2>Historia — Lectura del Figma</h2>
+<p class="subtitle">Página de contenido editorial. 3 columnas + "También te puede interesar". Comparte estructura con otras páginas del sitio.</p>
+
+<style>
+.layout-wrap { background: #111; border-radius: 8px; border: 1px solid #222; overflow: hidden; margin: 20px 0; }
+.layout-hdr { background: #1a1a2e; padding: 10px 16px; font-size: 12px; color: #888; border-bottom: 1px solid #222; }
+.layout-body { display: grid; grid-template-columns: 44px 1fr 44px; }
+.layout-share-l { background: #0d0d1a; border-right: 1px solid #222; display: flex; flex-direction: column; align-items: center; padding: 16px 0; gap: 10px; }
+.layout-share-r { background: #0d0d1a; border-left: 1px solid #222; display: flex; flex-direction: column; align-items: center; padding: 16px 0; gap: 10px; }
+.share-dot { width: 8px; height: 8px; border-radius: 50%; background: #333; }
+.layout-content { padding: 20px; }
+.breadcrumb { font-size: 11px; color: #555; margin-bottom: 8px; }
+.page-title { font-size: 24px; font-weight: 700; color: #fff; font-family: serif; margin-bottom: 20px; }
+
+.three-col { display: grid; grid-template-columns: 200px 1fr 200px; gap: 16px; margin-bottom: 24px; }
+.col-left, .col-right { display: flex; flex-direction: column; gap: 10px; }
+.tarjeta { background: #1a1a2e; border-radius: 6px; overflow: hidden; }
+.tarjeta-img { height: 110px; background: linear-gradient(135deg, #C81C0D, #4539F2); }
+.tarjeta-body { padding: 8px; font-size: 11px; color: #888; }
+.tarjeta-big { background: #1a1a2e; border-radius: 6px; overflow: hidden; }
+.tarjeta-big-img { height: 200px; background: linear-gradient(135deg, #4539F2, #2a7a2a); }
+.tarjeta-big-body { padding: 8px; font-size: 11px; color: #888; }
+
+.col-center { }
+.intro-text { font-size: 12px; color: #aaa; line-height: 1.6; margin-bottom: 12px; border-left: 3px solid #4539F2; padding-left: 10px; }
+.accordion-mock { border: 1px solid #333; border-radius: 4px; overflow: hidden; }
+.acc-item { border-bottom: 1px solid #222; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #aaa; cursor: pointer; }
+.acc-item.open { color: #FF7064; }
+.acc-item:last-child { border-bottom: none; }
+.acc-content { background: #0d0d1a; padding: 8px 12px; font-size: 11px; color: #666; display: none; }
+.acc-item.open + .acc-content { display: block; }
+
+.related-section { background: #0d0d1a; border-radius: 6px; padding: 14px; margin-top: 16px; }
+.related-title { font-size: 16px; font-weight: 700; color: #fff; font-family: serif; margin-bottom: 12px; }
+.related-cards { display: flex; gap: 10px; overflow: hidden; }
+.related-card { min-width: 130px; background: #1a1a2e; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+.related-card-img { height: 80px; background: linear-gradient(135deg, #333, #555); }
+.related-card-body { padding: 6px; font-size: 10px; color: #888; }
+
+.layout-ftr { background: #000; padding: 10px 16px; font-size: 11px; color: #444; border-top: 1px solid #111; }
+
+.highlight-box { background: #1a2a1a; border: 1px solid #2a5a2a; border-radius: 6px; padding: 14px 16px; margin: 14px 0; font-size: 13px; color: #6ee7b7; line-height: 1.6; }
+.highlight-box strong { color: #fff; }
+
+.questions { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.q-item { background: #1a1a2e; border-radius: 6px; padding: 12px 16px; border-left: 3px solid #FCD303; }
+.q-item .q-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #FCD303; margin-bottom: 4px; font-weight: 700; }
+.q-item p { font-size: 13px; color: #ccc; margin: 0; line-height: 1.5; }
+.tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 9999px; font-weight: 700; margin-left: 6px; }
+.tag-green { background: #14532d; color: #6ee7b7; }
+.tag-yellow { background: #713f12; color: #fde68a; }
+</style>
+
+<div class="layout-wrap">
+  <div class="layout-hdr">▤ Historia — 1440×1984px</div>
+  <div class="layout-body">
+    <div class="layout-share-l">
+      <div class="share-dot" style="background:#333;border:1px solid #555;width:10px;height:10px;border-radius:2px"></div>
+    </div>
+    <div class="layout-content">
+      <div class="breadcrumb">Inicio › Conoce UDP › Historia</div>
+      <div class="page-title">Historia</div>
+
+      <div class="three-col">
+        <div class="col-left">
+          <div class="tarjeta">
+            <div class="tarjeta-img"></div>
+            <div class="tarjeta-body">Tarjeta izquierda<br>"Introducción" label</div>
+          </div>
+        </div>
+        <div class="col-center">
+          <p class="intro-text">La UDP fue fundada el 4 de octubre de 1982. Nace como una fundación de derecho privado sin fines de lucro derivada del Instituto Profesional IPEVE...</p>
+          <p class="intro-text">El inicio de sus actividades docentes se produjo en marzo de 1983 con tres Facultades: Ciencias Administrativas, Derecho y Psicología...</p>
+          <div class="accordion-mock">
+            <div class="acc-item open">Estructura académica <span>−</span></div>
+            <div class="acc-content">Contenido del acordeón...</div>
+            <div class="acc-item">Organización institucional <span>+</span></div>
+            <div class="acc-item">Designación de autoridades <span>+</span></div>
+            <div class="acc-item">Carrera académica <span>+</span></div>
+          </div>
+        </div>
+        <div class="col-right">
+          <div class="tarjeta-big">
+            <div class="tarjeta-big-img"></div>
+            <div class="tarjeta-big-body">Tarjeta derecha (318×488)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="related-section">
+        <div class="related-title">También te puede interesar</div>
+        <div class="related-cards">
+          <div class="related-card"><div class="related-card-img"></div><div class="related-card-body">Página relacionada</div></div>
+          <div class="related-card"><div class="related-card-img"></div><div class="related-card-body">Página relacionada</div></div>
+          <div class="related-card"><div class="related-card-img"></div><div class="related-card-body">Página relacionada</div></div>
+          <div class="related-card"><div class="related-card-img"></div><div class="related-card-body">Página relacionada</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="layout-share-r">
+      <div class="share-dot" style="background:#4539F2;width:10px;height:10px;border-radius:50%"></div>
+      <div class="share-dot"></div>
+      <div class="share-dot"></div>
+      <div class="share-dot"></div>
+    </div>
+  </div>
+  <div class="layout-ftr">Footer (componente global)</div>
+</div>
+
+<div class="highlight-box">
+  <strong>Observación clave:</strong> El acordeón ya existe <span class="tag tag-green">F7b ✓</span>. El breadcrumb ya existe <span class="tag tag-green">F3 ✓</span>. El share button ya existe <span class="tag tag-green">F4b ✓</span>. La sección "También te puede interesar" es nueva pero es básicamente un Swiper de páginas — patrón conocido. <br><br>
+  Los dots del menú lateral son el mismo error que en Anuarios — ignorar.
+</div>
+
+<div class="questions">
+  <div class="q-item">
+    <div class="q-label">Pregunta 1 — ¿Template reutilizable?</div>
+    <p>¿Esta estructura (3-col texto + acordeón + tarjetas laterales + relacionados) se repite en otras páginas como <em>Gobernanza</em>, <em>Forma de Gobierno</em>? Si es así, conviene hacer un template genérico <code>page-flexible.php</code> extendido o un template propio reutilizable.</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">Pregunta 2 — Las "Tarjetas" laterales</div>
+    <p>¿Qué contienen las tarjetas de las columnas izquierda y derecha? En el Figma son instancias de "Tarjeta" (imagen + texto). ¿Son links a otras páginas, imágenes decorativas, o algo específico de Historia?</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">Pregunta 3 — "También te puede interesar"</div>
+    <p>¿Las páginas relacionadas se seleccionan manualmente (ACF) o de forma automática (páginas hermanas / hijas en la jerarquía WP)?</p>
+  </div>
+  <div class="q-item">
+    <div class="q-label">Pregunta 4 — Contenido del acordeón</div>
+    <p>El texto de introducción y los ítems del acordeón (Estructura académica, Organización institucional…) ¿los gestiona el cliente desde el admin? ¿O son texto fijo que no cambia?</p>
+  </div>
+</div>

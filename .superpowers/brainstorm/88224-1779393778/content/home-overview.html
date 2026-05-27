@@ -1,0 +1,166 @@
+<h2>F9 Home — Lectura del Figma</h2>
+<p class="subtitle">Esto es lo que entendí de las 11 secciones. Confirma o corrígeme antes de avanzar.</p>
+
+<style>
+.sections-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.section-row { display: grid; grid-template-columns: 32px 180px 1fr 160px; gap: 16px; align-items: start; padding: 14px 18px; background: #1a1a2e; border-radius: 8px; border-left: 4px solid #4539F2; }
+.section-row.dynamic { border-left-color: #C81C0D; }
+.section-row.hybrid { border-left-color: #FCD303; }
+.section-num { font-size: 22px; font-weight: 700; color: #4539F2; font-family: serif; }
+.section-row.dynamic .section-num { color: #C81C0D; }
+.section-row.hybrid .section-num { color: #FCD303; }
+.section-name { font-weight: 700; font-size: 15px; color: #fff; }
+.section-desc { font-size: 13px; color: #aaa; line-height: 1.5; }
+.section-source { font-size: 12px; background: rgba(255,255,255,0.08); padding: 4px 8px; border-radius: 4px; color: #ccc; text-align: center; }
+.legend { display: flex; gap: 20px; margin-bottom: 16px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #aaa; }
+.legend-dot { width: 12px; height: 12px; border-radius: 2px; }
+h3.section-title { color: #fff; margin: 0 0 4px; font-size: 15px; }
+</style>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#4539F2"></div> ACF estático</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#C81C0D"></div> Auto-source (CPT/DB)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#FCD303"></div> ACF + auto-source</div>
+</div>
+
+<div class="sections-list">
+
+  <div class="section-row">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-name">Portada / Hero</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">~760px alto</div>
+    </div>
+    <div class="section-desc">
+      Título grande (Arizona Flare) + botón CTA + imagen de fondo grande.<br>
+      <em>¿Es estático o slider con varias slides?</em>
+    </div>
+    <div class="section-source">ACF: título, CTA, imagen bg</div>
+  </div>
+
+  <div class="section-row">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-name">Buscador de carreras</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">3 inputs + botón</div>
+    </div>
+    <div class="section-desc">
+      3 dropdowns/inputs (¿Facultad? ¿Área? ¿Modalidad?) + botón Buscar.<br>
+      Redirige a <code>/carreras/</code> con filtros aplicados.
+    </div>
+    <div class="section-source">Form GET → /carreras/?udp_facultad=…</div>
+  </div>
+
+  <div class="section-row dynamic">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-name">Noticias</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">Carrusel horizontal</div>
+    </div>
+    <div class="section-desc">
+      "UDP hoy / Noticias". 1 card featured grande (432×580) izquierda + columna derecha con 2×2 cards compactas (imagen 201px + texto). Arrows prev/next.
+    </div>
+    <div class="section-source">post_type=post (últimas 5)</div>
+  </div>
+
+  <div class="section-row dynamic">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-name">Facultades</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">Marquee / huincha</div>
+    </div>
+    <div class="section-desc">
+      Lista de 11 facultades en tipografía Arizona Flare grande, superpuestas con escala variable. Visual tipo marquee o texto estático escalonado.
+    </div>
+    <div class="section-source">Taxonomía: facultad</div>
+  </div>
+
+  <div class="section-row dynamic">
+    <div class="section-num">5</div>
+    <div>
+      <div class="section-name">Próximos eventos</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">Cards + lista tabla</div>
+    </div>
+    <div class="section-desc">
+      2 cards grandes (imagen 232×250 + body) + lista de 5 eventos tipo tabla (tipo | título | fecha). Botón "Ver todos los eventos".
+    </div>
+    <div class="section-source">post_type=agenda (fecha ≥ hoy)</div>
+  </div>
+
+  <div class="section-row hybrid">
+    <div class="section-num">6</div>
+    <div>
+      <div class="section-name">Destacado azul + foto</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">"Postítulos" en Figma</div>
+    </div>
+    <div class="section-desc">
+      2 columnas: texto grande editorial (Arizona Flare, ~3 líneas) + descripción + link "Leer más" | imagen cuadrada derecha. Fondo probablemente azul/oscuro.
+    </div>
+    <div class="section-source">ACF: título, descripción, link, imagen</div>
+  </div>
+
+  <div class="section-row hybrid">
+    <div class="section-num">7</div>
+    <div>
+      <div class="section-name">Foto grande + Links</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">"Vida Universitaria"</div>
+    </div>
+    <div class="section-desc">
+      Izquierda: título + descripción + 3 links verticales. Derecha: imagen o video embed (894×503). Fondo oscuro.
+    </div>
+    <div class="section-source">ACF: título, texto, 3 links, imagen/embed</div>
+  </div>
+
+  <div class="section-row dynamic">
+    <div class="section-num">8</div>
+    <div>
+      <div class="section-name">Cultura UDP</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">Slider de cards</div>
+    </div>
+    <div class="section-desc">
+      Título "Cultura UDP" + descripción + carrusel de cards con imagen + texto.<br>
+      <em>¿De qué CPT/categoría vienen las cards?</em>
+    </div>
+    <div class="section-source">¿agenda filtrado? ¿posts?</div>
+  </div>
+
+  <div class="section-row dynamic">
+    <div class="section-num">9</div>
+    <div>
+      <div class="section-name">Cultura Digital</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">Carrusel ancho variable</div>
+    </div>
+    <div class="section-desc">
+      Imágenes de anchos distintos (372px, 601px, 211px…) + texto/título debajo. Sin fondo de sección — las fotos son el fondo visual.
+    </div>
+    <div class="section-source">¿agenda? ¿posts? ¿manual ACF?</div>
+  </div>
+
+  <div class="section-row dynamic">
+    <div class="section-num">10</div>
+    <div>
+      <div class="section-name">Innovación e Investigación</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">Slider masonry</div>
+    </div>
+    <div class="section-desc">
+      Carrusel de cards con eyebrow (facultad), imagen de altura variable, título, texto. Efecto pseudo-masonry vertical. Botón "Ver todo".
+    </div>
+    <div class="section-source">post_type=post, filtrado por categoría</div>
+  </div>
+
+  <div class="section-row hybrid">
+    <div class="section-num">11</div>
+    <div>
+      <div class="section-name">Cifras</div>
+      <div style="font-size:11px;color:#888;margin-top:2px">Slider números + citas</div>
+    </div>
+    <div class="section-desc">
+      Carrusel horizontal: números grandes (10.000, 1º, 4º) + descripción + fuente (ranking THE, QS). También hay "Cita" instances (posiblemente frases destacadas con comillas).
+    </div>
+    <div class="section-source">ACF repeater (gestionado manualmente)</div>
+  </div>
+
+</div>
+
+<p style="margin-top:24px;font-size:13px;color:#666;">¿Ves algo incorrecto o quieres ajustar alguna descripción antes de seguir?</p>

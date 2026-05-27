@@ -1,0 +1,154 @@
+<h2>Sección 1 — Hero: animación de la imagen al scroll</h2>
+<p class="subtitle">La imagen empieza con el ancho del bloque A (~580px) y se expande a pantalla completa al hacer scroll. Tres enfoques posibles.</p>
+
+<style>
+.hero-preview {
+  display: flex;
+  gap: 32px;
+  margin: 24px 0;
+  align-items: flex-start;
+}
+.hero-state {
+  flex: 1;
+  background: #0d0d1a;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #222;
+}
+.hero-state h4 { color: #fff; margin: 0 0 12px; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+.hero-canvas {
+  background: #111;
+  border-radius: 4px;
+  padding: 12px;
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+.hero-text-block {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 45%;
+  height: 100px;
+  background: rgba(69,57,242,0.15);
+  border: 1px dashed #4539F2;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px;
+}
+.hero-text-block .mock-title { font-size: 11px; color: #8888ff; font-weight: 700; margin-bottom: 6px; }
+.hero-text-block .mock-btn { width: 60px; height: 12px; background: #4539F2; border-radius: 9999px; }
+.hero-img-narrow {
+  position: absolute;
+  left: 8px;
+  top: 116px;
+  width: 45%;
+  height: 52px;
+  background: #C81C0D;
+  border-radius: 4px;
+  opacity: 0.7;
+}
+.hero-img-narrow .label-inside { font-size: 9px; color: white; padding: 4px; }
+.hero-img-full {
+  position: absolute;
+  left: 0;
+  top: 80px;
+  width: 100%;
+  height: 90px;
+  background: #C81C0D;
+  border-radius: 4px;
+  opacity: 0.7;
+}
+.arrow-down { text-align: center; font-size: 22px; margin: 6px 0; color: #555; }
+.approach-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 20px 0; }
+.approach { background: #1a1a2e; border-radius: 8px; padding: 16px; border: 2px solid transparent; cursor: pointer; transition: border-color 0.2s; }
+.approach.recommended { border-color: #4539F2; }
+.approach h3 { color: #fff; margin: 0 0 8px; font-size: 15px; }
+.approach .tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 9999px; margin-bottom: 10px; font-weight: 700; text-transform: uppercase; }
+.tag-rec { background: #4539F2; color: white; }
+.tag-alt { background: #333; color: #aaa; }
+.tag-heavy { background: #C81C0D; color: white; }
+.approach p { font-size: 13px; color: #aaa; line-height: 1.5; margin: 0 0 10px; }
+.pros { font-size: 12px; color: #6ee7b7; margin-bottom: 4px; }
+.cons { font-size: 12px; color: #fca5a5; }
+.note { font-size: 12px; color: #666; background: #111; border-radius: 4px; padding: 8px 12px; margin-top: 16px; border-left: 3px solid #333; }
+</style>
+
+<div class="section">
+  <h3>El efecto</h3>
+  <div class="hero-preview">
+    <div class="hero-state">
+      <h4>Estado inicial (antes del scroll)</h4>
+      <div class="hero-canvas">
+        <div class="hero-text-block">
+          <div class="mock-title">Universidad realiza<br>bienvenida 2026</div>
+          <div class="mock-btn"></div>
+        </div>
+        <div class="hero-img-narrow">
+          <div class="label-inside">imagen (~580px)</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#666;margin:8px 0 0">Imagen alineada con el texto, ancho ~580px</p>
+    </div>
+    <div style="display:flex;align-items:center;font-size:28px;color:#555;padding-top:60px">→</div>
+    <div class="hero-state">
+      <h4>Estado final (al hacer scroll)</h4>
+      <div class="hero-canvas">
+        <div class="hero-text-block">
+          <div class="mock-title">Universidad realiza<br>bienvenida 2026</div>
+          <div class="mock-btn"></div>
+        </div>
+        <div class="hero-img-full">
+          <div class="label-inside" style="font-size:9px;color:white;padding:4px">imagen → 100vw</div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#666;margin:8px 0 0">Imagen se expande a ancho completo de pantalla</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Tres enfoques de implementación</h3>
+  <div class="approach-grid">
+
+    <div class="approach recommended option" data-choice="a" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>CSS Scroll-driven</h3>
+        <span class="tag tag-rec">Recomendado</span>
+        <p>Animación nativa del browser. <code>animation-timeline: scroll()</code> expande el <code>clip-path</code> o el <code>width</code> proporcionalmente al scroll. Cero JS, cero dependencias.</p>
+        <div class="pros">✓ Sin dependencias • 0KB JS extra<br>✓ 60fps garantizado (browser nativo)<br>✓ Código muy simple</div>
+        <div class="cons">✗ Chrome 115+ / Safari 17+ (~82% global)<br>✗ Firefox: flag experimental</div>
+      </div>
+    </div>
+
+    <div class="approach option" data-choice="b" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>Vanilla JS + rAF</h3>
+        <span class="tag tag-alt">Alternativa ligera</span>
+        <p>Listener de scroll con <code>requestAnimationFrame</code>. Calcula el progreso (0→1) y aplica <code>clip-path</code> directamente en el estilo del elemento. ~25 líneas.</p>
+        <div class="pros">✓ Sin dependencias • ~1KB JS<br>✓ Compatible 100% browsers<br>✓ Patrón consistente con el resto del tema</div>
+        <div class="cons">✗ Más verboso que CSS<br>✗ Hay que gestionar el cleanup</div>
+      </div>
+    </div>
+
+    <div class="approach option" data-choice="c" onclick="toggleSelect(this)">
+      <div class="letter">C</div>
+      <div class="content">
+        <h3>GSAP ScrollTrigger</h3>
+        <span class="tag tag-heavy">Más potente / más pesado</span>
+        <p>La librería de referencia para scroll animations. <code>gsap.fromTo()</code> + <code>scrub: true</code>. Máxima precisión y control, ideal si hay más animaciones complejas en el sitio.</p>
+        <div class="pros">✓ API muy ergonómica<br>✓ Fácil de extender a otras secciones<br>✓ Soporte excelente</div>
+        <div class="cons">✗ +37KB gzipped (nueva dependencia)<br>✗ Overkill si solo es 1 animación</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <strong>Mi recomendación:</strong> <strong>Opción A (CSS)</strong> como implementación principal + <strong>Opción B (vanilla JS)</strong> como fallback para Firefox/browsers sin soporte. La combinación da cobertura total sin añadir dependencias. Si más adelante aparecen más animaciones complejas (parallax, stagger, etc.) se puede incorporar GSAP solo entonces.
+  </div>
+</div>
