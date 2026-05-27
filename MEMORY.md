@@ -1727,3 +1727,20 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 - **Colores de facultad**: la compañera personalizó el color de cada facultad (term meta `color`, campo ACF `field_60c07f1c20f2f`, taxonomía `facultad`). En `udp` todas tenían el default `#cca843`; en `elsa_udp` había 11 distintos. Traspasados a udp con `update_term_meta` (`/tmp/udp-import-faculty-colors.php`): Arquitectura #FC684A, Admin&Econ #6B85FA, CCSS&Hum #D9737F, Comunic&Letras #39AAAA, Derecho #C07DC5, Educación #FA8B14, Ingeniería #0EC881, Medicina #4193F6, Psicología #E8B717, Salud&Odont #14BDFF, Vespertinas #7A6454. (Reversible: el valor viejo uniforme era #cca843.)
 - **JS no cargaba**: `npm run build` fallaba por permisos (`dist/.vite/manifest.json` era de root) → quedaba un dist viejo sin los módulos home → JS roto. Resuelto con `mv dist .dist-root-bak* && npm run build`. Tras rebuild: `main.js` + chunks devuelven 200 y el manifest apunta al build nuevo.
 - **Recurrente sin resolver**: `dist/` (o `.vite/`) se vuelve propiedad de root repetidamente y rompe cada build. Sin proceso node root activo al revisar → causa probable: algún `sudo npm` o script de deploy externo. **Arreglo permanente pendiente**: `sudo chown -R 501:20 dist` + evitar build/watch con sudo. Borrar `.dist-root-bak*` acumuladas.
+
+### 2026-05-27 — Fixes S4 Facultades + fix S5 Eventos lista
+
+#### S4 Facultades — links a páginas, no al taxonomy archive
+- **Problema**: `section-facultades.php` usaba `get_term_link($fac)` → enlazaba al taxonomy archive de cada facultad.
+- **Solución**: pre-fetch de las páginas hijas de `pregrado-y-formacion-general/facultades/` indexadas por `post_name` (slug). Para cada término de `facultad`, se matchea por `$fac->slug === $child->post_name` → link a `get_permalink($child)`. Fallback a `get_term_link()` si no existe la página.
+- La fuente de datos sigue siendo `get_terms('facultad')` (nombre + color ACF). Son 3 queries en total.
+
+#### S5 Agenda archive — vista lista, columnas siempre presentes
+- **Problema**: en modo lista (`grid-template-columns: 140px 1fr 200px`), los `<?php if ($eyebrow): ?>` y `<?php if ($fecha_d): ?>` condicionales omitían elementos del DOM, desplazando el título y la fecha a columnas incorrectas.
+- **Solución**: en el bloque `list` de `card-evento.php`, `<span class="udp-card-evento__eyebrow">` y `<time class="udp-card-evento__date">` se renderizan siempre (vacíos si no hay dato). También se cambió `$fecha_d` por `$datetime_combined` en la columna de fecha para incluir la hora cuando exista.
+
+### 2026-05-27 — Cierre de sesión
+
+- Dos fixes puntuales: S4 links correctos a páginas de facultad + S5 lista de eventos con columnas siempre alineadas.
+- Rama `main` en estado limpio tras commit.
+- Pendientes habituales: imágenes S8 Cultura UDP, contenido S9 Cultura Digital, ACF sync link externo (S1/S6/S7/S9), revisar S3/S5/S6 contra Figma, F10 polish, F11 switch tema principal.

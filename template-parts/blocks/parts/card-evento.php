@@ -32,13 +32,9 @@ $datetime_combined = trim( $fecha_d . ( $hora_d ? ', ' . $hora_d : '' ) );
 ?>
 <?php if ( $mode === 'list' ) : ?>
 <a href="<?php echo esc_url( $href ); ?>" class="<?php echo esc_attr( $class ); ?>">
-    <?php if ( $eyebrow ) : ?>
-        <span class="udp-card-evento__eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
-    <?php endif; ?>
+    <span class="udp-card-evento__eyebrow"><?php echo esc_html( $eyebrow ); ?></span>
     <h3 class="udp-card-evento__title"><?php echo esc_html( $titulo ); ?></h3>
-    <?php if ( $fecha_d ) : ?>
-        <time class="udp-card-evento__date" datetime="<?php echo esc_attr( $fecha_iso ); ?>"><?php echo esc_html( $fecha_d ); ?></time>
-    <?php endif; ?>
+    <time class="udp-card-evento__date" datetime="<?php echo esc_attr( $fecha_iso ); ?>"><?php echo esc_html( $datetime_combined ); ?></time>
 </a>
 <?php else : ?>
 <a href="<?php echo esc_url( $href ); ?>" class="<?php echo esc_attr( $class ); ?>">
