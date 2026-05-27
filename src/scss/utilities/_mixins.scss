@@ -170,3 +170,29 @@
         color: var(--faculty-color);
     }
 }
+
+// --------------------------------------------------------------------------
+// Media placeholder: diagonal hatching sutil para slots de imagen vacíos.
+// $theme: 'dark' (default, sobre fondo oscuro) | 'light' (sobre fondo claro).
+// Uso standalone: <figure class="udp-media-placeholder"> (llena el padre).
+// Uso en modifier BEM: &--placeholder { @include udp-media-placeholder(); }
+// --------------------------------------------------------------------------
+@mixin udp-media-placeholder($theme: 'dark') {
+    @if $theme == 'light' {
+        background: repeating-linear-gradient(
+            45deg,
+            rgba($dark-1, 0.05),
+            rgba($dark-1, 0.05) 8px,
+            rgba($dark-1, 0.1) 8px,
+            rgba($dark-1, 0.1) 16px
+        );
+    } @else {
+        background: repeating-linear-gradient(
+            45deg,
+            $dark-2,
+            $dark-2 8px,
+            rgba($white, 0.04) 8px,
+            rgba($white, 0.04) 16px
+        );
+    }
+}

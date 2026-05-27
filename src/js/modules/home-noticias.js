@@ -5,27 +5,24 @@
 import { qs } from '@utils/dom';
 
 export async function initHomeNoticias() {
-    const el = qs( '.js-home-noticias-swiper' );
-    if ( ! el ) return;
+    const el = qs('.js-home-noticias-swiper');
+    if (!el) return;
 
-    const { default: Swiper }                = await import( 'swiper' );
-    const { Navigation, Keyboard, FreeMode } = await import( 'swiper/modules' );
-    await import( 'swiper/css' );
+    const section = el.closest('.udp-home-noticias');
 
-    new Swiper( el, {
-        modules: [ Navigation, Keyboard, FreeMode ],
+    const { default: Swiper } = await import('swiper');
+    const { Navigation, Keyboard } = await import('swiper/modules');
+    await import('swiper/css');
+
+    new Swiper(el, {
+        modules: [Navigation, Keyboard],
         slidesPerView: 'auto',
-        spaceBetween: 24,
-        freeMode: { enabled: true, momentum: true },
+        spaceBetween: 30,
         keyboard: { enabled: true },
         grabCursor: true,
         navigation: {
-            nextEl: el.querySelector( '.swiper-button-next' ),
-            prevEl: el.querySelector( '.swiper-button-prev' ),
+            nextEl: section ? section.querySelector('.js-noticias-next') : null,
+            prevEl: section ? section.querySelector('.js-noticias-prev') : null,
         },
-        breakpoints: {
-            0:   { spaceBetween: 12, slidesOffsetBefore: 16, slidesOffsetAfter: 16 },
-            768: { spaceBetween: 24, slidesOffsetBefore: 40, slidesOffsetAfter: 40 },
-        },
-    } );
+    });
 }

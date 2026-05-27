@@ -4,26 +4,28 @@
  *
  * ACF fields: cd_titulo, cd_texto, cd_items (repeater).
  * Sub-fields de cd_items: cd_item_titulo, cd_item_imagen (array),
- *                         cd_item_recuento (text), cd_item_url (url).
+ *                         cd_item_recuento (text), cd_item_url (url), cd_item_externo (bool).
  *
  * JS: home-cultura-digital.js — Swiper freeMode con drag libre.
  *
  * @package starter-bs5
  */
 
-$titulo = get_field( 'cd_titulo' );
-$texto  = get_field( 'cd_texto' );
-$items  = get_field( 'cd_items' );
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
+$titulo = get_field( 'cd_titulo', $post_id );
+$texto  = get_field( 'cd_texto', $post_id );
+$items  = get_field( 'cd_items', $post_id );
 
 if ( ! $titulo && ! $texto && empty( $items ) ) {
     return;
 }
 ?>
 <section class="udp-home-cultura-digital">
-    <div class="udp-home-cultura-digital__layout">
+    <div class="udp-home-cultura-digital__layout container">
         <div class="udp-home-cultura-digital__sidebar">
             <?php if ( $titulo ) : ?>
-                <h2 class="udp-home-cultura-digital__titulo"><?php echo esc_html( $titulo ); ?></h2>
+                <h2 class="udp-home__titulo"><?php echo esc_html( $titulo ); ?></h2>
             <?php endif; ?>
             <?php if ( $texto ) : ?>
                 <p class="udp-home-cultura-digital__texto"><?php echo esc_html( $texto ); ?></p>
@@ -43,8 +45,7 @@ if ( ! $titulo && ! $texto && empty( $items ) ) {
                             <a
                                 href="<?php echo esc_url( $card_url ); ?>"
                                 class="udp-home-cultura-digital__card"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                <?php if ( ! empty( $item['cd_item_externo'] ) ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
                             >
                                 <?php if ( $img_url ) : ?>
                                     <div class="udp-home-cultura-digital__card-img">

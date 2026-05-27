@@ -4,8 +4,33 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Common
+// -----------------------------------------------------------------------------
+
+.udp-home {
+    section {
+        margin-bottom: $space-5xl;
+
+        @include media-breakpoint-down(md) {
+            margin-bottom: $space-3xl;
+        }
+    }
+
+    &__titulo {
+        color: var(--Common-Neutral-Lowest, #FFF);
+        font-family: var(--Font-family-sans, "Work Sans");
+        font-size: var(--font-size-15-rem-24-px, 24px);
+        font-style: normal;
+        font-weight: var(--font-weight-font-weight-600, 600);
+        line-height: var(--font-line-height-2-rem-32-px, 32px);
+        margin-bottom: 1rem;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // S1 — Portada
 // -----------------------------------------------------------------------------
+
 .udp-home-portada {
     position: relative;
     overflow: hidden;
@@ -13,7 +38,6 @@
     display: flex;
     align-items: center;
     margin-top: 50px;
-    margin-bottom: 80px;
     width: 100%;
 
     &__inner {
@@ -48,8 +72,8 @@
     }
 
     &__media {
-        clip-path: inset(0 100% 0 0);
-        animation: portada-reveal 0.8s ease-out 2s forwards;
+        clip-path: rect(0 594px 50% 0);
+        animation: portada-reveal 0.8s ease-out forwards;
         animation-play-state: paused;
 
         &.is-visible {
@@ -57,9 +81,11 @@
         }
 
         @supports (animation-timeline: scroll()) {
-            animation-timeline: view();
-            animation-range: entry 0% entry 40%;
+            animation-duration: auto;
+            animation-timing-function: linear;
             animation-play-state: running;
+            animation-timeline: scroll(root);
+            animation-range: 0px 25vh;
         }
     }
 
@@ -72,11 +98,11 @@
 
 @keyframes portada-reveal {
     from {
-        clip-path: inset(0 100% 0 0);
+        clip-path: rect(0 594px 50% 0);
     }
 
     to {
-        clip-path: inset(0 0% 0 0);
+        clip-path: rect(0 100% 100% 0);
     }
 }
 
@@ -84,42 +110,43 @@
 // S2 — Buscador de Carreras
 // -----------------------------------------------------------------------------
 .udp-home-buscador {
-    padding: 3rem 0;
-    background-color: $gray-100;
-
     &__form {
-        max-width: 860px;
         margin: 0 auto;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-end;
+        padding: 30px 0;
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
     }
 
     &__fields {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 1rem;
         align-items: center;
+        justify-content: stretch;
+        width: 100%;
 
         @include media-breakpoint-down(md) {
             flex-direction: column;
         }
     }
 
-    &__select {
-        flex: 0 0 260px;
-
-        @include media-breakpoint-down(md) {
-            flex: 1 1 auto;
-            width: 100%;
-        }
-    }
-
-    &__input {
-        flex: 1 1 auto;
+    &__field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
     &__btn {
+        margin-top: 1rem;
         flex: 0 0 auto;
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        padding: 0 64px;
+        height: 48px;
     }
 }
 
@@ -127,52 +154,212 @@
 // S3 — Noticias
 // -----------------------------------------------------------------------------
 .udp-home-noticias {
-    padding: 4rem 0;
+    $swiper-h: 580px;
+
+    // --- Header ---
+    &__title {
+        margin-bottom: 0;
+    }
 
     &__header {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        margin-bottom: 25px;
     }
 
-    &__titulo {
-        font-family: $font-family-display;
-        font-size: 2rem;
+    &__nav {
+        display: flex;
+        gap: 10px;
+        align-items: center;
     }
 
-    &__ver-mas {
-        font-size: 0.875rem;
-        text-decoration: underline;
-    }
+    &__nav-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 0;
+        background: $brand-blue;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.2s;
 
-    &__swiper-wrap {
-        overflow: hidden;
-    }
+        &--prev {
+            background: #2b2788;
+        }
 
-    &__slide {
-        width: 280px;
+        &.swiper-button-disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
 
-        @include media-breakpoint-up(md) {
-            width: 320px;
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: 2px;
         }
     }
 
-    &__card {
-        display: block;
+    // --- Swiper ---
+    &__swiper-wrap {
+        overflow: hidden;
+        height: $swiper-h;
+    }
+
+    .swiper {
+        height: $swiper-h;
+    }
+
+    // --- Featured slide ---
+    &__slide--featured {
+        width: fit-content !important;
+    }
+
+    &__featured {
+        display: grid;
+        grid-template-columns: 6fr 4fr;
+        width: 694px;
+
+        gap: 30px;
+        height: $swiper-h;
         text-decoration: none;
         color: inherit;
-        height: 100%;
+    }
 
-        &:hover .udp-home-noticias__card-titulo {
-            text-decoration: underline;
+    &__featured-img {
+        position: relative;
+        height: $swiper-h;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: $white;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    }
+
+    &__badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 2;
+        background: #ffe210;
+        color: $dark-1;
+        font-family: $font-family-mono;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        padding: 2px 6px;
+        line-height: 20px;
+    }
+
+    &__featured-date {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 2;
+        font-size: 15px;
+        font-weight: 400;
+        color: $dark-1;
+        line-height: 20px;
+    }
+
+    &__featured-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 56px;
+        text-align: center;
+        pointer-events: none;
+    }
+
+    &__featured-overlay-title {
+        font-family: $font-family-display;
+        font-size: 48px;
+        font-weight: 500;
+        line-height: 48px;
+        color: $dark-1;
+        margin: 0;
+    }
+
+    &__featured-body {
+        height: $swiper-h;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 82px 0 0;
+    }
+
+    &__featured-text {
+        font-family: $font-family-body;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 34px;
+        color: $white;
+        margin: 0;
+    }
+
+    // --- Leer más (shared) ---
+    &__leer-mas {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 600;
+        color: $white;
+        text-decoration: none;
+        line-height: 24px;
+        transition: opacity $transition-base;
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+
+    // --- Regular pair slides ---
+    &__slide--pair {
+        width: fit-content !important;
+
+    }
+
+    &__card {
+        width: 463px;
+        height: 275px;
+
+        display: grid;
+        grid-template-columns: 43% 1fr;
+        gap: 30px;
+        text-decoration: none;
+        color: inherit;
+
+        &:first-child {
+            margin-bottom: 30px;
         }
     }
 
     &__card-img {
-        aspect-ratio: 4/3;
+        height: 275px;
+        flex-shrink: 0;
         overflow: hidden;
-        margin-bottom: 1rem;
 
         img {
             width: 100%;
@@ -180,27 +367,72 @@
             object-fit: cover;
             transition: transform 0.3s ease;
         }
+
+        &:hover img {
+            transform: scale(1.03);
+        }
     }
 
-    &__card:hover &__card-img img {
-        transform: scale(1.04);
+    &__card-body {
+        height: 275px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
-    &__card-eyebrow {
-        display: block;
-        margin-bottom: 0.5rem;
+    &__card-text {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
     &__card-titulo {
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.35;
-        margin-bottom: 0.5rem;
+        font-family: $font-family-body;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+        color: $white;
+        margin: 0;
     }
 
     &__card-fecha {
-        font-size: 0.8125rem;
-        color: $gray-600;
+        font-family: $font-family-body;
+        font-size: 13px;
+        font-weight: 400;
+        color: $white;
+        line-height: 20px;
+    }
+
+    // --- "Ver todas" button ---
+    &__ver-todas {
+        padding-block: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    &__ver-todas-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 216px;
+        height: 44px;
+        border: 1px solid rgba($white, 0.7);
+        border-radius: 9999px;
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 600;
+        color: $white;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background 0.2s, border-color 0.2s;
+
+        &:hover {
+            background: rgba($white, 0.1);
+            border-color: $white;
+        }
     }
 }
 
@@ -208,53 +440,28 @@
 // S4 — Facultades
 // -----------------------------------------------------------------------------
 .udp-home-facultades {
-    padding: 4rem 0;
     overflow: hidden;
 
-    &__marquee {
-        overflow: hidden;
-        margin-bottom: 3rem;
-        white-space: nowrap;
-    }
-
-    &__track {
-        display: inline-flex;
-        gap: 3rem;
-        animation: marquee-scroll 30s linear infinite;
-
-        @media (prefers-reduced-motion: reduce) {
-            animation: none;
-        }
-    }
-
-    &__marquee-item {
-        font-family: $font-family-display;
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        color: $gray-300;
-        text-transform: uppercase;
-        flex-shrink: 0;
-    }
-
-    &__lista {
-        column-count: 2;
-        column-gap: 2rem;
-
-        @include media-breakpoint-up(md) {
-            column-count: 3;
-        }
+    &__lista li {
+        display: inline;
     }
 
     &__link {
-        display: block;
-        padding: 0.375rem 0;
-        color: $black;
+        display: inline;
+
+        font-family: $font-family-display;
+        font-size: var(--font-size-3-rem-48-px, 48px);
+        font-style: normal;
+        font-weight: var(--font-weight-font-weight-500, 500);
+        line-height: 48px;
         text-decoration: none;
-        font-weight: 500;
-        border-bottom: 1px solid $gray-200;
-        transition: color 0.2s;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &:hover {
-            color: var(--udp-color-primary, #0033a0);
+            color: var(--udp-color-primary, #0033a0) !important;
         }
     }
 }
@@ -273,40 +480,79 @@
 // S5 — Próximos Eventos
 // -----------------------------------------------------------------------------
 .udp-home-eventos {
-    padding: 4rem 0;
-    background-color: $gray-100;
+
+    // --- Header ---
+    &__titulo {
+        margin-bottom: 0;
+    }
 
     &__header {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
-        margin-bottom: 2rem;
-    }
-
-    &__titulo {
-        font-family: $font-family-display;
-        font-size: 2rem;
+        margin-bottom: 30px;
     }
 
     &__ver-mas {
-        font-size: 0.875rem;
-        text-decoration: underline;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        min-width: 230px;
+        padding-inline: 40px;
+        border-radius: 9999px;
+        border: 1px solid rgba($white, 0.7);
+        color: $white;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+            background-color: $white;
+            color: $dark-1;
+        }
+    }
+
+    // --- Cards destacadas ---
+    &__destacados {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+
+        @include media-breakpoint-down(md) {
+            grid-template-columns: 1fr;
+        }
     }
 
     &__card {
-        display: block;
+        display: flex;
+        flex: 1;
+        min-width: 0;
         text-decoration: none;
         color: inherit;
-        background: $white;
-        height: 100%;
+        height: 250px;
 
-        &:hover .udp-home-eventos__card-titulo {
-            text-decoration: underline;
+        &:hover &-img img {
+            transform: scale(1.04);
+        }
+
+        &:hover &-btn {
+            border-color: $white;
+        }
+
+        @include media-breakpoint-down(md) {
+            height: auto;
+            flex-direction: column;
         }
     }
 
     &__card-img {
-        aspect-ratio: 16/9;
+        flex: 0 0 232px;
+        width: 232px;
+        height: 250px;
         overflow: hidden;
 
         img {
@@ -314,114 +560,303 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
+            display: block;
+        }
+
+        @include media-breakpoint-down(md) {
+            flex: none;
+            width: 100%;
+            height: 200px;
+        }
+
+        &-placeholder {
+            @include udp-media-placeholder();
+            width: 100%;
+            height: 100%;
         }
     }
 
-    &__card:hover &__card-img img {
-        transform: scale(1.04);
+    &__card-body {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #232323;
+        padding: 24px;
+        height: 250px;
+        overflow: hidden;
+
+        @include media-breakpoint-down(md) {
+            height: auto;
+        }
     }
 
-    &__card-body {
-        padding: 1.25rem;
+    &__card-title-wrap {
+        height: 150px;
+        overflow: hidden;
+    }
+
+    &__card-titulo {
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 1.5rem;
+        color: $white;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
+    }
+
+    &__card-footer {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    &__card-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__card-eyebrow {
+        font-family: $font-family-mono;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba($white, 0.7);
+    }
+
+    &__card-datetime {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
     }
 
     &__card-fecha {
         display: block;
-        font-size: 0.8125rem;
-        color: $gray-600;
-        margin-bottom: 0.5rem;
-    }
-
-    &__card-titulo {
-        font-size: 1.125rem;
+        font-size: 0.875rem;
         font-weight: 600;
-        line-height: 1.3;
-        margin-bottom: 0.5rem;
+        color: $white;
     }
 
     &__card-lugar {
-        font-size: 0.8125rem;
-        color: $gray-600;
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: $white;
     }
 
-    &__tabla {
-        width: 100%;
-        margin-top: 2rem;
-        border-collapse: collapse;
+    &__card-btn {
+        flex: 0 0 48px;
+        width: 48px;
+        height: 48px;
+        border-radius: 9999px;
+        border: 1px solid #4f4f4f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+        transition: border-color 0.2s;
 
-        tr {
-            border-bottom: 1px solid $gray-200;
-
-            &:last-child {
-                border-bottom: none;
-            }
-        }
-
-        td {
-            padding: 0.875rem 0;
-            vertical-align: middle;
+        svg {
+            width: 16px;
+            height: 16px;
         }
     }
 
-    &__tabla-fecha {
-        color: $gray-600;
-        font-size: 0.875rem;
+    // --- Lista adicional ---
+    &__lista {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__lista-row {
+        display: grid;
+        grid-template-columns: 200px 1fr 200px;
+        align-items: center;
+        padding-block: 20px;
+        border-top: 1px solid #3d3d3d;
+        text-decoration: none;
+        color: $white;
+        transition: opacity 0.2s;
+
+        &:last-child {
+            border-bottom: 1px solid #3d3d3d;
+        }
+
+        &:hover {
+            opacity: 0.7;
+        }
+
+        @include media-breakpoint-down(lg) {
+            grid-template-columns: 140px 1fr;
+        }
+
+        @include media-breakpoint-down(md) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    &__lista-eyebrow {
+        font-family: $font-family-mono;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: $white;
+
+        @include media-breakpoint-down(md) {
+            display: none;
+        }
+    }
+
+    &__lista-titulo {
+        font-size: 1.125rem;
+        font-weight: 500;
         white-space: nowrap;
-        padding-right: 1.5rem;
-    }
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-inline: 16px 24px;
 
-    &__tabla-titulo {
-        a {
-            color: $black;
-            text-decoration: none;
-            font-weight: 500;
+        @include media-breakpoint-down(lg) {
+            padding-inline: 16px 0;
+        }
 
-            &:hover {
-                text-decoration: underline;
-            }
+        @include media-breakpoint-down(md) {
+            padding-inline: 0;
         }
     }
 
-    &__tabla-lugar {
-        font-size: 0.875rem;
-        color: $gray-600;
-        padding-left: 1rem;
+    &__lista-fecha {
+        font-size: 0.9375rem;
+        font-weight: 500;
         text-align: right;
+        white-space: nowrap;
+
+        @include media-breakpoint-down(lg) {
+            grid-column: 2;
+            text-align: left;
+            font-size: 0.8125rem;
+            opacity: 0.7;
+            padding-left: 16px;
+        }
+
+        @include media-breakpoint-down(md) {
+            display: none;
+        }
     }
 }
 
 // -----------------------------------------------------------------------------
-// S6 — Postítulos (Destacado azul + foto)
+// S6 — Destacado azul (panel $brand-blue + foto cuadrada)
 // -----------------------------------------------------------------------------
-.udp-home-posttitulos {
-    padding: 5rem 0;
-    background-color: var(--udp-color-primary, #0033a0); // Azul UDP institucional
-    color: $white;
+.udp-home-destacado {
+    &__inner {
+        display: flex;
+        align-items: stretch;
+
+        @include media-breakpoint-down(lg) {
+            flex-direction: column;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        min-width: 0;
+        background-color: $brand-blue;
+        color: $white;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 432px;
+
+        @include media-breakpoint-down(lg) {
+            min-height: 0;
+            padding: 2rem;
+        }
+    }
 
     &__titulo {
+        max-width: 600px;
         font-family: $font-family-display;
-        font-size: clamp(1.75rem, 4vw, 3rem);
+        font-weight: 300;
+        font-size: clamp(2rem, 3.33vw, 3rem);
+        line-height: 1;
         color: $white;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
+
+        p {
+            margin-bottom: 0;
+        }
+
+        strong,
+        b {
+            font-weight: 500;
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin-top: 2rem;
+
+        @include media-breakpoint-down(lg) {
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
     }
 
     &__descripcion {
         font-size: 1rem;
-        line-height: 1.7;
-        opacity: 0.9;
+        line-height: 1.25;
+        max-width: 433px;
 
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 0;
+        }
+    }
+
+    &__cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: $white;
+        text-decoration: none;
+        transition: opacity 0.2s ease;
+
+        svg {
+            flex-shrink: 0;
         }
 
-        a {
+        &:hover {
             color: $white;
+            opacity: 0.75;
+        }
+    }
+
+    &__media {
+        flex: 0 0 432px;
+        width: 432px;
+        overflow: hidden;
+
+        @include media-breakpoint-down(lg) {
+            flex: none;
+            width: 100%;
+            aspect-ratio: 16 / 9;
         }
     }
 
     &__imagen {
-        border-radius: 2px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
     }
 }
 
@@ -429,18 +864,12 @@
 // S7 — Vida Universitaria
 // -----------------------------------------------------------------------------
 .udp-home-vida {
-    padding: 5rem 0;
-
-    &__titulo {
-        font-family: $font-family-display;
-        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-        margin-bottom: 1rem;
-    }
+    background-color: $dark-1;
 
     &__texto {
         font-size: 1rem;
-        line-height: 1.7;
-        color: $gray-700;
+        line-height: 1.625;
+        color: $white;
         margin-bottom: 2rem;
         max-width: 55ch;
     }
@@ -454,20 +883,29 @@
     &__link {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 6px;
         font-weight: 600;
-        color: $black;
+        color: $white;
         text-decoration: none;
-        border-bottom: 2px solid currentColor;
-        padding-bottom: 0.125rem;
         transition: opacity 0.2s;
 
+        &::after {
+            content: '↗';
+            font-size: 1em;
+        }
+
         &:hover {
+            color: $white;
             opacity: 0.7;
         }
     }
 
+    &__video,
     &__imagen {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         border-radius: 2px;
     }
 }
@@ -476,16 +914,8 @@
 // S8 — Cultura UDP
 // -----------------------------------------------------------------------------
 .udp-home-cultura-udp {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 560px;
-
-    @include media-breakpoint-down(md) {
-        grid-template-columns: 1fr;
-    }
-
     &__header {
-        padding: 3rem 0 2rem;
+        padding-bottom: 30px;
         color: $white;
     }
 
@@ -505,24 +935,42 @@
         margin-bottom: 0;
     }
 
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        @include media-breakpoint-down(md) {
+            grid-template-columns: 1fr;
+        }
+    }
+
     &__media {
         position: relative;
         overflow: hidden;
+        height: 620px;
         background: $gray-200;
     }
 
-    &__img {
+    &__img,
+    &__placeholder {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
         opacity: 0;
         transition: opacity 0.4s ease;
 
         &.is-active {
             opacity: 1;
         }
+    }
+
+    &__img {
+        object-fit: cover;
+    }
+
+    &__placeholder {
+        @include udp-media-placeholder();
     }
 
     &__panel {
@@ -535,42 +983,49 @@
 
     &__lista {
         width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 0;
     }
 
     &__item {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-        &:last-child {
-            border-bottom: none;
-        }
-
-        &.is-active &__nombre,
-        &:hover &__nombre {
-            color: #FF7064;
-        }
+        cursor: default;
     }
 
-    &__link {
+    &__item.is-active &__nombre,
+    &__item.is-active &__subtitulo,
+    &__item:hover &__nombre,
+    &__item:hover &__subtitulo {
+        color: #FF7064;
+    }
+
+    &__row {
         display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1rem 0;
-        text-decoration: none;
-        color: inherit;
+        align-items: flex-end;
+        justify-content: space-start;
+        gap: 18px;
     }
 
     &__nombre {
+        transition: color 0.25s ease;
+
         font-family: $font-family-display;
         font-size: clamp(1.75rem, 3.5vw, 3rem);
-        transition: color 0.25s ease;
         line-height: 1.1;
     }
 
-    &__contador {
-        font-size: 0.875rem;
+    &__subtitulo {
+        transition: color 0.25s ease;
+
+        font-family: $font-family-mono;
+        font-size: $font-size-label-md;
+        line-height: 1.25rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
         color: rgba(255, 255, 255, 0.5);
         flex-shrink: 0;
+        margin-bottom: 6px;
     }
 }
 
@@ -578,10 +1033,6 @@
 // S9 — Cultura Digital
 // -----------------------------------------------------------------------------
 .udp-home-cultura-digital {
-    background-color: #1a1a1a;
-    color: $white;
-    overflow: hidden;
-
     &__layout {
         display: flex;
         align-items: center;
@@ -590,8 +1041,9 @@
 
     &__sidebar {
         flex-shrink: 0;
-        width: 400px;
-        padding: 3rem 2.5rem;
+        width: 434px;
+        max-width: 100%;
+        padding: 3rem 30px 3rem 0;
 
         @include media-breakpoint-down(lg) {
             width: 280px;
@@ -604,15 +1056,6 @@
         }
     }
 
-    &__titulo {
-        font-family: $font-family-sans-serif;
-        font-size: 1.5rem;
-        font-weight: 600;
-        line-height: 2rem;
-        color: $white;
-        margin-bottom: 1rem;
-    }
-
     &__texto {
         font-size: 1rem;
         line-height: 1.625;
@@ -623,7 +1066,7 @@
     &__slider {
         flex: 1;
         min-width: 0;
-        overflow: visible;
+        overflow: hidden;
 
         .swiper-wrapper {
             align-items: flex-start;
@@ -638,11 +1081,7 @@
         display: block;
         text-decoration: none;
         color: $white;
-        width: 320px; // ancho fijo por card; la imagen se recorta a este ancho
-
-        @include media-breakpoint-down(sm) {
-            width: 240px;
-        }
+        width: fit-content;
     }
 
     &__card-img {
@@ -650,9 +1089,8 @@
         overflow: hidden;
 
         img {
-            width: 100%;
             height: 100%;
-            object-fit: cover;
+            width: auto;
             display: block;
             transition: transform 0.4s ease;
         }
@@ -702,64 +1140,141 @@
 // S10 — Innovación e Investigación
 // -----------------------------------------------------------------------------
 .udp-home-innovacion {
-    padding: 4rem 0;
-    background-color: $gray-100;
+    background-color: $dark-1;
+    color: $white;
+    overflow: hidden;
+
+    // Container acota el carousel — overflow hidden recorta slides fuera del ancho
+    &__wrap {
+        overflow: hidden;
+    }
 
     &__header {
         display: flex;
-        align-items: baseline;
+        align-items: center;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        gap: $space-sm;
+        margin-bottom: 30px;
     }
 
     &__titulo {
-        font-family: $font-family-display;
-        font-size: 2rem;
+        margin-bottom: 0;
     }
 
-    &__ver-mas {
-        font-size: 0.875rem;
-        text-decoration: underline;
-    }
-
-    &__card {
-        display: block;
+    &__ver-todo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 150px;
+        padding: 10px $space-3xl;
+        border: 1px solid #b0b0b0;
+        border-radius: 9999px;
+        color: $white;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.5;
         text-decoration: none;
-        color: inherit;
-        height: 100%;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: background $transition-base, color $transition-base, border-color $transition-base;
 
-        &:hover &-titulo {
-            text-decoration: underline;
+        &:hover {
+            background: $white;
+            border-color: $white;
+            color: $dark-1;
         }
+    }
+
+    // Swiper — ocupa todo el ancho del container
+    &__swiper {
+        overflow: visible; // Swiper necesita visible para que el clip lo haga el wrapper
+
+        .swiper-slide {
+            width: 347px !important; // slidesPerView: 'auto' requiere width explícito
+        }
+    }
+
+    // Card (link completo)
+    &__card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-decoration: none;
+        color: $white;
+    }
+
+    &__card:hover &__card-img img {
+        transform: scale(1.03);
+    }
+
+    &__card:hover &__card-titulo {
+        opacity: 0.65;
+    }
+
+    // Chip de siglas: siempre presente, vacío cuando no hay siglas.
+    // :empty reserva el espacio para alinear cards mixtas.
+    &__chip {
+        display: inline-flex;
+        align-items: center;
+        align-self: flex-start;
+        padding: 2px 4px;
+        background-color: #ff7064;
+        font-family: $font-family-mono;
+        font-size: $font-size-label-md;
+        line-height: 20px;
+        letter-spacing: $letter-spacing-eyebrow;
+        text-transform: uppercase;
+        color: $dark-1;
+        font-weight: 400;
+
+        &:empty {
+            background: transparent;
+            min-height: 24px; // reserva el alto del chip para alinear
+        }
+    }
+
+    // Bloque imagen + título
+    &__card-media {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 
     &__card-img {
-        aspect-ratio: 4/3;
+        width: 100%;
         overflow: hidden;
-        margin-bottom: 1rem;
 
         img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .udp-media-placeholder {
+            width: 100%;
+            aspect-ratio: 4 / 3;
         }
     }
 
-    &__eyebrow {
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
     &__card-titulo {
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.35;
-        margin-bottom: 0.5rem;
+        font-size: 1.125rem;
+        font-weight: 500;
+        line-height: 1.5rem;
+        color: $white;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: opacity $transition-base;
     }
 
-    &__fecha {
-        font-size: 0.8125rem;
-        color: $gray-600;
+    // Mobile    
+    @include media-breakpoint-down(md) {
+        &__swiper .swiper-slide {
+            width: 280px !important;
+        }
     }
 }
 
@@ -767,92 +1282,163 @@
 // S11 — Cifras
 // -----------------------------------------------------------------------------
 .udp-home-cifras {
-    padding: 5rem 0;
-    background-color: var(--udp-color-primary, #0033a0);
+    background-color: $dark-1;
     color: $white;
 
-    // --- Layout numérico ---
-    &__grid {
-        justify-content: center;
+    &__titulo {
+        margin-bottom: 30px;
     }
 
-    &__item {
-        text-align: center;
+    &__wrap {
+        overflow: hidden;
+    }
+
+    &__swiper {
+        overflow: visible;
+
+        .swiper-slide {
+            width: auto;
+        }
+    }
+
+    // Base card: compartido por ambas variantes
+    &__card {
+        background-color: #4539f2;
+        border-radius: 20px;
+        height: 280px;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    // --- Variante: número ---
+    &__card--numero {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+        padding: 60px 30px;
     }
 
     &__numero {
-        display: block;
-        font-family: $font-family-display;
-        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-size: 10rem;
+        font-weight: 700;
         line-height: 1;
-        margin-bottom: 0.5rem;
+        color: $white;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 
-    &__titulo {
-        display: block;
-        font-size: 0.9375rem;
-        line-height: 1.4;
-        opacity: 0.85;
-        font-weight: 600;
+    &__info {
+        width: 199px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
     }
 
-    &__subtitulo {
-        display: block;
-        font-size: 0.75rem;
-        opacity: 0.6;
-        margin-top: 0.375rem;
-        font-style: italic;
-    }
-
-    // --- Layout testimonios ---
-    &__testimonio {
-        border-left: 3px solid rgba(255, 255, 255, 0.3);
-        padding-left: 1.5rem;
-    }
-
-    &__cita {
+    &__titulo-numero {
         font-size: 1.125rem;
-        line-height: 1.6;
-        font-style: italic;
-        margin-bottom: 1.5rem;
-        opacity: 0.95;
+        font-weight: 600;
+        line-height: 22px;
+        color: $white;
+        margin: 0;
+    }
+
+    &__subtitulo-numero {
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 20px;
+        color: $white;
+        margin: 0;
+    }
+
+    // --- Variante: cita ---
+    &__card--cita {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 30px;
+        width: 631px;
+    }
+
+    &__quote-icon {
+        width: 32px;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    &__cita-body {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        flex: 1;
+        min-height: 0;
+    }
+
+    &__cita-texto {
+        font-size: 1.125rem;
+        line-height: 22px;
+        font-weight: 400;
+        color: $white;
+        margin: 0;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
 
         p {
-            margin-bottom: 0.5rem;
-        }
-
-        p:last-child {
-            margin-bottom: 0;
+            margin: 0;
         }
     }
 
     &__autor {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 12px;
+        flex-shrink: 0;
     }
 
     &__autor-img {
-        width: 48px;
-        height: 48px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         object-fit: cover;
         flex-shrink: 0;
     }
 
     &__autor-info {
-        p {
-            margin-bottom: 0;
-        }
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        flex: 1;
+        min-width: 0;
     }
 
     &__autor-nombre {
-        font-weight: 600;
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 20px;
+        color: $white;
+        margin: 0;
     }
 
     &__autor-desc {
-        font-size: 0.8125rem;
-        opacity: 0.7;
+        font-size: 0.75rem;
+        line-height: 16px;
+        color: rgba(255, 255, 255, 0.7);
+        margin: 0;
+    }
+
+    // Mobile
+    @include media-breakpoint-down(md) {
+        padding-block: $space-3xl;
+
+        &__numero {
+            font-size: 5rem;
+        }
+
+        &__card--cita {
+            width: min(631px, calc(100vw - 60px));
+        }
     }
 }

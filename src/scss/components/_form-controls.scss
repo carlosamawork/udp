@@ -1,0 +1,165 @@
+// ==========================================================================
+// FORM CONTROLS — udp-form-select, udp-form-input, udp-form-search
+// Clases base reutilizables para filtros y buscadores.
+// Variantes: --slim (40px), --light (tema claro).
+// ==========================================================================
+
+// --------------------------------------------------------------------------
+// udp-form-select — dark por defecto, 48px
+// --------------------------------------------------------------------------
+.udp-form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 48px;
+    padding: 0 36px 0 16px;
+    font-family: $font-family-body;
+    font-size: 14px;
+    color: $white;
+    background-color: transparent;
+    border: 1px solid rgba($white, 0.2);
+    border-radius: 0;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%23FFFFFF' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+
+    option {
+        color: $dark-1;
+        background-color: $white;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $brand-blue;
+        outline-offset: 2px;
+    }
+
+    &--slim {
+        height: 40px;
+    }
+
+    &--dim {
+        color: #b0b0b0;
+        border-color: #b0b0b0;
+    }
+
+    &--light {
+        color: $dark-1;
+        border-color: rgba($dark-1, 0.2);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%231C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+}
+
+// --------------------------------------------------------------------------
+// udp-form-input — dark por defecto, 48px
+// --------------------------------------------------------------------------
+.udp-form-input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    font-family: $font-family-body;
+    font-size: 14px;
+    color: $white;
+    background-color: transparent;
+    border: 1px solid rgba($white, 0.2);
+    border-radius: 0;
+
+    &::placeholder {
+        color: rgba($white, 0.5);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $brand-blue;
+        outline-offset: 2px;
+    }
+
+    &--slim {
+        height: 40px;
+    }
+
+    &--dim {
+        color: #b0b0b0;
+        border-color: #b0b0b0;
+    }
+
+    &--light {
+        color: $dark-1;
+        border-color: rgba($dark-1, 0.2);
+
+        &::placeholder {
+            color: rgba($dark-1, 0.5);
+        }
+    }
+
+    &--search-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.5 17.5L13.9166 13.9166M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 8px) center;
+        background-size: 20px;
+        padding-right: 34px;
+    }
+}
+
+// --------------------------------------------------------------------------
+// udp-form-filterbar — wrapper flex para barras de filtros (archivo)
+// --------------------------------------------------------------------------
+.udp-form-filterbar {
+    max-width: 1440px;
+    padding: 0 40px;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    &__group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 320px;
+        max-width: 100%;
+    }
+
+    &__group--search {
+        width: 380px;
+    }
+}
+
+// --------------------------------------------------------------------------
+// udp-form-search-group — wrapper para input + botón icono lupa (derecha)
+// --------------------------------------------------------------------------
+.udp-form-search-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &__btn {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        background: transparent;
+        border: 0;
+        color: $white;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+
+        &:focus-visible {
+            outline: 2px solid $brand-blue;
+            outline-offset: -2px;
+        }
+    }
+
+    .udp-form-input {
+        padding-left: 40px;
+    }
+
+    &--light &__btn {
+        color: $dark-1;
+    }
+}

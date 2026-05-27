@@ -2,14 +2,17 @@
 /**
  * Home — Sección 10: Innovación e Investigación
  *
- * Query: post_type=post, categorías 'investigacion' y/o 'innovacion' (OR).
- * Eyebrow: campo ACF 'siglas' del primer término de taxonomía 'facultad' del post.
- * Requiere que las categorías existan con esos slugs.
+ * Carousel horizontal con drag (Swiper freeMode) de posts de categorías
+ * 'investigacion' e 'innovacion'. Acotado al container con overflow hidden.
+ * Eyebrow chip: siglas ACF del primer término de taxonomía 'facultad'.
+ *
+ * JS: home-innovacion.js — Swiper freeMode con drag libre.
  *
  * @package starter-bs5
  */
 
-// Resolver IDs dinámicamente para no hardcodear.
+$post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
+
 $slugs   = [ 'investigacion', 'innovacion' ];
 $cat_ids = [];
 foreach ( $slugs as $slug ) {
@@ -20,14 +23,13 @@ foreach ( $slugs as $slug ) {
 }
 
 if ( empty( $cat_ids ) ) {
-    // Las categorías no existen aún — silencio para no romper el front.
     return;
 }
 
 $query = new WP_Query( [
     'post_type'      => 'post',
     'post_status'    => 'publish',
-    'posts_per_page' => 4,
+    'posts_per_page' => 8,
     'orderby'        => 'date',
     'order'          => 'DESC',
     'no_found_rows'  => true,
@@ -48,56 +50,75 @@ if ( ! $query->have_posts() ) {
 $posts = $query->posts;
 wp_reset_postdata();
 
-$titulo_seccion = get_field( 'innovacion_titulo' ) ?: 'Innovación e Investigación';
+$titulo_seccion = get_field( 'innovacion_titulo', $post_id ) ?: 'Innovación e Investigación';
+
+// Construir URL de "Ver todo" con las mismas categorías que filtra la sección.
+$base_url     = get_field( 'innovacion_url', $post_id ) ?: home_url( '/noticias/' );
+$ver_todo_ids = array();
+foreach ( $slugs as $slug ) {
+    $t = get_term_by( 'slug', $slug, 'category' );
+    if ( $t && ! is_wp_error( $t ) ) {
+        $ver_todo_ids[] = $t->term_id;
+    }
+}
+$ver_todo_url = ! empty( $ver_todo_ids )
+    ? add_query_arg( 'udp_cats', implode( ',', $ver_todo_ids ), $base_url )
+    : $base_url;
 ?>
 <section class="udp-home-innovacion">
     <div class="container">
-        <div class="udp-home-innovacion__header">
-            <h2 class="udp-home-innovacion__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
-            <a href="<?php echo esc_url( home_url( '/noticias/' ) ); ?>" class="udp-home-innovacion__ver-mas">
-                Ver todas
-            </a>
-        </div>
+        <div class="udp-home-innovacion__wrap">
+            <div class="udp-home-innovacion__header">
+                <h2 class="udp-home-innovacion__titulo udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
+                <a href="<?php echo esc_url( $ver_todo_url ); ?>" class="udp-home-innovacion__ver-todo">
+                    Ver todo
+                </a>
+            </div>
 
-        <div class="udp-home-innovacion__grid row g-4">
-            <?php foreach ( $posts as $post ) : ?>
-                <?php
-                // Eyebrow: siglas de la primera facultad asociada al post.
-                $facs   = get_the_terms( $post->ID, 'facultad' );
-                $siglas = '';
-                if ( ! is_wp_error( $facs ) && ! empty( $facs ) ) {
-                    $siglas = get_field( 'siglas', 'facultad_' . $facs[0]->term_id );
-                }
+            <div class="js-innovacion-swiper swiper udp-home-innovacion__swiper">
+                <div class="swiper-wrapper">
+                    <?php foreach ( $posts as $post ) : ?>
+                        <?php
+                        $facs   = get_the_terms( $post->ID, 'facultad' );
+                        $siglas = '';
+                        if ( ! is_wp_error( $facs ) && ! empty( $facs ) ) {
+                            $siglas = (string) get_field( 'siglas', 'facultad_' . $facs[0]->term_id );
+                        }
 
-                $thumb_url = get_the_post_thumbnail_url( $post->ID, 'medium_large' );
-                ?>
-                <article class="col-md-6 col-lg-3">
-                    <a href="<?php echo esc_url( get_permalink( $post ) ); ?>" class="udp-home-innovacion__card">
-                        <?php if ( $thumb_url ) : ?>
-                            <div class="udp-home-innovacion__card-img">
-                                <img
-                                    src="<?php echo esc_url( $thumb_url ); ?>"
-                                    alt=""
-                                    loading="lazy"
-                                    decoding="async"
-                                >
-                            </div>
-                        <?php endif; ?>
-                        <div class="udp-home-innovacion__card-body">
-                            <?php if ( $siglas ) : ?>
-                                <span class="eyebrow udp-home-innovacion__eyebrow"><?php echo esc_html( $siglas ); ?></span>
-                            <?php endif; ?>
-                            <h3 class="udp-home-innovacion__card-titulo"><?php echo esc_html( get_the_title( $post ) ); ?></h3>
-                            <time
-                                class="udp-home-innovacion__fecha"
-                                datetime="<?php echo esc_attr( get_the_date( 'Y-m-d', $post ) ); ?>"
+                        $thumb_url = get_the_post_thumbnail_url( $post->ID, 'medium_large' );
+                        ?>
+                        <div class="swiper-slide udp-home-innovacion__slide">
+                            <a
+                                href="<?php echo esc_url( get_permalink( $post ) ); ?>"
+                                class="udp-home-innovacion__card"
+                                aria-label="<?php echo esc_attr( get_the_title( $post ) ); ?>"
                             >
-                                <?php echo esc_html( get_the_date( 'j \d\e F \d\e Y', $post ) ); ?>
-                            </time>
+                                <?php /* Chip siempre presente — vacío reserva el espacio */ ?>
+                                <span class="udp-home-innovacion__chip"><?php echo esc_html( $siglas ); ?></span>
+
+                                <div class="udp-home-innovacion__card-media">
+                                    <div class="udp-home-innovacion__card-img">
+                                        <?php if ( $thumb_url ) : ?>
+                                            <img
+                                                src="<?php echo esc_url( $thumb_url ); ?>"
+                                                alt=""
+                                                loading="lazy"
+                                                decoding="async"
+                                            >
+                                        <?php else : ?>
+                                            <div class="udp-media-placeholder"></div>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <p class="udp-home-innovacion__card-titulo">
+                                        <?php echo esc_html( get_the_title( $post ) ); ?>
+                                    </p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </article>
-            <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
     </div>
 </section>

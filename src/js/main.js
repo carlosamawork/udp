@@ -47,6 +47,8 @@ import { initShareFloating } from '@modules/share-floating';
 import { initInstitucionalPeople } from '@modules/institucional-people';
 import { initAnchorScrollspy } from '@modules/anchor-scrollspy';
 import { initFeaturedDrag } from '@modules/featured-drag';
+import { initHomeInnovacion } from '@modules/home-innovacion';
+import { initHomeCifras } from '@modules/home-cifras';
 
 // --------------------------------------------------------------------------
 // 4. UTILS
@@ -79,6 +81,8 @@ domReady(() => {
     initInstitucionalPeople();
     initAnchorScrollspy();
     initFeaturedDrag();
+    initHomeInnovacion();
+    initHomeCifras();
 
     console.log('[StarterBS5] Theme initialized');
 });

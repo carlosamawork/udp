@@ -21,9 +21,13 @@ $year  = isset( $_GET['udp_year'] ) ? (int) $_GET['udp_year'] : 0;
 $s     = isset( $_GET['udp_s'] ) ? sanitize_text_field( wp_unslash( $_GET['udp_s'] ) ) : '';
 $paged = max( 1, (int) ( get_query_var( 'paged' ) ?: ( $_GET['paged'] ?? 1 ) ) );
 
+// Multi-cat: ?udp_cats=5,12  (IDs separadas por coma, tiene precedencia sobre udp_cat)
+$cats_raw = isset( $_GET['udp_cats'] ) ? sanitize_text_field( wp_unslash( $_GET['udp_cats'] ) ) : '';
+$cats     = array_values( array_filter( array_map( 'intval', explode( ',', $cats_raw ) ) ) );
+
 $page_id      = get_the_ID();
 $is_first_pg  = ( $paged === 1 );
-$has_filters  = ( $cat > 0 || $year > 0 || $s !== '' );
+$has_filters  = ( $cat > 0 || ! empty( $cats ) || $year > 0 || $s !== '' );
 $show_hero    = $is_first_pg && ! $has_filters;
 
 $featured_card = null;
@@ -82,6 +86,7 @@ if ( $show_hero && function_exists( 'udp_query_noticias' ) && function_exists( '
     $grid_result = function_exists( 'udp_query_noticias' )
         ? udp_query_noticias( array(
             'cat'   => $cat,
+            'cats'  => $cats,
             'year'  => $year,
             's'     => $s,
             'paged' => $paged,

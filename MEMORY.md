@@ -4,7 +4,7 @@
 
 ---
 
-### 2026-03-18 — Inicio del archivo *(Cacho)*
+### 2026-03-18 — Inicio del archivo _(Cacho)_
 
 - Se creó este archivo como parte de la configuración inicial del proyecto.
 - Se actualizó `CLAUDE.md` con dos bloques nuevos:
@@ -12,12 +12,12 @@
   - **Reglas de trabajo**: obligación de buscar en internet antes de implementar cualquier cosa externa, y no proceder si hay dudas de compatibilidad.
 - Versiones en uso confirmadas en CLAUDE.md: Vite 6, Bootstrap 5, ACF Pro, WordPress última estable.
 
-### 2026-03-18 — Cierre de sesión *(Cacho)*
+### 2026-03-18 — Cierre de sesión _(Cacho)_
 
 - Estado: proyecto en configuración inicial, sin cambios en código fuente.
 - Próximos pasos sugeridos: iniciar desarrollo de features o ajustar la configuración de Vite/SCSS según necesidades del proyecto.
 
-### 2026-04-27 — F0 Foundation completada *(Cacho)*
+### 2026-04-27 — F0 Foundation completada _(Cacho)_
 
 Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
@@ -51,7 +51,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - WP Fastest Cache cachea respuestas — durante desarrollo conviene desactivarlo o usar bypass.
 - `_mixins.scss` referencia `$transition-base` y otras variables — sí existen, el problema era el scope de @use.
 
-### 2026-04-27 — F1 udp-core + ACF refactor completada *(Cacho)*
+### 2026-04-27 — F1 udp-core + ACF refactor completada _(Cacho)_
 
 **Hechos**:
 
@@ -79,7 +79,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Field keys son la única forma de preservar data — los names/labels se pueden cambiar sin pérdida.
 - Vite config tenía `base: starter-theme-bs5` (nombre antiguo) que rompía URLs de fonts en build — corregido en F0.
 
-### 2026-04-27 — F2 Sistema de diseño + chrome completada *(Cacho)*
+### 2026-04-27 — F2 Sistema de diseño + chrome completada _(Cacho)_
 
 **Hechos**:
 
@@ -110,7 +110,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Las options pages General y Redes Sociales YA tenían data (logo + 6 redes) — el footer/header renderizan con valores reales.
 - Renombrar variables ($font-family-heading → $font-family-display, $section-spacing → $space-5xl) requirió ajustes colaterales en editor.scss y el mixin section-padding.
 
-### 2026-04-27 — Footer pixel-perfect F2 (Figma 4401:23290) *(Cacho)*
+### 2026-04-27 — Footer pixel-perfect F2 (Figma 4401:23290) _(Cacho)_
 
 **Hechos**:
 
@@ -128,7 +128,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Subir imagen `logo_acreditacion` real en options page General si todavía no está cargada.
 - Validar SVGs sociales contra los del Figma (paths actuales son monocromos genéricos — F10 polish).
 
-### 2026-04-27 — fix(acf): contact_blocks.enlace cambiado de url a text *(Cacho)*
+### 2026-04-27 — fix(acf): contact_blocks.enlace cambiado de url a text _(Cacho)_
 
 - Sub-field `enlace` del repeater `contact_blocks` (group_options_footer, ID 55199) cambiado de `type: "url"` a `type: "text"` con placeholder `tel:+56... | mailto:... | https://...`.
 - Razón: ACF `type:url` valida solo http/https y rechaza esquemas `tel:` y `mailto:` con "El valor debe ser una URL válida". El template `contact.php` ya escapa con `esc_url()` que sí acepta tel/mailto/http(s).
@@ -136,7 +136,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Verificación SQL: `post_content` ahora contiene `s:4:"type";s:4:"text"`.
 - HTTP 200, JSON válido. Commit f39fa0c.
 
-### 2026-04-27 — F3 Task 5: Swiper.js install + módulo JS + init *(Cacho)*
+### 2026-04-27 — F3 Task 5: Swiper.js install + módulo JS + init _(Cacho)_
 
 - Instalado `swiper@12.1.3` como `dependency` (runtime, no devDep).
 - Creado `src/js/modules/section-landing-swiper.js`: usa `qsa('.udp-section-cards--swiper')` y hace **lazy import** de Swiper + `Navigation/Keyboard/FreeMode` + CSS solo si hay containers en la página. Config: `slidesPerView:'auto'`, `spaceBetween: 33` (16 en mobile), `freeMode + momentum`, `keyboard`, `grabCursor`.
@@ -144,7 +144,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Build OK (`npm run build`, 652ms): Vite generó chunk separado `dist/js/chunks/swiper.0ByW75It.js` (62K) y `dist/css/swiper.vL0Q9Dr-.css` (4.69 kB) gracias al `await import()` dinámico. `main.js` quedó en 84K (sin crecer significativamente respecto al baseline ~83K — Swiper no entra en el bundle principal).
 - No commit (Task 6 los agrupa).
 
-### 2026-04-28 — F3 Section Landing Template completada *(Cacho)*
+### 2026-04-28 — F3 Section Landing Template completada _(Cacho)_
 
 **Hechos**:
 
@@ -162,7 +162,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Páginas iniciales que el usuario puede asignar el template: Pregrado, Conoce UDP, Gobernanza y Reglamentos, Premios y distinciones, Servicios, Webmail UDP. El admin asigna manualmente desde el editor.
 - F4 en adelante: archivos/singles de CPT.
 
-### 2026-04-28 — Fix: Vite base path para subdir install (MAMP /udp/cms/) *(Cacho)*
+### 2026-04-28 — Fix: Vite base path para subdir install (MAMP /udp/cms/) _(Cacho)_
 
 **Síntoma**: Swiper no inicializaba. Consola mostraba 404 en chunks dinámicos (`swiper.xxx.js`, `utils.xxx.js`, `index.xxx.js`) y todas las fonts woff2. `main.js` sí cargaba.
 
@@ -174,7 +174,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 **Verificación**: Curl 200 en chunks + fonts; `grep` confirma path `/udp/cms/...` baked en `main.DY8Fqxyc.js` y `main.BurZMkSV.css`.
 
-### 2026-04-28 — F3 Section Landing — Refactor v2 (sin imagen + breadcrumb + back-card) *(Cacho)*
+### 2026-04-28 — F3 Section Landing — Refactor v2 (sin imagen + breadcrumb + back-card) _(Cacho)_
 
 > Esta entrada **reemplaza conceptualmente** la entrada anterior "F3 Section Landing Template completada" (línea 138). Aquella describe la v1 y se mantiene como historial de la iteración inicial; la arquitectura efectiva en código es la v2 descrita aquí.
 
@@ -200,7 +200,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - El usuario debe asignar el template manualmente desde el dropdown del editor a las páginas iniciales: Pregrado, Conoce UDP, Gobernanza y Reglamentos, Premios y distinciones, Servicios, Webmail UDP.
 - F4 en adelante: archivos/singles de CPT.
 
-### 2026-04-28 — F4a `block_card_grid` + helpers *(Cacho)*
+### 2026-04-28 — F4a `block_card_grid` + helpers _(Cacho)_
 
 **Hechos**:
 
@@ -232,7 +232,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Cleanup de scaffold legacy (`block-cards_grid.php`, `_flexible-blocks.scss`) cuando todos los bloques UDP estén migrados.
 - El group PHP `group_flexible_blocks` en `inc/acf-setup.php` tiene mismo field name `content_blocks` que el nuevo JSON group — coexisten sin conflicto (ambos aplican al mismo template) pero el PHP group está vacío (no tiene `block_card_grid` layout). Limpiar en F11.
 
-### 2026-04-28 — F4b Task 2: Card `--horizontal` modifier *(Cacho)*
+### 2026-04-28 — F4b Task 2: Card `--horizontal` modifier _(Cacho)_
 
 **Hechos**:
 
@@ -249,7 +249,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 - Task 3 de F4b: archivo `archive-post.php` que pase `variant=>'horizontal'` al partial.
 
-### 2026-04-28 — F4b1 Noticias archive (simple) + single-post *(Cacho)*
+### 2026-04-28 — F4b1 Noticias archive (simple) + single-post _(Cacho)_
 
 **Hechos**:
 
@@ -283,7 +283,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - F4c: archive Agenda (toggle grid/list) + single-evento + nuevo card primitive `card-evento.php`. Reutilizará `udp_query_noticias` pattern → `udp_query_agenda()`, y los partials `archive/pagination.php`.
 - Image gallery del single (Figma muestra 3 imágenes con arrows después del body) → F4b2 cuando se añada el campo ACF gallery.
 
-### 2026-04-28 — F4b2 Tasks 4+5: Hero partial + SCSS featured + dark theme *(Cacho)*
+### 2026-04-28 — F4b2 Tasks 4+5: Hero partial + SCSS featured + dark theme _(Cacho)_
 
 **Hechos**:
 
@@ -303,7 +303,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Campo ACF `featured_post` (post_object) en options page UDP para curaduría editorial.
 - Bump `posts_per_page` de 6 → 9 para compensar los 3 posts consumidos por el hero.
 
-### 2026-04-28 — F4b2 Task 6: page-noticias.php logic update (page 1 vs 2+, theme=dark) *(Cacho)*
+### 2026-04-28 — F4b2 Task 6: page-noticias.php logic update (page 1 vs 2+, theme=dark) _(Cacho)_
 
 **Hechos**:
 
@@ -329,7 +329,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 ---
 
-### 2026-04-28 — F4b2 Noticias hero band + tema dark fix *(Cacho)*
+### 2026-04-28 — F4b2 Noticias hero band + tema dark fix _(Cacho)_
 
 **Hechos**:
 
@@ -355,7 +355,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 ---
 
-### 2026-04-28 — F4c Task 2: ICS calendar endpoint *(Cacho)*
+### 2026-04-28 — F4c Task 2: ICS calendar endpoint _(Cacho)_
 
 **Hechos**:
 
@@ -377,7 +377,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 ---
 
-### 2026-04-28 — Bugfix: udp_card_data_from_agenda fecha_display vacío *(Cacho)*
+### 2026-04-28 — Bugfix: udp_card_data_from_agenda fecha_display vacío _(Cacho)_
 
 **Hechos**:
 
@@ -393,7 +393,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 ---
 
-### 2026-04-28 — F4c Agenda archive (grid + list) + single-evento *(Cacho)*
+### 2026-04-28 — F4c Agenda archive (grid + list) + single-evento _(Cacho)_
 
 **Hechos**:
 
@@ -439,7 +439,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - `/eventos/` slug si el cliente prefiere a `/agenda-udp/`.
 - Subir imágenes featured a más eventos en BD para que el archive muestre los 6/12 cards esperados.
 
-### 2026-04-28 — F4 extras: image gallery en single-post *(Cacho)*
+### 2026-04-28 — F4 extras: image gallery en single-post _(Cacho)_
 
 **Hechos**:
 
@@ -455,7 +455,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 - F5+: el cliente sigue con calendario, concursos, facultades, carreras, centros, home, etc.
 
-### 2026-04-28 — Bugfix F4b1/F4c: prefijo udp\_ en params + agenda >= hoy *(Cacho)*
+### 2026-04-28 — Bugfix F4b1/F4c: prefijo udp\_ en params + agenda >= hoy _(Cacho)_
 
 **Bug 1**: `year`, `cat`, `facultad` son WP built-in query vars. Al enviar el form con `?year=2024`, WP interceptaba el request y ruteaba a date archive → 404.
 
@@ -492,7 +492,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 **Regla descubierta**: Los query params de forms GET propios deben llevar prefijo para evitar colisión con WP built-in vars: `year`, `cat`, `tag`, `author`, `s`, `p`, `name`, `feed`, `tb`, `paged`, `comments_popup`, `preview`, `page`, `calendar`, `m`, `w`, `day`, `monthnum`, `order`, `orderby`, `meta_key`, `meta_value`, `meta_compare`, `meta_query`, `posts`, etc.
 
-### 2026-04-28 — Fix: featured image opcional en card-evento grid + placeholder *(Cacho)*
+### 2026-04-28 — Fix: featured image opcional en card-evento grid + placeholder _(Cacho)_
 
 **Hechos**:
 
@@ -513,7 +513,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - Solo `udp_card_data_from_agenda` liberada del requirement de featured image — Agenda es CPT donde las imágenes no siempre están disponibles. Noticias mantiene el estándar editorial (imagen requerida).
 - El placeholder visual usa hatching diagonal vs gris sólido para distinguir visualmente "sin imagen intencional" de un posible error de carga.
 
-### 2026-04-29 — F5a Calendario Académico archive *(Cacho)*
+### 2026-04-29 — F5a Calendario Académico archive _(Cacho)_
 
 **Hechos**:
 
@@ -548,7 +548,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - `block_calendario_grid` flex content: diferido a iteración futura.
 - JS active-month tracking en sidebar (IntersectionObserver): defer.
 
-### 2026-04-29 — F5b Concursos académicos archive + single *(Cacho)*
+### 2026-04-29 — F5b Concursos académicos archive + single _(Cacho)_
 
 **Hechos**:
 
@@ -570,7 +570,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 - F5 cerrado. Próxima fase opcional: F6 (Facultades + Carreras + Centros) o seguir según prioridad del cliente.
 
-### 2026-04-29 — F5c Active-month tracking en Calendario sidebar *(Cacho)*
+### 2026-04-29 — F5c Active-month tracking en Calendario sidebar _(Cacho)_
 
 **Hechos**:
 
@@ -583,7 +583,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - IntersectionObserver vs scroll listener: el observer es más performante (rAF interno) y no requiere debounce.
 - Topmost-wins logic: cuando dos meses son visibles a la vez (transition entre Enero y Febrero), el de arriba mantiene el active hasta que el de abajo cruza el rootMargin top.
 
-### 2026-04-29 — F5d block_calendario_grid (flex content) *(Cacho)*
+### 2026-04-29 — F5d block_calendario_grid (flex content) _(Cacho)_
 
 **Hechos**:
 
@@ -603,7 +603,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 - F5 cerrado (a + b + c + d). F6 en adelante.
 
-### 2026-04-29 — F6a Facultades landing + mosaic primitive *(Cacho)*
+### 2026-04-29 — F6a Facultades landing + mosaic primitive _(Cacho)_
 
 **Hechos**:
 
@@ -627,7 +627,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - F6 extras: `block_facultades_mosaic` flex content (mismo mosaic insertable como widget) — diferido.
 - Subir las 12 imágenes de facultad faltantes en admin para que el placeholder se reemplace.
 
-### 2026-04-29 — F6b Carreras archive + single *(Cacho)*
+### 2026-04-29 — F6b Carreras archive + single _(Cacho)_
 
 **Hechos**:
 
@@ -648,7 +648,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - F6c: Centros archive + single simple.
 - Algunas carreras pueden no tener link_directo — esas linkean a su single (donde aterrizan en single-carrera-udp.php).
 
-### 2026-04-29 — F6c Centros archive + single *(Cacho)*
+### 2026-04-29 — F6c Centros archive + single _(Cacho)_
 
 **Hechos**:
 
@@ -670,7 +670,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 ---
 
-### 2026-04-29 — F7a 3 bloques simples (huincha + embed + big_buttons) *(Cacho)*
+### 2026-04-29 — F7a 3 bloques simples (huincha + embed + big_buttons) _(Cacho)_
 
 **Hechos**:
 
@@ -695,7 +695,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 ---
 
-### 2026-04-29 — F7b block_image_gallery + block_accordion *(Cacho)*
+### 2026-04-29 — F7b block_image_gallery + block_accordion _(Cacho)_
 
 **Hechos**:
 
@@ -718,7 +718,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 ---
 
-### 2026-04-29 — F7c block_people_list + block_premios_list *(Cacho)*
+### 2026-04-29 — F7c block_people_list + block_premios_list _(Cacho)_
 
 **Hechos**:
 
@@ -744,7 +744,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 ---
 
-### 2026-04-29 — F8 Mega-menú completo *(Cacho)*
+### 2026-04-29 — F8 Mega-menú completo _(Cacho)_
 
 **Hechos**:
 
@@ -769,7 +769,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - El cliente debe cargar items en `Options → Header & Mega-menú → Menu Principal` y `Mega-menú: Quick Links`. Si no hay data, el panel muestra el empty state (actualmente hay 5 items de menu_principal en DB).
 - F9: Home. F10: Polish. F11: Switch local.
 
-### 2026-05-14 — Wordfence colgaba el admin local (HTTP 500 timeout 30s) *(Cacho)*
+### 2026-05-14 — Wordfence colgaba el admin local (HTTP 500 timeout 30s) _(Cacho)_
 
 **Hechos**:
 
@@ -792,13 +792,13 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - Subir tema al staging — ya está hecho según el usuario pero "no funciona": pendiente de diagnosticar (probablemente falta `dist/` o el `udp-core-loader.php` en mu-plugins raíz; ver entrada anterior).
 - Migración DB local → staging vía WP Migrate DB con find/replace `http://localhost:8888/udp` → URL staging.
 
-### 2026-05-20 — Fix build:prod path para producción *(Cacho)*
+### 2026-05-20 — Fix build:prod path para producción _(Cacho)_
 
 - En `package.json` se añadió script `build:prod` que pasa `VITE_BASE_PATH=/cms/wp-content/themes/starter-theme/dist/` explícitamente. Para deploy hay que usar `npm run build:prod`, no `npm run build`.
 - Causa: Vite carga `.env.local` en TODOS los modes (incluido production), así que builds locales horneaban `/udp/cms/...` en los chunks dinámicos y rompían en producción.
 - `.env.local` ahora documenta este caveat en su comentario.
 
-### 2026-05-20 — F9 template page-institucional completado *(Cacho)*
+### 2026-05-20 — F9 template page-institucional completado _(Cacho)_
 
 Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 6 fixes post-review).
 
@@ -823,7 +823,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 - QA manual del template: crear página de prueba con las 4 secciones, verificar desktop ≥1440, tablet 768-991, mobile <768, Lighthouse a11y ≥95. Está documentado en plan §12.
 - Mergear `feature/f9-page-institucional` a main cuando se valide visualmente.
 
-### 2026-05-21 — F9 Home — Brainstorming en curso (pausado) *(Elsa)*
+### 2026-05-21 — F9 Home — Brainstorming en curso (pausado) _(Elsa)_
 
 **Estado**: Brainstorming a medias. Esperando confirmación del jefe sobre arquitectura.
 
@@ -854,7 +854,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 
 **Sesión de brainstorm pausada para avanzar con otras páginas.**
 
-### 2026-05-22 — Anuarios UDP — Brainstorming en curso (pausado) *(Elsa)*
+### 2026-05-22 — Anuarios UDP — Brainstorming en curso (pausado) _(Elsa)_
 
 **Diseño**: Grid 4 columnas de cards anuario (imagen portada portrait 317×391 + título + fecha). 14 anuarios en Figma (2025→2011). Breadcrumb + título "Anuarios UDP". Share button flotante derecha. Sin barra lateral dots (era error del Figma, pertenece a otra página).
 
@@ -865,7 +865,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 
 **Decisiones tomadas**: Sin sidebar dots. Share button = reusar `post-share.php` partial de F4b.
 
-### 2026-05-22 — Task 1: ACF JSON field group para Template Simple Accordion *(Elsa)*
+### 2026-05-22 — Task 1: ACF JSON field group para Template Simple Accordion _(Elsa)_
 
 **Hechos**:
 
@@ -888,7 +888,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 - Task 3+: template-parts y SCSS para renderizar el acordeón y carrusel de relacionados (Swiper lazy-loaded).
 - Las páginas que use este template aún no existen — serán creadas/asignadas por el cliente o futuras tasks.
 
-### 2026-05-22 — Task 2: Template principal + page-header partial *(Elsa)*
+### 2026-05-22 — Task 2: Template principal + page-header partial _(Elsa)_
 
 **Hechos**:
 
@@ -912,7 +912,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 - Task 4: `template-parts/simple-accordion/related.php` (carrusel Swiper de items relacionados).
 - Task 5+: SCSS para header, acordeón, related.
 
-### 2026-05-22 — Task 3: main-content partial (the_content + acordeón) *(Elsa)*
+### 2026-05-22 — Task 3: main-content partial (the_content + acordeón) _(Elsa)_
 
 **Hechos**:
 
@@ -938,7 +938,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 
 ---
 
-### 2026-05-22 — Task 5: SCSS styles + import (simple-accordion) *(Elsa)*
+### 2026-05-22 — Task 5: SCSS styles + import (simple-accordion) _(Elsa)_
 
 **Hechos**:
 
@@ -954,7 +954,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 
 - Task 6+: template PHP principal (`page-simple-accordion.php`) y entrypoint JS si aplica.
 
-### 2026-05-22 — F10 Task 6: E2E verification — Template Simple Accordion completado *(Elsa)*
+### 2026-05-22 — F10 Task 6: E2E verification — Template Simple Accordion completado _(Elsa)_
 
 **Hechos**:
 
@@ -983,7 +983,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 
 Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe sobre fuente datos), F11+ cleanup/polish.
 
-### 2026-05-22 — Bugfix: Template Simple Accordion — the_content() + rel escaping *(Elsa)*
+### 2026-05-22 — Bugfix: Template Simple Accordion — the_content() + rel escaping _(Elsa)_
 
 **Hechos**:
 
@@ -1010,7 +1010,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/simple-accordion/main-content.php`
 - `/Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/template-parts/simple-accordion/related.php`
 
-### 2026-05-22 — Lazy migration + guía cliente — Cierre de sesión *(Elsa)*
+### 2026-05-22 — Lazy migration + guía cliente — Cierre de sesión _(Elsa)_
 
 **Añadido al template Simple Accordion**:
 
@@ -1030,7 +1030,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 2. Retomar Anuarios cuando llegue respuesta del jefe
 3. Fase posterior Simple Accordion: tarjetas laterales (ACF repeater, 3 tipos, desarrolla compañero)
 
-### 2026-05-22 — F9 Home — Plan escrito *(Elsa)*
+### 2026-05-22 — F9 Home — Plan escrito _(Elsa)_
 
 **Confirmaciones recibidas**:
 
@@ -1046,7 +1046,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 
 **Estado**: Pendiente de ejecutar.
 
-### 2026-05-22 — F9 Home Task 4: S1 Portada *(Elsa)*
+### 2026-05-22 — F9 Home Task 4: S1 Portada _(Elsa)_
 
 **Hechos**:
 
@@ -1062,7 +1062,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Tasks 5+: secciones restantes de la Home (S2 Postítulos, S3 Vida Universitaria, etc.)
 - `initHomePortada()` todavía no está importado en `main.js` — se añadirá cuando se creen todos los módulos de la home en el task de infraestructura o al final.
 
-### 2026-05-22 — Task 2 completada: ACF JSON group_template_home + siglas *(Elsa)*
+### 2026-05-22 — Task 2 completada: ACF JSON group_template_home + siglas _(Elsa)_
 
 - Creado `acf-json/group_template_home.json` — 7 tabs, 30+ campos (portada, postítulos, vida universitaria, cultura UDP, cultura digital, cifras). Location: `front_page`.
 - Añadido campo `siglas` (text, maxlength 10) a `acf-json/group_tax_facultad_meta.json`.
@@ -1071,7 +1071,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - ACF normalizó los JSONs al sincronizar (añadió defaults de campos — comportamiento normal).
 - Commit: `1ba9297` feat(home/acf): group_template_home + siglas en facultad
 
-### 2026-05-22 — F9 Home S3 Noticias completada *(Elsa)*
+### 2026-05-22 — F9 Home S3 Noticias completada _(Elsa)_
 
 **Hechos**:
 
@@ -1091,7 +1091,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - S4 Facultades, S5 Próximos Eventos, S6 Postítulos (destacado azul), S7 Vida Universitaria, S8 Cultura UDP, S9 Cultura Digital, S10 Innovación e Investigación, S11 Cifras.
 - Wiring de `initHomeNoticias()` en `main.js` (se añade cuando se consoliden todos los módulos home).
 
-### 2026-05-22 — F9 Home S4 Facultades completada *(Elsa)*
+### 2026-05-22 — F9 Home S4 Facultades completada _(Elsa)_
 
 **Hechos**:
 
@@ -1110,7 +1110,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - S6 Postítulos (destacado azul), S7 Vida Universitaria, S8 Cultura UDP, S9 Cultura Digital, S10 Innovación e Investigación, S11 Cifras.
 - Wiring de todos los módulos JS home en `main.js`.
 
-### 2026-05-22 — F9 Home S5 Próximos Eventos completada *(Elsa)*
+### 2026-05-22 — F9 Home S5 Próximos Eventos completada _(Elsa)_
 
 **Hechos**:
 
@@ -1126,7 +1126,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - La tabla usa `<caption class="visually-hidden">` para accesibilidad (screenreaders anuncian el contexto de la tabla).
 - `lugar` condicional tanto en cards como en filas de tabla — algunos eventos no tienen lugar configurado.
 
-### 2026-05-22 — F9 Home S10 Innovación e Investigación completada *(Elsa)*
+### 2026-05-22 — F9 Home S10 Innovación e Investigación completada _(Elsa)_
 
 **Hechos**:
 
@@ -1142,7 +1142,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Wiring de todos los módulos JS home en `main.js` (consolidado al final).
 - Smoke test final de la home completa.
 
-### 2026-05-22 — F9 Home S9 Cultura Digital completada *(Elsa)*
+### 2026-05-22 — F9 Home S9 Cultura Digital completada _(Elsa)_
 
 **Hechos**:
 
@@ -1157,7 +1157,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - S11 Cifras (ACF repeater admin-editable).
 - Smoke test final de la home completa.
 
-### 2026-05-22 — F9 Home S8 Cultura UDP completada *(Elsa)*
+### 2026-05-22 — F9 Home S8 Cultura UDP completada _(Elsa)_
 
 **Hechos**:
 
@@ -1171,7 +1171,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - S9 Cultura Digital, S10 Innovación e Investigación, S11 Cifras.
 - Wiring de todos los módulos JS home en `main.js` (consolidado al final).
 
-### 2026-05-22 — F9 Home: Títulos editables + reorden tabs ACF *(Elsa)*
+### 2026-05-22 — F9 Home: Títulos editables + reorden tabs ACF _(Elsa)_
 
 **Hechos**:
 
@@ -1191,7 +1191,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Secciones con título fijo (semántico/obligatorio): fallback con `?: 'Texto por defecto'` → siempre renderiza el `<h2>`.
 - Secciones con título opcional: `get_field(...)` sin fallback → el `<h2>` solo aparece si hay valor en ACF.
 
-### 2026-05-22 — F9 Home S11 Cifras completada *(Elsa)*
+### 2026-05-22 — F9 Home S11 Cifras completada _(Elsa)_
 
 **Hechos**:
 
@@ -1214,7 +1214,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Todas las secciones implementadas: S1 Portada, S2 Buscador, S3 Noticias, S4 Facultades, S5 Eventos, S6 Postítulos, S7 Vida Universitaria, S8 Cultura UDP, S9 Cultura Digital, S10 Innovación, **S11 Cifras**.
 - Pendiente: wiring de módulos JS en `main.js` + `front-page.php` orquestador + smoke test final.
 
-### 2026-05-22 — F9 Home: Títulos sección → obligatorios (required=1) *(Elsa)*
+### 2026-05-22 — F9 Home: Títulos sección → obligatorios (required=1) _(Elsa)_
 
 **Hechos**:
 
@@ -1228,7 +1228,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 
 - Todos los `*_titulo` de S1–S11: `required=1`, fallback en PHP, `<h2>` siempre presente.
 
-### 2026-05-22 — F9 Home: build final ✅ *(Elsa)*
+### 2026-05-22 — F9 Home: build final ✅ _(Elsa)_
 
 **Hechos**:
 
@@ -1238,7 +1238,203 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 
 **Próximo**: F10 Polish (SVGs sociales, eyebrow color) → F11 Switch tema activo.
 
-### 2026-05-25 — F9: migración de contenido viejo (`secciones`) al template Institucional *(Cacho)*
+### 2026-05-23 — Cierre de sesión _(Elsa)_
+
+**Lo trabajado**:
+
+- **Editor config**: creados `.editorconfig`, `.prettierrc` y `.vscode/settings.json` para alinear el formato de SCSS/JS (2 espacios) con el output de Prettier. A partir de ahora Claude escribe SCSS en estilo Prettier (sin single-liners, `rgba()` con espacios).
+- **Fix animación portada**: corregida la scroll-driven animation de S1. El problema era `animation-timeline: view()` que no funciona para elementos above-fold. Solución: `animation-timeline: scroll(root)` con `animation-range: 0px 25vh`. Fallback JS (IntersectionObserver) para Firefox.
+- **Renombrado S6**: `section-posttitulos` → `section-destacado` en template, clases BEM, `front-page.php` y campos ACF (`posttitulos_*` → `destacado_*`). BD sincronizada (ID=55509). Los datos previos de esa sección quedan desvinculados — hay que reintroducirlos en el admin.
+
+**Estado actual**:
+
+- Rama activa: `home` (no mergeada a `main` aún).
+- F9 completada. F10 (Polish) y F11 (Switch tema) pendientes.
+
+**Próximos pasos sugeridos**:
+
+- Reintroducir datos de la sección Destacado en el admin WP.
+- Continuar con F10: SVGs sociales reales, eyebrow color por término de facultad.
+- Merge `home` → `main` cuando esté lista.
+
+### 2026-05-24 — Abstracción y centralización de form controls _(Elsa)_
+
+**Hechos**:
+
+- Creado `src/scss/components/_form-controls.scss` con todas las clases reutilizables de formulario. Importado en `main.scss` tras `_button.scss`.
+- Clases definidas:
+  - `.udp-form-select` (dark, 48px) + `--slim` (40px) + `--dim` (gris) + `--light`
+  - `.udp-form-input` (dark, 48px) + `--slim` + `--dim` + `--light` + `--search-icon` (lupa como bg-image)
+  - `.udp-form-filterbar` — contenedor flex (`max-width: 1440px; padding: 0 40px; margin-inline: auto`) para barras de filtros de archivo. `__group` (320px) y `__group--search` (380px). Concursos lo sobreescribe con `padding: 20px 40px; border-bottom: 1px solid black`.
+  - `.udp-form-search-group` — wrapper con botón lupa absoluto a la **izquierda** (`left: 0`, `padding-left: 48px` en el input). Modificador `--light` para tema claro.
+- Eliminados bloques de grid layout `.udp-archive-filters {}` de `_noticias-archive.scss`, `_carreras-archive.scss`, `_concursos-archive.scss`.
+- Renombrado `udp-archive-filters` → `udp-form-filterbar` (pasando por `udp-form-filtersgroup`) en los 5 PHP de filtros: noticias, eventos, carreras, concursos, calendario. JS selectors actualizados. Eliminado modificador muerto `--light` del form de concursos.
+- Bootstrap `form-select`/`form-control` eliminados del home buscador PHP. Home usa `--dim` para color gris.
+- Build: ✓ sin errores.
+
+**URLs para verificar el resultado**:
+
+- Home buscador: http://localhost:8888/udp/
+- Noticias: http://localhost:8888/udp/noticias/
+- Agenda/Eventos: http://localhost:8888/udp/agenda-udp/
+- Calendario académico: http://localhost:8888/udp/calendario-academico/
+- Carreras: http://localhost:8888/udp/pregrado-y-formacion-general/carreras/
+- Concursos académicos: http://localhost:8888/udp/docentes/concursos-academicos/
+
+### 2026-05-24 — Rediseño sección Home Eventos (S5) según Figma + taxonomía tipo-evento _(Elsa)_
+
+**Hechos**:
+
+- Reescrito `template-parts/home/section-eventos.php` según Figma 3706:20036: 2 cards destacadas (imagen 232px + cuerpo #232323, altura 250px) con footer (eyebrow Necto Mono + fecha+lugar + botón círculo flecha 48px). Lista de hasta 5 eventos: grid 3 cols (eyebrow 200px | título 1fr | fecha 200px), separadores `#3d3d3d`.
+- Botón "Ver todos los eventos" pill outline `rgba(white, 0.7)`.
+- Taxonomía `tipo-evento` creada (jerárquica = checkboxes, exclusiva CPT `agenda`). Términos: Charlas, Cátedras, Otras actividades, Exposiciones, Congresos (IDs 4309–4313).
+- Los 3 puntos que renderizan el eyebrow de agenda leen ahora `tipo-evento`: `udp_card_data_from_agenda()` (cubre home S5 + archivo), `event-meta.php` (single).
+- `post_tag` eliminado del array `taxonomies` del CPT `agenda` en mu-plugin (ya no aparece en el admin). Comentario corregido en `udp-cards.php`.
+- Refactor SCSS: mixin `udp-media-placeholder($theme)` en `_mixins.scss` + clase standalone `.udp-media-placeholder` en `components/_media-placeholder.scss`. Elimina 5 bloques `repeating-linear-gradient` duplicados en `_card-evento`, `_card-mosaic` y `_block-people-list`.
+
+### 2026-05-24 — Rediseño sección Home Noticias (S3) _(Elsa)_
+
+**Hechos**:
+
+- Rediseñada `template-parts/home/section-noticias.php` según Figma (node `3706:19949`):
+  - 1 slide destacado: imagen 432×580px con overlay blanco 60%, badge "Destacado" (#FFE210, Necto Mono), fecha top-right, título serif 48px centrado + columna de texto Work Sans 30px + "Leer más ↗"
+  - Slides regulares: pares de 2 cards (201×275px, imagen + título 18px + fecha + "Leer más ↗")
+  - Botón "Ver todas las noticias" pill outline bottom-right (216×44px)
+- Actualizado `_home.scss` bloque `.udp-home-noticias` con todas las dimensiones del Figma: swiper 580px, slide featured 694px, slide pair 463px, nav circular (#4539F2 / #2B2788)
+- Actualizado `home-noticias.js`: nav apunta a `.js-noticias-prev/next` del header, spaceBetween: 30, sin freeMode
+- Build: ✓ sin errores. Commit: `6131f7b`
+
+### 2026-05-24 — Cierre de sesión _(Elsa)_
+
+**Lo trabajado**:
+
+- Centralización form controls en `_form-controls.scss`; renombrado `udp-archive-filters` → `udp-form-filterbar`
+- Rediseño S3 Noticias según Figma
+- Rediseño S5 Eventos según Figma 3706:20036 (cards imagen+cuerpo oscuro + lista 3 cols)
+- Taxonomía `tipo-evento` (checkboxes, exclusiva agenda): 5 términos creados en BD
+- Eyebrow de agenda unificado a `tipo-evento` en los 3 puntos: helper, single, archivo
+- `post_tag` ocultado del admin de agenda (eliminado del CPT `taxonomies`)
+- Refactor SCSS: mixin `udp-media-placeholder` + clase standalone, elimina gradientes duplicados
+
+**Estado actual**:
+
+- Rama activa: `home` (no mergeada a `main`).
+- S3 y S5 home implementadas según Figma — pendiente revisar en navegador.
+- Resto de secciones del home pendientes de revisar/ajustar contra Figma.
+
+**Próximos pasos sugeridos**:
+
+- Revisar en navegador S3 y S5 y ajustar si es necesario.
+- Continuar revisión sección a sección del home contra Figma.
+- Merge `home` → `main` cuando el home esté completo.
+
+### 2026-05-24 (tarde) — Rediseño S6 Destacado azul + fix sistémico get_field() _(Elsa)_
+
+**Hechos**:
+
+- Rediseñada `template-parts/home/section-destacado.php` según Figma `3706:20079`:
+  - Sin Bootstrap container — ancho completo.
+  - Panel izquierdo `$brand-blue` (#4539F2), `flex: 1`, `min-height: 432px`, padding 40px.
+  - Imagen derecha `flex: 0 0 432px`, `object-fit: cover`.
+  - Título: serif, `font-weight: 300` (Light) por defecto; `strong/b` → 500 (Medium). Tamaño `clamp(2rem, 3.33vw, 3rem)`, `line-height: 1`.
+  - CTA: texto + SVG flecha (arrow-up-right), Work Sans SemiBold 16px blanco.
+  - Responsive `<lg`: flex-column, imagen `aspect-ratio: 16/9`.
+- Bloque SCSS `.udp-home-destacado` completamente reescrito en `_home.scss`.
+
+**Fix crítico — get_field() sin post_id en template parts**:
+
+- Causa raíz: `get_template_part()` se ejecuta fuera del loop de WP. `get_the_ID()` devuelve vacío. `get_field()` sin segundo argumento no puede determinar qué post leer.
+- El título S6 aparecía solo gracias al fallback hardcoded, no desde la BD. La descripción y todos los demás campos sin fallback no se renderizaban.
+- Fix: `front-page.php` ahora pasa `['post_id' => get_option('page_on_front')]` como `$args` a los 11 templates via `get_template_part()`.
+- Los 11 templates añaden `$post_id = $args['post_id'] ?? (int) get_option('page_on_front');` y pasan `$post_id` explícito a todos sus `get_field()`. Las llamadas con post_id propio (ej. `get_field('color', $fac)`) no fueron tocadas.
+
+**Limpieza BD ACF**:
+
+- Había 4 entradas duplicadas de `group_template_home` en `wp_posts`. ACF cargaba todos y `get_field()` entraba en conflicto.
+- Eliminados IDs 55354, 55396, 55453 via `wp post delete --force`. Queda solo el 55509 (más reciente, 37 campos correctos).
+
+**Commit**: `d314464`
+
+### 2026-05-24 — Cierre de sesión _(Elsa)_
+
+**Lo trabajado hoy (sesión completa)**:
+
+- S3 Noticias: rediseño según Figma
+- S5 Eventos: rediseño según Figma; taxonomía `tipo-evento`; eyebrow unificado
+- S6 Destacado azul: rediseño según Figma; fix get_field() en todos los templates home
+
+**Estado actual**:
+
+- Rama activa: `home` (no mergeada a `main`).
+- S6 implementada y funcionando con contenido real desde ACF.
+- S3 y S5 implementadas — pendiente revisar en navegador.
+- Resto de secciones del home pendientes de revisión visual contra Figma.
+
+**Próximos pasos sugeridos**:
+
+- Continuar revisión sección a sección del home contra Figma (S7–S11).
+- Revisar S3 y S5 en navegador.
+- Merge `home` → `main` cuando el home esté completo.
+
+### 2026-05-24 — Rediseño sección Home Eventos (S5) según Figma 3706:20036 _(Elsa)_
+
+**Hechos**:
+
+- Reescrito `template-parts/home/section-eventos.php` — estructura nueva: 2 cards destacadas (imagen 232px fija + cuerpo oscuro #232323, altura 250px) + lista de hasta 5 eventos.
+- Card: `display:flex`, imagen fija izquierda, cuerpo derecho con título arriba (Work Sans Medium 20px, height 150px overflow) + footer (eyebrow Necto Mono + fecha+lugar + botón círculo flecha 48px border #4f4f4f).
+- Lista: filas `display:grid` 3 cols (eyebrow 200px | título 1fr | fecha 200px), separadas por `border-top: 1px solid #3d3d3d`.
+- Botón "Ver todos los eventos" — pill outline `border: rgba(white, 0.7)`, 230×44px.
+- Build: ✓ 591ms sin errores.
+
+### 2026-05-24 — Fix S7 Vida Universitaria: colores y estilos _(Elsa)_
+
+- `.udp-home-vida` añadido `background-color: $dark-1` y `padding-block: 80px` — la sección no tenía fondo oscuro.
+- `__texto` corregido de `color: $gray-700` a `color: $white`.
+- `__link` corregido de `color: $black` a `color: $white`; eliminado `border-bottom`; añadido `::after { content: '↗' }` para ícono flecha según Figma.
+- Build: ✓ sin errores.
+
+### 2026-05-24 — S7 Vida Universitaria: campo video con fallback a imagen _(Elsa)_
+
+- Nuevo campo ACF `vida_video` (tipo File, mime mp4/webm) añadido al JSON `group_template_home.json` antes de `vida_imagen`.
+- `vida_imagen` renombrado a "Imagen (fallback si no hay video)" con instrucción actualizada — para que el admin entienda la jerarquía.
+- Template PHP: si hay `vida_video` → `<video autoplay muted loop playsinline>`; si no → `<img>` existente.
+- SCSS: `__video` y `__imagen` comparten estilos (`object-fit: cover`, `border-radius: 2px`).
+- Build: ✓ sin errores.
+
+### 2026-05-24 — Cierre de sesión _(Elsa)_
+
+- Resumen: fix completo de S7 Vida Universitaria — colores (fondo oscuro, texto blanco, links blancos con ↗) + nuevo campo video con fallback a imagen.
+- Estado actual: sección S7 alineada con Figma, campo ACF listo para que el admin suba video.
+- Próximos pasos: revisar el resto de secciones pendientes (S9–S11 según memory) contra Figma.
+
+### 2026-05-24 — S8 Cultura UDP: refactor campos ACF + contenido _(Elsa)_
+
+- `cu_contador` (number) → `cu_subtitulo` (text) en ACF JSON. Campo `cu_link` eliminado del repeater.
+- Template PHP: `<a href>` reemplazado por `<div class="__row">` (sin links). Clases actualizadas: `__link` → `__row`, `__contador` → `__subtitulo`.
+- SCSS: mismos renombres, `cursor: default` en `__row`.
+- JS sin cambios (fade ya funcionaba sobre el `<li>`).
+- Contenido cargado vía WP-CLI (post 55394): 6 ítems con subtítulos del Figma. Imagen asignada solo en Conferencias (ID 54829); las otras 5 categorías pendientes de imagen.
+
+### 2026-05-24 — Cierre de sesión _(Elsa)_
+
+- Resumen: S8 Cultura UDP alineada con Figma — campos ACF refactorizados, links eliminados, contenido de las 6 categorías cargado.
+- Estado actual: sección funcional, hover fade operativo. Faltan imágenes para Publicaciones, Exposiciones, Documentales, Podcasts y Especiales.
+- Próximos pasos: subir imágenes para los 5 ítems restantes desde el admin; revisar S3, S5, S6 contra Figma.
+
+### 2026-05-24 — S8 Cultura UDP: fixes hover + subtítulo + placeholder _(Elsa)_
+
+- **Bug hover CSS (BEM)**: `&.is-active &__nombre` dentro de `&__item` compilaba como doble BEM (`__item__nombre`). Movido un nivel arriba: `&__item.is-active &__nombre` funciona correctamente.
+- **Subtítulo**: añadidos `font-family: $font-family-mono`, `text-transform: uppercase`, `letter-spacing: 0.05em`, `line-height: 1.25rem` — alineado con Figma (Necto Mono 14px).
+- **Row**: `align-items: baseline` → `flex-end`; gap `12px` → `18px` (según Figma).
+- **Media placeholder**: cuando no hay imagen el PHP renderiza `<div class="__placeholder js-cultura-img">` en lugar de `<img>`. SCSS: `__img` y `__placeholder` comparten fade styles; `__placeholder` usa `@include udp-media-placeholder()`.
+
+### 2026-05-24 — Cierre de sesión (final) _(Elsa)_
+
+- Resumen: S8 Cultura UDP completamente alineada con Figma. ACF refactorizado, hover naranja corregido, subtítulos con fuente mono correcta, placeholder con mixin para ítems sin imagen.
+- Estado actual: build limpio, sección lista. Los 5 ítems sin imagen muestran tramado diagonal.
+- Próximos pasos: subir imágenes para Publicaciones–Especiales desde el admin; revisar S3, S5, S6 contra Figma.
+
+### 2026-05-25 — F9: migración de contenido viejo (`secciones`) al template Institucional _(Cacho)_
 
 El usuario reportó que la página institucional "no aprovechaba las secciones que ya había". Diagnóstico: el template solo renderiza el campo ACF nuevo `sections` (no `the_content()` ni el campo viejo `secciones` del tema legacy). El contenido vivía en el campo viejo `secciones` (group "Secciones" ID 313, aún activo) + `post_content`.
 
@@ -1274,7 +1470,7 @@ El usuario reportó que la página institucional "no aprovechaba las secciones q
 - El group viejo "Secciones" (ID 313) sigue activo y visible en el editor de estas páginas; se conserva como backup. Desactivar/limpiar post-validación.
 - Backups de meta de Forma de Gobierno en `/tmp/udp-fdg-backup.json`.
 
-### 2026-05-25 — F9: 2 layouts nuevos (premio_block + text_accordion) + migración Premios/Distinciones *(Cacho)*
+### 2026-05-25 — F9: 2 layouts nuevos (premio_block + text_accordion) + migración Premios/Distinciones _(Cacho)_
 
 El usuario pidió construir los layouts faltantes y migrar las páginas que tuvieran datos. Referencias Figma: Consejo Académico `3722:43026` (rosters = people_carousel existente), Premios Nacionales `4394:22894` (bloque laureado), Doctorado Honoris Causa `4398:21365` (acordeón).
 
@@ -1304,13 +1500,13 @@ Al intentar sincronizar el JSON con `acf_import_field_group()`, se generó un du
 - Verificación visual en navegador (desktop/tablet/mobile) de premio_block y text_accordion — solo verificado por estructura HTML, no pixel-perfect.
 - El group viejo "Secciones" (313) sigue activo como backup de los datos legacy.
 
-### 2026-05-25 — F9 ajustes UI: quitar rail lateral + rediseñar share (Figma 3706:24477) *(Cacho)*
+### 2026-05-25 — F9 ajustes UI: quitar rail lateral + rediseñar share (Figma 3706:24477) _(Cacho)_
 
 - **Rail vertical fijo izquierdo eliminado** (decisión del usuario): quitado el `get_template_part('nav-rail')` de `page-institucional.php` y el bloque SCSS `.udp-inst-rail`. La navegación queda solo en la **chips bar** superior (sticky). El partial `nav-rail.php` queda en disco pero sin uso. `anchor-scrollspy.js` sigue OK (`railLinks` resuelve a array vacío, solo sincroniza chips).
 - **Botón compartir rediseñado** según Figma `3706:24477`: de trigger+dropdown+Web Share API → **píldora vertical blanca** (border #e7e7e7, rounded-full, padding 20/16, gap 16) con 5 iconos de acción directa: copiar enlace, email, Facebook, X, WhatsApp (sin LinkedIn). `share-floating.php` reescrito (5 `<a>/<button>` con SVG inline), `share-floating.js` simplificado (sin dropdown/native share; solo set de hrefs + clipboard con feedback `.is-copied`), SCSS `.udp-inst-share` reescrito. Sigue oculto <576px.
 - E2E: 558 y 828 HTTP 200, 0 markup de rail, share con 5 botones, chips intactos. Build OK.
 
-### 2026-05-25 — F9: render institucional por defecto en page.php (auto-transforma legacy) *(Cacho)*
+### 2026-05-25 — F9: render institucional por defecto en page.php (auto-transforma legacy) _(Cacho)_
 
 Objetivo del usuario: que **todas las páginas que NO usan un template propio** rendericen con estilo institucional aprovechando sus secciones existentes, sin migración manual. Referencias Figma: Historia `3706:20493` y Accesos Internos `4418:26400` (hero morado + intro + acordeón + sidebar + back link).
 
@@ -1338,7 +1534,7 @@ Objetivo del usuario: que **todas las páginas que NO usan un template propio** 
 - No portado de los Figma: widget "Noticias" lateral derecho (Design Historia) y banda "También te puede interesar" (relacionadas por hermanas). El back_link cubre el "volver a {padre}".
 - Convención divergente intencional: la migración manual de las 3 hijas de FdG dejó `desplegable`→rich_text separados; el render por defecto usa `desplegable`→acordeón. Si se quiere unificar, re-migrar o borrar el campo `sections` de esas 3 (para que caigan al transformador).
 
-### 2026-05-25 — F9: banda "También te puede interesar" (páginas hermanas) *(Cacho)*
+### 2026-05-25 — F9: banda "También te puede interesar" (páginas hermanas) _(Cacho)_
 
 Añadida la banda relacionada del Figma de Historia (`3706:20493`, nodo `3706:20540`): un carrusel de páginas hermanas al pie del render institucional.
 
@@ -1349,7 +1545,7 @@ Añadida la banda relacionada del Figma de Historia (`3706:20493`, nodo `3706:20
 
 **Pendiente**: para que las páginas migradas (page-institucional) también muestren la banda relacionada habría que añadir `related` como layout ACF o auto-inyectarlo en `article.php`. Hoy solo aparece en el render por defecto (page.php).
 
-### 2026-05-25 — F9: widget "Noticias" en sidebar institucional (Figma 3706:20539) *(Cacho)*
+### 2026-05-25 — F9: widget "Noticias" en sidebar institucional (Figma 3706:20539) _(Cacho)_
 
 Añadida la tarjeta de noticias del sidebar derecho del Figma de Historia.
 
@@ -1360,7 +1556,7 @@ Añadida la tarjeta de noticias del sidebar derecho del Figma de Historia.
 
 **Pendiente**: igual que la banda relacionada, el widget hoy solo aparece en el render por defecto (page.php). Para migradas habría que setear `show_news` o un sidebar_card especial en su ACF.
 
-### 2026-05-25 — F9: layouts de "especiales" (carrusel, botones, números, video) *(Cacho)*
+### 2026-05-25 — F9: layouts de "especiales" (carrusel, botones, números, video) _(Cacho)_
 
 ⚠️ **El Figma NO tiene mockups de los especiales** (campañas) — solo Home + las páginas institucionales. Estos layouts se hicieron **best-effort** con el lenguaje visual existente; pendiente confirmación visual del cliente.
 
@@ -1384,7 +1580,7 @@ Los 4 añadidos al `$allowed` de `article.php`. Como video/buttons emiten clases
 - Nicho / nested repeaters: `links_en_tabs`, `directorio_de_redes_sociales`, `atributos`.
 - `color_de_fondo` (color picker por sección) se ignora — los layouts usan los temas dark/light por defecto.
 
-### 2026-05-25 — F9: especiales relationship-based (mozaico, destacados, páginas/eventos destacados) *(Cacho)*
+### 2026-05-25 — F9: especiales relationship-based (mozaico, destacados, páginas/eventos destacados) _(Cacho)_
 
 Añadidos al transformador los layouts legacy basados en campo `relationship`, resolviéndolos a items del **`featured_carousel` existente** (sin partial/SCSS nuevos):
 
@@ -1397,13 +1593,13 @@ Añadidos al transformador los layouts legacy basados en campo `relationship`, r
 
 **Quedan sin soportar** (nicho): `links_en_tabs`, `directorio_de_redes_sociales`, `atributos`. Cubren poca superficie y/o necesitan diseño dedicado.
 
-### 2026-05-25 — F9 fixes de revisión (especiales) *(Cacho)*
+### 2026-05-25 — F9 fixes de revisión (especiales) _(Cacho)_
 
 - **Título duplicado**: un `contenido` suelto se mapeaba a `rich_text_sidebar` con `title` = encabezado extraído Y `body` = HTML completo (que incluía el mismo encabezado) → el título salía 2 veces (columna izquierda + cuerpo). Fix: `body = $rest` (contenido sin el primer heading) en `udp_institucional_sections_from_legacy`.
 - **Video con fondo oscuro**: `layout-video.php` usaba `.udp-block-embed--dark`; cambiado a `--light` (fondo blanco) por feedback del cliente.
 - Nota: un `contenido` que solo es un encabezado (ej. "Galería de Imágenes" que precedía a un `galeria_de_imagenes` aún no soportado) queda como título suelto sin cuerpo — no es el bug de duplicación; se resolvería al soportar el layout `galeria_de_imagenes`.
 
-### 2026-05-25 — F9: botones (botones_con_links_externos) al aside derecho *(Cacho)*
+### 2026-05-25 — F9: botones (botones_con_links_externos) al aside derecho _(Cacho)_
 
 Por feedback del cliente, los botones dejan de ser una banda full-width y van al **aside derecho** de la primera sección de texto, como las tarjetas.
 
@@ -1412,7 +1608,7 @@ Por feedback del cliente, los botones dejan de ser una banda full-width y van al
 - SCSS `.udp-inst-sidebar-btns` / `.udp-inst-sidebar-btn`.
 - E2E: Ricardo Lagos (43079) → 2 botones en aside, 0 full-width. Facultad de Derecho (269) → 1 botón en aside + paginas_destacadas.
 
-### 2026-05-25 — F9: soporte `galeria_de_imagenes` *(Cacho)*
+### 2026-05-25 — F9: soporte `galeria_de_imagenes` _(Cacho)_
 
 El cliente notó que faltaban las imágenes (la galería estaba diferida). Añadido:
 
@@ -1423,7 +1619,7 @@ El cliente notó que faltaban las imágenes (la galería estaba diferida). Añad
 
 **Layouts legacy que quedan sin soportar**: `links_en_tabs`, `directorio_de_redes_sociales`, `atributos`.
 
-### 2026-05-25 — F9: `contenido` suelto a una sola columna (no 2-col) *(Cacho)*
+### 2026-05-25 — F9: `contenido` suelto a una sola columna (no 2-col) _(Cacho)_
 
 Feedback del cliente: el `contenido` no debe ir con título en columna lateral (2-col), sino todo seguido en una columna.
 
@@ -1432,13 +1628,13 @@ Feedback del cliente: el `contenido` no debe ir con título en columna lateral (
 - Scope: solo afecta al render legacy (page.php). Las páginas migradas (page-institucional) siguen usando `rich_text_sidebar` 3-col con su sidebar a propósito (verificado: Consejo Académico mantiene 3 secciones 2-col).
 - E2E: Ricardo Lagos (43079) → contenido en `.udp-inst-text` (1 col), 0 `.udp-inst-rts`.
 
-### 2026-05-25 — F9: featured_carousel drag-to-scroll + scrollbar oculta *(Cacho)*
+### 2026-05-25 — F9: featured_carousel drag-to-scroll + scrollbar oculta _(Cacho)_
 
 - SCSS `.udp-inst-featured__list`: `scrollbar-width:none` + `-ms-overflow-style:none` + `::-webkit-scrollbar{display:none}` (barra oculta). `cursor:grab`; `.is-dragging` → `grabbing` + `scroll-snap-type:none` + `user-select:none`.
 - JS nuevo `src/js/modules/featured-drag.js` (cableado en main.js): drag-to-scroll con pointer events para mouse (touch usa scroll nativo). Si hubo arrastre (>4px), cancela el click para no disparar el enlace de la card. Selector `.udp-inst-featured__list`.
 - **Permisos `dist/`**: el build falló porque `dist/js` quedó propiedad de `root` (sudo previo, ver F0/F3). Workaround sin sudo: `mv dist .dist-root-bak` (renombrar solo requiere permiso en el padre) y `npm run build` crea un `dist/` limpio del usuario. **Pendiente**: borrar `.dist-root-bak` con `sudo rm -rf .dist-root-bak` (root-owned, ambos gitignored).
 
-### 2026-05-26 — PENDIENTE (próxima sesión): traer la Home de la otra dev a esta BD *(Cacho)*
+### 2026-05-26 — PENDIENTE (próxima sesión): traer la Home de la otra dev a esta BD _(Cacho)_
 
 **Contexto**: hay otra persona trabajando en el proyecto. Ella hizo **la Home** (front page); este usuario hizo **todo lo demás** (F9 institucional/especiales/migraciones). Ambas BDs son **locales**. Solo se quiere traer **la Home** de ella a esta base (sus otros cambios NO). No es un merge de BD completo — es traer una feature acotada. WordPress no fusiona BDs (los IDs autoincrementales chocan), así que el plan evita sobrescribir: solo **inserta** la home con remapeo de IDs.
 
@@ -1462,7 +1658,7 @@ Feedback del cliente: el `contenido` no debe ir con título en columna lateral (
 
 **NO usar** WP Migrate DB (sobrescribe, no fusiona) ni editar IDs a mano en SQL (rompe relaciones).
 
-### 2026-05-26 — F9 fix: links_cuadrados con estilo de cards "te podría interesar" *(Cacho)*
+### 2026-05-26 — F9 fix: links_cuadrados con estilo de cards "te podría interesar" _(Cacho)_
 
 Feedback: el módulo `cards_dark_row` de `links_cuadrados` se veía mal (cards solo-título, vacías, sobre fondo oscuro). El cliente quiere que se vean como las cards de "También te puede interesar" (Section Landing: gris → azul, ícono flecha, sin imagen).
 
@@ -1471,7 +1667,7 @@ Feedback: el módulo `cards_dark_row` de `links_cuadrados` se veía mal (cards s
 - `link_cards` añadido al `$allowed`. El layout `cards_dark_row` sigue existiendo para la página migrada Forma de Gobierno (ACF) — esa NO cambió (sus cards también son sin imagen; si el cliente quiere el mismo estilo ahí, habría que re-migrarla a link_cards o ajustar su layout).
 - E2E: Autoridades (58) → 3 link cards (Consejo Directivo Superior / Dirección Superior / Decanatos) estilo Section Landing, 0 `udp-inst-dark__card`, sin back-card en ese módulo (el back-card solo en la banda "te podría interesar").
 
-### 2026-05-26 — Botón de accesibilidad (plugin Pojo) — estilo UDP + posición *(Cacho)*
+### 2026-05-26 — Botón de accesibilidad (plugin Pojo) — estilo UDP + posición _(Cacho)_
 
 Rediseño del botón del plugin **Pojo / One Click Accessibility** (Figma 3706:21202): círculo amarillo `#fcd303` (gold-medium) + ícono oscuro + sombra `0 8px 5px rgba(0,0,0,.25)`, fijo bajo la línea del header, a la derecha (bajo el buscador).
 
@@ -1481,7 +1677,7 @@ Rediseño del botón del plugin **Pojo / One Click Accessibility** (Figma 3706:2
 - **Inset + top** (pedido del cliente): el toggle se separó 40px del borde (mismo margen que el buscador) subiendo su `right` de 180px → `calc(180px + $space-3xl)` = 220px (insetar el botón sin revelar el panel, que sigue colapsado en `right:-180px`). `top` subido a 124px desktop / 104px mobile (más abajo del header).
 - **Permisos dist (recurrente)**: `dist/js`+`dist/css` se vuelven root tras cada build (causa no identificada; pasa repetido hoy). Workaround: `mv dist .dist-root-bak* && npm run build`. Acumuladas varias carpetas basura: `sudo rm -rf .dist-root-bak*`.
 
-### 2026-05-26 — people_carousel: card full-bleed con foto (Figma 3904:54293) *(Cacho)*
+### 2026-05-26 — people_carousel: card full-bleed con foto (Figma 3904:54293) _(Cacho)_
 
 El cliente pidió que los integrantes (people_carousel) puedan tener foto. El layout YA tenía el campo `foto` (field_inst_pc_persona_foto) y el partial lo renderiza — pero el diseño anterior era foto cuadrada arriba + texto debajo (dark sobre claro). El Figma real es **foto a sangre completa** (289×365) con **degradado oscuro** (negro 91% abajo → transparente arriba) y **nombre (Arizona Flare 20px) + cargo en blanco** sobre-impresos abajo-izquierda. Fondo fallback beige `#f8f7f4`.
 
@@ -1489,3 +1685,20 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 - El degradado deja el texto legible aunque NO haya foto → sirve de placeholder (card beige con franja oscura abajo).
 - **Datos**: ni el `listado_de_informacion` viejo ni el sitio live (capitanproject) tienen fotos — hay que subirlas en wp-admin: editar la página → grupo "Página Institucional" → Secciones → sección people_carousel → Personas → campo **Foto**. Hasta entonces las cards salen con placeholder + nombre/cargo.
 - **Ajustes de revisión**: (1) placeholder sin foto → fondo **gris `#cfcfcf`** (en vez de beige) para que se sustituya al subir imagen. (2) Fix "muy grandes": con la estructura full-bleed, Swiper (`slidesPerView:'auto'`, lee ancho del CSS) dejaba ganar su `.swiper-slide{width:100%}` → cards al 100% + aspect-ratio = altura enorme. Fijado con `width:289px !important` + `flex-shrink:0` + `max-width:80vw` (responsive). Vuelve a 289×365.
+
+### 2026-05-27 — Cierre de sesión _(Elsa)_
+
+**Lo trabajado hoy**:
+
+- Revertido el template `page-simple-accordion` (Historia) completo — el compañero lo implementa por su lado.
+- Commit `dd7b828`: eliminados 6 archivos (template principal, 3 partials, SCSS, ACF JSON) + import en `main.scss`.
+- Build limpio tras el borrado.
+
+**Estado actual**:
+
+- Rama `home` activa, sin el template de Historia. El resto del home (S1–S11) intacto.
+
+**Pendiente**:
+
+- Borrar manualmente la página de prueba ID 55353 "Historia (test simple-accordion)" desde WP Admin → Páginas (requiere MAMP corriendo).
+- Continuar con los pendientes habituales: imágenes S8, contenido S9, revisar S3/S5/S6 contra Figma, F10 polish, merge home → main.
