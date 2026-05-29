@@ -24,19 +24,23 @@ $img_url = ! empty( $imagen['url'] ) ? $imagen['url'] : '';
 $img_alt = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
 ?>
 <section class="udp-home-portada js-home-portada" aria-label="Portada">
-    <div class="udp-home-portada__inner container">
-        <div class="udp-home-portada__content">
-            <h1 class="udp-home-portada__titulo"><?php echo esc_html( $titulo ); ?></h1>
-            <?php if ( $cta_texto && $cta_url ) : ?>
-                <a
-                    href="<?php echo esc_url( $cta_url ); ?>"
-                    class="udp-home-portada__cta btn btn-outline-light"
-                    <?php if ( $cta_externo ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
-                ><?php echo esc_html( $cta_texto ); ?></a>
-            <?php endif; ?>
+    <div class="udp-home-portada__content">
+        <div class="container">
+            <div class="udp-home-portada__inner js-portada-content">
+                <h1 class="udp-home-portada__titulo"><?php echo esc_html( $titulo ); ?></h1>
+                <?php if ( $cta_texto && $cta_url ) : ?>
+                    <a
+                        href="<?php echo esc_url( $cta_url ); ?>"
+                        class="udp-home-portada__cta btn btn-outline-light"
+                        <?php if ( $cta_externo ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
+                    ><?php echo esc_html( $cta_texto ); ?></a>
+                <?php endif; ?>
+            </div>
         </div>
-        <?php if ( $img_url ) : ?>
-            <div class="udp-home-portada__media js-portada-media" aria-hidden="true">
+    </div>
+    <?php if ( $img_url ) : ?>
+        <div class="udp-home-portada__mediacontainer" aria-hidden="true">
+            <div class="udp-home-portada__media js-portada-media">       
                 <img
                     src="<?php echo esc_url( $img_url ); ?>"
                     alt="<?php echo esc_attr( $img_alt ); ?>"
@@ -47,6 +51,6 @@ $img_alt = ! empty( $imagen['alt'] ) ? $imagen['alt'] : '';
                     height="<?php echo esc_attr( $imagen['height'] ?? '' ); ?>"
                 >
             </div>
-        <?php endif; ?>
-    </div>
+        </div>
+    <?php endif; ?>
 </section>

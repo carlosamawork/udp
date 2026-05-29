@@ -63,6 +63,7 @@ window.starterAjax = ajax;
 // 5. INICIALIZACIÓN
 // --------------------------------------------------------------------------
 domReady(() => {
+    initHomePortada();
     initNavbar();
     initSmoothScroll();
     initScrollAnimations();
@@ -73,7 +74,6 @@ domReady(() => {
     initBlockImageGallery();
     initBlockAccordion();
     initMegaMenu();
-    initHomePortada();
     initHomeNoticias();
     initHomeCulturaUdp();
     initHomeCulturaDigital();

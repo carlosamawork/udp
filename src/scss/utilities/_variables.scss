@@ -12,72 +12,72 @@
 // - $primary y $secondary (sección 2) existen SOLO para que Bootstrap genere
 //   bien las utility classes (.btn-primary, .text-primary, .bg-secondary, etc).
 //   NO los uses en componentes — su nombre genérico empobrece el grep.
-$brand-red:      #C81C0D;  // CTA principal, botón Accesibilidad
-$brand-accent:   #FF7064;  // Item activo, texto destacado sobre dark
-$brand-blue:     #4539F2;  // Hover de cards, acentos secundarios
-$brand-yellow:   #FCD303;  // UDP gold-medium (Figma `main/AmarilloUDP/gold-medium`). Eyebrow badge.
+$brand-red: #C81C0D; // CTA principal, botón Accesibilidad
+$brand-accent: #FF7064; // Item activo, texto destacado sobre dark
+$brand-blue: #4539F2; // Hover de cards, acentos secundarios
+$brand-yellow: #FCD303; // UDP gold-medium (Figma `main/AmarilloUDP/gold-medium`). Eyebrow badge.
 
 // Superficies dark (modo dark-first)
-$dark-1:         #1C1C1C;  // Background principal del header / dark surfaces
-$dark-2:         #232323;  // Cards dark, paneles internos
-$gray-high:      #454545;  // Bordes iconos circulares
-$gray-medium:    #4F4F4F;  // Bordes botones sobre dark
-$white:          #FFFFFF;
-$white-70:       rgba(255, 255, 255, 0.7);  // Etiquetas/categorías sobre dark
+$dark-1: #1C1C1C; // Background principal del header / dark surfaces
+$dark-2: #232323; // Cards dark, paneles internos
+$gray-high: #454545; // Bordes iconos circulares
+$gray-medium: #4F4F4F; // Bordes botones sobre dark
+$white: #FFFFFF;
+$white-70: rgba(255, 255, 255, 0.7); // Etiquetas/categorías sobre dark
 
 // --------------------------------------------------------------------------
 // 2. Mapeo a variables Bootstrap (ANTES del @import de Bootstrap)
 // --------------------------------------------------------------------------
-$primary:        $brand-red;
-$secondary:      $brand-blue;
-$success:        #198754;
-$info:           #0dcaf0;
-$warning:        #ffc107;
-$danger:         #dc3545;
-$light:          $white;
-$dark:           $dark-1;
+$primary: $brand-red;
+$secondary: $brand-blue;
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: $white;
+$dark: $dark-1;
 
 // --------------------------------------------------------------------------
 // 3. Tipografía
 // --------------------------------------------------------------------------
 $font-family-display: 'Arizona Flare', Georgia, "Times New Roman", serif;
-$font-family-body:    'Work Sans', system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-$font-family-mono:    'Necto Mono', "JetBrains Mono", "Courier New", monospace;
+$font-family-body: 'Work Sans', system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+$font-family-mono: 'Necto Mono', "JetBrains Mono", "Courier New", monospace;
 
 // Sobreescribir Bootstrap
 $font-family-sans-serif: $font-family-body;
-$font-family-monospace:  $font-family-mono;
-$headings-font-family:   $font-family-display;
-$headings-font-weight:   500;  // Arizona Flare Medium para titulares display
-$font-size-base:         1rem;
-$line-height-base:       1.5;
+$font-family-monospace: $font-family-mono;
+$headings-font-family: $font-family-display;
+$headings-font-weight: 500; // Arizona Flare Medium para titulares display
+$font-size-base: 1rem;
+$line-height-base: 1.5;
 
 // Escala UDP (sección 4.2 del spec)
-$font-size-display-1: 48px;  // Hero titles — Arizona Flare Medium
-$font-size-display-2: 40px;  // H2 grandes — Arizona Flare Medium
-$font-size-h3:        24px;  // Card titles — Work Sans Medium
-$font-size-h4:        20px;  // Subtítulos — Work Sans Medium
-$font-size-body-lg:   16px;  // Body grande — Work Sans Medium
-$font-size-body-sm:   14px;  // Metadatos — Work Sans SemiBold
-$font-size-label-md:  14px;  // Eyebrow uppercase — Necto Mono
-$font-size-label-sm:  12px;  // Caption — Necto Mono
+$font-size-display-1: 48px; // Hero titles — Arizona Flare Medium
+$font-size-display-2: 40px; // H2 grandes — Arizona Flare Medium
+$font-size-h3: 24px; // Card titles — Work Sans Medium
+$font-size-h4: 20px; // Subtítulos — Work Sans Medium
+$font-size-body-lg: 16px; // Body grande — Work Sans Medium
+$font-size-body-sm: 14px; // Metadatos — Work Sans SemiBold
+$font-size-label-md: 14px; // Eyebrow uppercase — Necto Mono
+$font-size-label-sm: 12px; // Caption — Necto Mono
 
-$line-height-tight:   1.0;   // Display
-$line-height-snug:    1.25;  // H3, H4
-$line-height-normal:  1.5;   // Body
-$line-height-loose:   1.7;   // Long-form prose
+$line-height-tight: 1.0; // Display
+$line-height-snug: 1.25; // H3, H4
+$line-height-normal: 1.5; // Body
+$line-height-loose: 1.7; // Long-form prose
 
-$letter-spacing-eyebrow: 0.8px;  // Mono uppercase
+$letter-spacing-eyebrow: 0.8px; // Mono uppercase
 
 // --------------------------------------------------------------------------
 // 4. Espaciado (escala UDP — mixta, no estricta de 4 ni 8)
 // --------------------------------------------------------------------------
 $space-2xs: 8px;
-$space-xs:  12px;
-$space-sm:  16px;
-$space-md:  18px;
-$space-lg:  20px;
-$space-xl:  24px;
+$space-xs: 12px;
+$space-sm: 16px;
+$space-md: 18px;
+$space-lg: 20px;
+$space-xl: 24px;
 $space-2xl: 32px;
 $space-3xl: 40px;
 $space-4xl: 64px;
@@ -116,42 +116,43 @@ $container-max-widths: (
     xl: 1140px,
     xxl: 1360px,
 );
-$grid-gutter-width: $space-2xl;  // 32px
+$grid-gutter-width: $space-2xl; // 32px
 
 // Botones — pill (radius-full) sobreescribe el default 0.375rem
-$btn-border-radius:    9999px;
+$btn-border-radius: 9999px;
 $btn-border-radius-sm: 9999px;
 $btn-border-radius-lg: 9999px;
-$btn-padding-y:        12px;
-$btn-padding-x:        $space-sm;  // 16px
-$btn-font-weight:      600;        // Work Sans SemiBold
+$btn-padding-y: 12px;
+$btn-padding-x: $space-sm; // 16px
+$btn-font-weight: 600; // Work Sans SemiBold
 
 // Cards — flat (sin esquinas, sin sombras por defecto)
 $card-border-radius: 0;
-$card-border-width:  0;
-$card-spacer-y:      $space-md;  // 18px
-$card-spacer-x:      $space-md;  // 18px
-$card-bg:            transparent;
+$card-border-width: 0;
+$card-spacer-y: $space-md; // 18px
+$card-spacer-x: $space-md; // 18px
+$card-bg: transparent;
 
 // Body — diseño dark-first; el switch is-dark/is-light viene de body class
-$body-bg:    $white;        // Default light, ya que la mayor parte de páginas interiores son light
+$body-bg: $white; // Default light, ya que la mayor parte de páginas interiores son light
 $body-color: $dark-1;
 
 // Sombras — usar muy sparingly, diseño es flat
-$box-shadow:    0 1px 2px rgba(0, 0, 0, 0.08);
+$box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 $box-shadow-sm: 0 1px 1px rgba(0, 0, 0, 0.04);
 $box-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.12);
 
 // Bordes
-$border-radius:    0;
+$border-radius: 0;
 $border-radius-sm: 0;
 $border-radius-lg: 0;
 
 // --------------------------------------------------------------------------
 // 6. Layout
 // --------------------------------------------------------------------------
-$navbar-height: 80px;  // Top-bar UDP
-$header-side-padding: $space-3xl;  // 40px
+$header-height: 84px;
+$navbar-height: 80px; // Top-bar UDP
+$header-side-padding: $space-3xl; // 40px
 
 // --------------------------------------------------------------------------
 // 7. Transiciones

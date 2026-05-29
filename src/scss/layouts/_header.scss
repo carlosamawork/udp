@@ -4,7 +4,7 @@
 // ==========================================================================
 
 .udp-site-header {
-    height: 84px;
+    height: $header-height;
     background: $dark-1;
 
     &__inner {

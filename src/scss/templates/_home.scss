@@ -33,22 +33,19 @@
 
 .udp-home-portada {
     position: relative;
-    overflow: hidden;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    margin-top: 50px;
     width: 100%;
-
-    &__inner {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 41px;
-        align-items: center;
-    }
+    height: 150vh;
 
     &__content {
-        display: inline;
+        position: sticky;
+        top: $header-height;
+        height: fit-content;
+        z-index: 2;
+    }
+
+    &__inner {
+        padding-top: 50px;
+        padding-bottom: 41px;
         max-width: 594px;
     }
 
@@ -71,38 +68,28 @@
         margin-left: 10px;
     }
 
+    &__mediacontainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 150vh;
+    }
+
     &__media {
-        clip-path: rect(0 594px 50% 0);
-        animation: portada-reveal 0.8s ease-out forwards;
-        animation-play-state: paused;
-
-        &.is-visible {
-            animation-play-state: running;
-        }
-
-        @supports (animation-timeline: scroll()) {
-            animation-duration: auto;
-            animation-timing-function: linear;
-            animation-play-state: running;
-            animation-timeline: scroll(root);
-            animation-range: 0px 25vh;
-        }
+        position: sticky;
+        width: 45vw;
+        height: 30vw;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.2s ease;
     }
 
     &__imagen {
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
         display: block;
-    }
-}
-
-@keyframes portada-reveal {
-    from {
-        clip-path: rect(0 594px 50% 0);
-    }
-
-    to {
-        clip-path: rect(0 100% 100% 0);
     }
 }
 

@@ -1,0 +1,322 @@
+<h2>Layout de la portada: estado inicial → estado final</h2>
+<p class="subtitle">Confirma si así interpreto bien la posición y tamaño de la imagen. La medida 40vh usada como ancho (ej. 40% de 900px alto = 360px de ancho).</p>
+
+<style>
+  .estado-wrap {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .estado {
+    flex: 1;
+  }
+  .estado-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .viewport {
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 6px;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+  /* Header bar */
+  .vp-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 8%;
+    background: rgba(0,0,0,0.7);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    gap: 6px;
+    z-index: 10;
+  }
+  .vp-logo { width: 20px; height: 8px; background: #C81C0D; border-radius: 2px; }
+  .vp-nav { display: flex; gap: 4px; margin-left: auto; }
+  .vp-nav span { width: 24px; height: 3px; background: rgba(255,255,255,0.4); border-radius: 2px; }
+
+  /* Section content */
+  .vp-section {
+    position: absolute;
+    top: 8%; left: 0; right: 0; bottom: 0;
+    padding: 4% 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .vp-text {
+    max-width: 42%;
+    z-index: 2;
+    position: relative;
+  }
+  .vp-title-line {
+    height: 7px;
+    border-radius: 2px;
+    background: #fff;
+    margin-bottom: 5px;
+  }
+  .vp-title-line.l2 { width: 90%; }
+  .vp-title-line.l3 { width: 70%; }
+  .vp-cta {
+    display: inline-block;
+    border: 1.5px solid rgba(255,255,255,0.6);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+    vertical-align: middle;
+  }
+  .vp-gap {
+    height: 4.1%;
+    flex-shrink: 0;
+  }
+
+  /* Estado inicial — imagen pequeña */
+  .vp-img-small {
+    width: 40%;
+    height: 36%;
+    background: linear-gradient(135deg, #4539F2 0%, #1a0e7a 100%);
+    border-radius: 2px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .vp-img-small::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='none'/%3E%3Ccircle cx='20' cy='20' r='8' fill='rgba(255,255,255,0.15)'/%3E%3C/svg%3E") center/cover;
+    opacity: 0.3;
+  }
+  .vp-img-tag {
+    position: absolute;
+    bottom: 3px; right: 3px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    font-size: 7px;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  /* Estado final — imagen cubre todo */
+  .vp-img-full {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #4539F2 0%, #1a0e7a 100%);
+    z-index: 1;
+  }
+  .vp-img-full::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+  }
+  .vp-text-over {
+    position: absolute;
+    top: 18%;
+    left: 5%;
+    max-width: 42%;
+    z-index: 3;
+  }
+
+  /* Medida anotaciones */
+  .annot {
+    position: absolute;
+    font-size: 9px;
+    color: #FCD303;
+    font-family: monospace;
+  }
+  .arrow-h {
+    position: absolute;
+    height: 1px;
+    background: #FCD303;
+  }
+  .arrow-h::before, .arrow-h::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 0; height: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+  }
+  .arrow-h::before { left: 0; border-right: 5px solid #FCD303; }
+  .arrow-h::after  { right: 0; border-left: 5px solid #FCD303; }
+  .arrow-v {
+    position: absolute;
+    width: 1px;
+    background: #FCD303;
+  }
+  .arrow-v::before, .arrow-v::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    width: 0; height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+  }
+  .arrow-v::before { top: 0; border-bottom: 5px solid #FCD303; }
+  .arrow-v::after  { bottom: 0; border-top: 5px solid #FCD303; }
+
+  .big-arrow {
+    font-size: 32px;
+    color: #555;
+    align-self: center;
+    line-height: 1;
+    flex-shrink: 0;
+    padding-top: 40px;
+  }
+
+  /* Medidas anotadas */
+  .m-width {
+    position: absolute;
+    bottom: -16px; left: 0;
+    width: 40%;
+    height: 1px;
+    background: #FCD303;
+  }
+  .m-width::before, .m-width::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 0; height: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+  }
+  .m-width::before { left: 0; border-right: 5px solid #FCD303; }
+  .m-width::after  { right: 0; border-left: 5px solid #FCD303; }
+  .m-label-w {
+    position: absolute;
+    bottom: -26px;
+    left: 0;
+    width: 40%;
+    text-align: center;
+    font-size: 9px;
+    color: #FCD303;
+    font-family: monospace;
+    white-space: nowrap;
+  }
+
+  .m-height {
+    position: absolute;
+    right: -20px;
+    height: 36%;
+    top: 0;
+    width: 1px;
+    background: #FCD303;
+  }
+  .m-height::before, .m-height::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    width: 0; height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+  }
+  .m-height::before { top: 0; border-bottom: 5px solid #FCD303; }
+  .m-height::after  { bottom: 0; border-top: 5px solid #FCD303; }
+  .m-label-h {
+    position: absolute;
+    right: -44px;
+    height: 36%;
+    top: 0;
+    display: flex;
+    align-items: center;
+    font-size: 9px;
+    color: #FCD303;
+    font-family: monospace;
+    white-space: nowrap;
+  }
+
+  .gap-annot {
+    position: absolute;
+    right: 5%;
+    font-size: 9px;
+    color: #FCD303;
+    font-family: monospace;
+  }
+
+  .note {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 4px;
+  }
+  .note strong { color: #FCD303; }
+</style>
+
+<div class="estado-wrap">
+
+  <!-- ESTADO INICIAL -->
+  <div class="estado">
+    <div class="estado-label">Estado inicial (en reposo)</div>
+    <div class="viewport" style="overflow: visible;">
+      <div class="vp-header">
+        <div class="vp-logo"></div>
+        <div class="vp-nav"><span></span><span></span><span></span></div>
+      </div>
+      <div class="vp-section">
+        <div class="vp-text">
+          <div class="vp-title-line" style="width:100%"></div>
+          <div class="vp-title-line l2"></div>
+          <div class="vp-title-line l3"></div>
+          <span class="vp-cta">Explorar →</span>
+        </div>
+        <!-- gap 41px ≈ 4.1% of viewport -->
+        <div class="vp-gap" style="position:relative;">
+          <div class="gap-annot" style="top:0;">← 41px</div>
+        </div>
+        <!-- imagen pequeña -->
+        <div style="position:relative;">
+          <div class="vp-img-small">
+            <div class="vp-img-tag">foto</div>
+          </div>
+          <!-- medida ancho -->
+          <div class="m-width"></div>
+          <div class="m-label-w">40vh de ancho</div>
+          <!-- medida alto -->
+          <div class="m-height"></div>
+          <div class="m-label-h">23vh</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">Imagen completa visible (sin crop). Texto arriba, imagen abajo, <strong>alineados a la izquierda</strong>.</p>
+  </div>
+
+  <div class="big-arrow">→</div>
+
+  <!-- ESTADO FINAL -->
+  <div class="estado">
+    <div class="estado-label">Estado final (tras scroll)</div>
+    <div class="viewport">
+      <div class="vp-img-full"></div>
+      <div class="vp-header" style="background:rgba(0,0,0,0.4); z-index:4;">
+        <div class="vp-logo"></div>
+        <div class="vp-nav"><span></span><span></span><span></span></div>
+      </div>
+      <div class="vp-text-over">
+        <div class="vp-title-line" style="width:100%; background:rgba(255,255,255,0.9);"></div>
+        <div class="vp-title-line l2" style="background:rgba(255,255,255,0.9);"></div>
+        <div class="vp-title-line l3" style="background:rgba(255,255,255,0.9);"></div>
+        <span class="vp-cta">Explorar →</span>
+      </div>
+    </div>
+    <p class="note">Imagen cubre toda la ventana. Texto sigue visible encima. La sección se <strong>libera del fixed</strong> y el scroll continúa.</p>
+  </div>
+
+</div>
+
+<div style="margin-top: 32px; padding: 16px; background: rgba(69,57,242,0.1); border: 1px solid rgba(69,57,242,0.3); border-radius: 6px;">
+  <p style="margin:0; font-size: 13px; color: #ccc;">
+    <strong style="color:#fff;">Pregunta técnica:</strong> "40vh de ancho" — ¿confirmas que es <strong style="color:#FCD303;">viewport height</strong> usado como unidad de ancho (ej. en pantalla de 900px alto → 360px de ancho)?
+    ¿O quizás quisiste decir <strong style="color:#FCD303;">40vw</strong> (40% del ancho de pantalla)?
+  </p>
+</div>

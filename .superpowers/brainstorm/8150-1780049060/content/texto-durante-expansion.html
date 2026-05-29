@@ -1,0 +1,184 @@
+<h2>Animación portada: ¿qué pasa con el texto durante la expansión?</h2>
+<p class="subtitle">Cuando la imagen crece hasta cubrir la sección, el título y el CTA pueden comportarse de tres formas distintas.</p>
+
+<style>
+  .scene {
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 16px;
+  }
+  .scene-img-small {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 48%;
+    background: linear-gradient(135deg, #4539F2 0%, #C81C0D 100%);
+    opacity: 0.85;
+    border-radius: 0;
+    transition: all 0.4s;
+  }
+  .scene-img-full {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #4539F2 0%, #C81C0D 100%);
+    opacity: 0.85;
+  }
+  .scene-text {
+    position: relative;
+    z-index: 2;
+    max-width: 240px;
+  }
+  .scene-text h4 {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .scene-text .fake-cta {
+    display: inline-block;
+    border: 1.5px solid rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.7);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+  }
+  .scene-text.faded { opacity: 0.08; }
+  .scene-text.ontop { opacity: 1; }
+  .arrow-label {
+    text-align: center;
+    font-size: 22px;
+    color: #555;
+    padding: 4px 0;
+  }
+  .state-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .scenes-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .scenes-wrap .scene { flex: 1; }
+  .badge {
+    display: inline-block;
+    background: #4539F2;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+</style>
+
+<div class="options">
+
+  <!-- Opción A: texto desaparece -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Texto se desvanece</h3>
+      <div class="scenes-wrap">
+        <div>
+          <div class="state-label">Inicio</div>
+          <div class="scene">
+            <div class="scene-img-small"></div>
+            <div class="scene-text">
+              <h4>Título de la<br>portada UDP</h4>
+              <span class="fake-cta">Explorar →</span>
+            </div>
+          </div>
+        </div>
+        <div class="arrow-label">→</div>
+        <div>
+          <div class="state-label">Al hacer scroll</div>
+          <div class="scene">
+            <div class="scene-img-full"></div>
+            <div class="scene-text faded">
+              <h4>Título de la<br>portada UDP</h4>
+              <span class="fake-cta">Explorar →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>El texto desaparece gradualmente mientras la imagen crece. La portada termina siendo imagen pura a pantalla completa.</p>
+    </div>
+  </div>
+
+  <!-- Opción B: texto queda encima de la imagen -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Texto se queda sobre la imagen <span class="badge">Figma</span></h3>
+      <div class="scenes-wrap">
+        <div>
+          <div class="state-label">Inicio</div>
+          <div class="scene">
+            <div class="scene-img-small"></div>
+            <div class="scene-text">
+              <h4>Título de la<br>portada UDP</h4>
+              <span class="fake-cta">Explorar →</span>
+            </div>
+          </div>
+        </div>
+        <div class="arrow-label">→</div>
+        <div>
+          <div class="state-label">Al hacer scroll</div>
+          <div class="scene">
+            <div class="scene-img-full"></div>
+            <div class="scene-text ontop">
+              <h4>Título de la<br>portada UDP</h4>
+              <span class="fake-cta">Explorar →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>El texto permanece visible y centrado. La imagen crece por detrás. Termina como un hero clásico con imagen de fondo y texto encima.</p>
+    </div>
+  </div>
+
+  <!-- Opción C: texto se mueve -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Texto se desplaza hacia arriba y sale</h3>
+      <div class="scenes-wrap">
+        <div>
+          <div class="state-label">Inicio</div>
+          <div class="scene">
+            <div class="scene-img-small"></div>
+            <div class="scene-text">
+              <h4>Título de la<br>portada UDP</h4>
+              <span class="fake-cta">Explorar →</span>
+            </div>
+          </div>
+        </div>
+        <div class="arrow-label">→</div>
+        <div>
+          <div class="state-label">Al hacer scroll</div>
+          <div class="scene" style="overflow:hidden;">
+            <div class="scene-img-full"></div>
+            <div class="scene-text" style="opacity:0.15;transform:translateY(-40px);">
+              <h4>Título de la<br>portada UDP</h4>
+              <span class="fake-cta">Explorar →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>El texto sube y se va mientras la imagen expande. Efecto más dinámico y cinematográfico.</p>
+    </div>
+  </div>
+
+</div>

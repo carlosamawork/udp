@@ -1,0 +1,273 @@
+<h2>Layout portada — estado inicial</h2>
+<p class="subtitle">Imagen a 40vw × 23vw, bajo el texto, alineada a la izquierda.</p>
+
+<style>
+  .stage {
+    background: #0d0d0d;
+    border: 2px solid #333;
+    border-radius: 8px;
+    position: relative;
+    width: 100%;
+    /* Simula 16:9 viewport */
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    max-width: 680px;
+    margin: 0 auto 32px;
+  }
+
+  /* Header */
+  .s-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 9%;
+    background: rgba(0,0,0,0.8);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    z-index: 10;
+  }
+  .s-logo { width: 18px; height: 7px; background: #C81C0D; border-radius: 1px; }
+  .s-nav { display: flex; gap: 5px; margin-left: auto; }
+  .s-nav span { width: 22px; height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; }
+
+  /* Contenido de la sección */
+  .s-body {
+    position: absolute;
+    top: 9%; left: 0; right: 0; bottom: 0;
+    /* container padding ~5% */
+    padding: 4% 5% 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Bloque de texto */
+  .s-text {
+    width: 38%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .s-line {
+    height: 7px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.85);
+  }
+  .s-cta {
+    margin-top: 4px;
+    display: inline-block;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 9px;
+    color: rgba(255,255,255,0.6);
+    align-self: flex-start;
+  }
+
+  /* Gap 41px — usamos 4.5% para simular */
+  .s-gap {
+    height: 4.5%;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  /* Imagen inicial */
+  .s-img {
+    /* 40vw de ancho → relativo al stage que tiene max-width 680px y aspect 16/9 */
+    /* Lo simulamos con % del stage width */
+    width: 40%;    /* ≈ 40vw relativo al stage */
+    /* 23vw de alto */
+    height: 57.5%; /* 23/40 = 0.575 → para que sea proporcional */
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #4539F2 0%, #1a0a80 100%);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Simula foto */
+  .s-img::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.12) 0%, transparent 70%);
+  }
+  .s-img-label {
+    position: absolute;
+    bottom: 6px; left: 6px;
+    background: rgba(0,0,0,0.4);
+    color: rgba(255,255,255,0.7);
+    font-size: 8px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-style: italic;
+  }
+
+  /* ── Anotaciones de medidas ── */
+  .annots {
+    position: absolute;
+    top: 9%;
+    left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+
+  /* Línea de medida ancho */
+  .m-ancho {
+    position: absolute;
+    /* Alinea con el inicio de la imagen = 5% padding + 0 */
+    left: 5%;
+    /* La imagen está tras el gap; el gap ≈ 4.5% del body-height (91% del stage) */
+    /* Texto ~18%, gap ~4.5% → imagen empieza en ~22.5% del body → 9 + 22.5*0.91 = ~29.5% del stage */
+    bottom: 4%;
+    width: 40%;
+    height: 1px;
+    background: #FCD303;
+  }
+  .m-ancho::before, .m-ancho::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+  }
+  .m-ancho::before { left: 0; border-right: 5px solid #FCD303; }
+  .m-ancho::after  { right: 0; border-left:  5px solid #FCD303; }
+  .m-ancho-label {
+    position: absolute;
+    bottom: 7px;
+    left: 5%;
+    width: 40%;
+    text-align: center;
+    font-size: 9px;
+    color: #FCD303;
+    font-family: monospace;
+    white-space: nowrap;
+  }
+
+  /* Línea de medida alto (vertical, dentro de la imagen) */
+  .m-alto {
+    position: absolute;
+    /* x = 5% padding + 40% imagen + 1% margen */
+    left: 46%;
+    /* top de la imagen ≈ 9%(header) + ~18%(texto) + 4.5%(gap) = ~31.5% */
+    top: 31.5%;
+    height: 25%; /* ~23vw proporcional al stage 16:9 → ~23/56.25*100 ≈ 40.9%? simplificado */
+    width: 1px;
+    background: #FCD303;
+  }
+  .m-alto::before, .m-alto::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+  }
+  .m-alto::before { top: 0; border-bottom: 5px solid #FCD303; }
+  .m-alto::after  { bottom: 0; border-top: 5px solid #FCD303; }
+  .m-alto-label {
+    position: absolute;
+    left: 47.5%;
+    top: 31.5%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    font-size: 9px;
+    color: #FCD303;
+    font-family: monospace;
+    white-space: nowrap;
+  }
+
+  /* Línea de gap */
+  .m-gap-line {
+    position: absolute;
+    left: 2%;
+    top: 18%;
+    height: 13.5%;
+    width: 1px;
+    background: rgba(255,200,0,0.5);
+    border-left: 1px dashed rgba(255,200,0,0.5);
+  }
+  .m-gap-label {
+    position: absolute;
+    left: 3%;
+    top: 22%;
+    font-size: 8px;
+    color: rgba(255,200,0,0.7);
+    font-family: monospace;
+  }
+
+  /* ── Leyenda ── */
+  .leyenda {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .ley-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #aaa;
+  }
+  .ley-color {
+    width: 16px;
+    height: 3px;
+    border-radius: 2px;
+  }
+  .ley-dashed {
+    width: 16px;
+    height: 1px;
+    border-top: 1px dashed rgba(255,200,0,0.7);
+  }
+</style>
+
+<div class="stage">
+  <!-- Header -->
+  <div class="s-header">
+    <div class="s-logo"></div>
+    <div class="s-nav"><span></span><span></span><span></span><span></span></div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="s-body">
+    <div class="s-text">
+      <div class="s-line" style="width:100%"></div>
+      <div class="s-line" style="width:88%"></div>
+      <div class="s-line" style="width:72%"></div>
+      <span class="s-cta">Explorar →</span>
+    </div>
+    <div class="s-gap"></div>
+    <div class="s-img">
+      <div class="s-img-label">imagen completa · sin crop</div>
+    </div>
+  </div>
+
+  <!-- Capa de anotaciones -->
+  <div class="annots">
+    <!-- Medida de ancho -->
+    <div class="m-ancho"></div>
+    <div class="m-ancho-label">40vw</div>
+
+    <!-- Medida de alto -->
+    <div class="m-alto"></div>
+    <div class="m-alto-label">23vw</div>
+
+    <!-- Gap 41px -->
+    <div class="m-gap-line"></div>
+    <div class="m-gap-label">41px</div>
+  </div>
+</div>
+
+<div class="leyenda">
+  <div class="ley-item"><div class="ley-color" style="background:#FCD303"></div> Medidas</div>
+  <div class="ley-item"><div class="ley-dashed"></div> Gap entre texto e imagen</div>
+</div>
+
+<div style="margin-top: 24px; padding: 14px 16px; background: rgba(255,255,255,0.04); border: 1px solid #333; border-radius: 6px;">
+  <p style="margin:0 0 6px; font-size:13px; color:#fff; font-weight:600;">¿Se ven bien las medidas?</p>
+  <p style="margin:0; font-size:12px; color:#aaa;">
+    Si el gráfico refleja bien el estado inicial, confirma aquí y pasamos a proponer los 3 enfoques técnicos para la animación de expansión.
+  </p>
+</div>
