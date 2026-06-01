@@ -38,7 +38,7 @@ $carreras_url  = $carreras_page ? get_permalink( $carreras_page ) : home_url( '/
 
 $titulo_seccion = get_field( 'buscador_titulo', $post_id ) ?: 'Buscador de Carreras';
 ?>
-<section class="udp-home-buscador">
+<section class="udp-home-buscador" id="buscador-carreras">
     <div class="container">
         <h2 class="udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
         <form

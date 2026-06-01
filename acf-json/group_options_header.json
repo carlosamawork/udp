@@ -185,6 +185,69 @@
                             "ui_on_text": "",
                             "ui_off_text": "",
                             "parent_repeater": "field_60bdcb182d8a0"
+                        },
+                        {
+                            "key": "field_submenu_sub_items",
+                            "label": "Sub-items (Columna 3)",
+                            "name": "sub_items",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "Links que aparecen en la tercera columna cuando este apartado está en hover. Dejar vacío si no tiene sub-items.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "",
+                            "min": 0,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Agregar sub-item",
+                            "rows_per_page": 20,
+                            "parent_repeater": "field_60bdcb182d8a0",
+                            "sub_fields": [
+                                {
+                                    "key": "field_submenu_sub_item_titulo",
+                                    "label": "Título",
+                                    "name": "titulo",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": "",
+                                    "parent_repeater": "field_submenu_sub_items"
+                                },
+                                {
+                                    "key": "field_submenu_sub_item_link",
+                                    "label": "URL",
+                                    "name": "link",
+                                    "aria-label": "",
+                                    "type": "url",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "parent_repeater": "field_submenu_sub_items"
+                                }
+                            ]
                         }
                     ]
                 },
@@ -382,5 +445,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1778004490
+    "modified": 1780357414
 }

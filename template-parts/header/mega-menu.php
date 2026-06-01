@@ -2,25 +2,38 @@
 /**
  * Header > Mega-menú panel
  *
- * Panel light fixed full-viewport con 3 columnas:
- *  - Col 1: items principales (menu_principal repeater)
- *  - Col 2: submenu del item activo
- *  - Col 3: links_externos del item activo
- * Top bar interno: × Cerrar + logo. Footer: quick links + social.
+ * 3 columnas:
+ *  - Col 1: secciones principales (menu_principal repeater, botones no clickables)
+ *  - Col 2: apartados de la sección activa (links directos o triggers de col-3)
+ *  - Col 3: sub-items del apartado en hover (sub_items nested repeater, vacío por defecto)
  *
- * El primer item recibe `--active` por defecto (col 2 + 3 lo muestran).
+ * Footer: quick links + redes sociales.
  *
  * @package Starter_Theme
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$menu_items   = function_exists( 'starter_get_option' ) ? starter_get_option( 'menu_principal' ) : array();
-$quick_links  = function_exists( 'starter_get_option' ) ? starter_get_option( 'mega_menu_quick_links' ) : array();
-$socials      = function_exists( 'udp_get_social_urls' ) ? udp_get_social_urls() : array();
+$menu_items  = function_exists( 'starter_get_option' ) ? starter_get_option( 'menu_principal' ) : [];
+$quick_links = function_exists( 'starter_get_option' ) ? starter_get_option( 'mega_menu_quick_links' ) : [];
+$socials     = function_exists( 'udp_get_social_urls' ) ? udp_get_social_urls() : [];
 
-if ( ! is_array( $menu_items ) ) $menu_items  = array();
-if ( ! is_array( $quick_links ) ) $quick_links = array();
+if ( ! is_array( $menu_items ) )  $menu_items  = [];
+if ( ! is_array( $quick_links ) ) $quick_links = [];
+
+/**
+ * Detect if URL is external (different host from WP home).
+ * Internal localhost URLs and same-domain URLs return false.
+ */
+function udp_megamenu_is_external( string $url ): bool {
+	if ( empty( $url ) ) return false;
+	$home_host = parse_url( home_url(), PHP_URL_HOST );
+	$url_host  = parse_url( $url, PHP_URL_HOST );
+	return $url_host && $url_host !== $home_host;
+}
+
+$svg_chevron = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+$svg_ext     = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ?>
 <div
 	id="udp-megamenu-panel"
@@ -59,13 +72,12 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 	<?php else : ?>
 		<div class="udp-megamenu__body">
 
+			<!-- COL 1: Secciones principales (botones, no links) -->
 			<ul class="udp-megamenu__primary" role="menu">
 				<?php foreach ( $menu_items as $idx => $item ) :
-					$titulo    = $item['titulo_main_link'] ?? '';
-					$main_link = $item['main_link'] ?? '';
-					$new_tab   = ! empty( $item['new_tab'] );
+					$titulo = $item['titulo_main_link'] ?? '';
 					if ( ! $titulo ) continue;
-					$is_active = $idx === 0;  // first item active by default
+					$is_active = $idx === 0;
 				?>
 					<li class="udp-megamenu__primary-item<?php echo $is_active ? ' udp-megamenu__primary-item--active' : ''; ?>" role="none">
 						<button
@@ -81,12 +93,10 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 				<?php endforeach; ?>
 			</ul>
 
+			<!-- COL 2 + COL 3: Un detail panel por sección -->
 			<?php foreach ( $menu_items as $idx => $item ) :
-				$titulo         = $item['titulo_main_link'] ?? '';
-				$main_link      = $item['main_link'] ?? '';
-				$new_tab_main   = ! empty( $item['new_tab'] );
-				$submenu        = is_array( $item['submenu'] ?? null ) ? $item['submenu'] : array();
-				$links_externos = is_array( $item['links_externos'] ?? null ) ? $item['links_externos'] : array();
+				$titulo  = $item['titulo_main_link'] ?? '';
+				$submenu = is_array( $item['submenu'] ?? null ) ? $item['submenu'] : [];
 				if ( ! $titulo ) continue;
 				$is_active = $idx === 0;
 			?>
@@ -96,58 +106,75 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 					data-udp-megamenu-detail="<?php echo esc_attr( $idx ); ?>"
 					<?php echo $is_active ? '' : 'hidden'; ?>
 				>
+
+					<!-- COL 2: Apartados -->
 					<ul class="udp-megamenu__submenu">
-						<?php if ( $main_link ) : ?>
-							<li class="udp-megamenu__submenu-item udp-megamenu__submenu-item--main">
-								<a class="udp-megamenu__submenu-link" href="<?php echo esc_url( $main_link ); ?>"
-									<?php if ( $new_tab_main ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
-									<?php printf( esc_html__( 'Conoce %s', 'starter-theme' ), esc_html( wp_strip_all_tags( $titulo ) ) ); ?>
-									<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-										<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-									</svg>
-								</a>
-							</li>
-						<?php endif; ?>
-						<?php foreach ( $submenu as $sub ) :
+						<?php foreach ( $submenu as $sub_idx => $sub ) :
 							$sub_titulo = $sub['titulo'] ?? '';
 							$sub_link   = $sub['link']   ?? '';
-							$sub_new    = ! empty( $sub['new_tab_check'] );
-							if ( ! $sub_titulo || ! $sub_link ) continue;
+							$sub_items  = is_array( $sub['sub_items'] ?? null ) ? $sub['sub_items'] : [];
+							$has_sub    = ! empty( $sub_items );
+
+							if ( ! $sub_titulo ) continue;
+
+							$is_ext = $sub_link ? udp_megamenu_is_external( $sub_link ) : false;
+							$svg    = $has_sub ? $svg_chevron : ( $is_ext ? $svg_ext : '' );
 						?>
-							<li class="udp-megamenu__submenu-item">
-								<a class="udp-megamenu__submenu-link" href="<?php echo esc_url( $sub_link ); ?>"
-									<?php if ( $sub_new ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
-									<?php echo esc_html( wp_strip_all_tags( $sub_titulo ) ); ?>
-									<?php if ( $sub_new ) : ?>
-										<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-											<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-										</svg>
-									<?php else : ?>
-										<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-											<path d="M4 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-										</svg>
-									<?php endif; ?>
-								</a>
+							<li
+								class="udp-megamenu__submenu-item"
+								data-udp-sub-idx="<?php echo esc_attr( $sub_idx ); ?>"
+							>
+								<?php if ( $sub_link ) : ?>
+									<a
+										class="udp-megamenu__submenu-link<?php echo $has_sub ? ' udp-megamenu__submenu-link--has-sub' : ''; ?>"
+										href="<?php echo esc_url( $sub_link ); ?>"
+										<?php if ( $is_ext ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
+									>
+										<?php echo esc_html( $sub_titulo ); ?>
+										<?php echo $svg; // phpcs:ignore ?>
+									</a>
+								<?php else : ?>
+									<span class="udp-megamenu__submenu-link udp-megamenu__submenu-link--no-url">
+										<?php echo esc_html( $sub_titulo ); ?>
+										<?php echo $svg; // phpcs:ignore ?>
+									</span>
+								<?php endif; ?>
 							</li>
 						<?php endforeach; ?>
 					</ul>
 
-					<ul class="udp-megamenu__externos">
-						<?php foreach ( $links_externos as $ext ) :
-							$ext_titulo = $ext['titulo'] ?? '';
-							$ext_link   = $ext['link']   ?? '';
-							if ( ! $ext_titulo || ! $ext_link ) continue;
+					<!-- COL 3: Sub-panels (uno por apartado con sub-items, ocultos por defecto) -->
+					<div class="udp-megamenu__col3">
+						<?php foreach ( $submenu as $sub_idx => $sub ) :
+							$sub_items = is_array( $sub['sub_items'] ?? null ) ? $sub['sub_items'] : [];
+							if ( empty( $sub_items ) ) continue;
 						?>
-							<li class="udp-megamenu__externos-item">
-								<a class="udp-megamenu__externos-link" href="<?php echo esc_url( $ext_link ); ?>" target="_blank" rel="noopener noreferrer">
-									<?php echo esc_html( wp_strip_all_tags( $ext_titulo ) ); ?>
-									<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-										<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-									</svg>
-								</a>
-							</li>
+							<ul
+								class="udp-megamenu__sub-panel"
+								data-udp-sub-panel="<?php echo esc_attr( $sub_idx ); ?>"
+								hidden
+							>
+								<?php foreach ( $sub_items as $si ) :
+									$si_titulo = $si['titulo'] ?? '';
+									$si_link   = $si['link']   ?? '';
+									if ( ! $si_titulo || ! $si_link ) continue;
+									$si_ext = udp_megamenu_is_external( $si_link );
+								?>
+									<li class="udp-megamenu__sub-item">
+										<a
+											class="udp-megamenu__sub-link"
+											href="<?php echo esc_url( $si_link ); ?>"
+											<?php if ( $si_ext ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
+										>
+											<?php echo esc_html( $si_titulo ); ?>
+											<?php echo $si_ext ? $svg_ext : $svg_chevron; // phpcs:ignore ?>
+										</a>
+									</li>
+								<?php endforeach; ?>
+							</ul>
 						<?php endforeach; ?>
-					</ul>
+					</div>
+
 				</div>
 			<?php endforeach; ?>
 
@@ -165,12 +192,8 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 				<li class="udp-megamenu__quick-item">
 					<a class="udp-megamenu__quick-link" href="<?php echo esc_url( $ql_link ); ?>"
 						<?php if ( $ql_new ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
-						<?php echo esc_html( wp_strip_all_tags( $ql_titulo ) ); ?>
-						<?php if ( $ql_new ) : ?>
-							<svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-								<path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-							</svg>
-						<?php endif; ?>
+						<?php echo esc_html( $ql_titulo ); ?>
+						<?php if ( $ql_new ) : echo $svg_ext; endif; // phpcs:ignore ?>
 					</a>
 				</li>
 			<?php endforeach; ?>
@@ -178,7 +201,7 @@ if ( ! is_array( $quick_links ) ) $quick_links = array();
 
 		<?php if ( ! empty( $socials ) ) : ?>
 			<ul class="udp-megamenu__socials">
-				<?php foreach ( array( 'linkedin', 'instagram', 'youtube' ) as $key ) :
+				<?php foreach ( [ 'linkedin', 'instagram', 'youtube' ] as $key ) :
 					$url = $socials[ $key ] ?? '';
 					if ( ! $url ) continue;
 				?>

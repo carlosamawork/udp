@@ -1,82 +1,126 @@
 /**
  * Mega-menu — open/close + active item state machine.
  *
- * Eventos:
- *  - Click en [data-udp-megamenu-toggle] → open
- *  - Click en [data-udp-megamenu-close] → close
- *  - ESC key → close
- *  - Click en [data-udp-megamenu-item="N"] → activa el detail panel N
- *  - Click backdrop fuera del panel body → close (opcional, si UX lo pide)
- *
- * Lock body scroll cuando está abierto. Trap focus básico (Tab dentro del panel).
+ * Col-1 hover/click → switches which section detail panel is visible.
+ * Col-2 hover       → shows/hides sub-panels in col-3.
  */
 import { qs, qsa } from '@utils/dom';
 
 const STATE = {
-    isOpen: false,
-    activeIdx: 0,
-    lastFocused: null,
+	isOpen: false,
+	activeIdx: 0,
+	lastFocused: null,
 };
 
-function setOpen(panel, open) {
-    if (!panel) return;
-    STATE.isOpen = open;
-    panel.hidden = !open;
-    document.documentElement.classList.toggle('udp-megamenu-open', open);
-    document.body.classList.toggle('udp-megamenu-open', open);
+function setOpen( panel, open ) {
+	if ( !panel ) return;
+	STATE.isOpen = open;
+	panel.hidden = !open;
+	document.documentElement.classList.toggle( 'udp-megamenu-open', open );
+	document.body.classList.toggle( 'udp-megamenu-open', open );
 
-    const toggle = qs('[data-udp-megamenu-toggle]');
-    if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+	const toggle = qs( '[data-udp-megamenu-toggle]' );
+	if ( toggle ) toggle.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
 
-    if (open) {
-        STATE.lastFocused = document.activeElement;
-        const closeBtn = panel.querySelector('[data-udp-megamenu-close]');
-        if (closeBtn) closeBtn.focus();
-    } else {
-        if (STATE.lastFocused && typeof STATE.lastFocused.focus === 'function') {
-            STATE.lastFocused.focus();
-        }
-    }
+	if ( open ) {
+		STATE.lastFocused = document.activeElement;
+		const closeBtn = panel.querySelector( '[data-udp-megamenu-close]' );
+		if ( closeBtn ) closeBtn.focus();
+	} else {
+		if ( STATE.lastFocused && typeof STATE.lastFocused.focus === 'function' ) {
+			STATE.lastFocused.focus();
+		}
+	}
 }
 
-function setActiveItem(panel, idx) {
-    if (!panel) return;
-    STATE.activeIdx = idx;
+function clearSubPanels( detail ) {
+	if ( !detail ) return;
+	qsa( '[data-udp-sub-panel]', detail ).forEach( p => { p.hidden = true; } );
+	qsa( '.udp-megamenu__submenu-item--active', detail ).forEach( li => {
+		li.classList.remove( 'udp-megamenu__submenu-item--active' );
+	} );
+}
 
-    qsa('.udp-megamenu__primary-item', panel).forEach((el, i) => {
-        el.classList.toggle('udp-megamenu__primary-item--active', i === idx);
-    });
-    qsa('.udp-megamenu__primary-btn', panel).forEach((btn, i) => {
-        btn.setAttribute('aria-expanded', i === idx ? 'true' : 'false');
-    });
-    qsa('[data-udp-megamenu-detail]', panel).forEach((el) => {
-        const detailIdx = parseInt(el.getAttribute('data-udp-megamenu-detail'), 10);
-        const isActive = detailIdx === idx;
-        el.classList.toggle('udp-megamenu__detail--active', isActive);
-        el.hidden = !isActive;
-    });
+function setSubPanel( detail, subIdx ) {
+	if ( !detail ) return;
+	// Clear previous active item
+	qsa( '.udp-megamenu__submenu-item--active', detail ).forEach( li => {
+		li.classList.remove( 'udp-megamenu__submenu-item--active' );
+	} );
+	// Show matching sub-panel, hide others
+	let found = false;
+	qsa( '[data-udp-sub-panel]', detail ).forEach( p => {
+		const match = parseInt( p.getAttribute( 'data-udp-sub-panel' ), 10 ) === subIdx;
+		p.hidden = !match;
+		if ( match ) found = true;
+	} );
+	// Mark active submenu item
+	if ( found ) {
+		const li = detail.querySelector( `[data-udp-sub-idx="${subIdx}"]` );
+		if ( li ) li.classList.add( 'udp-megamenu__submenu-item--active' );
+	}
+}
+
+function setActiveItem( panel, idx ) {
+	if ( !panel ) return;
+	STATE.activeIdx = idx;
+
+	// Clear all sub-panels before switching section
+	qsa( '[data-udp-megamenu-detail]', panel ).forEach( d => clearSubPanels( d ) );
+
+	qsa( '.udp-megamenu__primary-item', panel ).forEach( ( el, i ) => {
+		el.classList.toggle( 'udp-megamenu__primary-item--active', i === idx );
+	} );
+	qsa( '.udp-megamenu__primary-btn', panel ).forEach( ( btn, i ) => {
+		btn.setAttribute( 'aria-expanded', i === idx ? 'true' : 'false' );
+	} );
+	qsa( '[data-udp-megamenu-detail]', panel ).forEach( el => {
+		const detailIdx = parseInt( el.getAttribute( 'data-udp-megamenu-detail' ), 10 );
+		const isActive = detailIdx === idx;
+		el.classList.toggle( 'udp-megamenu__detail--active', isActive );
+		el.hidden = !isActive;
+	} );
 }
 
 export function initMegaMenu() {
-    const panel = qs('#udp-megamenu-panel');
-    const toggle = qs('[data-udp-megamenu-toggle]');
-    if (!panel || !toggle) return;
+	const panel = qs( '#udp-megamenu-panel' );
+	const toggle = qs( '[data-udp-megamenu-toggle]' );
+	if ( !panel || !toggle ) return;
 
-    toggle.addEventListener('click', () => setOpen(panel, true));
+	toggle.addEventListener( 'click', () => setOpen( panel, true ) );
 
-    const closeBtn = panel.querySelector('[data-udp-megamenu-close]');
-    if (closeBtn) closeBtn.addEventListener('click', () => setOpen(panel, false));
+	const closeBtn = panel.querySelector( '[data-udp-megamenu-close]' );
+	if ( closeBtn ) closeBtn.addEventListener( 'click', () => setOpen( panel, false ) );
 
-    qsa('[data-udp-megamenu-item]', panel).forEach((btn) => {
-        const idx = parseInt(btn.getAttribute('data-udp-megamenu-item'), 10);
-        btn.addEventListener('click', () => setActiveItem(panel, idx));
-        btn.addEventListener('mouseenter', () => setActiveItem(panel, idx));
-        btn.addEventListener('focus', () => setActiveItem(panel, idx));
-    });
+	// Col-1: section switching
+	qsa( '[data-udp-megamenu-item]', panel ).forEach( btn => {
+		const idx = parseInt( btn.getAttribute( 'data-udp-megamenu-item' ), 10 );
+		btn.addEventListener( 'click', () => setActiveItem( panel, idx ) );
+		btn.addEventListener( 'mouseenter', () => setActiveItem( panel, idx ) );
+		btn.addEventListener( 'focus', () => setActiveItem( panel, idx ) );
+	} );
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && STATE.isOpen) {
-            setOpen(panel, false);
-        }
-    });
+	// Col-2: sub-panel switching on hover
+	panel.addEventListener( 'mouseenter', e => {
+		const li = e.target.closest( '[data-udp-sub-idx]' );
+		if ( !li ) return;
+		const detail = li.closest( '[data-udp-megamenu-detail]' );
+		const subIdx = parseInt( li.getAttribute( 'data-udp-sub-idx' ), 10 );
+		setSubPanel( detail, subIdx );
+	}, true );
+
+	// Clear sub-panels when mouse leaves the menu body
+	const body = qs( '.udp-megamenu__body', panel );
+	if ( body ) {
+		body.addEventListener( 'mouseleave', () => {
+			const activeDetail = qs( '[data-udp-megamenu-detail][class*="--active"]', panel );
+			if ( activeDetail ) clearSubPanels( activeDetail );
+		} );
+	}
+
+	document.addEventListener( 'keydown', e => {
+		if ( e.key === 'Escape' && STATE.isOpen ) {
+			setOpen( panel, false );
+		}
+	} );
 }
