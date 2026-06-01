@@ -1744,3 +1744,61 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 - Dos fixes puntuales: S4 links correctos a páginas de facultad + S5 lista de eventos con columnas siempre alineadas.
 - Rama `main` en estado limpio tras commit.
 - Pendientes habituales: imágenes S8 Cultura UDP, contenido S9 Cultura Digital, ACF sync link externo (S1/S6/S7/S9), revisar S3/S5/S6 contra Figma, F10 polish, F11 switch tema principal.
+
+### 2026-06-01 — Task 1 Anuarios UDP: ACF group_page_anuarios _(Agente)_
+
+- Creado `acf-json/group_page_anuarios.json` con group key `group_page_anuarios`, location `page_template == templates/page-anuarios.php`.
+- Estructura: repeater `anuarios_items` con 4 sub-fields: `anuario_titulo` (text, required), `anuario_fecha` (date_picker, return_format Ymd), `anuario_pdf` (file, return url, mime pdf), `anuario_imagen` (image, return array).
+- Sincronizado a BD con script UPSERT `/tmp/udp-sync-anuarios-acf.php`: limpieza previa por `post_name`, luego `acf_import_field_group()` → ID 55581. ACF auto-enriqueció el JSON con defaults canónicos (aria-label, wrapper, parent_repeater, etc.).
+- Commit `87e6acf`: solo el JSON, sin el script temporal.
+
+### 2026-06-01 — Tarea explícita pendiente: completar el menú _(Elsa)_
+
+- Elsa indicó explícitamente que hay que **completar el mega-menú**. Revisarlo contra el Figma/spec original y terminar lo que falte.
+- El módulo F8 está implementado (`mega-menu.php`, `mega-menu.js`, `_mega-menu.scss`, ACF `mega_menu_quick_links`) pero queda trabajo pendiente que no se documentó en detalle en la última sesión.
+- Animación portada S1 confirmada como ✅ completada.
+
+### 2026-06-01 — Task 2 Anuarios UDP: Page template _(Agente)_
+
+- Creado `templates/page-anuarios.php` (Template Name: Anuarios).
+- Estructura: header reutilizable `template-parts/institucional/header` (portada azul + breadcrumb) + share floating pill + main section con grid de items.
+- Lógica: extrae repeater `anuarios_items` vía `get_field()`, itera con fallback a repeater vacío. Cada item delega a `template-parts/anuarios/card-anuario` (creado en Task 3) con args: titulo, fecha, pdf_url, imagen.
+- Empty state: "No hay anuarios disponibles" cuando repeater vacío.
+- PHP lint: ✅ "No syntax errors detected".
+- No commit (Tasks 2, 3, 4 se commitean juntas en Task 4).
+
+### 2026-06-01 — Task 3 Anuarios UDP: Card partial _(Agente)_
+
+- Creado directorio `template-parts/anuarios/`.
+- Creado `template-parts/anuarios/card-anuario.php` con estructura especificada:
+  - Recibe `$args`: titulo, fecha, pdf_url, imagen (ACF image array).
+  - Valida presencia de titulo y pdf_url; retorna silenciosamente si faltan.
+  - Parsea `$fecha` (formato Ymd) con `DateTime::createFromFormat()` y formatea con `date_i18n('F Y')` para localización.
+  - Card es un `<a>` wrapping figure (imagen o placeholder) + body (titulo + fecha).
+  - Imagen lazy-loaded con ancho/alto de ACF; fallback a `udp-media-placeholder` si no existe.
+  - Links abren PDF en tab nuevo con rel="noopener noreferrer" y aria-label con "(PDF)".
+  - Escaping completo: `esc_url()` (href), `esc_attr()` (alt, aria-label, class), `esc_html()` (titulo, fecha).
+- PHP lint: ✅ "No syntax errors detected".
+- No commit (Tasks 2, 3, 4 se commitean juntas en Task 4).
+
+### 2026-06-01 — Task 6 Anuarios UDP: Populate repeater _(Agente)_
+
+- Página "Anuarios UDP" encontrada: ID 7081.
+- Script `/tmp/udp-populate-anuarios.php` creado e idempotente (delete_field antes de update_field).
+- Fix necesario: el patrón `anuario_udp_2016` para 2015 era incorrecto — el archivo real es `anuario_udp_2015` (ID 7092). Corregido antes de escribir a BD.
+- Fix clave: el campo `anuario_pdf` es de tipo `file` con `return_format=url`, pero ACF espera en BD el attachment ID (int), no la URL. Corregido para almacenar el ID numérico; ACF devuelve la URL al leer.
+- Resultado final: 14/14 PDFs encontrados, 14/14 imágenes (IDs 55587–55600), repeater escrito en BD y verificado con `get_field()`.
+- Sin commit (script es temporal, datos en BD).
+
+### 2026-06-01 — Página Anuarios UDP completada
+
+- Template `templates/page-anuarios.php` + card partial + SCSS creados.
+- ACF repeater `anuarios_items` con 14 ítems (2010→2023-2024): título + fecha + PDF + imagen.
+- 14 imágenes de portada extraídas del Figma (nodos 3706:24390→3706:24471) y subidas a WP media (IDs 55587–55600).
+- PDFs matcheados desde la media library por guid. Fix: 2015 era `anuario_udp_2015` (no `anuario_udp_2016`).
+- Fix autopoblado: campo `file` de ACF almacena IDs de attachment, no URLs.
+- Hero reutilizado de `template-parts/institucional/header.php` (sin modificar).
+- Página ID 7081, URL: http://localhost:8888/udp/vinculacion-con-el-medio/revistas-y-otras-publicaciones/anuarios-udp/.
+- Template `templates/page-anuarios.php` asignado a página 7081 vía `update_post_meta`.
+- Verificación curl: 14 cards (`udp-card-anuario`), 1 grid (`udp-anuarios__grid`), 4 hero (`udp-inst-hero`), 14 PDF links con `target="_blank"`. Nota: los conteos de grep son por LÍNEAS con la clase, no por ocurrencia de elemento — 70 líneas / 5 por card = 14 cards. La comprobación `target="_blank" | grep .pdf` da 0 porque href y target van en líneas separadas (HTML multi-línea); verificado con `grep -A3` que confirma las 14 cards tienen `target="_blank"`.
+- Pendiente: asignar página como hija de "Conoce la UDP" en el menú desde WP admin si procede.
