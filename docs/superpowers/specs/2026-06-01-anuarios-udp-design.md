@@ -35,7 +35,7 @@ template-parts/institucional/share-floating.php
 | Sub-field       | Tipo            | Notas                                 |
 |-----------------|-----------------|---------------------------------------|
 | `anuario_titulo`| text, required  | "Anuario UDP 2023 – 2024"             |
-| `anuario_fecha` | text            | "Diciembre 2025" (fecha publicación)  |
+| `anuario_fecha` | date_picker (Ymd) | Fecha de publicación. Se muestra como "F Y" (ej. "Diciembre 2025"). Script rellena desde `post_date` del attachment. |
 | `anuario_pdf`   | file, url       | PDF existente en WP media             |
 | `anuario_imagen`| image, array    | Portada extraída del Figma            |
 
@@ -153,7 +153,7 @@ Script PHP ejecutable una vez (`/tmp/udp-populate-anuarios.php`), idempotente.
 |--------------------------|---------------|--------------------------|---------------|
 | Anuario UDP 2023 – 2024  | Diciembre 2025| anuario_udp_23-24        | 3706:24390    |
 | Anuario UDP 2022         | Octubre 2023  | ANUARIO_2022             | 3706:24396    |
-| Anuario UDP 2021         | Octubre 2022  | ANUARIO_2021             | 3706:24402    |
+| Anuario UDP 2021         | Octubre 2022  | ANUARIO_2021-1           | 3706:24402    |
 | Anuario UDP 2020         | Octubre 2021  | ANUARIO_2020             | 3706:24408    |
 | Anuario UDP 2019         | Octubre 2020  | anuario2019              | 3706:24415    |
 | Anuario UDP 2018         | Octubre 2019  | anuario2018              | 3706:24421    |
