@@ -1745,12 +1745,42 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 - Rama `main` en estado limpio tras commit.
 - Pendientes habituales: imágenes S8 Cultura UDP, contenido S9 Cultura Digital, ACF sync link externo (S1/S6/S7/S9), revisar S3/S5/S6 contra Figma, F10 polish, F11 switch tema principal.
 
-### 2026-06-01 — Task 1 Anuarios UDP: ACF group_page_anuarios _(Agente)_
+### 2026-06-01 — Página Anuarios UDP completada _(Elsa)_
 
-- Creado `acf-json/group_page_anuarios.json` con group key `group_page_anuarios`, location `page_template == templates/page-anuarios.php`.
-- Estructura: repeater `anuarios_items` con 4 sub-fields: `anuario_titulo` (text, required), `anuario_fecha` (date_picker, return_format Ymd), `anuario_pdf` (file, return url, mime pdf), `anuario_imagen` (image, return array).
-- Sincronizado a BD con script UPSERT `/tmp/udp-sync-anuarios-acf.php`: limpieza previa por `post_name`, luego `acf_import_field_group()` → ID 55581. ACF auto-enriqueció el JSON con defaults canónicos (aria-label, wrapper, parent_repeater, etc.).
-- Commit `87e6acf`: solo el JSON, sin el script temporal.
+**Archivos nuevos:**
+- `acf-json/group_page_anuarios.json` — group key `group_page_anuarios`, location `page_template == templates/page-anuarios.php`. Repeater `anuarios_items` (4 sub-fields: titulo/text, fecha/date_picker Ymd, pdf/file url, imagen/image array). BD ID 55581.
+- `templates/page-anuarios.php` — Template Name "Anuarios". Hero reutilizado de `template-parts/institucional/header.php` (sin modificar), share-floating reutilizado.
+- `template-parts/anuarios/card-anuario.php` — card portrait, abre PDF en `target="_blank"`, fecha parseada con `DateTime::createFromFormat('Ymd')` → `date_i18n('F Y')`, placeholder con `udp-media-placeholder`.
+- `src/scss/templates/_anuarios.scss` — grid 4 col responsive (4→3→2→1), card Work Sans 500 22px, fecha Work Sans 400 14px, sin box-shadow, hover scale(1.04).
+
+**Datos poblados:**
+- 14 imágenes de portada descargadas del Figma (nodos 3706:24390→3706:24471) y subidas a WP media (IDs 55587–55600).
+- Repeater ACF con 14 ítems (2023-2024 → 2010) en página ID 7081. PDFs matcheados por `guid` (no `post_name` — WP sanitiza underscores a guiones en el slug).
+
+**Fixes/gotchas descubiertos:**
+- 2015: filename era `anuario_udp_2015` (no `anuario_udp_2016` como estaba en el plan).
+- Campo `file` de ACF almacena IDs de attachment en DB, no URLs. El script de populate debe escribir el ID entero; ACF resuelve a URL al leer con `get_field()`.
+- Hero `udp-inst-hero` está en `_institucional.scss` (ya importado en main.scss) — reutilizable en cualquier template sin SCSS adicional.
+
+**URL:** `http://localhost:8888/udp/vinculacion-con-el-medio/revistas-y-otras-publicaciones/anuarios-udp/`
+
+**Commits:** `87e6acf` (ACF), `c968f94` (template+card+SCSS), `914cc6d` (MEMORY E2E), `8e57336` (fix tipografía card).
+
+### 2026-06-01 — Cierre de sesión _(Elsa)_
+
+**Lo trabajado:**
+- Anotado en bitácora: tarea explícita de completar el mega-menú.
+- Página Anuarios UDP implementada completa: brainstorming → spec → plan → 7 tasks subagente → ajustes de estilo finales.
+
+**Estado actual:**
+- Rama activa: `elsa`.
+- Anuarios UDP: ✅ completa (14 cards, PDFs, portadas Figma, tipografía Figma).
+
+**Próximos pasos sugeridos:**
+- Completar el mega-menú (tarea explícita pendiente).
+- Buscador funcional en el header.
+- Página Anuarios: revisar si debe moverse jerárquicamente bajo "Conoce la UDP" desde WP admin.
+- F10 polish, F11 switch tema principal.
 
 ### 2026-06-01 — Tarea explícita pendiente: completar el menú _(Elsa)_
 
