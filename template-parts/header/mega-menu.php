@@ -127,16 +127,9 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								class="udp-megamenu__submenu-item"
 								data-udp-sub-idx="<?php echo esc_attr( $sub_idx ); ?>"
 							>
-								<?php if ( $has_sub ) : ?>
-									<!-- Con sub-items: button que abre col-3, no navega -->
-									<button type="button" class="udp-megamenu__submenu-link udp-megamenu__submenu-link--has-sub">
-										<?php echo esc_html( $sub_titulo ); ?>
-										<?php echo $svg; // phpcs:ignore ?>
-									</button>
-								<?php elseif ( $sub_link ) : ?>
-									<!-- Sin sub-items: link que navega -->
+								<?php if ( $sub_link ) : ?>
 									<a
-										class="udp-megamenu__submenu-link"
+										class="udp-megamenu__submenu-link<?php echo $has_sub ? ' udp-megamenu__submenu-link--has-sub' : ''; ?>"
 										href="<?php echo esc_url( $sub_link ); ?>"
 										<?php if ( $is_ext ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
 									>
