@@ -144,6 +144,17 @@ export function initMegaMenu() {
 		} );
 	}
 
+	// Cerrar menú al hacer click en un link de la misma página (anchors o mismo pathname)
+	panel.addEventListener( 'click', e => {
+		const a = e.target.closest( 'a[href]' );
+		if ( !a || !STATE.isOpen ) return;
+		const href = a.getAttribute( 'href' );
+		const isSamePage =
+			href.startsWith( '#' ) ||
+			( a.hostname === window.location.hostname && a.pathname === window.location.pathname );
+		if ( isSamePage ) setOpen( panel, false );
+	} );
+
 	document.addEventListener( 'keydown', e => {
 		if ( e.key === 'Escape' && STATE.isOpen ) {
 			setOpen( panel, false );
