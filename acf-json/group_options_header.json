@@ -90,7 +90,7 @@
                         {
                             "key": "field_60bdcb222d8a1",
                             "label": "URL",
-                            "name": "url",
+                            "name": "link",
                             "aria-label": "",
                             "type": "url",
                             "instructions": "",
@@ -235,7 +235,7 @@
                                 {
                                     "key": "field_submenu_sub_item_link",
                                     "label": "URL",
-                                    "name": "url",
+                                    "name": "link",
                                     "aria-label": "",
                                     "type": "url",
                                     "instructions": "",
@@ -396,5 +396,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780391690
+    "modified": 1780391818
 }
