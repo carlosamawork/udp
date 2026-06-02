@@ -18,7 +18,9 @@ body.udp-megamenu-open {
     display: flex;
     flex-direction: column;
 
-    &[hidden] { display: none; }
+    &[hidden] {
+        display: none;
+    }
 
     // Fade-in al abrir (negro del header → blanco del panel)
     &:not([hidden]) {
@@ -91,7 +93,12 @@ body.udp-megamenu-open {
         display: inline-flex;
         align-items: center;
 
-        img { height: 40px; width: auto; display: block; }
+        img {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+
         &-text {
             font-family: $font-family-display;
             font-size: 16px;
@@ -136,6 +143,7 @@ body.udp-megamenu-open {
     }
 
     &__primary-item {
+
         // Default: gris suave
         .udp-megamenu__primary-btn,
         .udp-megamenu__primary-btn[aria-expanded] {
@@ -152,9 +160,12 @@ body.udp-megamenu-open {
             transition: color $transition-base;
             width: auto;
 
-            @include media-down(md) { font-size: 22px; }
+            @include media-down(md) {
+                font-size: 22px;
+            }
 
-            &:hover, &:focus-visible {
+            &:hover,
+            &:focus-visible {
                 color: $dark-1;
                 outline: none;
             }
@@ -174,10 +185,12 @@ body.udp-megamenu-open {
         display: none;
 
         &--active {
-            display: contents;  // mantiene el grid del parent (col 2 = submenu, col 3 = externos)
+            display: contents; // mantiene el grid del parent (col 2 = submenu, col 3 = externos)
         }
 
-        &[hidden] { display: none !important; }
+        &[hidden] {
+            display: none !important;
+        }
 
         @include media-down(lg) {
             grid-column: 1;
@@ -187,7 +200,9 @@ body.udp-megamenu-open {
             padding-top: $space-md;
             border-top: 1px solid rgba($dark-1, 0.1);
 
-            &--active { display: flex; }
+            &--active {
+                display: flex;
+            }
         }
     }
 
@@ -208,7 +223,7 @@ body.udp-megamenu-open {
         padding: $space-2xs 0;
         font-family: $font-family-body;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
         color: $dark-1;
         text-decoration: none;
         background: none;
@@ -219,22 +234,25 @@ body.udp-megamenu-open {
         // Estado 3: hover → bold + subrayado
         &:hover,
         &:focus-visible {
-            font-weight: 700;
-            text-decoration: underline;
+            text-decoration: underline !important;
             text-underline-offset: 3px;
             text-decoration-thickness: 1px;
             color: $dark-1;
             outline: none;
         }
 
-        &--no-url { cursor: default; }
+        &--no-url {
+            cursor: default;
+        }
 
-        svg { flex-shrink: 0; }
+        svg {
+            flex-shrink: 0;
+        }
     }
 
     // Estado 2: activo (col-3 abierto) → bold, sin subrayado
     &__submenu-item--active > .udp-megamenu__submenu-link {
-        font-weight: 700;
+        font-weight: 600;
         text-decoration: none;
     }
 
@@ -260,7 +278,9 @@ body.udp-megamenu-open {
         flex-direction: column;
         gap: $space-2xs;
 
-        &[hidden] { display: none; }
+        &[hidden] {
+            display: none;
+        }
 
         &:not([hidden]) {
             animation: udp-subpanel-fadein 0.2s ease forwards;
@@ -287,7 +307,9 @@ body.udp-megamenu-open {
             outline: none;
         }
 
-        svg { flex-shrink: 0; }
+        svg {
+            flex-shrink: 0;
+        }
     }
 
     // ----------------------------------------------------------------------
@@ -334,7 +356,8 @@ body.udp-megamenu-open {
         text-decoration: none;
         transition: color $transition-base;
 
-        &:hover, &:focus-visible {
+        &:hover,
+        &:focus-visible {
             color: $brand-blue;
             outline: none;
         }
@@ -360,7 +383,8 @@ body.udp-megamenu-open {
         text-decoration: none;
         transition: background-color $transition-base, color $transition-base;
 
-        &:hover, &:focus-visible {
+        &:hover,
+        &:focus-visible {
             background-color: $dark-1;
             color: $white;
             outline: none;
@@ -377,13 +401,23 @@ body.udp-megamenu-open {
 
 // Keyframes mega-menu
 @keyframes udp-megamenu-fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes udp-megamenu-fadeout {
-    from { opacity: 1; }
-    to   { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 @keyframes udp-close-rotate-in {
@@ -391,6 +425,7 @@ body.udp-megamenu-open {
         opacity: 0;
         transform: rotate(-90deg) scale(0.7);
     }
+
     to {
         opacity: 1;
         transform: rotate(0deg) scale(1);
@@ -398,6 +433,13 @@ body.udp-megamenu-open {
 }
 
 @keyframes udp-subpanel-fadein {
-    from { opacity: 0; transform: translateY(-6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
