@@ -89,7 +89,7 @@ export function initSearch() {
     // ── Fetch ─────────────────────────────────────────────────────────────
 
     async function fetchResults( q ) {
-        results.innerHTML = '<p class="udp-search-results__loading">Buscando…</p>';
+        results.innerHTML = '<div class="udp-search-loader" role="status" aria-label="Buscando"><div class="udp-search-loader__track"></div></div>';
         results.hidden    = false;
 
         abortController = new AbortController();
