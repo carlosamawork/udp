@@ -189,7 +189,15 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "post_type": [],
+                            "post_type": [
+                                "page",
+                                "post",
+                                "agenda",
+                                "carrera-udp",
+                                "centro-udp",
+                                "concurso-academico",
+                                "calendario"
+                            ],
                             "taxonomy": [],
                             "return_format": "object",
                             "multiple": 0,
@@ -295,7 +303,15 @@
                                         "class": "",
                                         "id": ""
                                     },
-                                    "post_type": [],
+                                    "post_type": [
+                                        "page",
+                                        "post",
+                                        "agenda",
+                                        "carrera-udp",
+                                        "centro-udp",
+                                        "concurso-academico",
+                                        "calendario"
+                                    ],
                                     "taxonomy": [],
                                     "return_format": "object",
                                     "multiple": 0,
@@ -519,7 +535,15 @@
                         "class": "",
                         "id": ""
                     },
-                    "post_type": [],
+                    "post_type": [
+                        "page",
+                        "post",
+                        "agenda",
+                        "carrera-udp",
+                        "centro-udp",
+                        "concurso-academico",
+                        "calendario"
+                    ],
                     "taxonomy": [],
                     "return_format": "object",
                     "multiple": 0,
@@ -692,5 +716,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780395463
+    "modified": 1780396266
 }
