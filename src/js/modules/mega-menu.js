@@ -126,23 +126,22 @@ export function initMegaMenu() {
 		btn.addEventListener( 'focus', () => setActiveItem( panel, idx ) );
 	} );
 
-	// Col-2: sub-panel switching on hover
-	panel.addEventListener( 'mouseenter', e => {
+	// Col-2: click abre/cierra sub-panel col-3
+	panel.addEventListener( 'click', e => {
 		const li = e.target.closest( '[data-udp-sub-idx]' );
 		if ( !li ) return;
+		// Solo actuar si el click es en el button --has-sub (no en un <a> que navega)
+		const trigger = e.target.closest( '.udp-megamenu__submenu-link--has-sub' );
+		if ( !trigger ) return;
 		const detail = li.closest( '[data-udp-megamenu-detail]' );
 		const subIdx = parseInt( li.getAttribute( 'data-udp-sub-idx' ), 10 );
-		setSubPanel( detail, subIdx );
-	}, true );
-
-	// Clear sub-panels when mouse leaves the menu body
-	const body = qs( '.udp-megamenu__body', panel );
-	if ( body ) {
-		body.addEventListener( 'mouseleave', () => {
-			const activeDetail = qs( '[data-udp-megamenu-detail][class*="--active"]', panel );
-			if ( activeDetail ) clearSubPanels( activeDetail );
-		} );
-	}
+		// Toggle: si ya está activo, cierra; si no, abre
+		if ( li.classList.contains( 'udp-megamenu__submenu-item--active' ) ) {
+			clearSubPanels( detail );
+		} else {
+			setSubPanel( detail, subIdx );
+		}
+	} );
 
 	// Cerrar menú al hacer click en un link de la misma página (anchors o mismo pathname)
 	panel.addEventListener( 'click', e => {
