@@ -18,7 +18,7 @@ body.udp-search-overlay::after {
 
 .udp-top-bar {
   height: $header-height;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.25s ease, border-bottom-color 0.25s ease;
 
   &.udp-search-open {
     .udp-top-bar__inner {
@@ -91,6 +91,7 @@ body.udp-search-overlay::after {
   font-weight: 500;
   color: $white;
   min-width: 0;
+  transition: color 0.25s ease;
 
   &::placeholder {
     color: rgba($white, 0.3);
@@ -127,20 +128,36 @@ body.udp-search-overlay::after {
 
 // ── Panel de resultados ──────────────────────────────────────────────────────
 
+@keyframes udp-search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
 .udp-search-results {
   position: fixed;
   top: 84px;
   left: 0;
   right: 0;
+  height: calc(100vh - 84px);
   background: $white;
   z-index: 999;
-  max-height: calc(100vh - 84px);
   overflow-y: auto;
   padding: 32px 40px 48px;
-  border-bottom: 1px solid $gray-high;
 
   &[hidden] {
     display: none;
+  }
+
+  &:not([hidden]) {
+    animation: udp-search-in 0.22s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:not([hidden]) {
+      animation: none;
+    }
   }
 
   @include media-down(md) {
