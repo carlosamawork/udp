@@ -187,6 +187,41 @@ add_filter('excerpt_more', fn() => '&hellip;');
 // =============================================================================
 // 10. MODULE TYPE para scripts de Vite (en modo dev)
 // =============================================================================
+
+
+// =============================================================================
+// 11. ADMIN CSS — mejoras UX en la página de opciones del mega-menú
+// =============================================================================
+add_action('admin_head', function () {
+    $screen = get_current_screen();
+    if (!$screen || strpos($screen->id, 'udp-options-header') === false) return;
+    ?>
+    <style>
+        /* Resalta el botón de colapso/expandir en el repeater Menu Principal */
+        .acf-field[data-key="field_60bdcaf92d89c"] .acf-icon.-collapse {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: #c8183c;
+            color: #fff;
+            border-radius: 50%;
+            opacity: 1 !important;
+        }
+
+        /* Filas colapsadas: fondo sutil para distinguirlas de las expandidas */
+        .acf-field[data-key="field_60bdcaf92d89c"] .acf-row.-collapsed {
+            background: #f9f9f9;
+        }
+
+        /* Cursor pointer sobre la fila colapsada para indicar que es clickable */
+        .acf-field[data-key="field_60bdcaf92d89c"] .acf-row.-collapsed > td {
+            cursor: pointer;
+        }
+    </style>
+    <?php
+});
 add_filter('script_loader_tag', function ($tag, $handle) {
     if ($handle === 'vite-client') {
         $tag = str_replace(' src', ' type="module" src', $tag);
