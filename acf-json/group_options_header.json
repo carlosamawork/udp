@@ -474,37 +474,166 @@
             "collapsed": "",
             "sub_fields": [
                 {
-                    "key": "field_options_header_mega_quick_titulo",
+                    "key": "field_quick_tipo",
+                    "label": "Tipo",
+                    "name": "tipo",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "externo": "Link externo",
+                        "interno": "Página interna"
+                    },
+                    "default_value": "externo",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "layout": "horizontal",
+                    "parent_repeater": "field_options_header_mega_quick_links"
+                },
+                {
+                    "key": "field_quick_pagina",
+                    "label": "Página",
+                    "name": "pagina",
+                    "aria-label": "",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_quick_tipo",
+                                "operator": "==",
+                                "value": "interno"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [],
+                    "taxonomy": [],
+                    "return_format": "object",
+                    "multiple": 0,
+                    "allow_null": 1,
+                    "ui": 1,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_options_header_mega_quick_links"
+                },
+                {
+                    "key": "field_quick_titulo_alt",
+                    "label": "Título (opcional)",
+                    "name": "titulo_alt",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_quick_tipo",
+                                "operator": "==",
+                                "value": "interno"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "Si se deja vacío se usa el título de la página",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": "",
+                    "parent_repeater": "field_options_header_mega_quick_links"
+                },
+                {
+                    "key": "field_quick_anchor",
+                    "label": "Anchor (opcional)",
+                    "name": "anchor",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_quick_tipo",
+                                "operator": "==",
+                                "value": "interno"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "#seccion",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": "",
+                    "parent_repeater": "field_options_header_mega_quick_links"
+                },
+                {
+                    "key": "field_quick_titulo",
                     "label": "Título",
                     "name": "titulo",
                     "aria-label": "",
                     "type": "text",
                     "instructions": "",
-                    "required": 1,
-                    "conditional_logic": false,
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_quick_tipo",
+                                "operator": "==",
+                                "value": "externo"
+                            }
+                        ]
+                    ],
                     "wrapper": {
-                        "width": "",
+                        "width": "40",
                         "class": "",
                         "id": ""
                     },
                     "default_value": "",
-                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
+                    "maxlength": "",
                     "parent_repeater": "field_options_header_mega_quick_links"
                 },
                 {
-                    "key": "field_options_header_mega_quick_link",
+                    "key": "field_quick_url",
                     "label": "URL",
-                    "name": "link",
+                    "name": "url",
                     "aria-label": "",
                     "type": "url",
                     "instructions": "",
-                    "required": 1,
-                    "conditional_logic": false,
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_quick_tipo",
+                                "operator": "==",
+                                "value": "externo"
+                            }
+                        ]
+                    ],
                     "wrapper": {
-                        "width": "",
+                        "width": "40",
                         "class": "",
                         "id": ""
                     },
@@ -513,22 +642,30 @@
                     "parent_repeater": "field_options_header_mega_quick_links"
                 },
                 {
-                    "key": "field_options_header_mega_quick_new_tab",
+                    "key": "field_quick_nueva_pestana",
                     "label": "Abrir en pestaña nueva",
-                    "name": "new_tab",
+                    "name": "nueva_pestana",
                     "aria-label": "",
                     "type": "true_false",
                     "instructions": "",
-                    "required": false,
-                    "conditional_logic": false,
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_quick_tipo",
+                                "operator": "==",
+                                "value": "externo"
+                            }
+                        ]
+                    ],
                     "wrapper": {
-                        "width": "",
+                        "width": "20",
                         "class": "",
                         "id": ""
                     },
-                    "ui": 1,
-                    "default_value": 0,
                     "message": "",
+                    "default_value": 0,
+                    "ui": 1,
                     "ui_on_text": "",
                     "ui_off_text": "",
                     "parent_repeater": "field_options_header_mega_quick_links"
@@ -555,5 +692,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780393540
+    "modified": 1780395375
 }

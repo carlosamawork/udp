@@ -210,9 +210,19 @@ $svg_ext_sm = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path
 	<footer class="udp-megamenu__footer">
 		<ul class="udp-megamenu__quick-links">
 			<?php foreach ( $quick_links as $ql ) :
-				$ql_titulo = $ql['titulo'] ?? '';
-				$ql_link   = $ql['link']   ?? '';
-				$ql_new    = ! empty( $ql['new_tab'] );
+				$ql_tipo = $ql['tipo'] ?? 'externo';
+
+				if ( $ql_tipo === 'interno' && ! empty( $ql['pagina'] ) ) {
+					$ql_titulo = $ql['titulo_alt'] ?: get_the_title( $ql['pagina'] );
+					$ql_anchor = ltrim( $ql['anchor'] ?? '', '#' );
+					$ql_link   = get_permalink( $ql['pagina'] ) . ( $ql_anchor ? '#' . $ql_anchor : '' );
+					$ql_new    = false;
+				} else {
+					$ql_titulo = $ql['titulo'] ?? '';
+					$ql_link   = $ql['url']    ?? $ql['link'] ?? '';
+					$ql_new    = ! empty( $ql['nueva_pestana'] ) || ! empty( $ql['new_tab'] );
+				}
+
 				if ( ! $ql_titulo || ! $ql_link ) continue;
 			?>
 				<li class="udp-megamenu__quick-item">
