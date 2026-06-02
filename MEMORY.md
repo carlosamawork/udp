@@ -1887,3 +1887,30 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - F10 polish (SVGs sociales reales, etc.)
 - F11 switch tema principal (activar starter-theme como tema activo)
 - Buscador funcional en el header
+
+### 2026-06-02 — Admin UX mega-menú + refactor ACF completo _(Elsa)_
+
+**Hechos**:
+
+- **CSS admin** (`functions.php`, hook `admin_head`): icono toggle de colapso/expandir siempre visible (`display:block !important`), color rojo UDP, scoped a `udp-options-header`. Selector real: `.acf-field[data-key="field_60bdcaf92d89c"] .acf-repeater .acf-row-handle .acf-icon`.
+- **ACF limpieza secciones**: eliminados `main_link`, `descripcion`, `new_tab` (nivel sección), `imagen` y `links_externos` (heredados del tema viejo, sin uso en template). Renombrado `Titulo Main Link` → `Título`. Botón `Agregar Grupo` → `Agregar Sección`.
+- **Submenu (col-2)** refactorizado con tipo 3 opciones: `Sin link` | `Link externo` | `Página interna`. Título siempre visible (100%, required). Condicionales: externo → URL 75% + switch 25%; interno → Página 70% + Anchor 30%.
+- **Sub-items (col-3)** refactorizados: tipo `Link externo` | `Página interna`. Externo → Título 40% + URL 40% + switch 20%. Interno → Página 45% + Título (opcional) 30% + Anchor 25%.
+- **Iconos externos**: `$svg_ext` 20×20 (submenu col-2), `$svg_ext_sm` 14×14 (sub-items col-3). Se muestra para todo `tipo=externo`.
+- **Migraciones** (con prefijo `options_` correcto): 5 submenu items + 24 sub-items con localhost → `tipo=interno` + post_id resuelto.
+
+**Bug crítico — opciones pages ACF**:
+- ACF options pages guarda en `wp_options` con prefijo `options_` (ej. `options_menu_principal_0_submenu_0_tipo`). Sin ese prefijo, la escritura directa no afecta lo que ACF lee en el admin. **Regla**: migraciones de options pages siempre con `options_` prefix.
+
+**Pendientes tras esta sesión**:
+- Añadir anchors desde el admin a Doctorado HC / Profesor Emérito / Honorario (ID=831, anclas `#section-...`).
+- Añadir anchor `#buscador-carreras` al sub-item "Buscador de carreras" (interno ID=55394).
+- Quick Links del footer del megamenú: poblar desde admin (Bibliotecas, Estudiantes, Alumni, etc.).
+- Buscador funcional en el header.
+- F10 polish, F11 switch tema principal.
+
+### 2026-06-02 — Cierre de sesión _(Elsa)_
+
+- Sesión dedicada a mejorar la UX del admin del mega-menú y refactorizar el ACF.
+- Rama activa: `elsa`. Build limpio.
+- Commits destacados: `a5d510b` (UX hints), `d00caf3` (limpieza campos), `3bc637f` (submenu+subitems tipo), `2370618` (hotfix name link), `8bdfa36` (tipo submenu col-2), `a5820ea` (orden campos interno).
