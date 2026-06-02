@@ -36,6 +36,19 @@ function setOpen( panel, open ) {
 			panel.hidden = true;
 			STATE.isOpen = false;
 			STATE.activeIdx = -1;
+
+			// Reset DOM: quitar --active de col-1, ocultar todos los detail panels
+			qsa( '.udp-megamenu__primary-item--active', panel ).forEach( el =>
+				el.classList.remove( 'udp-megamenu__primary-item--active' )
+			);
+			qsa( '.udp-megamenu__primary-btn', panel ).forEach( btn =>
+				btn.setAttribute( 'aria-expanded', 'false' )
+			);
+			qsa( '[data-udp-megamenu-detail]', panel ).forEach( el => {
+				el.classList.remove( 'udp-megamenu__detail--active' );
+				el.hidden = true;
+				clearSubPanels( el );
+			} );
 			document.documentElement.classList.remove( 'udp-megamenu-open' );
 			document.body.classList.remove( 'udp-megamenu-open' );
 			if ( toggle ) toggle.setAttribute( 'aria-expanded', 'false' );
