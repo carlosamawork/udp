@@ -234,7 +234,7 @@
                                 },
                                 {
                                     "key": "field_submenu_sub_item_titulo_alt",
-                                    "label": "Título alternativo (opcional)",
+                                    "label": "Título (opcional)",
                                     "name": "titulo_alt",
                                     "aria-label": "",
                                     "type": "text",
@@ -454,5 +454,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780393071
+    "modified": 1780393162
 }
