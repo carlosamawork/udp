@@ -34,8 +34,8 @@ function udp_megamenu_is_external( string $url ): bool {
 
 // Flecha gorda → para apartados con sub-items (col-2)
 $svg_arrow_right = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-// Flecha ↗ para links externos (col-2 y col-3)
-$svg_ext         = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// Flecha ↗ externa (Figma arrow-up-right)
+$svg_ext         = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M14.1663 14.1673V5.83398H5.83301M14.1663 5.83398L5.83301 14.1673" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ?>
 <div
 	id="udp-megamenu-panel"
