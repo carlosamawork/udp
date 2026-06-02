@@ -10,10 +10,10 @@
 import { qs } from '@utils/dom';
 import { ajax } from '@utils/ajax';
 
-let debounceTimer    = null;
-let abortController  = null;
-
 export function initSearch() {
+    let debounceTimer    = null;
+    let abortController  = null;
+
     const topBar    = qs( '.udp-top-bar' );
     const trigger   = qs( '.udp-top-bar__search' );
     const searchBar = qs( '.udp-top-bar__search-bar' );
@@ -62,7 +62,9 @@ export function initSearch() {
         input.value = '';
         document.body.classList.remove( 'udp-search-overlay' );
         clearTimeout( debounceTimer );
+        debounceTimer = null;
         if ( abortController ) abortController.abort();
+        abortController = null;
         trigger.focus();
     }
 
