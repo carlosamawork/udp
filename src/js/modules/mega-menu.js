@@ -12,24 +12,36 @@ const STATE = {
 	lastFocused: null,
 };
 
+const ANIM_DURATION = 220; // ms — debe coincidir con udp-megamenu-fadeout
+
 function setOpen( panel, open ) {
 	if ( !panel ) return;
-	STATE.isOpen = open;
-	panel.hidden = !open;
-	document.documentElement.classList.toggle( 'udp-megamenu-open', open );
-	document.body.classList.toggle( 'udp-megamenu-open', open );
 
 	const toggle = qs( '[data-udp-megamenu-toggle]' );
-	if ( toggle ) toggle.setAttribute( 'aria-expanded', open ? 'true' : 'false' );
 
 	if ( open ) {
+		STATE.isOpen = true;
+		panel.hidden = false;
+		document.documentElement.classList.add( 'udp-megamenu-open' );
+		document.body.classList.add( 'udp-megamenu-open' );
+		if ( toggle ) toggle.setAttribute( 'aria-expanded', 'true' );
 		STATE.lastFocused = document.activeElement;
 		const closeBtn = panel.querySelector( '[data-udp-megamenu-close]' );
 		if ( closeBtn ) closeBtn.focus();
 	} else {
-		if ( STATE.lastFocused && typeof STATE.lastFocused.focus === 'function' ) {
-			STATE.lastFocused.focus();
-		}
+		// Fade-out antes de ocultar
+		panel.classList.add( 'udp-megamenu--closing' );
+		setTimeout( () => {
+			panel.classList.remove( 'udp-megamenu--closing' );
+			panel.hidden = true;
+			STATE.isOpen = false;
+			document.documentElement.classList.remove( 'udp-megamenu-open' );
+			document.body.classList.remove( 'udp-megamenu-open' );
+			if ( toggle ) toggle.setAttribute( 'aria-expanded', 'false' );
+			if ( STATE.lastFocused && typeof STATE.lastFocused.focus === 'function' ) {
+				STATE.lastFocused.focus();
+			}
+		}, ANIM_DURATION );
 	}
 }
 

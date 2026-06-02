@@ -12,13 +12,24 @@ body.udp-megamenu-open {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background-color: $white;  // light theme
+    background-color: $white;
     color: $dark-1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
 
     &[hidden] { display: none; }
+
+    // Fade-in al abrir (negro del header → blanco del panel)
+    &:not([hidden]) {
+        animation: udp-megamenu-fadein 0.25s ease forwards;
+    }
+
+    // Clase añadida por JS antes de ocultar → fade-out
+    &--closing {
+        animation: udp-megamenu-fadeout 0.2s ease forwards !important;
+        pointer-events: none;
+    }
 
     // ----------------------------------------------------------------------
     // TOP BAR INTERNO (× Cerrar + logo)
@@ -54,8 +65,8 @@ body.udp-megamenu-open {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
+            width: 50px;
+            height: 50px;
             border-radius: 9999px;
             border: 1px solid $dark-1;
             transition: background-color $transition-base, color $transition-base;
@@ -67,6 +78,11 @@ body.udp-megamenu-open {
             color: $white;
             outline: none;
         }
+    }
+
+    // Animación de entrada del botón cerrar (rota desde posición burger)
+    &:not([hidden]) &__close-circle {
+        animation: udp-close-rotate-in 0.3s 0.1s ease both;
     }
 
     &__logo {
@@ -338,5 +354,27 @@ body.udp-megamenu-open {
         font-family: $font-family-body;
         font-size: 14px;
         color: rgba($dark-1, 0.6);
+    }
+}
+
+// Keyframes mega-menu
+@keyframes udp-megamenu-fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes udp-megamenu-fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+@keyframes udp-close-rotate-in {
+    from {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
     }
 }
