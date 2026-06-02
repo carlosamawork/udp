@@ -57,7 +57,7 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="udp-megamenu__logo" aria-label="<?php bloginfo( 'name' ); ?>">
 			<?php
-			$logo = function_exists( 'udp_get_logo_url' ) ? udp_get_logo_url( 'color' ) : '';
+			$logo = function_exists( 'udp_get_logo_url' ) ? udp_get_logo_url( 'udp' ) : '';
 			if ( ! empty( $logo ) ) :
 				?>
 				<img src="<?php echo esc_url( $logo ); ?>" alt="<?php bloginfo( 'name' ); ?>" />
