@@ -39,6 +39,7 @@ import { initCalendarioActiveMonth } from '@modules/calendario-active-month';
 import { initBlockImageGallery } from '@modules/block-image-gallery';
 import { initBlockAccordion } from '@modules/block-accordion';
 import { initMegaMenu } from '@modules/mega-menu';
+import { initSearch } from '@modules/search';
 import { initHomePortada } from '@modules/home-portada';
 import { initHomeNoticias } from '@modules/home-noticias';
 import { initHomeCulturaUdp } from '@modules/home-cultura-udp';
@@ -74,6 +75,7 @@ domReady(() => {
     initBlockImageGallery();
     initBlockAccordion();
     initMegaMenu();
+    initSearch();
     initHomeNoticias();
     initHomeCulturaUdp();
     initHomeCulturaDigital();
