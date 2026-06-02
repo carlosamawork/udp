@@ -27,6 +27,14 @@
 	</div>
 </header>
 
+<div
+	id="udp-search-results"
+	class="udp-search-results"
+	hidden
+	aria-live="polite"
+	aria-label="<?php esc_attr_e( 'Resultados de búsqueda', 'starter-theme' ); ?>"
+></div>
+
 <?php get_template_part( 'template-parts/header/mega-menu' ); ?>
 
 <main id="main" class="udp-site-main" role="main">

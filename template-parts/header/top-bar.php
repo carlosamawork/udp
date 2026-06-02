@@ -48,4 +48,27 @@
 		</button>
 
 	</div>
+
+	<div class="udp-top-bar__search-bar" hidden>
+		<span class="udp-top-bar__search-cursor" aria-hidden="true">|</span>
+		<input
+			type="search"
+			class="udp-top-bar__search-input"
+			placeholder="<?php esc_attr_e( 'Escribe aquí lo que quieras buscar', 'starter-theme' ); ?>"
+			autocomplete="off"
+			aria-label="<?php esc_attr_e( 'Buscador', 'starter-theme' ); ?>"
+			aria-controls="udp-search-results"
+			aria-expanded="false"
+		>
+		<button
+			type="button"
+			class="udp-top-bar__search-close"
+			aria-label="<?php esc_attr_e( 'Cerrar buscador', 'starter-theme' ); ?>"
+		>
+			<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+				<line x1="3" y1="3" x2="13" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+				<line x1="13" y1="3" x2="3" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+			</svg>
+		</button>
+	</div>
 </div>
