@@ -36,9 +36,8 @@ body.udp-megamenu-open {
     // ----------------------------------------------------------------------
     &__top {
         display: grid;
-        grid-template-columns: 1fr auto 1fr;
+        grid-template-columns: 150px 1fr 150px;
         align-items: center;
-        gap: $space-md;
         padding: 0 $space-3xl;
         height: $header-height;
         border-bottom: 1px solid rgba($dark-1, 0.1);
@@ -87,6 +86,7 @@ body.udp-megamenu-open {
 
     &__logo {
         justify-self: center;
+        grid-column: 2;
         display: inline-flex;
         align-items: center;
 
