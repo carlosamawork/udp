@@ -37,10 +37,10 @@ function udp_search_handler(): void {
 
     // Resolvemos el ID de la página Facultades por path (resiliente entre entornos)
     $fac_page = get_page_by_path( 'facultades' );
-    $fac_pid  = $fac_page ? (int) $fac_page->ID : 14;
+    $fac_pid  = $fac_page ? (int) $fac_page->ID : 0;
 
     $definitions = [
-        [ 'pages',      'Páginas',             'page',        [ 'post_parent__not_in' => [ $fac_pid ] ] ],
+        [ 'pages',      'Páginas',             'page',        [ 'post_parent__not_in' => [ $fac_pid ], 'post__not_in' => [ $fac_pid ] ] ],
         [ 'facultades', 'Facultades',           'page',        [ 'post_parent'         => $fac_pid ] ],
         [ 'carreras',   'Carreras',             'carrera-udp', [] ],
         [ 'centros',    'Centros',              'centro-udp',  [] ],
@@ -75,6 +75,5 @@ function udp_search_handler(): void {
         }
     }
 
-    wp_reset_postdata();
     wp_send_json_success( [ 'sections' => $sections ] );
 }
