@@ -354,11 +354,13 @@ body.udp-megamenu-open {
         font-weight: 500;
         color: $dark-1;
         text-decoration: none;
-        transition: color $transition-base;
+        transition: text-decoration-color $transition-base;
+        text-decoration-color: transparent;
 
         &:hover,
         &:focus-visible {
-            color: $brand-blue;
+            text-decoration: underline;
+            text-decoration-color: $dark-1;
             outline: none;
         }
     }

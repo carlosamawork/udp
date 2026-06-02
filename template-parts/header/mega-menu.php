@@ -37,6 +37,8 @@ $svg_arrow_right = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none">
 // Flecha ↗ externa — 20×20 para submenu (col-2), 14×14 para sub-items (col-3)
 $svg_ext    = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M14.1663 14.1673V5.83398H5.83301M14.1663 5.83398L5.83301 14.1673" stroke="#B0B0B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 $svg_ext_sm = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M14.1663 14.1673V5.83398H5.83301M14.1663 5.83398L5.83301 14.1673" stroke="#B0B0B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// + para quick links internos
+$svg_plus   = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 3v14M3 10h14" stroke="#B0B0B0" stroke-width="1.8" stroke-linecap="round"/></svg>';
 ?>
 <div
 	id="udp-megamenu-panel"
@@ -229,7 +231,13 @@ $svg_ext_sm = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path
 					<a class="udp-megamenu__quick-link" href="<?php echo esc_url( $ql_link ); ?>"
 						<?php if ( $ql_new ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>>
 						<?php echo esc_html( $ql_titulo ); ?>
-						<?php if ( $ql_new ) : echo $svg_ext; endif; // phpcs:ignore ?>
+						<?php
+						if ( $ql_new ) {
+							echo $svg_ext; // phpcs:ignore
+						} elseif ( $ql_tipo === 'interno' ) {
+							echo $svg_plus; // phpcs:ignore
+						}
+						?>
 					</a>
 				</li>
 			<?php endforeach; ?>
