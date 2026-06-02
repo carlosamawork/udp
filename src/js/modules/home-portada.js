@@ -42,4 +42,16 @@ export async function initHomePortada() {
             scrub: 2,
         },
     });
+
+    // Si hay un hash en la URL, re-scroll tras la inicialización de GSAP
+    // (ScrollTrigger.refresh() invalida la posición que el browser calculó)
+    if (window.location.hash) {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+            ScrollTrigger.refresh();
+            requestAnimationFrame(() => {
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    }
 }
