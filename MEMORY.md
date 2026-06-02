@@ -1914,3 +1914,21 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - Sesión dedicada a mejorar la UX del admin del mega-menú y refactorizar el ACF.
 - Rama activa: `elsa`. Build limpio.
 - Commits destacados: `a5d510b` (UX hints), `d00caf3` (limpieza campos), `3bc637f` (submenu+subitems tipo), `2370618` (hotfix name link), `8bdfa36` (tipo submenu col-2), `a5820ea` (orden campos interno).
+
+### 2026-06-02 (tarde) — Quick Links + mejoras ACF menú + cierre _(Elsa)_
+
+**Lo trabajado:**
+
+- **Spec de contenido del mega-menú** creado en `docs/superpowers/specs/2026-06-02-megamenu-content-map.md`. Exportación completa de las 8 secciones, 52 apartados, 11 sub-panels con todas las URLs, IDs de páginas y notas de re-importación. Antídoto contra pérdida de datos de BD.
+- **Quick Links refactorizados** a tipo externo/interno (mismo patrón que submenu/sub-items). Layout `table` → `block` (2 filas por item: tipo + campos condicionales). Datos migrados en BD (5 items: Bibliotecas, Estudiantes, Alumni, Servicios, UDP University).
+- **Post_object filtrado** en los 3 campos `pagina` del menú: solo `page`, `carrera-udp`, `centro-udp`, `concurso-academico`. Se quitaron `post` y `agenda` (demasiados resultados).
+- **Quick links hover** → subrayado en lugar de azul. Icono `+` (20×20 SVG) para links de tipo interno.
+
+**Bug documentado (SQL):** `REPLACE` en MySQL sobre `options_mega_menu_quick_links_N_link` afecta también al `_links_` del nombre — usar `CONCAT` en migraciones de options pages futuras.
+
+**Estado:** Rama `elsa`. Build limpio. 8 commits esta sesión.
+
+**Pendientes activos:**
+- Quick Links: Servicios tiene URL de Alumni — confirmar URL real desde admin.
+- Mega-menú: Buscador de carreras anchor, Rankings (decisión), Calendario sub-items (decisión), Dirección Finanzas URL — ver `project-megamenu-pending.md`.
+- **F10** Polish, **F11** Switch tema principal, Buscador funcional en header.
