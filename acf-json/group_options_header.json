@@ -191,12 +191,9 @@
                             },
                             "post_type": [
                                 "page",
-                                "post",
-                                "agenda",
                                 "carrera-udp",
                                 "centro-udp",
-                                "concurso-academico",
-                                "calendario"
+                                "concurso-academico"
                             ],
                             "taxonomy": [],
                             "return_format": "object",
@@ -305,12 +302,9 @@
                                     },
                                     "post_type": [
                                         "page",
-                                        "post",
-                                        "agenda",
                                         "carrera-udp",
                                         "centro-udp",
-                                        "concurso-academico",
-                                        "calendario"
+                                        "concurso-academico"
                                     ],
                                     "taxonomy": [],
                                     "return_format": "object",
@@ -537,12 +531,9 @@
                     },
                     "post_type": [
                         "page",
-                        "post",
-                        "agenda",
                         "carrera-udp",
                         "centro-udp",
-                        "concurso-academico",
-                        "calendario"
+                        "concurso-academico"
                     ],
                     "taxonomy": [],
                     "return_format": "object",
@@ -716,5 +707,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780396266
+    "modified": 1780396457
 }
