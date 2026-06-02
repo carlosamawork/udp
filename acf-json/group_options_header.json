@@ -190,95 +190,6 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "key": "field_60bdccb82d8a3",
-                    "label": "Imagen",
-                    "name": "imagen",
-                    "aria-label": "",
-                    "type": "image",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url",
-                    "preview_size": "medium",
-                    "library": "all",
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "",
-                    "parent_repeater": "field_60bdcaf92d89c"
-                },
-                {
-                    "key": "field_60bdccc22d8a4",
-                    "label": "Links Externos",
-                    "name": "links_externos",
-                    "aria-label": "",
-                    "type": "repeater",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "collapsed": "",
-                    "min": 0,
-                    "max": 0,
-                    "layout": "block",
-                    "button_label": "Agregar Link Externo",
-                    "rows_per_page": 20,
-                    "parent_repeater": "field_60bdcaf92d89c",
-                    "sub_fields": [
-                        {
-                            "key": "field_60bdcccd2d8a5",
-                            "label": "Link",
-                            "name": "link",
-                            "aria-label": "",
-                            "type": "url",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "parent_repeater": "field_60bdccc22d8a4"
-                        },
-                        {
-                            "key": "field_60bdccd32d8a6",
-                            "label": "Titulo",
-                            "name": "titulo",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": "",
-                            "parent_repeater": "field_60bdccc22d8a4"
-                        }
-                    ]
                 }
             ]
         },
@@ -385,5 +296,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780390861
+    "modified": 1780391005
 }
