@@ -161,7 +161,7 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								<?php foreach ( $sub_items as $si ) :
 									$si_tipo = $si['tipo'] ?? 'externo';
 									if ( $si_tipo === 'interno' && ! empty( $si['pagina'] ) ) {
-										$si_titulo  = get_the_title( $si['pagina'] );
+										$si_titulo  = $si['titulo_alt'] ?: get_the_title( $si['pagina'] );
 										$si_anchor  = ltrim( $si['anchor'] ?? '', '#' );
 										$si_link    = get_permalink( $si['pagina'] ) . ( $si_anchor ? '#' . $si_anchor : '' );
 										$si_nueva   = false;

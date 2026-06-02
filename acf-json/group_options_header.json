@@ -233,6 +233,35 @@
                                     "parent_repeater": "field_submenu_sub_items"
                                 },
                                 {
+                                    "key": "field_submenu_sub_item_titulo_alt",
+                                    "label": "Título alternativo (opcional)",
+                                    "name": "titulo_alt",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_submenu_sub_item_tipo",
+                                                "operator": "==",
+                                                "value": "interno"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "Si se deja vacío se usa el título de la página",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": "",
+                                    "parent_repeater": "field_submenu_sub_items"
+                                },
+                                {
                                     "key": "field_submenu_sub_item_titulo",
                                     "label": "Título",
                                     "name": "titulo",
@@ -425,5 +454,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780392549
+    "modified": 1780392660
 }
