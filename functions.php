@@ -197,8 +197,9 @@ add_action('admin_head', function () {
     if (!$screen || strpos($screen->id, 'udp-options-header') === false) return;
     ?>
     <style>
-        /* Botón colapso/expandir: posición y estilo rojo UDP */
+        /* Botón colapso/expandir: siempre visible, posición y estilo rojo UDP */
         .acf-field[data-key="field_60bdcaf92d89c"] .acf-repeater .acf-row-handle .acf-icon {
+            display: block !important;
             position: absolute;
             top: 0.3rem;
             left: 50%;
