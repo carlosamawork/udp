@@ -277,11 +277,19 @@ _Sin sub-items._
 
 | Ítem | Ubicación | Estado |
 |---|---|---|
-| Quick Links footer | Admin → Header & Mega-menú | ⏳ Poblar desde admin |
-| Dirección de Finanzas y Presupuesto | S6 > Estructura organizacional | ⚠️ URL provisional |
-| Rankings | Eliminado de S6 > Conoce la UDP | ❌ No hay página dedicada |
-| Proyectos institucionales | Eliminado de S3 | ❌ Sin URL |
-| Centros y unidades de investigación | Eliminado de S3 | ❌ Sin URL |
+| Quick Links footer | Admin → Header & Mega-menú → Mega-menú: Quick Links (footer) | ⏳ Poblar desde admin (Bibliotecas, Estudiantes, Alumni, Servicios, UDP University) |
+| Dirección de Finanzas y Presupuesto | S6 > Estructura organizacional | ⚠️ URL provisional `https://www.udp.cl/area-udp/direccion-gral-de-finanzas-y-presupuestos/` — confirmar URL correcta |
+| Buscador de carreras | S0 > Carreras > sub-items | ⚠️ Apunta a `/#buscador-carreras`. Confirmar si es el destino correcto |
+| Calendario Académico | S6 > Universidad | ⚠️ Figma muestra flecha → (sugiere sub-items futuros). Actualmente link directo a `/calendario-academico/`. Confirmar si habrá sub-items |
+
+## Eliminados (decisiones tomadas)
+
+| Ítem | Ubicación | Motivo |
+|---|---|---|
+| Rankings | S6 > Conoce la UDP | ❌ No existe página dedicada (solo aparece en noticias). Pendiente decidir si se enlaza a alguna URL o se deja fuera definitivamente |
+| Proyectos institucionales | S3 > Investigación | ❌ Sin URL conocida |
+| Centros y unidades de investigación | S3 > Investigación | ❌ Sin URL conocida |
+| Buscar por área de estudio | S1 > Posgrado | Simplificado a link directo `https://posgrados.udp.cl/` (antes era trigger de col 3 con sub-items por tipo) |
 
 ---
 
