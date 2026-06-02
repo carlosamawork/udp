@@ -7,7 +7,7 @@
 
 ## Resumen
 
-El botón "Buscador" del top-bar abre un panel de búsqueda que reemplaza visualmente el header. El usuario escribe y los resultados aparecen debajo via AJAX (debounce 400ms, mínimo 3 caracteres). Los resultados se agrupan en hasta 7 secciones (solo se muestran las que tienen resultados), con un máximo de 10 items por sección.
+El botón "Buscador" del top-bar abre un panel de búsqueda que reemplaza visualmente el header. El usuario escribe y los resultados aparecen debajo via AJAX (debounce 400ms, sin mínimo de caracteres — busca desde el primer carácter). Los resultados se agrupan en hasta 7 secciones (solo se muestran las que tienen resultados), con un máximo de 10 items por sección.
 
 ---
 
@@ -50,7 +50,7 @@ add_action('wp_ajax_udp_search', 'udp_search_handler');
 ### Handler
 1. Verifica nonce (`wp_verify_nonce`, mismo nonce de `starterBS5`)
 2. Sanitiza query con `sanitize_text_field($_POST['q'])`
-3. Rechaza si `mb_strlen($q) < 3` → `wp_send_json_error`
+3. Rechaza si `$q === ''` → `wp_send_json_error`
 4. Lanza las queries (ver tabla abajo)
 5. Filtra secciones vacías
 6. `wp_send_json_success(['sections' => $sections])`
@@ -174,7 +174,7 @@ click closeBtn | ESC | click fuera del panel →
 ### Búsqueda
 ```
 input event → debounce(400ms)
-  if query.length < 3 → ocultar resultados, return
+  if query.length === 0 → ocultar resultados, return
   añadir clase --loading
   cancelar request anterior (AbortController)
   ajax('udp_search', { q: query }) → response
@@ -397,7 +397,7 @@ body.udp-search-overlay::after {
 
 ## Estados vacío / sin resultados
 
-- `query < 3 chars` → panel oculto
+- `query vacío` → panel oculto
 - `query ≥ 3 chars, 0 resultados` → texto "No se encontraron resultados para «{query}»" centrado en el panel
 - `query ≥ 3 chars, cargando` → texto "Buscando…" o spinner
 
