@@ -50,7 +50,6 @@
 	</div>
 
 	<div class="udp-top-bar__search-bar" hidden>
-		<span class="udp-top-bar__search-cursor" aria-hidden="true">|</span>
 		<input
 			type="search"
 			class="udp-top-bar__search-input"

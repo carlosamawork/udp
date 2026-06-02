@@ -17,6 +17,7 @@ body.udp-search-overlay::after {
 // ── Estados del top-bar ──────────────────────────────────────────────────────
 
 .udp-top-bar {
+  height: $header-height;
   transition: background-color 0.2s ease;
 
   &.udp-search-open {
@@ -116,6 +117,7 @@ body.udp-search-overlay::after {
   svg {
     stroke: $white;
     transition: stroke 0.2s;
+    color: #b0b0b0;
   }
 
   &:hover {
