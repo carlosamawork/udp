@@ -197,17 +197,20 @@ add_action('admin_head', function () {
     if (!$screen || strpos($screen->id, 'udp-options-header') === false) return;
     ?>
     <style>
-        /* Resalta el botón de colapso/expandir en el repeater Menu Principal */
-        .acf-field[data-key="field_60bdcaf92d89c"] .acf-icon.-collapse {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        /* Botón colapso/expandir: posición y estilo rojo UDP */
+        .acf-field[data-key="field_60bdcaf92d89c"] .acf-repeater .acf-row-handle .acf-icon {
+            display: none;
+            position: absolute;
+            top: 0.3rem;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            z-index: 1;
             width: 22px;
             height: 22px;
             background: #c8183c;
             color: #fff;
             border-radius: 50%;
-            opacity: 1 !important;
+            opacity: 1;
         }
 
         /* Filas colapsadas: fondo sutil para distinguirlas de las expandidas */
