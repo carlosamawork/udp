@@ -43,7 +43,6 @@ function udp_search_handler(): void {
         [ 'pages',      'Páginas',             'page',        [ 'post_parent__not_in' => [ $fac_pid ], 'post__not_in' => [ $fac_pid ] ] ],
         [ 'facultades', 'Facultades',           'page',        [ 'post_parent'         => $fac_pid ] ],
         [ 'carreras',   'Carreras',             'carrera-udp', [] ],
-        [ 'centros',    'Centros',              'centro-udp',  [] ],
         [ 'noticias',   'Noticias',             'post',        [] ],
         [ 'eventos',    'Eventos',              'agenda',      [] ],
         [ 'calendario', 'Calendario Académico', 'calendario',  [] ],
