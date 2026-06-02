@@ -58,7 +58,6 @@
 			autocomplete="off"
 			aria-label="<?php esc_attr_e( 'Buscador', 'starter-theme' ); ?>"
 			aria-controls="udp-search-results"
-			aria-expanded="false"
 		>
 		<button
 			type="button"
