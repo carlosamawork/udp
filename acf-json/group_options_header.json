@@ -305,35 +305,6 @@
                                     "bidirectional_target": []
                                 },
                                 {
-                                    "key": "field_submenu_sub_item_anchor",
-                                    "label": "Anchor (opcional)",
-                                    "name": "anchor",
-                                    "aria-label": "",
-                                    "type": "text",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": [
-                                        [
-                                            {
-                                                "field": "field_submenu_sub_item_tipo",
-                                                "operator": "==",
-                                                "value": "interno"
-                                            }
-                                        ]
-                                    ],
-                                    "wrapper": {
-                                        "width": "25",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "default_value": "",
-                                    "placeholder": "#seccion",
-                                    "prepend": "",
-                                    "append": "",
-                                    "maxlength": "",
-                                    "parent_repeater": "field_submenu_sub_items"
-                                },
-                                {
                                     "key": "field_submenu_sub_item_titulo_alt",
                                     "label": "Título (opcional)",
                                     "name": "titulo_alt",
@@ -357,6 +328,35 @@
                                     },
                                     "default_value": "",
                                     "placeholder": "Si se deja vacío se usa el título de la página",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": "",
+                                    "parent_repeater": "field_submenu_sub_items"
+                                },
+                                {
+                                    "key": "field_submenu_sub_item_anchor",
+                                    "label": "Anchor (opcional)",
+                                    "name": "anchor",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_submenu_sub_item_tipo",
+                                                "operator": "==",
+                                                "value": "interno"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "25",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "#seccion",
                                     "prepend": "",
                                     "append": "",
                                     "maxlength": "",
@@ -555,5 +555,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780393379
+    "modified": 1780393540
 }
