@@ -32,8 +32,8 @@ function udp_megamenu_is_external( string $url ): bool {
 	return $url_host && $url_host !== $home_host;
 }
 
-// Flecha gorda → para apartados con sub-items (col-2)
-$svg_arrow_right = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// Flecha gorda → para apartados con sub-items (col-2), color #B0B0B0
+$svg_arrow_right = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="#B0B0B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 // Flecha ↗ externa (Figma arrow-up-right, 20×20, color fijo #B0B0B0)
 $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M14.1663 14.1673V5.83398H5.83301M14.1663 5.83398L5.83301 14.1673" stroke="#B0B0B0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ?>
@@ -57,7 +57,7 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="udp-megamenu__logo" aria-label="<?php bloginfo( 'name' ); ?>">
 			<?php
-			$logo = function_exists( 'udp_get_logo_url' ) ? udp_get_logo_url( 'negro' ) : '';
+			$logo = function_exists( 'udp_get_logo_url' ) ? udp_get_logo_url( 'color' ) : '';
 			if ( ! empty( $logo ) ) :
 				?>
 				<img src="<?php echo esc_url( $logo ); ?>" alt="<?php bloginfo( 'name' ); ?>" />

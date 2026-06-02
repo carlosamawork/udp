@@ -2,6 +2,10 @@
 // ESTILOS BASE / GLOBALES
 // ==========================================================================
 
+html {
+    scrollbar-gutter: stable; // evita el layout shift al bloquear scroll del body
+}
+
 body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
