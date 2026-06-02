@@ -28,7 +28,8 @@ body.udp-megamenu-open {
         grid-template-columns: 1fr auto 1fr;
         align-items: center;
         gap: $space-md;
-        padding: $space-md $space-3xl;
+        padding: 0 $space-3xl;
+        height: $header-height;
         border-bottom: 1px solid rgba($dark-1, 0.1);
 
         @include media-down(md) {
@@ -73,7 +74,7 @@ body.udp-megamenu-open {
         display: inline-flex;
         align-items: center;
 
-        img { height: 32px; width: auto; display: block; }
+        img { height: 40px; width: auto; display: block; }
         &-text {
             font-family: $font-family-display;
             font-size: 16px;
