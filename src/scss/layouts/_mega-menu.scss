@@ -109,6 +109,7 @@ body.udp-megamenu-open {
         display: flex;
         flex-direction: column;
         gap: $space-2xs;
+        align-items: flex-start; // botones solo tan anchos como su texto
 
         @include media-down(lg) {
             border-bottom: 1px solid rgba($dark-1, 0.1);
@@ -131,7 +132,7 @@ body.udp-megamenu-open {
             color: rgba($dark-1, 0.4);
             cursor: pointer;
             transition: color $transition-base;
-            width: 100%;
+            width: auto;
 
             @include media-down(md) { font-size: 22px; }
 
@@ -178,6 +179,7 @@ body.udp-megamenu-open {
         display: flex;
         flex-direction: column;
         gap: $space-2xs;
+        align-items: flex-start; // links solo tan anchos como su texto
     }
 
     &__submenu-link {

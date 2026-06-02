@@ -32,8 +32,10 @@ function udp_megamenu_is_external( string $url ): bool {
 	return $url_host && $url_host !== $home_host;
 }
 
-$svg_chevron = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-$svg_ext     = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// Flecha gorda → para apartados con sub-items (col-2)
+$svg_arrow_right = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+// Flecha ↗ para links externos (col-2 y col-3)
+$svg_ext         = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M3 3h6v6M9 3 3 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ?>
 <div
 	id="udp-megamenu-panel"
@@ -118,7 +120,8 @@ $svg_ext     = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><pat
 							if ( ! $sub_titulo ) continue;
 
 							$is_ext = $sub_link ? udp_megamenu_is_external( $sub_link ) : false;
-							$svg    = $has_sub ? $svg_chevron : ( $is_ext ? $svg_ext : '' );
+							// Con sub-items → flecha gorda →. Externo sin sub → ↗. Interno sin sub → sin icono.
+						$svg    = $has_sub ? $svg_arrow_right : ( $is_ext ? $svg_ext : '' );
 						?>
 							<li
 								class="udp-megamenu__submenu-item"
@@ -167,7 +170,7 @@ $svg_ext     = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><pat
 											<?php if ( $si_ext ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
 										>
 											<?php echo esc_html( $si_titulo ); ?>
-											<?php echo $si_ext ? $svg_ext : $svg_chevron; // phpcs:ignore ?>
+											<?php echo $si_ext ? $svg_ext : ''; // phpcs:ignore — internos sin icono ?>
 										</a>
 									</li>
 								<?php endforeach; ?>
