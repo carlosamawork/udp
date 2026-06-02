@@ -190,7 +190,7 @@
                                         ]
                                     ],
                                     "wrapper": {
-                                        "width": "70",
+                                        "width": "50",
                                         "class": "",
                                         "id": ""
                                     },
@@ -250,7 +250,7 @@
                                         ]
                                     ],
                                     "wrapper": {
-                                        "width": "100",
+                                        "width": "30",
                                         "class": "",
                                         "id": ""
                                     },
@@ -454,5 +454,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780392660
+    "modified": 1780392735
 }
