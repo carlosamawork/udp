@@ -76,7 +76,7 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "",
+                                "width": "40",
                                 "class": "",
                                 "id": ""
                             },
@@ -86,7 +86,7 @@
                         },
                         {
                             "key": "field_60bdcb312d8a2",
-                            "label": "Titulo",
+                            "label": "Título",
                             "name": "titulo",
                             "aria-label": "",
                             "type": "text",
@@ -94,7 +94,7 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "",
+                                "width": "40",
                                 "class": "",
                                 "id": ""
                             },
@@ -107,7 +107,7 @@
                         },
                         {
                             "key": "field_60ecb032490ff",
-                            "label": "New Tab Check",
+                            "label": "Abrir en pestaña nueva",
                             "name": "new_tab_check",
                             "aria-label": "",
                             "type": "true_false",
@@ -115,13 +115,13 @@
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "",
+                                "width": "20",
                                 "class": "",
                                 "id": ""
                             },
                             "message": "",
                             "default_value": 0,
-                            "ui": 0,
+                            "ui": 1,
                             "ui_on_text": "",
                             "ui_off_text": "",
                             "parent_repeater": "field_60bdcb182d8a0"
@@ -296,5 +296,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780391025
+    "modified": 1780391266
 }
