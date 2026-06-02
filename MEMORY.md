@@ -1965,11 +1965,17 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - Commit: `f23ea96` `feat(search): JS module — apertura/cierre, debounce AJAX, render secciones`.
 - **Pendiente:** Task 5 (wiring final — verificación integración completa).
 
-### 2026-06-02 — Buscador del header completado
+### 2026-06-02 — Buscador del header completado _(Elsa)_
 
 **Hechos**:
-- Endpoint `inc/udp-search.php`: acción `udp_search`, 7 WP_Query (pages/facultades/carreras/centros/noticias/eventos/calendario), max 10 por sección. Nonce `starter_bs5_nonce`. Facultades resueltas por `get_page_by_path('facultades')` con fallback 0.
-- Markup: `__search-bar` (input + cerrar) en `top-bar.php` como hermano de `__inner`. Panel `#udp-search-results` en `header.php` entre `</header>` y mega-menu.
-- SCSS `_search.scss`: top-bar transforma a beige al escribir, panel fixed `top:84px`, grid 3-col→2-col→1-col, cards `#f8f7f4` Arizona Flare.
-- JS `search.js`: debounce 400ms desde 1er carácter, AbortController, render DOM secciones.
+- Endpoint `inc/udp-search.php`: acción `udp_search`, 6 WP_Query (pages/facultades/carreras/noticias/eventos/calendario — Centros descartado por páginas en desuso), max 10 por sección. Nonce `starter_bs5_nonce`. Facultades resueltas por `get_page_by_path('facultades')` con fallback 0. Página Facultades excluida de la sección Páginas con `post__not_in`.
+- Markup: `__search-bar` (input + cerrar) en `top-bar.php` como hermano de `__inner`. Panel `#udp-search-results` (fixed, full-height `calc(100vh-84px)`) en `header.php` entre `</header>` y mega-menu.
+- SCSS `_search.scss`: top-bar transforma a beige al escribir (transición `background-color + border-bottom-color + color` 0.25s), panel entra con `@keyframes udp-search-in` (slide -10px + fade). Loader: línea scan 200×3px `cubic-bezier(0.4,0,0.2,1)`. Grid resultados 3-col→2-col→1-col, cards `#f8f7f4` Arizona Flare.
+- JS `search.js`: debounce 400ms desde 1er carácter, AbortController cancela request anterior, render DOM secciones, `escHtml` local.
 - Cards: beige `#f8f7f4`, Arizona Flare 18px, flecha `→` abajo, hover `#eceae6`.
+
+**Decisiones clave**:
+- Sin mínimo de caracteres (busca desde el primero, igual que la web antigua).
+- `centro-udp` excluido: páginas en desuso.
+- Panel `height` fijo (no `max-height`) para ocupar toda la pantalla disponible.
+- Loader es línea horizontal que escanea (no spinner) — coherente con el lenguaje editorial del sitio.
