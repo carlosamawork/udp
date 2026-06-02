@@ -8,7 +8,7 @@
             "name": "menu_principal",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Cada sección puede desplegarse: haz click en el triángulo ▾ de la esquina inferior izquierda de cada bloque para editar el submenú, imagen y links externos.",
+            "instructions": "Cada sección puede desplegarse: haz click en el triángulo ▾ de la esquina inferior izquierda de cada bloque para editar el submenú.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -296,5 +296,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780391005
+    "modified": 1780391025
 }
