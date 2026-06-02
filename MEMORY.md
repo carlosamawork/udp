@@ -1932,3 +1932,44 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - Quick Links: Servicios tiene URL de Alumni — confirmar URL real desde admin.
 - Mega-menú: Buscador de carreras anchor, Rankings (decisión), Calendario sub-items (decisión), Dirección Finanzas URL — ver `project-megamenu-pending.md`.
 - **F10** Polish, **F11** Switch tema principal, Buscador funcional en header.
+
+### 2026-06-02 (tarde) — Buscador header: Task 1 endpoint AJAX _(Elsa)_
+
+- Creado `inc/udp-search.php`: acción AJAX `udp_search` con 7 WP_Query (páginas, facultades, carreras, centros, noticias, eventos, calendario), nonce `starter_bs5_nonce`, respuesta JSON secciones.
+- `functions.php` línea 155: añadido `require_once` del nuevo archivo.
+- PHP lint OK. Smoke test: query `udp` → `success: true` con secciones; query vacía → `success: false`.
+- Commit: `a5302ef` `feat(search): endpoint AJAX udp_search`.
+- **Pendiente:** Tasks 2–5 (JS module, SCSS, template partial, wiring en header).
+
+### 2026-06-02 (tarde) — Buscador header: Task 2 markup HTML _(Agente)_
+
+- `template-parts/header/top-bar.php`: añadido `<div class="udp-top-bar__search-bar" hidden>` justo antes del `</div>` de `.udp-top-bar`. Contiene cursor `|`, `<input type="search">` con aria-controls="udp-search-results" y botón de cierre con SVG ×.
+- `header.php`: añadido `<div id="udp-search-results" class="udp-search-results" hidden aria-live="polite">` entre `</header>` y el `get_template_part` del mega-menu.
+- PHP lint: sin errores en ambos archivos. Curl: 1 instancia de `udp-top-bar__search-bar`, 3 instancias de `udp-search-results` (id + class + aria-label).
+- Commit: `d99f55c` `feat(search): markup — search-bar en top-bar + panel de resultados en header`.
+- **Pendiente:** Tasks 3–5 (SCSS, JS module, wiring final).
+
+### 2026-06-02 (tarde) — Buscador header: Task 3 SCSS _(Agente)_
+
+- Creado `src/scss/layouts/_search.scss`: overlay, estados `.udp-search-open` + `.udp-search-has-text` en `.udp-top-bar`, search bar, panel de resultados, cards. Transición dark (blanco) → beige (`#f8f7f4`) al escribir texto.
+- `src/scss/main.scss` línea 50: añadido `@import "layouts/search"` después de `mega-menu`.
+- Build OK (760ms). Verificación: `udp-search-card` presente 1× en CSS compilado.
+- Commit: `6e8c35c` `feat(search): SCSS — panel, transiciones dark/beige, cards resultados`.
+- **Pendiente:** Tasks 4–5 (JS module, wiring final).
+
+### 2026-06-02 (tarde) — Buscador header: Task 4 JS module _(Agente)_
+
+- Creado `src/js/modules/search.js`: apertura (click trigger), cierre (ESC, click fuera, botón ×), debounce 400ms, AbortController para cancelar requests anteriores, render por secciones, escapeHtml local.
+- `src/js/main.js`: import `initSearch` añadido tras `initMegaMenu`; llamada `initSearch()` añadida en el mismo orden.
+- Build OK (649ms). Verificación: `grep -c "initSearch\|udp_search" dist/js/main.*.js` → 1.
+- Commit: `f23ea96` `feat(search): JS module — apertura/cierre, debounce AJAX, render secciones`.
+- **Pendiente:** Task 5 (wiring final — verificación integración completa).
+
+### 2026-06-02 — Buscador del header completado
+
+**Hechos**:
+- Endpoint `inc/udp-search.php`: acción `udp_search`, 7 WP_Query (pages/facultades/carreras/centros/noticias/eventos/calendario), max 10 por sección. Nonce `starter_bs5_nonce`. Facultades resueltas por `get_page_by_path('facultades')` con fallback 0.
+- Markup: `__search-bar` (input + cerrar) en `top-bar.php` como hermano de `__inner`. Panel `#udp-search-results` en `header.php` entre `</header>` y mega-menu.
+- SCSS `_search.scss`: top-bar transforma a beige al escribir, panel fixed `top:84px`, grid 3-col→2-col→1-col, cards `#f8f7f4` Arizona Flare.
+- JS `search.js`: debounce 400ms desde 1er carácter, AbortController, render DOM secciones.
+- Cards: beige `#f8f7f4`, Arizona Flare 18px, flecha `→` abajo, hover `#eceae6`.
