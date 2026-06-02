@@ -67,9 +67,30 @@
                     "parent_repeater": "field_60bdcaf92d89c",
                     "sub_fields": [
                         {
+                            "key": "field_60bdcb312d8a2",
+                            "label": "Título",
+                            "name": "titulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "40",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": "",
+                            "parent_repeater": "field_60bdcb182d8a0"
+                        },
+                        {
                             "key": "field_60bdcb222d8a1",
-                            "label": "Link",
-                            "name": "link",
+                            "label": "URL",
+                            "name": "url",
                             "aria-label": "",
                             "type": "url",
                             "instructions": "",
@@ -82,27 +103,6 @@
                             },
                             "default_value": "",
                             "placeholder": "",
-                            "parent_repeater": "field_60bdcb182d8a0"
-                        },
-                        {
-                            "key": "field_60bdcb312d8a2",
-                            "label": "Título",
-                            "name": "titulo",
-                            "aria-label": "",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "40",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": "",
                             "parent_repeater": "field_60bdcb182d8a0"
                         },
                         {
@@ -132,7 +132,7 @@
                             "name": "sub_items",
                             "aria-label": "",
                             "type": "repeater",
-                            "instructions": "Links que aparecen en la tercera columna cuando este apartado está en hover. Dejar vacío si no tiene sub-items.",
+                            "instructions": "Aparecen en la tercera columna al hacer hover sobre este apartado.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -140,14 +140,69 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "collapsed": "",
+                            "collapsed": "field_submenu_sub_item_titulo",
                             "min": 0,
                             "max": 0,
-                            "layout": "table",
+                            "layout": "block",
                             "button_label": "Agregar sub-item",
                             "rows_per_page": 20,
                             "parent_repeater": "field_60bdcb182d8a0",
                             "sub_fields": [
+                                {
+                                    "key": "field_submenu_sub_item_tipo",
+                                    "label": "Tipo",
+                                    "name": "tipo",
+                                    "aria-label": "",
+                                    "type": "button_group",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "choices": {
+                                        "externo": "Link externo",
+                                        "interno": "Página interna"
+                                    },
+                                    "default_value": "externo",
+                                    "return_format": "value",
+                                    "allow_null": 0,
+                                    "parent_repeater": "field_submenu_sub_items",
+                                    "layout": "horizontal"
+                                },
+                                {
+                                    "key": "field_submenu_sub_item_pagina",
+                                    "label": "Página",
+                                    "name": "pagina",
+                                    "aria-label": "",
+                                    "type": "post_object",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_submenu_sub_item_tipo",
+                                                "operator": "==",
+                                                "value": "interno"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "100",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "post_type": [],
+                                    "taxonomy": [],
+                                    "return_format": "object",
+                                    "multiple": 0,
+                                    "allow_null": 1,
+                                    "ui": 1,
+                                    "parent_repeater": "field_submenu_sub_items",
+                                    "bidirectional_target": []
+                                },
                                 {
                                     "key": "field_submenu_sub_item_titulo",
                                     "label": "Título",
@@ -156,9 +211,17 @@
                                     "type": "text",
                                     "instructions": "",
                                     "required": 0,
-                                    "conditional_logic": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_submenu_sub_item_tipo",
+                                                "operator": "==",
+                                                "value": "externo"
+                                            }
+                                        ]
+                                    ],
                                     "wrapper": {
-                                        "width": "",
+                                        "width": "40",
                                         "class": "",
                                         "id": ""
                                     },
@@ -172,19 +235,56 @@
                                 {
                                     "key": "field_submenu_sub_item_link",
                                     "label": "URL",
-                                    "name": "link",
+                                    "name": "url",
                                     "aria-label": "",
                                     "type": "url",
                                     "instructions": "",
                                     "required": 0,
-                                    "conditional_logic": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_submenu_sub_item_tipo",
+                                                "operator": "==",
+                                                "value": "externo"
+                                            }
+                                        ]
+                                    ],
                                     "wrapper": {
-                                        "width": "",
+                                        "width": "40",
                                         "class": "",
                                         "id": ""
                                     },
                                     "default_value": "",
                                     "placeholder": "",
+                                    "parent_repeater": "field_submenu_sub_items"
+                                },
+                                {
+                                    "key": "field_submenu_sub_item_nueva_pestana",
+                                    "label": "Abrir en pestaña nueva",
+                                    "name": "nueva_pestana",
+                                    "aria-label": "",
+                                    "type": "true_false",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_submenu_sub_item_tipo",
+                                                "operator": "==",
+                                                "value": "externo"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "20",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "message": "",
+                                    "default_value": 0,
+                                    "ui": 1,
+                                    "ui_on_text": "",
+                                    "ui_off_text": "",
                                     "parent_repeater": "field_submenu_sub_items"
                                 }
                             ]
@@ -296,5 +396,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780391266
+    "modified": 1780391690
 }

@@ -112,14 +112,15 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 					<!-- COL 2: Apartados -->
 					<ul class="udp-megamenu__submenu">
 						<?php foreach ( $submenu as $sub_idx => $sub ) :
-							$sub_titulo = $sub['titulo'] ?? '';
-							$sub_link   = $sub['link']   ?? '';
+							$sub_titulo = $sub['titulo']                     ?? '';
+							$sub_link   = $sub['url'] ?? $sub['link']        ?? '';
+							$sub_new    = ! empty( $sub['new_tab_check'] );
 							$sub_items  = is_array( $sub['sub_items'] ?? null ) ? $sub['sub_items'] : [];
 							$has_sub    = ! empty( $sub_items );
 
 							if ( ! $sub_titulo ) continue;
 
-							$is_ext = $sub_link ? udp_megamenu_is_external( $sub_link ) : false;
+							$is_ext = $sub_new || ( $sub_link ? udp_megamenu_is_external( $sub_link ) : false );
 							// Con sub-items → flecha gorda →. Externo sin sub → ↗. Interno sin sub → sin icono.
 						$svg    = $has_sub ? $svg_arrow_right : ( $is_ext ? $svg_ext : '' );
 						?>
@@ -158,19 +159,26 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 								hidden
 							>
 								<?php foreach ( $sub_items as $si ) :
-									$si_titulo = $si['titulo'] ?? '';
-									$si_link   = $si['link']   ?? '';
+									$si_tipo = $si['tipo'] ?? 'externo';
+									if ( $si_tipo === 'interno' && ! empty( $si['pagina'] ) ) {
+										$si_titulo = get_the_title( $si['pagina'] );
+										$si_link   = get_permalink( $si['pagina'] );
+										$si_nueva  = false;
+									} else {
+										$si_titulo = $si['titulo']             ?? '';
+										$si_link   = $si['url'] ?? $si['link'] ?? '';
+										$si_nueva  = ! empty( $si['nueva_pestana'] );
+									}
 									if ( ! $si_titulo || ! $si_link ) continue;
-									$si_ext = udp_megamenu_is_external( $si_link );
 								?>
 									<li class="udp-megamenu__sub-item">
 										<a
 											class="udp-megamenu__sub-link"
 											href="<?php echo esc_url( $si_link ); ?>"
-											<?php if ( $si_ext ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
+											<?php if ( $si_nueva ) : ?>target="_blank" rel="noopener noreferrer"<?php endif; ?>
 										>
 											<?php echo esc_html( $si_titulo ); ?>
-											<?php echo $si_ext ? $svg_ext : ''; // phpcs:ignore — internos sin icono ?>
+											<?php echo $si_nueva ? $svg_ext : ''; // phpcs:ignore ?>
 										</a>
 									</li>
 								<?php endforeach; ?>
