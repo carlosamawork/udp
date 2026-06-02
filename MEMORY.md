@@ -1832,3 +1832,58 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 - Template `templates/page-anuarios.php` asignado a página 7081 vía `update_post_meta`.
 - Verificación curl: 14 cards (`udp-card-anuario`), 1 grid (`udp-anuarios__grid`), 4 hero (`udp-inst-hero`), 14 PDF links con `target="_blank"`. Nota: los conteos de grep son por LÍNEAS con la clase, no por ocurrencia de elemento — 70 líneas / 5 por card = 14 cards. La comprobación `target="_blank" | grep .pdf` da 0 porque href y target van en líneas separadas (HTML multi-línea); verificado con `grep -A3` que confirma las 14 cards tienen `target="_blank"`.
 - Pendiente: asignar página como hija de "Conoce la UDP" en el menú desde WP admin si procede.
+
+### 2026-06-02 — Mega-menú 3 niveles completado _(Elsa)_
+
+**Problema resuelto:** La arquitectura original tenía `links_externos` como lista global por sección (col-3 igual para todos los apartados). Se reemplazó por sub-panels por apartado.
+
+**Cambios:**
+- `acf-json/group_options_header.json`: añadido repeater `sub_items` (titulo+link) dentro de cada `submenu` item. ACF synced a BD (group ID 55171).
+- `template-parts/header/mega-menu.php`: col-3 ahora renderiza `__col3 > __sub-panel[data-udp-sub-panel="N"] hidden` por cada apartado con sub-items. Detección automática de links externos por dominio (`udp_megamenu_is_external()`).
+- `src/js/modules/mega-menu.js`: hover col-2 (`[data-udp-sub-idx]`) muestra el sub-panel correspondiente; limpieza al salir del `__body` o cambiar sección col-1.
+- `src/scss/layouts/_mega-menu.scss`: añadidos `__col3`, `__sub-panel`, `__sub-link`, `__submenu-item--active`.
+- `template-parts/home/section-buscador-carreras.php`: `id="buscador-carreras"` para anchor del menú.
+- BD poblada: 8 secciones, 52 apartados, 11 sub-panels. Script en `/tmp/udp-populate-megamenu.php`.
+- Commit: `79f4dbd`
+
+**Pendientes del menú** (en memory `project-megamenu-pending.md`):
+- Buscador de carreras: anchor `#buscador-carreras` — implementado, pero confirmar que el buscador de la home es lo que se quiere.
+- Rankings (Universidad > Conoce la UDP): eliminado, sin URL conocida.
+- Proyectos institucionales y Centros y unidades de investigación: eliminados, sin URL.
+- Dirección de Finanzas y Presupuesto: URL provisional, pendiente confirmar.
+- Quick Links del footer del menú: pendiente poblar desde admin (Bibliotecas, Estudiantes, Alumni, Servicios, UDP University).
+
+### 2026-06-02 — Mega-menú completado _(Elsa)_
+
+**Lo trabajado (sesión completa):**
+
+Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (URLs, sub-items, links externos/internos), rediseño del ACF (`sub_items` nested repeater), reescritura del template PHP, JS y SCSS.
+
+**Commits destacados:**
+- `79f4dbd` — arquitectura 3 niveles + 8 secciones pobladas
+- `55cde13` — iconografía (flecha → gorda, ↗ externo) + área activa
+- `a5a80ca` — fix scroll anchor GSAP/ScrollTrigger home
+- `e281e08` — scroll-margin-top buscador carreras
+- `253a135` — animaciones apertura/cierre + botón cerrar 50×50
+- `1384de0` — grid 150px/1fr/150px header y mega-menu
+- `19e1471` — logo correcto (udp/Pluma) + scrollbar-gutter:stable
+- `e46eb37` — sin sección pre-seleccionada al abrir + última persiste
+- `e8f2248` — fix especificidad CSS --active col-1
+- `414ded5` — reset DOM completo al cerrar
+- `6fef5a2` — cierre auto en links misma página
+- `059ec18` — ACF repeaters con collapsed accordion
+- `509aa33` — col-3 por hover (revert click), 4 estados CSS col-2
+
+**Estado actual:**
+- Mega-menú: ✅ completo
+- Rama: `elsa`
+
+**Pendientes del menú** (ver `project-megamenu-pending.md`):
+- Quick Links del footer (Bibliotecas, Estudiantes, Alumni, Servicios, UDP University) — poblar desde admin
+- URL "Dirección de Finanzas y Presupuesto" provisional
+- CSS admin del formulario ACF (mejora UX editor — opcional)
+
+**Próximos pasos:**
+- F10 polish (SVGs sociales reales, etc.)
+- F11 switch tema principal (activar starter-theme como tema activo)
+- Buscador funcional en el header
