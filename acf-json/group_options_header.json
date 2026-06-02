@@ -76,7 +76,7 @@
                             "required": 1,
                             "conditional_logic": 0,
                             "wrapper": {
-                                "width": "40",
+                                "width": "100",
                                 "class": "",
                                 "id": ""
                             },
@@ -88,6 +88,31 @@
                             "parent_repeater": "field_60bdcb182d8a0"
                         },
                         {
+                            "key": "field_submenu_tipo",
+                            "label": "Tipo",
+                            "name": "tipo",
+                            "aria-label": "",
+                            "type": "button_group",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "100",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "sin_link": "Sin link",
+                                "externo": "Link externo",
+                                "interno": "Página interna"
+                            },
+                            "default_value": "externo",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "layout": "horizontal",
+                            "parent_repeater": "field_60bdcb182d8a0"
+                        },
+                        {
                             "key": "field_60bdcb222d8a1",
                             "label": "URL",
                             "name": "link",
@@ -95,9 +120,17 @@
                             "type": "url",
                             "instructions": "",
                             "required": 0,
-                            "conditional_logic": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_submenu_tipo",
+                                        "operator": "==",
+                                        "value": "externo"
+                                    }
+                                ]
+                            ],
                             "wrapper": {
-                                "width": "40",
+                                "width": "75",
                                 "class": "",
                                 "id": ""
                             },
@@ -113,9 +146,17 @@
                             "type": "true_false",
                             "instructions": "",
                             "required": 0,
-                            "conditional_logic": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_submenu_tipo",
+                                        "operator": "==",
+                                        "value": "externo"
+                                    }
+                                ]
+                            ],
                             "wrapper": {
-                                "width": "20",
+                                "width": "25",
                                 "class": "",
                                 "id": ""
                             },
@@ -124,6 +165,66 @@
                             "ui": 1,
                             "ui_on_text": "",
                             "ui_off_text": "",
+                            "parent_repeater": "field_60bdcb182d8a0"
+                        },
+                        {
+                            "key": "field_submenu_pagina",
+                            "label": "Página",
+                            "name": "pagina",
+                            "aria-label": "",
+                            "type": "post_object",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_submenu_tipo",
+                                        "operator": "==",
+                                        "value": "interno"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "70",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [],
+                            "taxonomy": [],
+                            "return_format": "object",
+                            "multiple": 0,
+                            "allow_null": 1,
+                            "ui": 1,
+                            "parent_repeater": "field_60bdcb182d8a0",
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_submenu_anchor",
+                            "label": "Anchor (opcional)",
+                            "name": "anchor",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_submenu_tipo",
+                                        "operator": "==",
+                                        "value": "interno"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "30",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "#seccion",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": "",
                             "parent_repeater": "field_60bdcb182d8a0"
                         },
                         {
@@ -454,5 +555,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780393162
+    "modified": 1780393379
 }

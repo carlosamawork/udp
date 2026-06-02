@@ -112,16 +112,29 @@ $svg_ext         = '<svg width="14" height="14" viewBox="0 0 20 20" fill="none">
 					<!-- COL 2: Apartados -->
 					<ul class="udp-megamenu__submenu">
 						<?php foreach ( $submenu as $sub_idx => $sub ) :
-							$sub_titulo = $sub['titulo']                     ?? '';
-							$sub_link   = $sub['url'] ?? $sub['link']        ?? '';
-							$sub_new    = ! empty( $sub['new_tab_check'] );
+							$sub_titulo = $sub['titulo'] ?? '';
+							$sub_tipo   = $sub['tipo']   ?? 'externo';
 							$sub_items  = is_array( $sub['sub_items'] ?? null ) ? $sub['sub_items'] : [];
 							$has_sub    = ! empty( $sub_items );
 
 							if ( ! $sub_titulo ) continue;
 
-							$is_ext = $sub_new || ( $sub_link ? udp_megamenu_is_external( $sub_link ) : false );
-							// Con sub-items → flecha gorda →. Externo sin sub → ↗. Interno sin sub → sin icono.
+							if ( $sub_tipo === 'interno' && ! empty( $sub['pagina'] ) ) {
+								$sub_anchor = ltrim( $sub['anchor'] ?? '', '#' );
+								$sub_link   = get_permalink( $sub['pagina'] ) . ( $sub_anchor ? '#' . $sub_anchor : '' );
+								$sub_new    = false;
+								$is_ext     = false;
+							} elseif ( $sub_tipo === 'sin_link' ) {
+								$sub_link = '';
+								$sub_new  = false;
+								$is_ext   = false;
+							} else {
+								$sub_link = $sub['url'] ?? $sub['link'] ?? '';
+								$sub_new  = ! empty( $sub['new_tab_check'] );
+								$is_ext   = $sub_new || ( $sub_link ? udp_megamenu_is_external( $sub_link ) : false );
+							}
+
+							// Con sub-items → flecha gorda →. Externo sin sub → ↗. Interno/sin_link → sin icono.
 						$svg    = $has_sub ? $svg_arrow_right : ( $is_ext ? $svg_ext : '' );
 						?>
 							<li
