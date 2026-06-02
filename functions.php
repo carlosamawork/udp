@@ -199,7 +199,6 @@ add_action('admin_head', function () {
     <style>
         /* Botón colapso/expandir: posición y estilo rojo UDP */
         .acf-field[data-key="field_60bdcaf92d89c"] .acf-repeater .acf-row-handle .acf-icon {
-            display: none;
             position: absolute;
             top: 0.3rem;
             left: 50%;
