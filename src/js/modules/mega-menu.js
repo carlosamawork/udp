@@ -8,7 +8,7 @@ import { qs, qsa } from '@utils/dom';
 
 const STATE = {
 	isOpen: false,
-	activeIdx: 0,
+	activeIdx: -1, // -1 = ninguna sección activa al abrir
 	lastFocused: null,
 };
 
@@ -35,6 +35,7 @@ function setOpen( panel, open ) {
 			panel.classList.remove( 'udp-megamenu--closing' );
 			panel.hidden = true;
 			STATE.isOpen = false;
+			STATE.activeIdx = -1;
 			document.documentElement.classList.remove( 'udp-megamenu-open' );
 			document.body.classList.remove( 'udp-megamenu-open' );
 			if ( toggle ) toggle.setAttribute( 'aria-expanded', 'false' );

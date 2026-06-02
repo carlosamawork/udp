@@ -79,7 +79,7 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 				<?php foreach ( $menu_items as $idx => $item ) :
 					$titulo = $item['titulo_main_link'] ?? '';
 					if ( ! $titulo ) continue;
-					$is_active = $idx === 0;
+					$is_active = false; // nada activo al abrir — JS lo gestiona con hover
 				?>
 					<li class="udp-megamenu__primary-item<?php echo $is_active ? ' udp-megamenu__primary-item--active' : ''; ?>" role="none">
 						<button
