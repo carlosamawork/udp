@@ -16,7 +16,7 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
+            "collapsed": "field_60bdcb102d89f",
             "min": 0,
             "max": 0,
             "layout": "block",
@@ -118,7 +118,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "collapsed": "",
+                    "collapsed": "field_60bdcb312d8a2",
                     "min": 0,
                     "max": 0,
                     "layout": "block",
@@ -445,5 +445,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780357414
+    "modified": 1780360425
 }
