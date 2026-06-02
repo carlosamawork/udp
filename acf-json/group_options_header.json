@@ -467,7 +467,7 @@
                 "id": ""
             },
             "min": 0,
-            "layout": "table",
+            "layout": "block",
             "button_label": "Agregar quick link",
             "max": 0,
             "rows_per_page": 20,
@@ -692,5 +692,5 @@
     "description": "Configuración del mega-menú. NO incluye el field mensaje_sobre_medidas_por_covid (obsoleto).",
     "show_in_rest": false,
     "display_title": "",
-    "modified": 1780395375
+    "modified": 1780395463
 }
