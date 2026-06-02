@@ -160,7 +160,8 @@ body.udp-megamenu-open {
             }
         }
 
-        &--active .udp-megamenu__primary-btn {
+        &--active .udp-megamenu__primary-btn,
+        &--active .udp-megamenu__primary-btn[aria-expanded] {
             color: $dark-1;
             font-weight: 600;
         }

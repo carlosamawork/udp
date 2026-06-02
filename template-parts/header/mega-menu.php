@@ -100,7 +100,7 @@ $svg_ext         = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 				$titulo  = $item['titulo_main_link'] ?? '';
 				$submenu = is_array( $item['submenu'] ?? null ) ? $item['submenu'] : [];
 				if ( ! $titulo ) continue;
-				$is_active = $idx === 0;
+				$is_active = false;
 			?>
 				<div
 					id="udp-megamenu-panel-<?php echo (int) $idx; ?>"
