@@ -97,6 +97,7 @@
 // S2 — Buscador de Carreras
 // -----------------------------------------------------------------------------
 .udp-home-buscador {
+    scroll-margin-top: $header-height + $space-xl;
     &__form {
         margin: 0 auto;
         display: flex;
