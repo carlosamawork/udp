@@ -128,7 +128,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 - Subir imagen `logo_acreditacion` real en options page General si todavía no está cargada.
 - Validar SVGs sociales contra los del Figma (paths actuales son monocromos genéricos — F10 polish).
 
-### 2026-04-27 — fix(acf): contact_blocks.enlace cambiado de url a text _(Cacho)_
+### 2026-04-27 — fix(acf): contact*blocks.enlace cambiado de url a text *(Cacho)\_
 
 - Sub-field `enlace` del repeater `contact_blocks` (group_options_footer, ID 55199) cambiado de `type: "url"` a `type: "text"` con placeholder `tel:+56... | mailto:... | https://...`.
 - Razón: ACF `type:url` valida solo http/https y rechaza esquemas `tel:` y `mailto:` con "El valor debe ser una URL válida". El template `contact.php` ya escapa con `esc_url()` que sí acepta tel/mailto/http(s).
@@ -377,7 +377,7 @@ Migración WordPress udp_portable → starter-theme. F0 cubre infraestructura.
 
 ---
 
-### 2026-04-28 — Bugfix: udp_card_data_from_agenda fecha_display vacío _(Cacho)_
+### 2026-04-28 — Bugfix: udp*card_data_from_agenda fecha_display vacío *(Cacho)\_
 
 **Hechos**:
 
@@ -583,7 +583,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 - IntersectionObserver vs scroll listener: el observer es más performante (rAF interno) y no requiere debounce.
 - Topmost-wins logic: cuando dos meses son visibles a la vez (transition entre Enero y Febrero), el de arriba mantiene el active hasta que el de abajo cruza el rootMargin top.
 
-### 2026-04-29 — F5d block_calendario_grid (flex content) _(Cacho)_
+### 2026-04-29 — F5d block*calendario_grid (flex content) *(Cacho)\_
 
 **Hechos**:
 
@@ -670,7 +670,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 ---
 
-### 2026-04-29 — F7a 3 bloques simples (huincha + embed + big_buttons) _(Cacho)_
+### 2026-04-29 — F7a 3 bloques simples (huincha + embed + big*buttons) *(Cacho)\_
 
 **Hechos**:
 
@@ -695,7 +695,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 ---
 
-### 2026-04-29 — F7b block_image_gallery + block_accordion _(Cacho)_
+### 2026-04-29 — F7b block*image_gallery + block_accordion *(Cacho)\_
 
 **Hechos**:
 
@@ -718,7 +718,7 @@ Con año específico el filtro LIKE reemplaza al >=hoy (el usuario quiere ver to
 
 ---
 
-### 2026-04-29 — F7c block_people_list + block_premios_list _(Cacho)_
+### 2026-04-29 — F7c block*people_list + block_premios_list *(Cacho)\_
 
 **Hechos**:
 
@@ -912,7 +912,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 - Task 4: `template-parts/simple-accordion/related.php` (carrusel Swiper de items relacionados).
 - Task 5+: SCSS para header, acordeón, related.
 
-### 2026-05-22 — Task 3: main-content partial (the_content + acordeón) _(Elsa)_
+### 2026-05-22 — Task 3: main-content partial (the*content + acordeón) *(Elsa)\_
 
 **Hechos**:
 
@@ -983,7 +983,7 @@ Implementado en rama `feature/f9-page-institucional`. 18 commits (12 features + 
 
 Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe sobre fuente datos), F11+ cleanup/polish.
 
-### 2026-05-22 — Bugfix: Template Simple Accordion — the_content() + rel escaping _(Elsa)_
+### 2026-05-22 — Bugfix: Template Simple Accordion — the*content() + rel escaping *(Elsa)\_
 
 **Hechos**:
 
@@ -1062,7 +1062,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Tasks 5+: secciones restantes de la Home (S2 Postítulos, S3 Vida Universitaria, etc.)
 - `initHomePortada()` todavía no está importado en `main.js` — se añadirá cuando se creen todos los módulos de la home en el task de infraestructura o al final.
 
-### 2026-05-22 — Task 2 completada: ACF JSON group_template_home + siglas _(Elsa)_
+### 2026-05-22 — Task 2 completada: ACF JSON group*template_home + siglas *(Elsa)\_
 
 - Creado `acf-json/group_template_home.json` — 7 tabs, 30+ campos (portada, postítulos, vida universitaria, cultura UDP, cultura digital, cifras). Location: `front_page`.
 - Añadido campo `siglas` (text, maxlength 10) a `acf-json/group_tax_facultad_meta.json`.
@@ -1328,7 +1328,7 @@ Próximos: F9 Home (pending jefe confirm arquitectura), Anuarios (pending jefe s
 - Continuar revisión sección a sección del home contra Figma.
 - Merge `home` → `main` cuando el home esté completo.
 
-### 2026-05-24 (tarde) — Rediseño S6 Destacado azul + fix sistémico get_field() _(Elsa)_
+### 2026-05-24 (tarde) — Rediseño S6 Destacado azul + fix sistémico get*field() *(Elsa)\_
 
 **Hechos**:
 
@@ -1470,7 +1470,7 @@ El usuario reportó que la página institucional "no aprovechaba las secciones q
 - El group viejo "Secciones" (ID 313) sigue activo y visible en el editor de estas páginas; se conserva como backup. Desactivar/limpiar post-validación.
 - Backups de meta de Forma de Gobierno en `/tmp/udp-fdg-backup.json`.
 
-### 2026-05-25 — F9: 2 layouts nuevos (premio_block + text_accordion) + migración Premios/Distinciones _(Cacho)_
+### 2026-05-25 — F9: 2 layouts nuevos (premio*block + text_accordion) + migración Premios/Distinciones *(Cacho)\_
 
 El usuario pidió construir los layouts faltantes y migrar las páginas que tuvieran datos. Referencias Figma: Consejo Académico `3722:43026` (rosters = people_carousel existente), Premios Nacionales `4394:22894` (bloque laureado), Doctorado Honoris Causa `4398:21365` (acordeón).
 
@@ -1550,7 +1550,7 @@ Añadida la banda relacionada del Figma de Historia (`3706:20493`, nodo `3706:20
 Añadida la tarjeta de noticias del sidebar derecho del Figma de Historia.
 
 - Helper `udp_institucional_latest_noticia()`: devuelve el post más reciente con featured image (title, url, image medium_large, date 'd / m / Y', category). Cacheado 1h en transient `udp_inst_latest_noticia` (array vacío = "no hay", para no re-consultar).
-- Partial `template-parts/institucional/news-widget.php`: `<a>` envolvente (toda la tarjeta clickable) — eyebrow "Noticias" con ícono broadcast + imagen (aspect 318/196) + título (Arizona Flare 20px) + fecha + chip de categoría. SCSS `.udp-inst-news`: bg beige `#f8f7f4`, chip cerulean (`#dce5fd`/`#95b6fb`/`#2135d4`, Necto Mono uppercase) — colores literales del Figma (no están en la paleta). Hover: título azul + zoom imagen (respeta prefers-reduced-motion).
+- Partial `template-parts/institucional/news-widget.php`: `<a>` envolvente (toda la tarjeta clickable) — eyebrow "Noticias" con ícono broadcast + imagen (aspect 318/196) + título (Arizona Flare 20px) + fecha + chip de categoría. SCSS `.udp-inst-news`: bg beige `$beige`, chip cerulean (`#dce5fd`/`#95b6fb`/`#2135d4`, Necto Mono uppercase) — colores literales del Figma (no están en la paleta). Hover: título azul + zoom imagen (respeta prefers-reduced-motion).
 - Inyección: el transformador legacy marca `show_news=true` en la **primera** sección `rich_text_sidebar`/`text_accordion`; esos partials renderizan el widget al inicio de su `<aside>` (y ahora abren el aside aunque no haya sidebar_cards).
 - E2E: Historia (64) y Accesos Internos (107) → widget con el post más reciente (imagen + título + fecha + categoría). Consejo Académico (558, migrada ACF) → sin widget (el transformador no aplica; `show_news` solo lo pone el render por defecto).
 
@@ -1599,7 +1599,7 @@ Añadidos al transformador los layouts legacy basados en campo `relationship`, r
 - **Video con fondo oscuro**: `layout-video.php` usaba `.udp-block-embed--dark`; cambiado a `--light` (fondo blanco) por feedback del cliente.
 - Nota: un `contenido` que solo es un encabezado (ej. "Galería de Imágenes" que precedía a un `galeria_de_imagenes` aún no soportado) queda como título suelto sin cuerpo — no es el bug de duplicación; se resolvería al soportar el layout `galeria_de_imagenes`.
 
-### 2026-05-25 — F9: botones (botones_con_links_externos) al aside derecho _(Cacho)_
+### 2026-05-25 — F9: botones (botones*con_links_externos) al aside derecho *(Cacho)\_
 
 Por feedback del cliente, los botones dejan de ser una banda full-width y van al **aside derecho** de la primera sección de texto, como las tarjetas.
 
@@ -1628,7 +1628,7 @@ Feedback del cliente: el `contenido` no debe ir con título en columna lateral (
 - Scope: solo afecta al render legacy (page.php). Las páginas migradas (page-institucional) siguen usando `rich_text_sidebar` 3-col con su sidebar a propósito (verificado: Consejo Académico mantiene 3 secciones 2-col).
 - E2E: Ricardo Lagos (43079) → contenido en `.udp-inst-text` (1 col), 0 `.udp-inst-rts`.
 
-### 2026-05-25 — F9: featured_carousel drag-to-scroll + scrollbar oculta _(Cacho)_
+### 2026-05-25 — F9: featured*carousel drag-to-scroll + scrollbar oculta *(Cacho)\_
 
 - SCSS `.udp-inst-featured__list`: `scrollbar-width:none` + `-ms-overflow-style:none` + `::-webkit-scrollbar{display:none}` (barra oculta). `cursor:grab`; `.is-dragging` → `grabbing` + `scroll-snap-type:none` + `user-select:none`.
 - JS nuevo `src/js/modules/featured-drag.js` (cableado en main.js): drag-to-scroll con pointer events para mouse (touch usa scroll nativo). Si hubo arrastre (>4px), cancela el click para no disparar el enlace de la card. Selector `.udp-inst-featured__list`.
@@ -1667,6 +1667,7 @@ La BD de la compañera está en el mismo servidor MySQL: **`elsa_udp`** (mismo p
 **Código del tema**: está en el branch **`origin/home`** (61 archivos: front-page.php nuevo, `template-parts/home/section-*.php`, `src/js/modules/home-*.js`, `_home.scss`, `acf-json/group_template_home.json`). El usuario lo **mergeó a main** (no tocar ramas).
 
 **Hecho (solo BD `udp`, sin sobrescribir nada)**:
+
 1. Backup: `~/Backups/udp/udp-pre-home-merge-20260527-124611.sql.gz` (25 MB). (mysqldump real está en `/Applications/MAMP/Library/bin/mysql80/bin/`, vía socket `/Applications/MAMP/tmp/mysql/mysql.sock` — la ruta `Library/bin/mysqldump` NO existe.)
 2. Registrado `group_template_home` en BD udp vía `git show origin/home:acf-json/...json` + `acf_import_field_group` (ID 55495, sin duplicados). En este install los grupos ACF deben estar en BD (el JSON local solo no basta).
 3. Copiados de elsa_udp→udp (IDs 55394 libre + 4 adjuntos libres; idempotente; guid de dominio capitanproject→localhost solo en wp_posts, NO en meta_value para no romper serializados): página 55394 +187 metas, 4 attachments +2 metas c/u.
@@ -1675,7 +1676,7 @@ La BD de la compañera está en el mismo servidor MySQL: **`elsa_udp`** (mismo p
 
 **Pendiente**: el render solo se ve en **main** (front-page.php nuevo + partials + `_home.scss` + JS están en main, no en feature/f9-page-institucional cuyo front-page.php es el scaffold viejo). Estando en main: `npm run build` y ver `/`. Los datos ya están en la BD compartida (no dependen de la rama).
 
-### 2026-05-26 — F9 fix: links_cuadrados con estilo de cards "te podría interesar" _(Cacho)_
+### 2026-05-26 — F9 fix: links*cuadrados con estilo de cards "te podría interesar" *(Cacho)\_
 
 Feedback: el módulo `cards_dark_row` de `links_cuadrados` se veía mal (cards solo-título, vacías, sobre fondo oscuro). El cliente quiere que se vean como las cards de "También te puede interesar" (Section Landing: gris → azul, ícono flecha, sin imagen).
 
@@ -1694,9 +1695,9 @@ Rediseño del botón del plugin **Pojo / One Click Accessibility** (Figma 3706:2
 - **Inset + top** (pedido del cliente): el toggle se separó 40px del borde (mismo margen que el buscador) subiendo su `right` de 180px → `calc(180px + $space-3xl)` = 220px (insetar el botón sin revelar el panel, que sigue colapsado en `right:-180px`). `top` subido a 124px desktop / 104px mobile (más abajo del header).
 - **Permisos dist (recurrente)**: `dist/js`+`dist/css` se vuelven root tras cada build (causa no identificada; pasa repetido hoy). Workaround: `mv dist .dist-root-bak* && npm run build`. Acumuladas varias carpetas basura: `sudo rm -rf .dist-root-bak*`.
 
-### 2026-05-26 — people_carousel: card full-bleed con foto (Figma 3904:54293) _(Cacho)_
+### 2026-05-26 — people*carousel: card full-bleed con foto (Figma 3904:54293) *(Cacho)\_
 
-El cliente pidió que los integrantes (people_carousel) puedan tener foto. El layout YA tenía el campo `foto` (field_inst_pc_persona_foto) y el partial lo renderiza — pero el diseño anterior era foto cuadrada arriba + texto debajo (dark sobre claro). El Figma real es **foto a sangre completa** (289×365) con **degradado oscuro** (negro 91% abajo → transparente arriba) y **nombre (Arizona Flare 20px) + cargo en blanco** sobre-impresos abajo-izquierda. Fondo fallback beige `#f8f7f4`.
+El cliente pidió que los integrantes (people_carousel) puedan tener foto. El layout YA tenía el campo `foto` (field_inst_pc_persona_foto) y el partial lo renderiza — pero el diseño anterior era foto cuadrada arriba + texto debajo (dark sobre claro). El Figma real es **foto a sangre completa** (289×365) con **degradado oscuro** (negro 91% abajo → transparente arriba) y **nombre (Arizona Flare 20px) + cargo en blanco** sobre-impresos abajo-izquierda. Fondo fallback beige `$beige`.
 
 - Reescrito SOLO el SCSS de `.udp-inst-people__card/__photo/__info` en `_institucional.scss` (el partial ya tenía la estructura correcta: `__photo` absolute fill + `__info` absolute bottom + `::after` degradado). Sin cambios de PHP.
 - El degradado deja el texto legible aunque NO haya foto → sirve de placeholder (card beige con franja oscura abajo).
@@ -1731,11 +1732,13 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 ### 2026-05-27 — Fixes S4 Facultades + fix S5 Eventos lista
 
 #### S4 Facultades — links a páginas, no al taxonomy archive
+
 - **Problema**: `section-facultades.php` usaba `get_term_link($fac)` → enlazaba al taxonomy archive de cada facultad.
 - **Solución**: pre-fetch de las páginas hijas de `pregrado-y-formacion-general/facultades/` indexadas por `post_name` (slug). Para cada término de `facultad`, se matchea por `$fac->slug === $child->post_name` → link a `get_permalink($child)`. Fallback a `get_term_link()` si no existe la página.
 - La fuente de datos sigue siendo `get_terms('facultad')` (nombre + color ACF). Son 3 queries en total.
 
 #### S5 Agenda archive — vista lista, columnas siempre presentes
+
 - **Problema**: en modo lista (`grid-template-columns: 140px 1fr 200px`), los `<?php if ($eyebrow): ?>` y `<?php if ($fecha_d): ?>` condicionales omitían elementos del DOM, desplazando el título y la fecha a columnas incorrectas.
 - **Solución**: en el bloque `list` de `card-evento.php`, `<span class="udp-card-evento__eyebrow">` y `<time class="udp-card-evento__date">` se renderizan siempre (vacíos si no hay dato). También se cambió `$fecha_d` por `$datetime_combined` en la columna de fecha para incluir la hora cuando exista.
 
@@ -1748,16 +1751,19 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 ### 2026-06-01 — Página Anuarios UDP completada _(Elsa)_
 
 **Archivos nuevos:**
+
 - `acf-json/group_page_anuarios.json` — group key `group_page_anuarios`, location `page_template == templates/page-anuarios.php`. Repeater `anuarios_items` (4 sub-fields: titulo/text, fecha/date_picker Ymd, pdf/file url, imagen/image array). BD ID 55581.
 - `templates/page-anuarios.php` — Template Name "Anuarios". Hero reutilizado de `template-parts/institucional/header.php` (sin modificar), share-floating reutilizado.
 - `template-parts/anuarios/card-anuario.php` — card portrait, abre PDF en `target="_blank"`, fecha parseada con `DateTime::createFromFormat('Ymd')` → `date_i18n('F Y')`, placeholder con `udp-media-placeholder`.
 - `src/scss/templates/_anuarios.scss` — grid 4 col responsive (4→3→2→1), card Work Sans 500 22px, fecha Work Sans 400 14px, sin box-shadow, hover scale(1.04).
 
 **Datos poblados:**
+
 - 14 imágenes de portada descargadas del Figma (nodos 3706:24390→3706:24471) y subidas a WP media (IDs 55587–55600).
 - Repeater ACF con 14 ítems (2023-2024 → 2010) en página ID 7081. PDFs matcheados por `guid` (no `post_name` — WP sanitiza underscores a guiones en el slug).
 
 **Fixes/gotchas descubiertos:**
+
 - 2015: filename era `anuario_udp_2015` (no `anuario_udp_2016` como estaba en el plan).
 - Campo `file` de ACF almacena IDs de attachment en DB, no URLs. El script de populate debe escribir el ID entero; ACF resuelve a URL al leer con `get_field()`.
 - Hero `udp-inst-hero` está en `_institucional.scss` (ya importado en main.scss) — reutilizable en cualquier template sin SCSS adicional.
@@ -1769,14 +1775,17 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 ### 2026-06-01 — Cierre de sesión _(Elsa)_
 
 **Lo trabajado:**
+
 - Anotado en bitácora: tarea explícita de completar el mega-menú.
 - Página Anuarios UDP implementada completa: brainstorming → spec → plan → 7 tasks subagente → ajustes de estilo finales.
 
 **Estado actual:**
+
 - Rama activa: `elsa`.
 - Anuarios UDP: ✅ completa (14 cards, PDFs, portadas Figma, tipografía Figma).
 
 **Próximos pasos sugeridos:**
+
 - Completar el mega-menú (tarea explícita pendiente).
 - Buscador funcional en el header.
 - Página Anuarios: revisar si debe moverse jerárquicamente bajo "Conoce la UDP" desde WP admin.
@@ -1838,6 +1847,7 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 **Problema resuelto:** La arquitectura original tenía `links_externos` como lista global por sección (col-3 igual para todos los apartados). Se reemplazó por sub-panels por apartado.
 
 **Cambios:**
+
 - `acf-json/group_options_header.json`: añadido repeater `sub_items` (titulo+link) dentro de cada `submenu` item. ACF synced a BD (group ID 55171).
 - `template-parts/header/mega-menu.php`: col-3 ahora renderiza `__col3 > __sub-panel[data-udp-sub-panel="N"] hidden` por cada apartado con sub-items. Detección automática de links externos por dominio (`udp_megamenu_is_external()`).
 - `src/js/modules/mega-menu.js`: hover col-2 (`[data-udp-sub-idx]`) muestra el sub-panel correspondiente; limpieza al salir del `__body` o cambiar sección col-1.
@@ -1847,6 +1857,7 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 - Commit: `79f4dbd`
 
 **Pendientes del menú** (en memory `project-megamenu-pending.md`):
+
 - Buscador de carreras: anchor `#buscador-carreras` — implementado, pero confirmar que el buscador de la home es lo que se quiere.
 - Rankings (Universidad > Conoce la UDP): eliminado, sin URL conocida.
 - Proyectos institucionales y Centros y unidades de investigación: eliminados, sin URL.
@@ -1860,6 +1871,7 @@ El cliente pidió que los integrantes (people_carousel) puedan tener foto. El la
 Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (URLs, sub-items, links externos/internos), rediseño del ACF (`sub_items` nested repeater), reescritura del template PHP, JS y SCSS.
 
 **Commits destacados:**
+
 - `79f4dbd` — arquitectura 3 niveles + 8 secciones pobladas
 - `55cde13` — iconografía (flecha → gorda, ↗ externo) + área activa
 - `a5a80ca` — fix scroll anchor GSAP/ScrollTrigger home
@@ -1875,15 +1887,18 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - `509aa33` — col-3 por hover (revert click), 4 estados CSS col-2
 
 **Estado actual:**
+
 - Mega-menú: ✅ completo
 - Rama: `elsa`
 
 **Pendientes del menú** (ver `project-megamenu-pending.md`):
+
 - Quick Links del footer (Bibliotecas, Estudiantes, Alumni, Servicios, UDP University) — poblar desde admin
 - URL "Dirección de Finanzas y Presupuesto" provisional
 - CSS admin del formulario ACF (mejora UX editor — opcional)
 
 **Próximos pasos:**
+
 - F10 polish (SVGs sociales reales, etc.)
 - F11 switch tema principal (activar starter-theme como tema activo)
 - Buscador funcional en el header
@@ -1900,9 +1915,11 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - **Migraciones** (con prefijo `options_` correcto): 5 submenu items + 24 sub-items con localhost → `tipo=interno` + post_id resuelto.
 
 **Bug crítico — opciones pages ACF**:
+
 - ACF options pages guarda en `wp_options` con prefijo `options_` (ej. `options_menu_principal_0_submenu_0_tipo`). Sin ese prefijo, la escritura directa no afecta lo que ACF lee en el admin. **Regla**: migraciones de options pages siempre con `options_` prefix.
 
 **Pendientes tras esta sesión**:
+
 - Añadir anchors desde el admin a Doctorado HC / Profesor Emérito / Honorario (ID=831, anclas `#section-...`).
 - Añadir anchor `#buscador-carreras` al sub-item "Buscador de carreras" (interno ID=55394).
 - Quick Links del footer del megamenú: poblar desde admin (Bibliotecas, Estudiantes, Alumni, etc.).
@@ -1929,6 +1946,7 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 **Estado:** Rama `elsa`. Build limpio. 8 commits esta sesión.
 
 **Pendientes activos:**
+
 - Quick Links: Servicios tiene URL de Alumni — confirmar URL real desde admin.
 - Mega-menú: Buscador de carreras anchor, Rankings (decisión), Calendario sub-items (decisión), Dirección Finanzas URL — ver `project-megamenu-pending.md`.
 - **F10** Polish, **F11** Switch tema principal, Buscador funcional en header.
@@ -1951,7 +1969,7 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 
 ### 2026-06-02 (tarde) — Buscador header: Task 3 SCSS _(Agente)_
 
-- Creado `src/scss/layouts/_search.scss`: overlay, estados `.udp-search-open` + `.udp-search-has-text` en `.udp-top-bar`, search bar, panel de resultados, cards. Transición dark (blanco) → beige (`#f8f7f4`) al escribir texto.
+- Creado `src/scss/layouts/_search.scss`: overlay, estados `.udp-search-open` + `.udp-search-has-text` en `.udp-top-bar`, search bar, panel de resultados, cards. Transición dark (blanco) → beige (`$beige`) al escribir texto.
 - `src/scss/main.scss` línea 50: añadido `@import "layouts/search"` después de `mega-menu`.
 - Build OK (760ms). Verificación: `udp-search-card` presente 1× en CSS compilado.
 - Commit: `6e8c35c` `feat(search): SCSS — panel, transiciones dark/beige, cards resultados`.
@@ -1968,13 +1986,15 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 ### 2026-06-02 — Buscador del header completado _(Elsa)_
 
 **Hechos**:
+
 - Endpoint `inc/udp-search.php`: acción `udp_search`, 6 WP_Query (pages/facultades/carreras/noticias/eventos/calendario — Centros descartado por páginas en desuso), max 10 por sección. Nonce `starter_bs5_nonce`. Facultades resueltas por `get_page_by_path('facultades')` con fallback 0. Página Facultades excluida de la sección Páginas con `post__not_in`.
 - Markup: `__search-bar` (input + cerrar) en `top-bar.php` como hermano de `__inner`. Panel `#udp-search-results` (fixed, full-height `calc(100vh-84px)`) en `header.php` entre `</header>` y mega-menu.
-- SCSS `_search.scss`: top-bar transforma a beige al escribir (transición `background-color + border-bottom-color + color` 0.25s), panel entra con `@keyframes udp-search-in` (slide -10px + fade). Loader: línea scan 200×3px `cubic-bezier(0.4,0,0.2,1)`. Grid resultados 3-col→2-col→1-col, cards `#f8f7f4` Arizona Flare.
+- SCSS `_search.scss`: top-bar transforma a beige al escribir (transición `background-color + border-bottom-color + color` 0.25s), panel entra con `@keyframes udp-search-in` (slide -10px + fade). Loader: línea scan 200×3px `cubic-bezier(0.4,0,0.2,1)`. Grid resultados 3-col→2-col→1-col, cards `$beige` Arizona Flare.
 - JS `search.js`: debounce 400ms desde 1er carácter, AbortController cancela request anterior, render DOM secciones, `escHtml` local.
-- Cards: beige `#f8f7f4`, Arizona Flare 18px, flecha `→` abajo, hover `#eceae6`.
+- Cards: beige `$beige`, Arizona Flare 18px, flecha `→` abajo, hover `#eceae6`.
 
 **Decisiones clave**:
+
 - Sin mínimo de caracteres (busca desde el primero, igual que la web antigua).
 - `centro-udp` excluido: páginas en desuso.
 - Panel `height` fijo (no `max-height`) para ocupar toda la pantalla disponible.
@@ -2057,3 +2077,36 @@ Rama **`feature/mobile`** (engloba todo el mobile). Continuación de la sesión 
 - Merge `feature/mobile` → `main` cuando se valide.
 - Otras páginas mobile (la barra global ya aparece en ellas).
 - **WP Fastest Cache sigue desactivado (dev)** — reactivar en producción.
+### 2026-06-11 — Mobile header: top bar simplificado + bottom nav bar _(Elsa)_
+
+- Top bar en `< md`: `__menu` oculto, grid `50px 1fr 50px` (logo centrado + lupa).
+- Nuevo `template-parts/header/mobile-nav.php` (barra fija inferior): círculo hamburger + "Menú", incluido desde `footer.php`.
+- `mega-menu.js`: `qs → qsa` en `setOpen` e `initMegaMenu` — sincroniza `aria-expanded` en todos los triggers.
+- Pendiente: adaptar el panel del mega-menú al diseño mobile (fase siguiente).
+
+### 2026-06-11 — Mobile header: bottom nav completa con botón cerrar _(Elsa)_
+
+**Hechos**:
+
+- `mobile-nav.php` extendido con segundo `<button data-udp-megamenu-close>` (clase `udp-mobile-nav__close` + `__close-circle`). Mismo icono × SVG que el botón desktop.
+- Diseño final: la barra inferior transiciona a **fondo blanco** cuando el menú se abre (`body.udp-megamenu-open` → `background-color: $white; border-color: $black`). El botón hamburger se oculta (`display: none`) y el botón cerrar aparece (`display: flex`) con borde `$black`, color heredado. Hover: `background-color: $white; color: $dark-1`.
+- Panel del mega-menú en mobile: `bottom: 80px` para dejar hueco a la barra inferior. El botón cerrar del panel (`__close`) se oculta en `< md` (`display: none; width: 0`) — en mobile solo cierra desde la barra inferior.
+- Animación rotate del botón cerrar: JS re-dispara `udp-close-rotate-in` en cada apertura usando el patrón `classList.remove → void el.offsetWidth → classList.add` con clase `udp-is-entering`. El keyframe ya existía en `_mega-menu.scss`.
+- Z-index: `udp-mobile-nav` = `1001` (encima del panel `1000`). Crítico para que la barra inferior sea clickable con el panel abierto.
+
+**Correcciones que hizo el usuario manualmente** (y que se incorporan al código final):
+
+- `_header.scss`: `udp-mobile-nav` cambió de `display: flex` a `display: block` + `padding: 15px $space-3xl 53px` (altura correcta). `__trigger` y `__close` con `margin: 0 auto; display: flex/none`. `button { color: $white }` dentro del bloque de la nav.
+- `_mega-menu.scss`: `&__top @include media-down(md)` — revertido cambio de `grid-template-columns: 1fr` (el usuario lo dejó como solo `padding`). `&__close` oculto en mobile con `display: none; width: 0`.
+
+**Bug introducido y corregido**: en un refactor del JS, `setTimeout(() => {...}, ANIM_DURATION)` se cambió accidentalmente a `setTimeout(..., 0)`, eliminando la animación de fade-out al cerrar. Corregido en commit `254fa1b`.
+
+**Commits de esta sesión**: `af186a9` (tokens SCSS), `eb1fb57` (z-index + bottom 80px), `...` (close button PHP + SCSS + JS), `aa0d621` (quitar setTimeout y fade-out — cierre instantáneo).
+
+**Nota sobre el cierre del menú**: se intentó `setTimeout(ANIM_DURATION)` para sincronizar con la animación CSS de fade-out, pero producía doble latencia perceptible al hacer click. Se eliminaron el timeout, la clase `--closing`, `ANIM_DURATION` y el keyframe `udp-megamenu-fadeout`. El panel se oculta sincrónicamente. El fade-in al abrir sigue intacto.
+
+### 2026-06-11 — Cierre de sesión _(Elsa)_
+
+- Mobile header completamente implementado: top bar móvil simplificado (logo + lupa), barra inferior fija con hamburger → × blanco al abrir menú, animación rotate, transición de fondo, cierre instantáneo.
+- Rama activa: `elsa`. Build limpio (101.83 kB main.js, 712ms).
+- **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish (SVGs sociales reales, eyebrow color por término); F11 switch tema activo.

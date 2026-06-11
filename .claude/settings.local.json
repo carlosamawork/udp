@@ -19,7 +19,13 @@
       "Bash(curl -s -k -o /tmp/home.html -w '__TRACKED_VAR__ → HTTP %{http_code}\\\\n' '__TRACKED_VAR__&cb=__TRACKED_VAR__')",
       "Bash(xargs -n1 basename)",
       "Bash(awk '$1==\"root\" && /node|npm|vite/ {print}')",
-      "Bash(/Applications/MAMP/bin/php/php8.4.1/bin/php *)"
+      "Bash(/Applications/MAMP/bin/php/php8.4.1/bin/php *)",
+      "mcp__visualize__read_me",
+      "mcp__visualize__show_widget",
+      "Bash(curl -s \"http://localhost:8888/udp/?theme=new\")",
+      "Bash(git -C /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme log --oneline -5)",
+      "Bash(curl -s \"http://localhost:8888/udp/\")",
+      "Bash(cat /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/.claude/settings.local.json 2>/dev/null || cat ~/.claude/settings.local.json 2>/dev/null)"
     ],
     "deny": [
       "Bash(rm -rf *)",
