@@ -270,4 +270,186 @@ $svg_plus   = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-
 			</ul>
 		<?php endif; ?>
 	</footer>
+
+	<?php if ( ! empty( $menu_items ) ) :
+
+		// SVG inline para botones mobile (sin dependencia de font)
+		$svg_mob_back  = '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>';
+		$svg_mob_close = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 14 14"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>';
+		$svg_mob_chev  = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg>';
+		$svg_mob_arr   = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M3 8h10M8 3l5 5-5 5"/></svg>';
+		$svg_mob_ext   = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M11 11V5H5M11 5L5 11"/></svg>';
+	?>
+	<div class="udp-megamenu__mobile">
+
+		<!-- TOP BAR DINÁMICA -->
+		<div class="udp-megamenu__mtop">
+
+			<div class="udp-megamenu__mtop-l1" id="udp-mob-topbar-l1">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="udp-megamenu__mlogo" aria-label="<?php bloginfo( 'name' ); ?>">
+					<?php
+					$logo = function_exists( 'udp_get_logo_url' ) ? udp_get_logo_url( 'udp' ) : '';
+					if ( ! empty( $logo ) ) : ?>
+						<img src="<?php echo esc_url( $logo ); ?>" alt="<?php bloginfo( 'name' ); ?>" />
+					<?php else : ?>
+						<span class="udp-megamenu__mlogo-text"><?php bloginfo( 'name' ); ?></span>
+					<?php endif; ?>
+				</a>
+			</div>
+
+			<div class="udp-megamenu__mtop-nav" id="udp-mob-topbar-nav" hidden>
+				<button class="udp-megamenu__mback" type="button" data-udp-mob-back aria-label="<?php esc_attr_e( 'Volver', 'starter-theme' ); ?>">
+					<?php echo $svg_mob_back; // phpcs:ignore ?>
+				</button>
+				<span class="udp-megamenu__mtitle" id="udp-mob-title"></span>
+				<button class="udp-megamenu__mclose-all" type="button" data-udp-megamenu-close aria-label="<?php esc_attr_e( 'Cerrar menú', 'starter-theme' ); ?>">
+					<?php echo $svg_mob_close; // phpcs:ignore ?>
+				</button>
+			</div>
+
+		</div><!-- /.udp-megamenu__mtop -->
+
+		<!-- VIEWPORT SLIDER -->
+		<div class="udp-megamenu__mviewport">
+			<div class="udp-megamenu__mslider" id="udp-megamenu-mslider">
+
+				<!-- L1: lista de secciones -->
+				<div class="udp-megamenu__ml1">
+					<ul class="udp-megamenu__mlist">
+						<?php foreach ( $menu_items as $idx => $item ) :
+							$titulo = $item['titulo_main_link'] ?? '';
+							if ( ! $titulo ) continue;
+						?>
+							<li class="udp-megamenu__mitem">
+								<button
+									type="button"
+									class="udp-megamenu__mbtn"
+									data-udp-mob-section="<?php echo esc_attr( $idx ); ?>"
+									data-udp-mob-title="<?php echo esc_attr( wp_strip_all_tags( $titulo ) ); ?>"
+								>
+									<span class="udp-megamenu__mbtn-label"><?php echo esc_html( wp_strip_all_tags( $titulo ) ); ?></span>
+									<?php echo $svg_mob_chev; // phpcs:ignore ?>
+								</button>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div><!-- /.udp-megamenu__ml1 -->
+
+				<!-- L2-wrap: un panel por sección, solo uno visible a la vez -->
+				<div class="udp-megamenu__ml2-wrap">
+					<?php foreach ( $menu_items as $idx => $item ) :
+						$titulo  = $item['titulo_main_link'] ?? '';
+						$submenu = is_array( $item['submenu'] ?? null ) ? $item['submenu'] : [];
+						if ( ! $titulo ) continue;
+					?>
+						<div
+							class="udp-megamenu__ml2"
+							data-udp-mob-l2="<?php echo esc_attr( $idx ); ?>"
+							hidden
+						>
+							<ul class="udp-megamenu__mlist">
+								<?php foreach ( $submenu as $sub_idx => $sub ) :
+									$sub_titulo = $sub['titulo'] ?? '';
+									$sub_tipo   = $sub['tipo']   ?? 'externo';
+									$sub_items  = is_array( $sub['sub_items'] ?? null ) ? $sub['sub_items'] : [];
+									$has_sub    = ! empty( $sub_items );
+									if ( ! $sub_titulo ) continue;
+
+									if ( $sub_tipo === 'interno' && ! empty( $sub['pagina'] ) ) {
+										$sub_anchor = ltrim( $sub['anchor'] ?? '', '#' );
+										$sub_link   = get_permalink( $sub['pagina'] ) . ( $sub_anchor ? '#' . $sub_anchor : '' );
+										$is_ext     = false;
+									} elseif ( $sub_tipo === 'sin_link' ) {
+										$sub_link = '';
+										$is_ext   = false;
+									} else {
+										$sub_link = $sub['url'] ?? $sub['link'] ?? '';
+										$is_ext   = $sub_link ? udp_megamenu_is_external( $sub_link ) : false;
+									}
+								?>
+									<li class="udp-megamenu__mitem">
+										<?php if ( $has_sub ) : ?>
+											<button
+												type="button"
+												class="udp-megamenu__mbtn udp-megamenu__mbtn--l2"
+												data-udp-mob-sub="<?php echo esc_attr( $sub_idx ); ?>"
+												data-udp-mob-title="<?php echo esc_attr( $sub_titulo ); ?>"
+											>
+												<span class="udp-megamenu__mbtn-label udp-megamenu__mbtn-label--l2"><?php echo esc_html( $sub_titulo ); ?></span>
+												<?php echo $svg_mob_arr; // phpcs:ignore ?>
+											</button>
+										<?php elseif ( $sub_link ) : ?>
+											<a
+												class="udp-megamenu__mlink udp-megamenu__mlink--l2"
+												href="<?php echo esc_url( $sub_link ); ?>"
+												<?php if ( $is_ext ) echo 'target="_blank" rel="noopener noreferrer"'; ?>
+											>
+												<span><?php echo esc_html( $sub_titulo ); ?></span>
+												<?php if ( $is_ext ) echo $svg_mob_ext; // phpcs:ignore ?>
+											</a>
+										<?php else : ?>
+											<span class="udp-megamenu__mlink udp-megamenu__mlink--l2 udp-megamenu__mlink--no-url">
+												<?php echo esc_html( $sub_titulo ); ?>
+											</span>
+										<?php endif; ?>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div><!-- /.udp-megamenu__ml2 -->
+					<?php endforeach; ?>
+				</div><!-- /.udp-megamenu__ml2-wrap -->
+
+				<!-- L3-wrap: un panel por sección-apartado, solo uno visible a la vez -->
+				<div class="udp-megamenu__ml3-wrap">
+					<?php foreach ( $menu_items as $idx => $item ) :
+						$titulo  = $item['titulo_main_link'] ?? '';
+						$submenu = is_array( $item['submenu'] ?? null ) ? $item['submenu'] : [];
+						if ( ! $titulo ) continue;
+						foreach ( $submenu as $sub_idx => $sub ) :
+							$sub_items = is_array( $sub['sub_items'] ?? null ) ? $sub['sub_items'] : [];
+							if ( empty( $sub_items ) ) continue;
+					?>
+							<div
+								class="udp-megamenu__ml3"
+								data-udp-mob-l3="<?php echo esc_attr( $idx ); ?>-<?php echo esc_attr( $sub_idx ); ?>"
+								hidden
+							>
+								<ul class="udp-megamenu__mlist">
+									<?php foreach ( $sub_items as $si ) :
+										$si_tipo = $si['tipo'] ?? 'externo';
+										if ( $si_tipo === 'interno' && ! empty( $si['pagina'] ) ) {
+											$si_titulo = ! empty( $si['titulo_alt'] ) ? $si['titulo_alt'] : get_the_title( $si['pagina'] );
+											$si_anchor = ltrim( $si['anchor'] ?? '', '#' );
+											$si_link   = get_permalink( $si['pagina'] ) . ( $si_anchor ? '#' . $si_anchor : '' );
+											$si_ext    = false;
+										} else {
+											$si_titulo = $si['titulo']             ?? '';
+											$si_link   = $si['url'] ?? $si['link'] ?? '';
+											$si_ext    = ! empty( $si['nueva_pestana'] );
+										}
+										if ( ! $si_titulo || ! $si_link ) continue;
+									?>
+										<li class="udp-megamenu__mitem">
+											<a
+												class="udp-megamenu__mlink udp-megamenu__mlink--l3"
+												href="<?php echo esc_url( $si_link ); ?>"
+												<?php if ( $si_ext ) echo 'target="_blank" rel="noopener noreferrer"'; ?>
+											>
+												<span><?php echo esc_html( $si_titulo ); ?></span>
+												<?php if ( $si_ext || $si_tipo === 'externo' ) echo $svg_mob_ext; // phpcs:ignore ?>
+											</a>
+										</li>
+									<?php endforeach; ?>
+								</ul>
+							</div><!-- /.udp-megamenu__ml3 -->
+					<?php endforeach; ?>
+					<?php endforeach; ?>
+				</div><!-- /.udp-megamenu__ml3-wrap -->
+
+			</div><!-- /.udp-megamenu__mslider -->
+		</div><!-- /.udp-megamenu__mviewport -->
+
+	</div><!-- /.udp-megamenu__mobile -->
+	<?php endif; ?>
+
 </div>
