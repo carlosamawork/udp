@@ -61,21 +61,24 @@ if ( empty( $cards ) ) {
     return;
 }
 ?>
-<section class="udp-single-post__related">
+<section class="udp-single-post__related" data-udp-related-carousel>
     <div class="udp-single-post__related-inner">
         <h2 class="udp-single-post__related-title"><?php esc_html_e( 'Te podría interesar', 'starter-theme' ); ?></h2>
-        <ul class="udp-single-post__related-list">
-            <?php foreach ( $cards as $card ) : ?>
-                <li class="udp-single-post__related-item">
-                    <?php
-                    get_template_part(
-                        'template-parts/blocks/parts/card-noticia',
-                        null,
-                        array( 'card' => $card, 'theme' => 'light' )
-                    );
-                    ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
+        <div class="udp-single-post__related-viewport">
+            <ul class="udp-single-post__related-list">
+                <?php foreach ( $cards as $card ) : ?>
+                    <li class="udp-single-post__related-item">
+                        <?php
+                        get_template_part(
+                            'template-parts/blocks/parts/card-noticia',
+                            null,
+                            array( 'card' => $card, 'theme' => 'light' )
+                        );
+                        ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <div class="udp-single-post__related-dots" aria-hidden="true"></div>
     </div>
 </section>
