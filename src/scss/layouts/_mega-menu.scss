@@ -18,6 +18,10 @@ body.udp-megamenu-open {
     display: flex;
     flex-direction: column;
 
+    @include media-down(md) {
+        bottom: 80px; // deja espacio a la barra fija inferior
+    }
+
     &[hidden] {
         display: none;
     }
