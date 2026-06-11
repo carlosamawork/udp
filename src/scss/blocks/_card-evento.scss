@@ -117,7 +117,7 @@
 
         @include media-down(md) {
             flex-direction: column;
-            gap: $space-sm;
+            gap: 0; // imagen pegada al bloque de contenido (Figma)
 
             .udp-card-evento__media {
                 width: 100%;
@@ -127,9 +127,39 @@
             }
 
             .udp-card-evento__body {
+                gap: 0;
                 min-height: 0;
-                padding-right: 0;
-                padding-bottom: 56px; // espacio para el CTA absoluto
+                padding: $space-xl; // 24px los 4 lados
+                background-color: $dark-2; // #232323
+            }
+
+            .udp-card-evento__title {
+                font-size: 20px;
+                line-height: 24px;
+                -webkit-line-clamp: 6;
+            }
+
+            .udp-card-evento__eyebrow {
+                margin-top: $space-2xl; // 32px desde el título
+                padding-right: 56px;    // deja sitio al CTA absoluto
+            }
+
+            .udp-card-evento__datetime {
+                margin-top: $space-xs;  // 12px
+                font-weight: 600;       // SemiBold
+                padding-right: 56px;
+            }
+
+            .udp-card-evento__lugar {
+                margin-top: 5px;
+                color: $white;
+                font-weight: 500;       // Medium
+                padding-right: 56px;
+            }
+
+            .udp-card-evento__cta {
+                bottom: $space-xl; // 24px (dentro del padding)
+                right: $space-xl;
             }
         }
     }

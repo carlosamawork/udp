@@ -105,7 +105,7 @@
 
             @include media-down(lg) {
                 grid-template-columns: 1fr;
-                gap: $space-2xl;
+                gap: $space-xl; // 24px entre cards (Figma)
             }
         }
 
