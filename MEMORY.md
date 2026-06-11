@@ -1986,3 +1986,28 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - Nuevo `template-parts/header/mobile-nav.php` (barra fija inferior): círculo hamburger + "Menú", incluido desde `footer.php`.
 - `mega-menu.js`: `qs → qsa` en `setOpen` e `initMegaMenu` — sincroniza `aria-expanded` en todos los triggers.
 - Pendiente: adaptar el panel del mega-menú al diseño mobile (fase siguiente).
+
+### 2026-06-11 — Mobile header: bottom nav completa con botón cerrar _(Elsa)_
+
+**Hechos**:
+
+- `mobile-nav.php` extendido con segundo `<button data-udp-megamenu-close>` (clase `udp-mobile-nav__close` + `__close-circle`). Mismo icono × SVG que el botón desktop.
+- Diseño final: la barra inferior transiciona a **fondo blanco** cuando el menú se abre (`body.udp-megamenu-open` → `background-color: $white; border-color: $black`). El botón hamburger se oculta (`display: none`) y el botón cerrar aparece (`display: flex`) con borde `$black`, color heredado. Hover: `background-color: $white; color: $dark-1`.
+- Panel del mega-menú en mobile: `bottom: 80px` para dejar hueco a la barra inferior. El botón cerrar del panel (`__close`) se oculta en `< md` (`display: none; width: 0`) — en mobile solo cierra desde la barra inferior.
+- Animación rotate del botón cerrar: JS re-dispara `udp-close-rotate-in` en cada apertura usando el patrón `classList.remove → void el.offsetWidth → classList.add` con clase `udp-is-entering`. El keyframe ya existía en `_mega-menu.scss`.
+- Z-index: `udp-mobile-nav` = `1001` (encima del panel `1000`). Crítico para que la barra inferior sea clickable con el panel abierto.
+
+**Correcciones que hizo el usuario manualmente** (y que se incorporan al código final):
+
+- `_header.scss`: `udp-mobile-nav` cambió de `display: flex` a `display: block` + `padding: 15px $space-3xl 53px` (altura correcta). `__trigger` y `__close` con `margin: 0 auto; display: flex/none`. `button { color: $white }` dentro del bloque de la nav.
+- `_mega-menu.scss`: `&__top @include media-down(md)` — revertido cambio de `grid-template-columns: 1fr` (el usuario lo dejó como solo `padding`). `&__close` oculto en mobile con `display: none; width: 0`.
+
+**Bug introducido y corregido**: en un refactor del JS, `setTimeout(() => {...}, ANIM_DURATION)` se cambió accidentalmente a `setTimeout(..., 0)`, eliminando la animación de fade-out al cerrar. Corregido en commit `254fa1b`.
+
+**Commits de esta sesión**: `af186a9` (tokens SCSS), `eb1fb57` (z-index + bottom 80px), `...` (close button PHP + SCSS + JS), `254fa1b` (fix setTimeout).
+
+### 2026-06-11 — Cierre de sesión _(Elsa)_
+
+- Mobile header completamente implementado: top bar móvil simplificado (logo + lupa), barra inferior fija con hamburger → × blanco al abrir menú, animación rotate, transición de fondo.
+- Rama activa: `elsa`. Build limpio (101.94 kB main.js, 744ms).
+- **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish (SVGs sociales reales, eyebrow color por término); F11 switch tema activo; buscador funcional end-to-end testing.
