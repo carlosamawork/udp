@@ -1979,3 +1979,29 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - `centro-udp` excluido: páginas en desuso.
 - Panel `height` fijo (no `max-height`) para ocupar toda la pantalla disponible.
 - Loader es línea horizontal que escanea (no spinner) — coherente con el lenguaje editorial del sitio.
+
+### 2026-06-11 — Single Noticia mobile (responsive) _(Cacho)_
+
+Inicio de la **fase mobile**. Primer pase: `single-post.php` contra la maqueta Figma `4041-42144`. Rama `feature/single-noticia-mobile`. Solo contenido del single (header/footer globales ya tienen su mobile, fuera de alcance). Spec: `docs/superpowers/specs/2026-06-11-single-noticia-mobile-design.md`; plan: `docs/superpowers/plans/2026-06-11-single-noticia-mobile.md`.
+
+**Patrones mobile (`<md` = ≤767.98px; desktop ≥992 intacto):**
+
+- **Meta hero apilado**: en `<md` el `__meta` pasa a columna (label "Fecha" / fecha / chip categoría amarillo cada uno en su línea).
+- **Barra inferior fija** (`template-parts/single/post-mobile-bar.php`, nuevo): Compartir (`navigator.share` nativo + fallback popover con copiar/FB/X/WhatsApp/LinkedIn) + Menú (dispara el `data-udp-megamenu-toggle` del header vía `.click()`, sin duplicar nav) + volver-arriba (respeta `prefers-reduced-motion`). El sidebar share de desktop (`__share`) se oculta en `<md`; la barra solo se ve en `<md`.
+- **"Te podría interesar"**: en `<md` fondo oscuro (`$dark-1`) + cards horizontales (texto claro) + carrusel Swiper con dots. Desktop sigue grid claro 3-col. La card NO cambia de variant; el layout horizontal es solo CSS scoped a `.udp-single-post__related` dentro de `media-down(md)`. JS `initRelatedCarousel` hace **init/destroy por `matchMedia`**: añade clases swiper + lazy-import de Swiper solo en mobile, y al cruzar a desktop `destroy(true,true)` + limpia clases → el grid CSS vuelve sin restos. Guarda `enabling` contra doble-init en resize agresivo.
+- **Galería**: en `<md` dots de paginación (Swiper Pagination) y flechas prev/next ocultas.
+
+**Archivos:** nuevos `post-mobile-bar.php`, `src/js/modules/single-post-mobile.js`. Modificados `single-post.php`, `post-related.php`, `post-gallery.php`, `single-post-gallery.js`, `main.js`, `_noticias-single.scss`.
+
+**Decisiones clave:**
+- El carrusel de relacionados se inicializa SOLO en mobile (`matchMedia`) para no cargar `swiper/css` en desktop ni alterar el grid nativo. El `__related-viewport` es un `<div>` neutro en desktop.
+- El botón Menú de la barra reutiliza el toggle real del header (no hay segundo handler en `mega-menu.js`, que usa `qs()` un único toggle).
+- Tablet (768–991): conserva el comportamiento desktop/`<lg` existente (fila estática del share); la barra inferior y el carrusel oscuro son estrictos `<md`.
+
+**Verificación E2E** (post 55086, `?theme=new`): HTTP 200, sin errores PHP, presentes `udp-single-post__mobile-bar`, `__related-viewport`, `__related-dots`, `__gallery-dots`; sidebar share desktop intacto; build limpio. Code review final: APROBADO. Fixes post-review: quitado `aria-hidden` de los divs de dots (eran clicables), guarda doble-init, limpieza SCSS (`4c4c0b8`).
+
+**Pendientes:**
+- Pase **pixel-perfect** fino (colores exactos de la barra inferior y círculos, tipografías/espaciados px a px) con el skill `pixel-perfect` — los valores actuales son base aproximada del Figma.
+- Otras páginas single/archive mobile (misma fase).
+- Merge `feature/single-noticia-mobile` → `main` cuando se valide visualmente en dispositivo.
+- Revisión visual en dispositivo real / DevTools @393px vs Figma `4041-42144`.
