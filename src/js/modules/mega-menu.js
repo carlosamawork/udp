@@ -115,8 +115,9 @@ export function initMegaMenu() {
 
 	toggles.forEach( t => t.addEventListener( 'click', () => setOpen( panel, true ) ) );
 
-	const closeBtn = panel.querySelector( '[data-udp-megamenu-close]' );
-	if ( closeBtn ) closeBtn.addEventListener( 'click', () => setOpen( panel, false ) );
+	qsa( '[data-udp-megamenu-close]' ).forEach( btn => {
+		btn.addEventListener( 'click', () => setOpen( panel, false ) );
+	} );
 
 	// Col-1: section switching
 	qsa( '[data-udp-megamenu-item]', panel ).forEach( btn => {

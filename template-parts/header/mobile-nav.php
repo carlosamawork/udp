@@ -24,4 +24,18 @@
 		</span>
 		<span class="udp-mobile-nav__label"><?php esc_html_e( 'Menú', 'starter-theme' ); ?></span>
 	</button>
+	<button
+		type="button"
+		class="udp-mobile-nav__close"
+		data-udp-megamenu-close
+		aria-label="<?php esc_attr_e( 'Cerrar menú principal', 'starter-theme' ); ?>"
+	>
+		<span class="udp-mobile-nav__close-circle" aria-hidden="true">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+				<line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+				<line x1="19" y1="5" x2="5" y2="19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+			</svg>
+		</span>
+		<span class="udp-mobile-nav__label"><?php esc_html_e( 'Cerrar', 'starter-theme' ); ?></span>
+	</button>
 </nav>
