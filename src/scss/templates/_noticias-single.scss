@@ -9,6 +9,10 @@
     position: relative;
     padding-bottom: $space-3xl;
 
+    @include media-down(md) {
+        padding-bottom: 0;
+    }
+
     // ----------------------------------------------------------------
     // HERO
     // ----------------------------------------------------------------
@@ -350,6 +354,35 @@
         }
     }
 
+    // Mobile: flechas en píldora oscura (Figma 4041-42206)
+    @include media-down(md) {
+        &-nav {
+            width: fit-content;
+            margin-left: auto;
+            gap: 4px;
+            background-color: $dark-1;
+            border-radius: 9999px;
+            padding: 4px 10px;
+        }
+
+        &-prev,
+        &-next {
+            width: auto;
+            height: auto;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            color: $white;
+            padding: 6px;
+
+            &:hover,
+            &:focus-visible {
+                background: transparent;
+                color: $white;
+            }
+        }
+    }
+
 }
 
 // --------------------------------------------------------------------------
@@ -501,8 +534,7 @@
     }
 
     .udp-single-post__related-item {
-        width: 88vw;
-        max-width: 320px;
+        width: 100%;
         flex-shrink: 0;
     }
 

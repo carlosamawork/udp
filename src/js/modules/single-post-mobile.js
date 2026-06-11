@@ -100,7 +100,7 @@ async function initRelatedCarousel() {
 
         swiper = new Swiper(viewport, {
             modules: [Pagination],
-            slidesPerView: 'auto',
+            slidesPerView: 1,
             spaceBetween: 16,
             grabCursor: true,
             pagination: { el: pagination, clickable: true },
