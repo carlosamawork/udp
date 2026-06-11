@@ -30,6 +30,7 @@
         align-items: center;
 
         @include media-down(md) {
+            grid-template-columns: 50px 1fr 50px;
             padding-inline: $space-sm;
         }
     }
@@ -37,6 +38,13 @@
     &__menu   { justify-self: start; }
     &__logo   { justify-self: center; }
     &__search { justify-self: end; }
+
+    // Ocultar trigger desktop en mobile — el bottom bar lo reemplaza
+    @include media-down(md) {
+        .udp-top-bar__menu {
+            display: none;
+        }
+    }
 
     // ----------------------------------------------------------------------
     // Logo (centrado)
@@ -145,6 +153,71 @@
         align-items: center;
         justify-content: center;
         color: $white;
+    }
+}
+
+// ==========================================================================
+// BOTTOM NAV — mobile only (< md)
+// Barra fija inferior con trigger del mega-menú
+// ==========================================================================
+
+.udp-mobile-nav {
+    display: none;
+
+    @include media-down(md) {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        background: $dark-1;
+        border-top: 1px solid $white;
+        padding: 15px 40px;
+    }
+}
+
+.udp-mobile-nav__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2xs;
+    background: transparent;
+    border: none;
+    color: $white;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity $transition-base;
+
+    &:hover,
+    &:focus {
+        opacity: 0.7;
+    }
+}
+
+.udp-mobile-nav__circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 9999px;
+    border: 1px solid $gray-high;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.udp-mobile-nav__label {
+    font-family: $font-family-body;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+// Padding-bottom en body para que el contenido no quede tapado por la barra fija
+@include media-down(md) {
+    body {
+        padding-bottom: 80px;
     }
 }
 
