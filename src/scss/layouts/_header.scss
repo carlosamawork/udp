@@ -30,8 +30,9 @@
         align-items: center;
 
         @include media-down(md) {
-            grid-template-columns: 50px 1fr 50px;
-            padding-inline: $space-sm;
+            display: flex;
+            justify-content: space-between;
+            padding-inline: 25px;
         }
     }
 
