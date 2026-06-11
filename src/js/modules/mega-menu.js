@@ -17,14 +17,14 @@ const ANIM_DURATION = 220; // ms — debe coincidir con udp-megamenu-fadeout
 function setOpen( panel, open ) {
 	if ( !panel ) return;
 
-	const toggle = qs( '[data-udp-megamenu-toggle]' );
+	const toggles = qsa( '[data-udp-megamenu-toggle]' );
 
 	if ( open ) {
 		STATE.isOpen = true;
 		panel.hidden = false;
 		document.documentElement.classList.add( 'udp-megamenu-open' );
 		document.body.classList.add( 'udp-megamenu-open' );
-		if ( toggle ) toggle.setAttribute( 'aria-expanded', 'true' );
+		toggles.forEach( t => t.setAttribute( 'aria-expanded', 'true' ) );
 		STATE.lastFocused = document.activeElement;
 		const closeBtn = panel.querySelector( '[data-udp-megamenu-close]' );
 		if ( closeBtn ) closeBtn.focus();
@@ -51,7 +51,7 @@ function setOpen( panel, open ) {
 			} );
 			document.documentElement.classList.remove( 'udp-megamenu-open' );
 			document.body.classList.remove( 'udp-megamenu-open' );
-			if ( toggle ) toggle.setAttribute( 'aria-expanded', 'false' );
+			toggles.forEach( t => t.setAttribute( 'aria-expanded', 'false' ) );
 			if ( STATE.lastFocused && typeof STATE.lastFocused.focus === 'function' ) {
 				STATE.lastFocused.focus();
 			}
@@ -110,10 +110,10 @@ function setActiveItem( panel, idx ) {
 
 export function initMegaMenu() {
 	const panel = qs( '#udp-megamenu-panel' );
-	const toggle = qs( '[data-udp-megamenu-toggle]' );
-	if ( !panel || !toggle ) return;
+	const toggles = qsa( '[data-udp-megamenu-toggle]' );
+	if ( !panel || !toggles.length ) return;
 
-	toggle.addEventListener( 'click', () => setOpen( panel, true ) );
+	toggles.forEach( t => t.addEventListener( 'click', () => setOpen( panel, true ) ) );
 
 	const closeBtn = panel.querySelector( '[data-udp-megamenu-close]' );
 	if ( closeBtn ) closeBtn.addEventListener( 'click', () => setOpen( panel, false ) );
