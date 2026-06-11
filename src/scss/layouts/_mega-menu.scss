@@ -452,3 +452,271 @@ body.udp-megamenu-open {
         transform: translateY(0);
     }
 }
+
+// ==========================================================================
+// MOBILE — slider horizontal 3 niveles (< md)
+// ==========================================================================
+
+.udp-megamenu__mobile {
+    display: none; // oculto en desktop
+}
+
+@include media-down(md) {
+    // Contenedor principal (fondo crema, reemplaza el desktop)
+    .udp-megamenu {
+        background-color: #f8f7f4;
+        overflow: hidden;
+    }
+
+    // Ocultar secciones desktop
+    .udp-megamenu__top,
+    .udp-megamenu__body,
+    .udp-megamenu__footer {
+        display: none !important;
+    }
+
+    // Mostrar bloque mobile
+    .udp-megamenu__mobile {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    // -------------------------------------------------------------------------
+    // TOP BAR DINÁMICA
+    // -------------------------------------------------------------------------
+    .udp-megamenu__mtop {
+        display: flex;
+        align-items: center;
+        height: $header-height;
+        min-height: $header-height;
+        padding: 0 $space-md;
+        border-bottom: 1px solid $dark-1;
+        flex-shrink: 0;
+    }
+
+    .udp-megamenu__mtop-l1,
+    .udp-megamenu__mtop-nav {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .udp-megamenu__mtop-l1[hidden],
+    .udp-megamenu__mtop-nav[hidden] {
+        display: none;
+    }
+
+    .udp-megamenu__mlogo {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        color: $dark-1;
+
+        img {
+            height: 36px;
+            width: auto;
+            display: block;
+        }
+    }
+
+    .udp-megamenu__mlogo-text {
+        font-family: $font-family-display;
+        font-size: 18px;
+        font-weight: 500;
+        color: $dark-1;
+    }
+
+    .udp-megamenu__mtop-nav {
+        justify-content: space-between;
+        gap: $space-sm;
+    }
+
+    .udp-megamenu__mtitle {
+        flex: 1;
+        text-align: center;
+        font-family: $font-family-body;
+        font-size: 17px;
+        font-weight: 600;
+        color: $dark-1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .udp-megamenu__mback,
+    .udp-megamenu__mclose-all {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 9999px;
+        border: 1px solid $gray-high;
+        background: transparent;
+        color: $dark-1;
+        cursor: pointer;
+        flex-shrink: 0;
+        padding: 0;
+        transition: background-color $transition-base, color $transition-base;
+
+        &:hover,
+        &:focus-visible {
+            background-color: $dark-1;
+            color: $white;
+            outline: none;
+        }
+
+        svg {
+            display: block;
+            flex-shrink: 0;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // VIEWPORT + SLIDER
+    // -------------------------------------------------------------------------
+    .udp-megamenu__mviewport {
+        flex: 1;
+        overflow: hidden;
+        min-height: 0;
+    }
+
+    .udp-megamenu__mslider {
+        display: flex;
+        width: 300%;
+        height: 100%;
+        transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .udp-megamenu__ml1,
+    .udp-megamenu__ml2-wrap,
+    .udp-megamenu__ml3-wrap {
+        width: 33.333%;
+        flex-shrink: 0;
+        overflow-y: auto;
+        padding: $space-md;
+    }
+
+    // -------------------------------------------------------------------------
+    // LISTAS
+    // -------------------------------------------------------------------------
+    .udp-megamenu__mlist {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .udp-megamenu__mitem {
+        border-bottom: 1px solid rgba($dark-1, 0.1);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // L1: botones de sección — tipografía serif grande
+    // -------------------------------------------------------------------------
+    .udp-megamenu__mbtn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: $space-md 0;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: $dark-1;
+        text-align: left;
+        gap: $space-sm;
+
+        svg {
+            flex-shrink: 0;
+            color: rgba($dark-1, 0.4);
+        }
+
+        &:hover,
+        &:focus-visible {
+            outline: none;
+
+            svg {
+                color: $dark-1;
+            }
+        }
+    }
+
+    .udp-megamenu__mbtn-label {
+        font-family: $font-family-display;
+        font-size: 25px;
+        line-height: 1.2;
+        font-weight: 500;
+        letter-spacing: -0.5px;
+        color: $dark-1;
+    }
+
+    // -------------------------------------------------------------------------
+    // L2: botones y links de apartado — sans 17px
+    // -------------------------------------------------------------------------
+    .udp-megamenu__mbtn--l2 {
+        .udp-megamenu__mbtn-label {
+            font-family: $font-family-body;
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: normal;
+        }
+    }
+
+    .udp-megamenu__mlink {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $space-sm;
+        width: 100%;
+        padding: $space-md 0;
+        text-decoration: none;
+        color: $dark-1;
+
+        svg {
+            flex-shrink: 0;
+            color: rgba($dark-1, 0.4);
+        }
+
+        &:hover,
+        &:focus-visible {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: $dark-1;
+            outline: none;
+        }
+
+        &--no-url {
+            cursor: default;
+            display: block;
+            padding: $space-md 0;
+            color: rgba($dark-1, 0.5);
+        }
+    }
+
+    .udp-megamenu__mlink--l2 {
+        font-family: $font-family-body;
+        font-size: 17px;
+        font-weight: 500;
+    }
+
+    // -------------------------------------------------------------------------
+    // L3: links de sub-items — sans 16px
+    // -------------------------------------------------------------------------
+    .udp-megamenu__ml2[hidden],
+    .udp-megamenu__ml3[hidden] {
+        display: none;
+    }
+
+    .udp-megamenu__mlink--l3 {
+        font-family: $font-family-body;
+        font-size: 16px;
+        font-weight: 400;
+    }
+}
