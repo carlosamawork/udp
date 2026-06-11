@@ -572,6 +572,13 @@ body.udp-megamenu-open {
         animation: udp-close-rotate-in 0.3s 0.1s ease both;
     }
 
+    // Solo visible en pantallas intermedias (md–lg); en < md lo cubre el bottom bar
+    @include media-down(md) {
+        .udp-megamenu__mclose-l1 {
+            display: none;
+        }
+    }
+
     // Animación back: slide left al hacer click
     .udp-megamenu__mback.udp-mob-back-anim {
         animation: udp-mob-back-tap 0.25s ease both;

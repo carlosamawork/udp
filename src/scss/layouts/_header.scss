@@ -257,7 +257,6 @@
 
 .udp-mobile-nav__close:hover .udp-mobile-nav__close-circle,
 .udp-mobile-nav__close:focus-visible .udp-mobile-nav__close-circle {
-    background-color: $white;
     color: $dark-1;
 }
 
@@ -266,7 +265,7 @@ body.udp-megamenu-open {
 
     @include media-down(md) {
         .udp-mobile-nav {
-            background-color: $white;
+            background-color: $beige;
             border-color: $black;
 
             button {
