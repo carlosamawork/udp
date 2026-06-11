@@ -22,7 +22,6 @@ while ( have_posts() ) :
         <?php
         get_template_part( 'template-parts/single/post-hero', null, array( 'post_id' => get_the_ID() ) );
         get_template_part( 'template-parts/single/post-share', null, array( 'post_id' => get_the_ID() ) );
-        get_template_part( 'template-parts/single/post-mobile-bar', null, array( 'post_id' => get_the_ID() ) );
         ?>
 
         <div class="udp-single-post__body">
