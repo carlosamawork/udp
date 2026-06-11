@@ -286,14 +286,13 @@
     }
 
     @include media-down(md) {
-        flex-direction: column;
-        gap: $space-md;
+        gap: $space-sm; // imagen-izquierda se mantiene en mobile (Figma)
 
         .udp-card-noticia__media {
-            width: 100%;
+            flex: 0 0 140px;
+            width: 140px;
             height: auto;
-            aspect-ratio: 16 / 9;
-            flex: 0 0 auto;
+            aspect-ratio: 140 / 225;
         }
     }
 }
