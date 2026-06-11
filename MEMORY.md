@@ -1979,3 +1979,10 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - `centro-udp` excluido: páginas en desuso.
 - Panel `height` fijo (no `max-height`) para ocupar toda la pantalla disponible.
 - Loader es línea horizontal que escanea (no spinner) — coherente con el lenguaje editorial del sitio.
+
+### 2026-06-11 — Mobile header: top bar simplificado + bottom nav bar _(Elsa)_
+
+- Top bar en `< md`: `__menu` oculto, grid `50px 1fr 50px` (logo centrado + lupa).
+- Nuevo `template-parts/header/mobile-nav.php` (barra fija inferior): círculo hamburger + "Menú", incluido desde `footer.php`.
+- `mega-menu.js`: `qs → qsa` en `setOpen` e `initMegaMenu` — sincroniza `aria-expanded` en todos los triggers.
+- Pendiente: adaptar el panel del mega-menú al diseño mobile (fase siguiente).
