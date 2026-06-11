@@ -35,9 +35,17 @@
         }
     }
 
-    &__menu   { justify-self: start; }
-    &__logo   { justify-self: center; }
-    &__search { justify-self: end; }
+    &__menu {
+        justify-self: start;
+    }
+
+    &__logo {
+        justify-self: center;
+    }
+
+    &__search {
+        justify-self: end;
+    }
 
     // Ocultar trigger desktop en mobile — el bottom bar lo reemplaza
     @include media-down(md) {
@@ -164,28 +172,33 @@
 .udp-mobile-nav {
     display: none;
 
+
     @include media-down(md) {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
+        display: block;
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: 100;
+        z-index: 1001; // encima del panel (z-index: 1000)
         background: $dark-1;
         border-top: 1px solid $white;
-        padding: 15px $space-3xl;
+        padding: 15px $space-3xl 53px;
+        transition: all .25s ease;
+        color: $white;
+
+        button {
+            color: $white;
+        }
     }
 }
 
 .udp-mobile-nav__trigger {
-    display: inline-flex;
+    margin: 0 auto;
+    display: flex;
     align-items: center;
     gap: $space-2xs;
     background: transparent;
     border: none;
-    color: $white;
     cursor: pointer;
     padding: 0;
     transition: opacity $transition-base;
@@ -208,6 +221,10 @@
 }
 
 .udp-mobile-nav__label {
+    display: block;
+    width: 43px;
+    overflow: visible;
+
     font-family: $font-family-body;
     font-weight: 500;
     font-size: $font-size-body-lg;
@@ -215,6 +232,7 @@
 }
 
 .udp-mobile-nav__close {
+    margin: 0 auto;
     display: none;
     align-items: center;
     gap: $space-2xs;
@@ -229,7 +247,7 @@
     width: 50px;
     height: 50px;
     border-radius: 9999px;
-    border: 1px solid $white;
+    border: 1px solid $black;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -244,9 +262,17 @@
 }
 
 body.udp-megamenu-open {
+
+
     @include media-down(md) {
         .udp-mobile-nav {
-            z-index: 1001; // encima del panel (z-index: 1000)
+            background-color: $white;
+            border-color: $black;
+
+            button {
+                color: black;
+            }
+
         }
 
         .udp-mobile-nav__trigger {
@@ -254,7 +280,7 @@ body.udp-megamenu-open {
         }
 
         .udp-mobile-nav__close {
-            display: inline-flex;
+            display: flex;
         }
 
         .udp-mobile-nav__close-circle.udp-is-entering {

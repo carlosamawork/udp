@@ -51,17 +51,11 @@ body.udp-megamenu-open {
 
         @include media-down(md) {
             padding: $space-sm $space-md;
-            grid-template-columns: 1fr;
-            justify-items: center;
         }
     }
 
     &__close {
         justify-self: start;
-
-        @include media-down(md) {
-            display: none;
-        }
         display: inline-flex;
         align-items: center;
         gap: 8px;
@@ -72,6 +66,11 @@ body.udp-megamenu-open {
         font-size: 14px;
         font-weight: 500;
         color: $dark-1;
+
+        @include media-down(md) {
+            display: none;
+            width: 0;
+        }
 
         &-circle {
             display: inline-flex;
