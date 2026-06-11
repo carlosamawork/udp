@@ -42,6 +42,7 @@ body.udp-megamenu-open {
         align-items: center;
         padding: 0 $space-3xl;
         height: $header-height;
+        min-height: $header-height;
         border-bottom: 1px solid rgba($dark-1, 0.1);
 
         @include media-down(md) {
@@ -58,7 +59,6 @@ body.udp-megamenu-open {
         background: transparent;
         border: 0;
         cursor: pointer;
-        font-family: $font-family-body;
         font-size: 14px;
         font-weight: 500;
         color: $dark-1;
@@ -72,6 +72,14 @@ body.udp-megamenu-open {
             border-radius: 9999px;
             border: 1px solid $dark-1;
             transition: background-color $transition-base, color $transition-base;
+        }
+
+        &-label {
+            font-family: $font-family-body;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            color: $dark-1;
         }
 
         &:hover &-circle,
