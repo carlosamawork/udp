@@ -566,11 +566,6 @@ body.udp-megamenu-open {
         }
     }
 
-    // Animación close: gira al aparecer (igual que el close del bottom bar)
-    .udp-megamenu__mtop-nav:not([hidden]) .udp-megamenu__mclose-all,
-    .udp-megamenu__mclose-l1 {
-        animation: udp-close-rotate-in 0.3s 0.1s ease both;
-    }
 
     // Solo visible en pantallas intermedias (md–lg); en < md lo cubre el bottom bar
     @include media-down(md) {
