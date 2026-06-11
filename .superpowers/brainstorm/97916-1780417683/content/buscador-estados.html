@@ -1,10 +1,26 @@
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #f0f0f0; font-family: 'Work Sans', sans-serif; }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    background: #f0f0f0;
+    font-family: "Work Sans", sans-serif;
+  }
 
-  .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #666; font-weight: 600; margin-bottom: 8px; }
+  .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
 
-  .estado-wrap { margin-bottom: 32px; }
+  .estado-wrap {
+    margin-bottom: 32px;
+  }
 
   /* ── ESTADO 1: vacío / oscuro ── */
   .header-dark {
@@ -23,21 +39,34 @@
     flex: 1;
     max-width: 720px;
   }
-  .header-dark .cursor { color: white; font-size: 16px; font-weight: 500; }
-  .header-dark .placeholder { color: rgba(255,255,255,0.3); font-size: 16px; font-weight: 500; }
+  .header-dark .cursor {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .header-dark .placeholder {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 16px;
+    font-weight: 500;
+  }
   .btn-close-dark {
-    width: 50px; height: 50px;
+    width: 50px;
+    height: 50px;
     border-radius: 9999px;
     border: 1px solid #454545;
     background: transparent;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
   }
-  .btn-close-dark svg { stroke: white; }
+  .btn-close-dark svg {
+    stroke: white;
+  }
 
   /* ── ESTADO 2: con texto / beige ── */
   .header-beige {
-    background: #f8f7f4;
+    background: $beige;
     height: 84px;
     display: flex;
     align-items: center;
@@ -52,17 +81,30 @@
     flex: 1;
     max-width: 720px;
   }
-  .header-beige .cursor { color: #1c1c1c; font-size: 16px; font-weight: 500; }
-  .header-beige .typed { color: #1c1c1c; font-size: 24px; font-weight: 500; }
+  .header-beige .cursor {
+    color: #1c1c1c;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .header-beige .typed {
+    color: #1c1c1c;
+    font-size: 24px;
+    font-weight: 500;
+  }
   .btn-close-beige {
-    width: 50px; height: 50px;
+    width: 50px;
+    height: 50px;
     border-radius: 9999px;
     border: 1px solid #b0b0b0;
     background: transparent;
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
   }
-  .btn-close-beige svg { stroke: #1c1c1c; }
+  .btn-close-beige svg {
+    stroke: #1c1c1c;
+  }
 
   /* ── PANEL DE RESULTADOS ── */
   .results-panel {
@@ -70,7 +112,9 @@
     padding: 40px;
     border-bottom: 1px solid #e5e5e5;
   }
-  .results-section { margin-bottom: 32px; }
+  .results-section {
+    margin-bottom: 32px;
+  }
   .results-label {
     font-size: 13px;
     font-weight: 600;
@@ -78,9 +122,13 @@
     text-transform: uppercase;
     color: #1c1c1c;
     margin-bottom: 16px;
-    font-family: 'Necto Mono', monospace;
+    font-family: "Necto Mono", monospace;
   }
-  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
   .result-card {
     background: #f2f2f2;
     padding: 16px 20px;
@@ -91,20 +139,24 @@
     display: flex;
     align-items: flex-start;
   }
-  .result-card:hover { background: #e8e8e8; }
+  .result-card:hover {
+    background: #e8e8e8;
+  }
   .result-card-title {
     font-size: 15px;
     font-weight: 600;
     color: #1c1c1c;
     line-height: 1.3;
-    font-family: 'Arizona Flare', serif;
+    font-family: "Arizona Flare", serif;
   }
 
-  .page-bg { background: #f0f0f0; padding: 24px; }
+  .page-bg {
+    background: #f0f0f0;
+    padding: 24px;
+  }
 </style>
 
 <div class="page-bg">
-
   <div class="section">
     <h2>¿Cómo funciona el buscador?</h2>
     <p class="subtitle">Click en "Buscador" en el header → el top-bar se transforma en el panel de búsqueda</p>
@@ -119,8 +171,8 @@
       </div>
       <button class="btn-close-dark">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke-width="1.5" stroke-linecap="round">
-          <line x1="3" y1="3" x2="13" y2="13"/>
-          <line x1="13" y1="3" x2="3" y2="13"/>
+          <line x1="3" y1="3" x2="13" y2="13" />
+          <line x1="13" y1="3" x2="3" y2="13" />
         </svg>
       </button>
     </div>
@@ -135,8 +187,8 @@
       </div>
       <button class="btn-close-beige">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke-width="1.5" stroke-linecap="round">
-          <line x1="3" y1="3" x2="13" y2="13"/>
-          <line x1="13" y1="3" x2="3" y2="13"/>
+          <line x1="3" y1="3" x2="13" y2="13" />
+          <line x1="13" y1="3" x2="3" y2="13" />
         </svg>
       </button>
     </div>
@@ -152,15 +204,31 @@
       <div class="results-section">
         <div class="results-label">Encontrado en Noticias</div>
         <div class="results-grid">
-          <div class="result-card"><span class="result-card-title">Admisión 2026: Universidad Diego Portales consolida su crecimiento con más de 5.000 nuevos convocados</span></div>
-          <div class="result-card"><span class="result-card-title">UDP suscribe convenio académico con la Universidad de Ámsterdam</span></div>
-          <div class="result-card"><span class="result-card-title">Posgrados y educación continua: 30 años en el centro del proyecto académico</span></div>
-          <div class="result-card"><span class="result-card-title">Conoce las fechas de Admisión Especial UDP 1° Semestre 2026</span></div>
-          <div class="result-card"><span class="result-card-title">Facultad de Ingeniería y Ciencias lanza nuevo Doctorado</span></div>
-          <div class="result-card"><span class="result-card-title">UDP concluye exitosamente su proceso de matrícula 2025</span></div>
+          <div class="result-card">
+            <span class="result-card-title"
+              >Admisión 2026: Universidad Diego Portales consolida su crecimiento con más de 5.000 nuevos
+              convocados</span
+            >
+          </div>
+          <div class="result-card">
+            <span class="result-card-title">UDP suscribe convenio académico con la Universidad de Ámsterdam</span>
+          </div>
+          <div class="result-card">
+            <span class="result-card-title"
+              >Posgrados y educación continua: 30 años en el centro del proyecto académico</span
+            >
+          </div>
+          <div class="result-card">
+            <span class="result-card-title">Conoce las fechas de Admisión Especial UDP 1° Semestre 2026</span>
+          </div>
+          <div class="result-card">
+            <span class="result-card-title">Facultad de Ingeniería y Ciencias lanza nuevo Doctorado</span>
+          </div>
+          <div class="result-card">
+            <span class="result-card-title">UDP concluye exitosamente su proceso de matrícula 2025</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>

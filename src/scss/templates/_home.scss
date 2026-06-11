@@ -450,9 +450,17 @@
         line-height: 48px;
         text-decoration: none;
 
+        @include media-down(md) {
+            font-size: var(--font-size-225-rem-36-px, 36px);
+            font-style: normal;
+            font-weight: var(--font-weight-font-weight-500, 500);
+            line-height: 38px;
+            letter-spacing: var(--Common-Typography-Tracking-normal, 0);
+        }
+
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
+        white-space: wrap;
 
         &:hover {
             color: var(--udp-color-primary, #0033a0) !important;

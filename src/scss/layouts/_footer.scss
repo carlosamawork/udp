@@ -10,6 +10,7 @@
 
     @include media-down(md) {
         padding: 50px 25px;
+        margin-bottom: $mobile-nav-height;
     }
 
     &__inner {
