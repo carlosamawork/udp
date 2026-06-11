@@ -622,11 +622,7 @@ body.udp-megamenu-open {
     }
 
     .udp-megamenu__mitem {
-        border-bottom: 1px solid rgba($dark-1, 0.1);
-
-        &:last-child {
-            border-bottom: none;
-        }
+        // Sin border entre items
     }
 
     // -------------------------------------------------------------------------
@@ -637,7 +633,7 @@ body.udp-megamenu-open {
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding: $space-md 0;
+        padding: 12px 0;
         background: transparent;
         border: none;
         cursor: pointer;
@@ -647,26 +643,27 @@ body.udp-megamenu-open {
 
         svg {
             flex-shrink: 0;
-            color: rgba($dark-1, 0.4);
+            width: 26px;
+            height: 26px;
+            color: $dark-1;
         }
 
         &:hover,
         &:focus-visible {
             outline: none;
-
-            svg {
-                color: $dark-1;
-            }
         }
     }
 
     .udp-megamenu__mbtn-label {
         font-family: $font-family-display;
         font-size: 25px;
-        line-height: 1.2;
+        line-height: 25px;
         font-weight: 500;
         letter-spacing: -0.5px;
         color: $dark-1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     // -------------------------------------------------------------------------
