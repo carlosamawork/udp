@@ -2025,3 +2025,35 @@ Inicio de la **fase mobile**. Primer pase: `single-post.php` contra la maqueta F
 **Rama unificada:** se renombró `feature/single-noticia-mobile` → **`feature/mobile`** (engloba todo el trabajo mobile). Borrada `feature/eventos-mobile` (vacía). Eventos + la **barra flotante global** se construyen sobre `feature/mobile`. Recordatorio: al implementar la barra global (footer, todas las páginas), retirar la barra específica del single (`post-mobile-bar.php` + funciones share/menú/top de `single-post-mobile.js`, dejando solo el carrusel de relacionados).
 
 **Nota visual:** el diseño mobile es `media-down(md)` (≤767px). En ancho desktop el single se ve igual que antes (intencional). Para revisar: DevTools responsive @393px.
+
+### 2026-06-11 — Single desktop 2-col + Eventos mobile + barra de acción global _(Cacho)_
+
+Rama **`feature/mobile`** (engloba todo el mobile). Continuación de la sesión del fix de build/caché.
+
+**Single desktop reestructurado (Figma 3706-21278)** — commit `16972af`:
+- Hero = back + **título a ancho completo** (contenedor 1440/1360) con línea inferior (`@media-up(lg)`).
+- Cuerpo en **2 columnas** (`__body-grid`, `grid-template-columns: 317px minmax(0,662px)`, solo `≥lg`): izquierda = meta (`post-meta.php` nuevo: Fecha + categoría), derecha = imagen destacada + caption (`wp_get_attachment_caption`) + texto (~662 legible).
+- La meta y la imagen destacada **salieron del hero**; `post-hero.php` ahora solo back+título. En `<lg` se apila (título → meta → imagen → texto) = mobile aprobado intacto.
+- Galería y related ya iban a 1440.
+
+**Barra de acción mobile GLOBALIZADA** — commits `787f829`→`8e83089`:
+- `template-parts/global/mobile-action-bar.php` (clase `udp-mobile-bar`) + `src/scss/layouts/_mobile-action-bar.scss` + `src/js/modules/mobile-action-bar.js` (`initMobileActionBar`). Montada en `footer.php` antes de `wp_footer()` → aparece en TODAS las páginas, visible solo `<md`. Comparte la página actual.
+- Retirada la barra específica del single: borrado `post-mobile-bar.php`, su include, su bloque SCSS; `single-post-mobile.js` quedó solo con `initRelatedCarousel`.
+- Estilo (Figma 4054-51922): barra `#1c1c1c` borde-top blanco, círculos share/↑ borde `#454545`, Menú = círculo hamburguesa 50px + label.
+- **Seguridad** (`bf3ae24`): el partial NO usa `$_SERVER['HTTP_HOST']` (Host Header Injection / cache-poisoning) — usa `home_url(add_query_arg([], $wp->request))` para no-singulares. Regla: nunca construir URLs desde cabeceras Host.
+
+**Eventos archive mobile pixel-perfect (Figma 4041-43414 grid / 4041-43845 list)** — commits `5c56974`→`90327ca`:
+- Header `<md`: título **48px** (`H1 Mobile`), toggle grid/list **a la derecha del título** (no debajo).
+- Card grid `<md`: imagen arriba ratio **343:250**, CTA circular absoluto abajo-derecha, body `padding-bottom:56px`.
+- Card list `<md`: título **20px** (eyebrow 12px mono y fecha 14px ya venían del base).
+
+**Correcciones de feedback al single mobile** (commits previos `ad41ff7`, `79be552`): related sin chip amarillo + 1 card por vista (slidesPerView 1); galería sin dots, flechas en píldora oscura (Figma 4041-42206); article sin padding-bottom en `<md`.
+
+**Verificación E2E**: single y eventos HTTP 200, 0 errores PHP, barra global única en cada página, single sin doble barra + carrusel intacto, eventos grid 6 cards / list 12. Review final: APROBADO.
+
+**Pendientes**:
+- Validación visual en dispositivo/DevTools @393px (single + eventos + barra global en otras páginas) y desktop ≥992.
+- Pixel-perfect fino de cards eventos si hace falta tras revisión visual.
+- Merge `feature/mobile` → `main` cuando se valide.
+- Otras páginas mobile (la barra global ya aparece en ellas).
+- **WP Fastest Cache sigue desactivado (dev)** — reactivar en producción.
