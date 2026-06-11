@@ -491,7 +491,7 @@ body.udp-megamenu-open {
         align-items: center;
         height: $header-height;
         min-height: $header-height;
-        padding: 0 $space-md;
+        padding: 0 25px;
         border-bottom: 1px solid $dark-1;
         flex-shrink: 0;
     }
@@ -512,6 +512,7 @@ body.udp-megamenu-open {
     .udp-megamenu__mlogo {
         display: inline-flex;
         align-items: center;
+        flex-shrink: 0;
         text-decoration: none;
         color: $dark-1;
 
@@ -580,9 +581,17 @@ body.udp-megamenu-open {
     }
 
     @keyframes udp-mob-back-tap {
-        0%   { transform: translateX(0); }
-        40%  { transform: translateX(-6px); }
-        100% { transform: translateX(0); }
+        0% {
+            transform: translateX(0);
+        }
+
+        40% {
+            transform: translateX(-6px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -633,28 +642,35 @@ body.udp-megamenu-open {
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding: 12px 0;
         background: transparent;
         border: none;
         cursor: pointer;
         color: $dark-1;
         text-align: left;
-        gap: $space-sm;
+        gap: 4px;
 
         svg {
             flex-shrink: 0;
             width: 26px;
             height: 26px;
-            color: $dark-1;
+            color: #B0B0B0;
+
         }
 
         &:hover,
         &:focus-visible {
             outline: none;
+
+
+            svg {
+                color: $dark-1;
+            }
         }
     }
 
     .udp-megamenu__mbtn-label {
+        padding: 12px 0;
+
         font-family: $font-family-display;
         font-size: 25px;
         line-height: 25px;
