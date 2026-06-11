@@ -10,7 +10,7 @@ export async function initSinglePostGallery() {
     }
 
     const { default: Swiper } = await import('swiper');
-    const { Navigation, Keyboard, Pagination } = await import('swiper/modules');
+    const { Navigation, Keyboard } = await import('swiper/modules');
     await import('swiper/css');
 
     containers.forEach((el) => {
@@ -18,7 +18,7 @@ export async function initSinglePostGallery() {
         if (!swiperEl) return;
 
         new Swiper(swiperEl, {
-            modules: [Navigation, Keyboard, Pagination],
+            modules: [Navigation, Keyboard],
             slidesPerView: 'auto',
             spaceBetween: 16,
             keyboard: { enabled: true },
@@ -26,10 +26,6 @@ export async function initSinglePostGallery() {
             navigation: {
                 nextEl: el.querySelector('.udp-single-post__gallery-next'),
                 prevEl: el.querySelector('.udp-single-post__gallery-prev'),
-            },
-            pagination: {
-                el: el.querySelector('.udp-single-post__gallery-dots'),
-                clickable: true,
             },
             breakpoints: {
                 768: { slidesPerView: 3, spaceBetween: 30 },

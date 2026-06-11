@@ -41,7 +41,7 @@ $linkedin = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencod
     <button type="button" class="udp-single-post__mobile-menu" data-udp-mobile-menu
         aria-label="<?php esc_attr_e( 'Abrir menú', 'starter-theme' ); ?>">
         <span class="udp-single-post__mobile-menu-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 26 26" fill="none">
+            <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
                 <line x1="5" y1="9"  x2="21" y2="9"  stroke="currentColor" stroke-width="1.5"/>
                 <line x1="5" y1="13" x2="21" y2="13" stroke="currentColor" stroke-width="1.5"/>
                 <line x1="5" y1="17" x2="21" y2="17" stroke="currentColor" stroke-width="1.5"/>
@@ -52,7 +52,7 @@ $linkedin = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencod
 
     <button type="button" class="udp-single-post__mobile-top" data-udp-mobile-top
         aria-label="<?php esc_attr_e( 'Volver arriba', 'starter-theme' ); ?>">
-        <svg width="20" height="20" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 18 18" fill="none" aria-hidden="true">
             <path d="M9 14V4M5 8l4-4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </button>

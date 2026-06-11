@@ -42,5 +42,4 @@ if ( ! is_array( $gallery ) || empty( $gallery ) ) {
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
     </div>
-    <div class="udp-single-post__gallery-dots"></div>
 </section>

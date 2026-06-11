@@ -350,33 +350,6 @@
         }
     }
 
-    &-dots {
-        display: none;
-
-        @include media-down(md) {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: $space-md;
-
-            .swiper-pagination-bullet {
-                width: 8px;
-                height: 8px;
-                border-radius: 9999px;
-                background-color: rgba($dark-1, 0.25);
-                opacity: 1;
-            }
-
-            .swiper-pagination-bullet-active {
-                width: 22px;
-                background-color: $dark-1;
-            }
-        }
-    }
-
-    @include media-down(md) {
-        .udp-single-post__gallery-nav { display: none; }
-    }
 }
 
 // --------------------------------------------------------------------------
@@ -394,21 +367,22 @@
         right: 0;
         bottom: 0;
         z-index: 60;
-        height: 88px;
-        padding: 0 $space-md;
+        min-height: 80px;
+        padding: 15px $space-md;
         background-color: $dark-1;
-        border-top: 1px solid rgba($white, 0.15);
+        border-top: 1px solid $white;
     }
 }
 
+// Compartir (izq) y volver-arriba (der): círculos flotando sobre el borde de la barra
 .udp-single-post__mobile-share,
 .udp-single-post__mobile-top {
     position: absolute;
-    bottom: calc(88px - 24px); // flotan apoyados sobre el borde superior de la barra
+    bottom: calc(100% + 16px);
     width: 48px;
     height: 48px;
     border-radius: 9999px;
-    border: 1px solid rgba($white, 0.4);
+    border: 1px solid $gray-high;
     background-color: $dark-1;
     color: $white;
     display: inline-flex;
@@ -428,30 +402,37 @@
 .udp-single-post__mobile-share { left: $space-md; }
 .udp-single-post__mobile-top   { right: $space-md; }
 
+// Menú: círculo hamburguesa + etiqueta "Menú" al lado (no pill)
 .udp-single-post__mobile-menu {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
-    border: 1px solid rgba($white, 0.4);
-    border-radius: 9999px;
+    padding: 0;
+    border: 0;
     background-color: transparent;
     color: $white;
     font-family: $font-family-body;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
+    line-height: 24px;
     cursor: pointer;
-    transition: background-color $transition-base, color $transition-base;
-
-    &:hover,
-    &:focus-visible {
-        background-color: $white;
-        color: $dark-1;
-        outline: none;
-    }
 
     &-icon {
         display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 9999px;
+        border: 1px solid $gray-high;
+        transition: background-color $transition-base, color $transition-base;
+    }
+
+    &:hover &-icon,
+    &:focus-visible &-icon {
+        background-color: $white;
+        color: $dark-1;
+        outline: none;
     }
 }
 
@@ -554,6 +535,11 @@
 
     .udp-single-post__related .udp-card-noticia__title {
         color: $white;
+    }
+
+    // Sin chip de categoría amarilla en el related mobile (feedback)
+    .udp-single-post__related .udp-card-noticia__eyebrow {
+        display: none;
     }
 
     .udp-single-post__related .udp-card-noticia__date {
