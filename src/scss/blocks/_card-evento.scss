@@ -122,18 +122,14 @@
             .udp-card-evento__media {
                 width: 100%;
                 height: auto;
-                aspect-ratio: 16 / 9;
+                aspect-ratio: 343 / 250;
                 flex: 0 0 auto;
             }
 
             .udp-card-evento__body {
-                padding-right: 0;
                 min-height: 0;
-            }
-
-            .udp-card-evento__cta {
-                position: static;
-                margin-top: $space-sm;
+                padding-right: 0;
+                padding-bottom: 56px; // espacio para el CTA absoluto
             }
         }
     }
