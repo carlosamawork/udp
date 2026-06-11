@@ -62,7 +62,7 @@ function setOpen(panel, open) {
 			if (STATE.lastFocused && typeof STATE.lastFocused.focus === 'function') {
 				STATE.lastFocused.focus();
 			}
-		}, 0);
+		}, ANIM_DURATION);
 	}
 }
 
