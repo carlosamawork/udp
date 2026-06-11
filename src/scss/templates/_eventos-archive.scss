@@ -36,7 +36,7 @@
         color: $white;
 
         @include media-down(md) {
-            font-size: 40px;
+            font-size: 48px;
         }
     }
 
@@ -48,9 +48,7 @@
         gap: 8px;
 
         @include media-down(md) {
-            position: static;
-            margin-top: $space-sm;
-            right: auto;
+            right: $space-sm;
         }
     }
 
