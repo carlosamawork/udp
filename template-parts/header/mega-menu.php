@@ -274,7 +274,7 @@ $svg_plus   = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-
 	<?php if ( ! empty( $menu_items ) ) :
 
 		// SVG inline para botones mobile (sin dependencia de font)
-		$svg_mob_back  = '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>';
+		$svg_mob_back  = '<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.7487 11.334L11.332 16.7507L16.7487 22.1673M11.332 16.7507H22.707C23.4895 16.7507 24.2643 16.9048 24.9872 17.2042C25.7101 17.5036 26.3669 17.9425 26.9202 18.4958C27.4735 19.0491 27.9124 19.7059 28.2118 20.4288C28.5112 21.1517 28.6654 21.9265 28.6654 22.709C28.6654 23.4914 28.5112 24.2662 28.2118 24.9891C27.9124 25.712 27.4735 26.3689 26.9202 26.9222C26.3669 27.4754 25.7101 27.9143 24.9872 28.2138C24.2643 28.5132 23.4895 28.6673 22.707 28.6673H18.9154" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 		$svg_mob_close = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" viewBox="0 0 14 14"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>';
 		$svg_mob_chev  = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg>';
 		$svg_mob_arr   = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 16 16"><path d="M3 8h10M8 3l5 5-5 5"/></svg>';
