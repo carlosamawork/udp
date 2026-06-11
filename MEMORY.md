@@ -2004,10 +2004,12 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 
 **Bug introducido y corregido**: en un refactor del JS, `setTimeout(() => {...}, ANIM_DURATION)` se cambió accidentalmente a `setTimeout(..., 0)`, eliminando la animación de fade-out al cerrar. Corregido en commit `254fa1b`.
 
-**Commits de esta sesión**: `af186a9` (tokens SCSS), `eb1fb57` (z-index + bottom 80px), `...` (close button PHP + SCSS + JS), `254fa1b` (fix setTimeout).
+**Commits de esta sesión**: `af186a9` (tokens SCSS), `eb1fb57` (z-index + bottom 80px), `...` (close button PHP + SCSS + JS), `aa0d621` (quitar setTimeout y fade-out — cierre instantáneo).
+
+**Nota sobre el cierre del menú**: se intentó `setTimeout(ANIM_DURATION)` para sincronizar con la animación CSS de fade-out, pero producía doble latencia perceptible al hacer click. Se eliminaron el timeout, la clase `--closing`, `ANIM_DURATION` y el keyframe `udp-megamenu-fadeout`. El panel se oculta sincrónicamente. El fade-in al abrir sigue intacto.
 
 ### 2026-06-11 — Cierre de sesión _(Elsa)_
 
-- Mobile header completamente implementado: top bar móvil simplificado (logo + lupa), barra inferior fija con hamburger → × blanco al abrir menú, animación rotate, transición de fondo.
-- Rama activa: `elsa`. Build limpio (101.94 kB main.js, 744ms).
-- **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish (SVGs sociales reales, eyebrow color por término); F11 switch tema activo; buscador funcional end-to-end testing.
+- Mobile header completamente implementado: top bar móvil simplificado (logo + lupa), barra inferior fija con hamburger → × blanco al abrir menú, animación rotate, transición de fondo, cierre instantáneo.
+- Rama activa: `elsa`. Build limpio (101.83 kB main.js, 712ms).
+- **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish (SVGs sociales reales, eyebrow color por término); F11 switch tema activo.
