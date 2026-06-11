@@ -24,6 +24,7 @@ $gray-high: #454545; // Bordes iconos circulares
 $gray-medium: #4F4F4F; // Bordes botones sobre dark
 $white: #FFFFFF;
 $white-70: rgba(255, 255, 255, 0.7); // Etiquetas/categorías sobre dark
+$beige: #f8f7f4;
 
 // --------------------------------------------------------------------------
 // 2. Mapeo a variables Bootstrap (ANTES del @import de Bootstrap)
@@ -152,6 +153,7 @@ $border-radius-lg: 0;
 // --------------------------------------------------------------------------
 $header-height: 84px;
 $navbar-height: 80px; // Top-bar UDP
+$mobile-nav-height: 120px;
 $header-side-padding: $space-3xl; // 40px
 
 // --------------------------------------------------------------------------

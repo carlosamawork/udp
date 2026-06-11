@@ -9,7 +9,8 @@
     padding: 70px 40px;
 
     @include media-down(md) {
-        padding: $space-3xl $space-lg;
+        padding: 50px 25px;
+        margin-bottom: $mobile-nav-height;
     }
 
     &__inner {
@@ -30,9 +31,8 @@
         padding-top: 30px;
         border-top: 1px solid $white;
 
-        @include media-down(md) {
+        @include media-down(lg) {
             flex-direction: column;
-            align-items: flex-start;
             gap: $space-xl;
         }
     }
@@ -102,7 +102,7 @@
         }
     }
 
-    @include media-down(lg) {
+    @include media-down(xl) {
         justify-content: flex-start;
         gap: $space-lg;
 
@@ -130,8 +130,10 @@
     padding: 0;
     display: flex;
     align-items: center;
-    gap: $space-xl; // 24px
+    justify-content: center;
+    gap: $space-sm $space-xl; // 24px
     flex-shrink: 0;
+    flex-wrap: wrap;
 
     li {
         display: inline-flex;
@@ -173,6 +175,10 @@
             outline: 2px solid $brand-accent;
             outline-offset: 2px;
         }
+    }
+
+    @include media-down(lg) {
+        order: 3;
     }
 }
 

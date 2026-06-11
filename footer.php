@@ -75,6 +75,8 @@ if ( ! empty( $legal_links ) || ! empty( $copyright ) ) :
 </div>
 <?php endif; ?>
 
+<?php get_template_part( 'template-parts/header/mobile-nav' ); ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>
