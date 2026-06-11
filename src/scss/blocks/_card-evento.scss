@@ -181,6 +181,11 @@
             gap: $space-2xs;
             padding: $space-sm 0;
 
+            .udp-card-evento__title {
+                font-size: 20px;
+                line-height: 1.2;
+            }
+
             .udp-card-evento__date {
                 text-align: left;
             }
