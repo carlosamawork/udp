@@ -9,8 +9,9 @@
     padding: 70px 40px;
 
     @include media-down(md) {
-        padding: 50px 25px;
-        margin-bottom: $mobile-nav-height;
+        // Reserva para la barra inferior fija del mega-menú como PADDING (negro)
+        // en vez de margin externo, para no dejar un hueco blanco bajo el footer.
+        padding: 50px 25px $mobile-nav-height;
     }
 
     &__inner {
