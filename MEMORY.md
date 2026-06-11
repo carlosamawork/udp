@@ -2005,3 +2005,23 @@ Inicio de la **fase mobile**. Primer pase: `single-post.php` contra la maqueta F
 - Otras páginas single/archive mobile (misma fase).
 - Merge `feature/single-noticia-mobile` → `main` cuando se valide visualmente en dispositivo.
 - Revisión visual en dispositivo real / DevTools @393px vs Figma `4041-42144`.
+
+### 2026-06-11 — Fix entorno (build no se reflejaba) + rama `feature/mobile` _(Cacho)_
+
+**Síntoma:** "hago `npm run build` y no cambia nada / el single no se ve como el diseño".
+
+**Causa raíz (3 capas):**
+1. `dist/` (y `dist/.vite/manifest.json`) propiedad de **root** → `npm run build` aborta con `EACCES: permission denied, unlink .../dist/.vite/manifest.json` (Vite no puede vaciar el outDir) → quedan assets viejos. No hay watcher root vivo (ps limpio); el manifest queda chowneado a root con el mismo mtime del build → un `chown` posterior, casi seguro **MAMP/Apache corriendo como root**. Trigger exacto no identificado (ambiental).
+2. **WP Fastest Cache** (premium + free) cacheaba el HTML.
+3. **WPFC Premium minify/combine**: servía bundles `wp-content/cache/wpfc-minified/*.css` en vez de `dist/css/main.*.css` → aunque el build fuera correcto, el CSS no cambiaba (la culpable real de "estilos no cambian").
+
+**Fix aplicado:**
+- Workaround de build SIN sudo: `mv dist .dist-root-bak-<ts> && npm run build` (renombrar solo requiere permiso en el padre, que es de uid 501; Vite crea un `dist/` nuevo de tu propiedad). El `rm -rf dist` NO funciona (no puedes unlink archivos root sin sudo).
+- **Desactivados ambos plugins WPFC** (`deactivate_plugins`) para desarrollo — reversible (WP Admin → Plugins). En producción deben ir activados y limpiarse en deploy.
+- Verificado: la home y el single ahora enlazan `dist/css/main.*.css` directo (sin wpfc-minified), HTTP 200, hash = build actual.
+
+**Pendiente entorno:** quedan dirs `.dist-root-bak-*` root-owned (borrar con `sudo rm -rf .dist-root-bak-*`). Mitigación permanente real: que MAMP no sirva Apache como root, o nunca correr build/watch con sudo.
+
+**Rama unificada:** se renombró `feature/single-noticia-mobile` → **`feature/mobile`** (engloba todo el trabajo mobile). Borrada `feature/eventos-mobile` (vacía). Eventos + la **barra flotante global** se construyen sobre `feature/mobile`. Recordatorio: al implementar la barra global (footer, todas las páginas), retirar la barra específica del single (`post-mobile-bar.php` + funciones share/menú/top de `single-post-mobile.js`, dejando solo el carrusel de relacionados).
+
+**Nota visual:** el diseño mobile es `media-down(md)` (≤767px). En ancho desktop el single se ve igual que antes (intencional). Para revisar: DevTools responsive @393px.
