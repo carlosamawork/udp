@@ -38,7 +38,7 @@ import { initSinglePostGallery } from '@modules/single-post-gallery';
 import { initCalendarioActiveMonth } from '@modules/calendario-active-month';
 import { initBlockImageGallery } from '@modules/block-image-gallery';
 import { initBlockAccordion } from '@modules/block-accordion';
-import { initMegaMenu } from '@modules/mega-menu';
+import { initMegaMenu, initMegaMenuMobile } from '@modules/mega-menu';
 import { initSearch } from '@modules/search';
 import { initHomePortada } from '@modules/home-portada';
 import { initHomeNoticias } from '@modules/home-noticias';
@@ -75,6 +75,7 @@ domReady(() => {
     initBlockImageGallery();
     initBlockAccordion();
     initMegaMenu();
+    initMegaMenuMobile();
     initSearch();
     initHomeNoticias();
     initHomeCulturaUdp();
