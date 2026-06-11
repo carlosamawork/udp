@@ -36,6 +36,7 @@ import { initMobileMenu } from '@modules/mobile-menu';
 import { initSectionLandingSwiper } from '@modules/section-landing-swiper';
 import { initSinglePostGallery } from '@modules/single-post-gallery';
 import { initSinglePostMobile } from '@modules/single-post-mobile';
+import { initMobileActionBar } from '@modules/mobile-action-bar';
 import { initCalendarioActiveMonth } from '@modules/calendario-active-month';
 import { initBlockImageGallery } from '@modules/block-image-gallery';
 import { initBlockAccordion } from '@modules/block-accordion';
@@ -73,6 +74,7 @@ domReady(() => {
     initSectionLandingSwiper();
     initSinglePostGallery();
     initSinglePostMobile();
+    initMobileActionBar();
     initCalendarioActiveMonth();
     initBlockImageGallery();
     initBlockAccordion();
