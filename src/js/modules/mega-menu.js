@@ -12,7 +12,7 @@ const STATE = {
 	lastFocused: null,
 };
 
-const MOBILE_MQ = window.matchMedia('(max-width: 767px)');
+const MOBILE_MQ = window.matchMedia('(max-width: 991.98px)');
 const MOB = { level: 0, sectionIdx: -1 };
 
 function mobSlide(level) {
@@ -63,7 +63,12 @@ function mobGoSub(sectionIdx, subIdx, title) {
     mobShowTopbar(2, title);
 }
 
-function mobBack() {
+function mobBack(btn) {
+    if (btn) {
+        btn.classList.remove('udp-mob-back-anim');
+        void btn.offsetWidth;
+        btn.classList.add('udp-mob-back-anim');
+    }
     if (MOB.level === 2) {
         MOB.level = 1;
         mobSlide(1);
@@ -238,6 +243,6 @@ export function initMegaMenuMobile() {
     });
 
     qsa('[data-udp-mob-back]').forEach(btn => {
-        btn.addEventListener('click', mobBack);
+        btn.addEventListener('click', () => mobBack(btn));
     });
 }

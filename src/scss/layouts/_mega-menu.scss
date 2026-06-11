@@ -454,17 +454,18 @@ body.udp-megamenu-open {
 }
 
 // ==========================================================================
-// MOBILE — slider horizontal 3 niveles (< md)
+// MOBILE — slider horizontal 3 niveles (< lg)
 // ==========================================================================
 
 .udp-megamenu__mobile {
     display: none; // oculto en desktop
 }
 
-@include media-down(md) {
+@include media-down(lg) {
+
     // Contenedor principal (fondo crema, reemplaza el desktop)
     .udp-megamenu {
-        background-color: #f8f7f4;
+        background-color: $beige;
         overflow: hidden;
     }
 
@@ -571,6 +572,22 @@ body.udp-megamenu-open {
             display: block;
             flex-shrink: 0;
         }
+    }
+
+    // Animación close: gira al aparecer (igual que el close del bottom bar)
+    .udp-megamenu__mtop-nav:not([hidden]) .udp-megamenu__mclose-all {
+        animation: udp-close-rotate-in 0.3s 0.05s ease both;
+    }
+
+    // Animación back: slide left al hacer click
+    .udp-megamenu__mback.udp-mob-back-anim {
+        animation: udp-mob-back-tap 0.25s ease both;
+    }
+
+    @keyframes udp-mob-back-tap {
+        0%   { transform: translateX(0); }
+        40%  { transform: translateX(-6px); }
+        100% { transform: translateX(0); }
     }
 
     // -------------------------------------------------------------------------
