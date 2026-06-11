@@ -31,12 +31,6 @@ body.udp-megamenu-open {
         animation: udp-megamenu-fadein 0.25s ease forwards;
     }
 
-    // Clase añadida por JS antes de ocultar → fade-out
-    &--closing {
-        animation: udp-megamenu-fadeout 0.2s ease forwards !important;
-        pointer-events: none;
-    }
-
     // ----------------------------------------------------------------------
     // TOP BAR INTERNO (× Cerrar + logo)
     // ----------------------------------------------------------------------
@@ -426,16 +420,6 @@ body.udp-megamenu-open {
 
     to {
         opacity: 1;
-    }
-}
-
-@keyframes udp-megamenu-fadeout {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
     }
 }
 

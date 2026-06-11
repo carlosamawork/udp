@@ -12,7 +12,6 @@ const STATE = {
 	lastFocused: null,
 };
 
-const ANIM_DURATION = 220; // ms — debe coincidir con udp-megamenu-fadeout
 
 function setOpen(panel, open) {
 	if (!panel) return;
@@ -36,33 +35,28 @@ function setOpen(panel, open) {
 			mobileCircle.classList.add('udp-is-entering');
 		}
 	} else {
-		// Fade-out antes de ocultar
-		panel.classList.add('udp-megamenu--closing');
-		setTimeout(() => {
-			panel.classList.remove('udp-megamenu--closing');
-			panel.hidden = true;
-			STATE.isOpen = false;
-			STATE.activeIdx = -1;
+		panel.hidden = true;
+		STATE.isOpen = false;
+		STATE.activeIdx = -1;
 
-			// Reset DOM: quitar --active de col-1, ocultar todos los detail panels
-			qsa('.udp-megamenu__primary-item--active', panel).forEach(el =>
-				el.classList.remove('udp-megamenu__primary-item--active')
-			);
-			qsa('.udp-megamenu__primary-btn', panel).forEach(btn =>
-				btn.setAttribute('aria-expanded', 'false')
-			);
-			qsa('[data-udp-megamenu-detail]', panel).forEach(el => {
-				el.classList.remove('udp-megamenu__detail--active');
-				el.hidden = true;
-				clearSubPanels(el);
-			});
-			document.documentElement.classList.remove('udp-megamenu-open');
-			document.body.classList.remove('udp-megamenu-open');
-			toggles.forEach(t => t.setAttribute('aria-expanded', 'false'));
-			if (STATE.lastFocused && typeof STATE.lastFocused.focus === 'function') {
-				STATE.lastFocused.focus();
-			}
-		}, ANIM_DURATION);
+		// Reset DOM: quitar --active de col-1, ocultar todos los detail panels
+		qsa('.udp-megamenu__primary-item--active', panel).forEach(el =>
+			el.classList.remove('udp-megamenu__primary-item--active')
+		);
+		qsa('.udp-megamenu__primary-btn', panel).forEach(btn =>
+			btn.setAttribute('aria-expanded', 'false')
+		);
+		qsa('[data-udp-megamenu-detail]', panel).forEach(el => {
+			el.classList.remove('udp-megamenu__detail--active');
+			el.hidden = true;
+			clearSubPanels(el);
+		});
+		document.documentElement.classList.remove('udp-megamenu-open');
+		document.body.classList.remove('udp-megamenu-open');
+		toggles.forEach(t => t.setAttribute('aria-expanded', 'false'));
+		if (STATE.lastFocused && typeof STATE.lastFocused.focus === 'function') {
+			STATE.lastFocused.focus();
+		}
 	}
 }
 
