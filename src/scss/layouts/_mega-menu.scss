@@ -670,27 +670,33 @@ body.udp-megamenu-open {
     // L2: botones y links de apartado — sans 17px
     // -------------------------------------------------------------------------
     .udp-megamenu__mbtn--l2 {
+        width: auto; // solo el ancho del contenido
+        justify-content: flex-start;
+
         .udp-megamenu__mbtn-label {
             font-family: $font-family-body;
             font-size: 17px;
             font-weight: 500;
             letter-spacing: normal;
         }
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
     }
 
     .udp-megamenu__mlink {
-        display: flex;
+        display: inline-flex; // ancho del contenido, no full-width
         align-items: center;
-        justify-content: space-between;
-        gap: $space-sm;
-        width: 100%;
-        padding: $space-md 0;
+        gap: 6px;
+        padding: 10px 0;
         text-decoration: none;
         color: $dark-1;
 
         svg {
             flex-shrink: 0;
-            color: rgba($dark-1, 0.4);
+            color: $dark-1;
         }
 
         &:hover,
@@ -703,8 +709,8 @@ body.udp-megamenu-open {
 
         &--no-url {
             cursor: default;
-            display: block;
-            padding: $space-md 0;
+            display: inline-block;
+            padding: 10px 0;
             color: rgba($dark-1, 0.5);
         }
     }
