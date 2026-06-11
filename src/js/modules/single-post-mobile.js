@@ -85,9 +85,11 @@ async function initRelatedCarousel() {
 
     const mq = window.matchMedia('(max-width: 767.98px)');
     let swiper = null;
+    let enabling = false;
 
     async function enable() {
-        if (swiper) return;
+        if (swiper || enabling) return;
+        enabling = true;
         viewport.classList.add('swiper');
         list.classList.add('swiper-wrapper');
         items.forEach((i) => i.classList.add('swiper-slide'));
@@ -103,6 +105,7 @@ async function initRelatedCarousel() {
             grabCursor: true,
             pagination: { el: pagination, clickable: true },
         });
+        enabling = false;
     }
 
     function disable() {

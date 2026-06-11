@@ -79,6 +79,6 @@ if ( empty( $cards ) ) {
                 <?php endforeach; ?>
             </ul>
         </div>
-        <div class="udp-single-post__related-dots" aria-hidden="true"></div>
+        <div class="udp-single-post__related-dots"></div>
     </div>
 </section>
