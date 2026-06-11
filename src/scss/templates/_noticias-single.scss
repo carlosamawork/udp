@@ -26,6 +26,11 @@
         margin-inline: auto;
         padding-inline: $space-3xl;
 
+        @include media-up(lg) {
+            padding-bottom: $space-lg;
+            border-bottom: 1px solid rgba($dark-1, 0.15);
+        }
+
         @include media-down(md) {
             padding-inline: $space-sm;
         }
@@ -64,17 +69,15 @@
 
     &__meta {
         display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: $space-sm;
-        margin-top: $space-lg;
-        padding-bottom: $space-md;
-        border-bottom: 1px solid rgba($dark-1, 0.15);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
 
-        @include media-down(md) {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 6px;
+        // Layout apilado (mobile/tablet): divisor antes de la imagen
+        @include media-down(lg) {
+            margin-bottom: $space-lg;
+            padding-bottom: $space-md;
+            border-bottom: 1px solid rgba($dark-1, 0.15);
         }
     }
 
@@ -93,13 +96,21 @@
     }
 
     &__featured {
-        margin: $space-2xl 0 0;
+        margin: 0 0 $space-lg;
 
         img {
             width: 100%;
             height: auto;
             display: block;
         }
+    }
+
+    &__featured-caption {
+        margin-top: $space-2xs;
+        font-family: $font-family-body;
+        font-size: 13px;
+        line-height: 1.4;
+        color: rgba($dark-1, 0.6);
     }
 
     // ----------------------------------------------------------------
@@ -113,6 +124,21 @@
         @include media-down(md) {
             padding-inline: $space-sm;
         }
+    }
+
+    // Dos columnas en desktop: meta (izq, 317) + contenido (der, ~662, legible).
+    // En <lg se apila (meta → imagen → texto), igual que el mobile aprobado.
+    &__body-grid {
+        @include media-up(lg) {
+            display: grid;
+            grid-template-columns: 317px minmax(0, 662px);
+            gap: 30px;
+            align-items: start;
+        }
+    }
+
+    &__main {
+        min-width: 0;
     }
 
     &__content {
