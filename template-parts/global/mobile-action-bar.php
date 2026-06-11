@@ -14,9 +14,12 @@ if ( is_singular() ) {
     $url   = get_permalink();
     $title = get_the_title();
 } else {
-    $scheme = ( function_exists( 'is_ssl' ) && is_ssl() ) ? 'https://' : 'http://';
-    $url    = esc_url_raw( $scheme . ( $_SERVER['HTTP_HOST'] ?? '' ) . ( $_SERVER['REQUEST_URI'] ?? '' ) );
-    $title  = wp_get_document_title();
+    // URL desde origen de confianza: home_url() fuerza el scheme+host del sitio
+    // (no manipulables vía cabecera Host). Evita Host Header Injection / cache-poisoning.
+    global $wp;
+    $path  = isset( $wp->request ) ? $wp->request : '';
+    $url   = home_url( add_query_arg( array(), $path ) );
+    $title = wp_get_document_title();
 }
 
 $facebook = 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $url );
