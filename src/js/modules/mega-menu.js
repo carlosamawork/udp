@@ -28,6 +28,13 @@ function setOpen( panel, open ) {
 		STATE.lastFocused = document.activeElement;
 		const closeBtn = panel.querySelector( '[data-udp-megamenu-close]' );
 		if ( closeBtn ) closeBtn.focus();
+		// Re-dispara la animación del círculo del close mobile en cada apertura
+		const mobileCircle = document.querySelector( '.udp-mobile-nav__close-circle' );
+		if ( mobileCircle ) {
+			mobileCircle.classList.remove( 'udp-is-entering' );
+			void mobileCircle.offsetWidth; // fuerza reflow
+			mobileCircle.classList.add( 'udp-is-entering' );
+		}
 	} else {
 		// Fade-out antes de ocultar
 		panel.classList.add( 'udp-megamenu--closing' );

@@ -223,12 +223,6 @@
     color: $white;
     cursor: pointer;
     padding: 0;
-    transition: opacity $transition-base;
-
-    &:hover,
-    &:focus {
-        opacity: 0.7;
-    }
 }
 
 .udp-mobile-nav__close-circle {
@@ -240,6 +234,13 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    transition: background-color $transition-base, color $transition-base;
+}
+
+.udp-mobile-nav__close:hover .udp-mobile-nav__close-circle,
+.udp-mobile-nav__close:focus-visible .udp-mobile-nav__close-circle {
+    background-color: $white;
+    color: $dark-1;
 }
 
 body.udp-megamenu-open {
@@ -256,8 +257,8 @@ body.udp-megamenu-open {
             display: inline-flex;
         }
 
-        .udp-mobile-nav__close-circle {
-            animation: udp-close-rotate-in 0.3s 0.1s ease both;
+        .udp-mobile-nav__close-circle.udp-is-entering {
+            animation: udp-close-rotate-in 0.3s ease both;
         }
     }
 }
