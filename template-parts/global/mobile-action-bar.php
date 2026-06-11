@@ -43,18 +43,6 @@ $linkedin = 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencod
         </svg>
     </button>
 
-    <button type="button" class="udp-mobile-bar__menu" data-udp-mobile-menu
-        aria-label="<?php esc_attr_e( 'Abrir menú', 'starter-theme' ); ?>">
-        <span class="udp-mobile-bar__menu-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 26 26" fill="none">
-                <line x1="5" y1="9"  x2="21" y2="9"  stroke="currentColor" stroke-width="1.5"/>
-                <line x1="5" y1="13" x2="21" y2="13" stroke="currentColor" stroke-width="1.5"/>
-                <line x1="5" y1="17" x2="21" y2="17" stroke="currentColor" stroke-width="1.5"/>
-            </svg>
-        </span>
-        <span class="udp-mobile-bar__menu-label"><?php esc_html_e( 'Menú', 'starter-theme' ); ?></span>
-    </button>
-
     <button type="button" class="udp-mobile-bar__top" data-udp-mobile-top
         aria-label="<?php esc_attr_e( 'Volver arriba', 'starter-theme' ); ?>">
         <svg width="24" height="24" viewBox="0 0 18 18" fill="none" aria-hidden="true">

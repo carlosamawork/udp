@@ -55,15 +55,6 @@ function initShare(bar) {
     });
 }
 
-function initMenu(bar) {
-    const btn = qs('[data-udp-mobile-menu]', bar);
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-        const toggle = qs('[data-udp-megamenu-toggle]');
-        if (toggle) toggle.click();
-    });
-}
-
 function initTop(bar) {
     const btn = qs('[data-udp-mobile-top]', bar);
     if (!btn) return;
@@ -77,6 +68,5 @@ export function initMobileActionBar() {
     const bar = qs('[data-udp-mobile-bar]');
     if (!bar) return;
     initShare(bar);
-    initMenu(bar);
     initTop(bar);
 }

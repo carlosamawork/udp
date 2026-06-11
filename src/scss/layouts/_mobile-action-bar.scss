@@ -1,29 +1,21 @@
 // ==========================================================================
 // BARRA DE ACCIÓN MOBILE GLOBAL — udp-mobile-bar (solo <md)
-// Compartir + Menú + volver-arriba. Figma 4054-51922.
+// Compartir + volver-arriba: círculos flotantes en las esquinas inferiores.
+// (El menú lo cubre el mega-menú mobile del header.)
 // ==========================================================================
 .udp-mobile-bar {
     display: none;
 
     @include media-down(md) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 60;
-        min-height: 80px;
-        padding: 15px $space-md;
-        background-color: $dark-1;
-        border-top: 1px solid $white;
+        display: block;
     }
 
+    // Compartir (izq) y volver-arriba (der): círculos fijos en las esquinas
     &__share,
     &__top {
-        position: absolute;
-        bottom: calc(100% + 16px);
+        position: fixed;
+        bottom: $space-md;
+        z-index: 60;
         width: 48px;
         height: 48px;
         border-radius: 9999px;
@@ -47,44 +39,11 @@
     &__share { left: $space-md; }
     &__top   { right: $space-md; }
 
-    &__menu {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 0;
-        border: 0;
-        background-color: transparent;
-        color: $white;
-        font-family: $font-family-body;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 24px;
-        cursor: pointer;
-
-        &-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 9999px;
-            border: 1px solid $gray-high;
-            transition: background-color $transition-base, color $transition-base;
-        }
-
-        &:hover &-icon,
-        &:focus-visible &-icon {
-            background-color: $white;
-            color: $dark-1;
-            outline: none;
-        }
-    }
-
     &__sheet {
         position: fixed;
         left: $space-md;
         right: $space-md;
-        bottom: 96px;
+        bottom: 74px; // sobre el botón de compartir (48px + $space-md + 8px)
         z-index: 61;
         display: flex;
         flex-direction: column;
