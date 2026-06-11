@@ -45,6 +45,7 @@ body.udp-megamenu-open {
 
         @include media-down(md) {
             padding: $space-sm $space-md;
+            grid-template-columns: 0 1fr;
         }
     }
 
@@ -103,6 +104,11 @@ body.udp-megamenu-open {
         grid-column: 2;
         display: inline-flex;
         align-items: center;
+
+
+        @include media-down(md) {
+            justify-self: left;
+        }
 
         img {
             height: 40px;
