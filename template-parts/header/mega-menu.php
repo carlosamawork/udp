@@ -286,11 +286,11 @@ $svg_plus   = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-
 		<div class="udp-megamenu__mtop">
 
 			<div class="udp-megamenu__mtop-l1" id="udp-mob-topbar-l1">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="udp-megamenu__mlogo" aria-label="<?php bloginfo( 'name' ); ?>">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="udp-megamenu__mlogo" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
 					<?php
 					$logo = function_exists( 'udp_get_logo_url' ) ? udp_get_logo_url( 'udp' ) : '';
 					if ( ! empty( $logo ) ) : ?>
-						<img src="<?php echo esc_url( $logo ); ?>" alt="<?php bloginfo( 'name' ); ?>" />
+						<img src="<?php echo esc_url( $logo ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
 					<?php else : ?>
 						<span class="udp-megamenu__mlogo-text"><?php bloginfo( 'name' ); ?></span>
 					<?php endif; ?>
