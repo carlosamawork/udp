@@ -501,6 +501,7 @@ body.udp-megamenu-open {
         display: flex;
         align-items: center;
         width: 100%;
+        justify-content: space-between;
     }
 
     .udp-megamenu__mtop-l1[hidden],
@@ -566,8 +567,9 @@ body.udp-megamenu-open {
     }
 
     // Animación close: gira al aparecer (igual que el close del bottom bar)
-    .udp-megamenu__mtop-nav:not([hidden]) .udp-megamenu__mclose-all {
-        animation: udp-close-rotate-in 0.3s 0.05s ease both;
+    .udp-megamenu__mtop-nav:not([hidden]) .udp-megamenu__mclose-all,
+    .udp-megamenu__mclose-l1 {
+        animation: udp-close-rotate-in 0.3s 0.1s ease both;
     }
 
     // Animación back: slide left al hacer click

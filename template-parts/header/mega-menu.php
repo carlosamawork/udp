@@ -295,6 +295,9 @@ $svg_plus   = '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-
 						<span class="udp-megamenu__mlogo-text"><?php bloginfo( 'name' ); ?></span>
 					<?php endif; ?>
 				</a>
+				<button class="udp-megamenu__mclose-all udp-megamenu__mclose-l1" type="button" data-udp-megamenu-close aria-label="<?php esc_attr_e( 'Cerrar menú', 'starter-theme' ); ?>">
+					<?php echo $svg_mob_close; // phpcs:ignore ?>
+				</button>
 			</div>
 
 			<div class="udp-megamenu__mtop-nav" id="udp-mob-topbar-nav" hidden>
