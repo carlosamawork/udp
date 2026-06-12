@@ -240,6 +240,13 @@
                 color: $white;
                 border-color: $dark-1;
             }
+
+            // Mobile: el bloque de contenido NO va oscuro en tema light (related single-event)
+            @include media-down(md) {
+                .udp-card-evento__body {
+                    background-color: transparent;
+                }
+            }
         }
     }
 }

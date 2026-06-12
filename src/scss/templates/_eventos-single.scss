@@ -199,6 +199,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
+        width: 100%; // ocupa todo el ancho del sidebar/columna
         height: 44px;
         padding: 0 $space-md;
         font-family: $font-family-body;
