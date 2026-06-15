@@ -113,6 +113,7 @@ $ics_url = add_query_arg( 'udp_ics', $post_id, home_url( '/' ) );
         <?php if ( $inscrip_url ) : ?>
             <a class="udp-event-meta__btn udp-event-meta__btn--primary" href="<?php echo esc_url( $inscrip_url ); ?>" target="_blank" rel="noopener noreferrer">
                 <?php esc_html_e( 'Inscríbete aquí', 'starter-theme' ); ?>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9.5 2.5l2 2L5 11l-2.5.5L3 9l6.5-6.5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
         <?php endif; ?>
     </div>

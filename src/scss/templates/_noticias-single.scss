@@ -426,7 +426,8 @@
     // El grid pasa a fila (Swiper toma el control al inicializar)
     .udp-single-post__related-list {
         display: flex;
-        gap: $space-md;
+        gap: 0; // el espaciado entre slides lo gestiona Swiper (spaceBetween); con
+                // `gap` CSS se sumaría y descentraría los slides 2º, 3º…
     }
 
     .udp-single-post__related-item {

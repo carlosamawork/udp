@@ -18,6 +18,10 @@
         top: 104px !important;
     }
 
+    @include media-down(sm) {
+        top: 104px !important;
+    }
+
     // Insetar el botón colapsado el mismo margen que el buscador (40px).
     // El plugin lo coloca a right:180px (ancho del panel); +40px lo separa del
     // borde sin revelar el panel (el contenedor sigue colapsado en right:-180px).

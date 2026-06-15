@@ -150,6 +150,12 @@
 // MODO GRID — 5 columnas desktop, 3 tablet, scroll-snap mobile
 // --------------------------------------------------------------------------
 .udp-section-cards--grid {
+    // Peek de la siguiente card cuando Swiper toma el control en mobile.
+    // (.udp-section-cards--grid .udp-section-cards__viewport supera a .swiper)
+    .udp-section-cards__viewport {
+        overflow: visible;
+    }
+
     .udp-section-cards__list {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -163,22 +169,15 @@
         }
 
         @include media-down(md) {
-            // Mobile: scroll-snap horizontal
+            // Mobile: Swiper convierte la lista en slider (mismo que modo swiper).
+            // Reset del grid; la separación entre slides la gestiona Swiper
+            // (spaceBetween) — sin gap/padding/max-width CSS que la descentre.
+            display: flex;
             grid-template-columns: none;
-            grid-auto-flow: column;
-            grid-auto-columns: 80%;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-padding-inline: $space-sm;
-            padding-inline: $space-sm;
-            -webkit-overflow-scrolling: touch;
-
-            scrollbar-width: none;
-            &::-webkit-scrollbar { display: none; }
-
-            .udp-section-cards__item {
-                scroll-snap-align: start;
-            }
+            gap: 0;
+            padding-inline: 0;
+            max-width: none;
+            margin-inline: 0;
         }
     }
 }
@@ -199,10 +198,7 @@
 
     .udp-section-cards__item.swiper-slide {
         flex: 0 0 285px;
-
-        @include media-down(md) {
-            flex: 0 0 80%;
-        }
+        // El ancho mobile (266px) lo fija la regla unificada al final del archivo.
     }
 }
 
@@ -305,5 +301,20 @@
             font-size: $font-size-h4;
             line-height: $line-height-snug;
         }
+    }
+}
+
+// --------------------------------------------------------------------------
+// MOBILE (<md): ambos modos (grid + swiper) son slider con cards 266×365 (Figma
+// 4041-44920). Selectores con 2 clases + orden al final → ganan a las reglas
+// por-modo (285px / aspect-ratio del swiper).
+// --------------------------------------------------------------------------
+@include media-down(md) {
+    .udp-section-cards .udp-section-cards__item.swiper-slide {
+        flex: 0 0 266px;
+    }
+
+    .udp-section-cards .udp-section-card {
+        aspect-ratio: 266 / 365;
     }
 }

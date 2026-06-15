@@ -17,6 +17,10 @@
         color: #fff;
         padding: $space-2xl $space-3xl;
 
+        @include media-down(md) {
+            padding: $space-xl $space-sm;
+        }
+
         &__inner {
             max-width: 1440px;
             margin: 0 auto;
@@ -28,6 +32,33 @@
 
             a {
                 color: inherit;
+            }
+
+            // Mobile: el breadcrumb se reemplaza por el back-link (Figma 4041-41179).
+            @include media-down(md) {
+                display: none;
+            }
+        }
+
+        // Back-link mobile (flecha volver + nombre de la página padre).
+        &__back {
+            display: none;
+
+            @include media-down(md) {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: $space-md;
+                font-family: $font-family-body;
+                font-size: 14px;
+                font-weight: 500;
+                color: #fff;
+                text-decoration: none;
+
+                &:hover,
+                &:focus-visible {
+                    text-decoration: underline;
+                }
             }
         }
 
@@ -139,6 +170,15 @@
         ol {
             margin: 0 0 $space-md $space-md;
         }
+
+        // Mobile: alineado a la izquierda (Figma). El contenido WYSIWYG trae
+        // `text-align: justify` inline en algunos párrafos → se anula con !important.
+        @include media-down(md) {
+            p,
+            li {
+                text-align: left !important;
+            }
+        }
     }
 
     &__sidebar {
@@ -206,6 +246,10 @@
         grid-template-columns: 1fr;
         gap: $space-xl;
 
+        @include media-down(md) {
+            padding: $space-2xl $space-sm;
+        }
+
         @include media-up(lg) {
             grid-template-columns: 318px 1fr;
             gap: $space-3xl;
@@ -227,6 +271,26 @@
         grid-template-columns: 1fr;
         gap: $space-md;
 
+        // Mobile: carrusel horizontal con peek (Figma 4041-41179 "autoridades").
+        @include media-down(md) {
+            display: flex;
+            grid-template-columns: none;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-padding-left: $space-sm;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            .udp-inst-dark__card {
+                flex: 0 0 266px; // ancho card Figma (266×365) con peek
+                scroll-snap-align: start;
+            }
+        }
+
         @include media-up(md) {
             grid-template-columns: repeat(2, 1fr);
         }
@@ -236,57 +300,73 @@
         }
     }
 
+    // Card estilo Figma 4041-41179 "autoridades" (= card del Section Landing):
+    // fondo oscuro, sin imagen, título abajo-izquierda + flecha circular arriba.
     &__card {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: $space-xs;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        position: relative; // ancla del stretched-link del title
+        list-style: none;
 
-        &-image {
-            aspect-ratio: 16 / 10;
-            background: $gray-medium;
+        &-link {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; // título al fondo
+            aspect-ratio: 266 / 365;
+            padding: $space-md;
+            background: $dark-2;
+            color: #fff;
+            text-decoration: none;
+            overflow: hidden;
+            transition: background-color $transition-base, transform $transition-base;
 
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
+            &:hover,
+            &:focus-visible {
+                background: $brand-blue; // lila
+                color: #fff;
+            }
+
+            @media (prefers-reduced-motion: no-preference) {
+                &:hover,
+                &:focus-visible {
+                    transform: translateY(-2px);
+                }
             }
         }
 
-        &-body {
-            padding: $space-md;
+        &-content {
+            position: relative;
+            z-index: 1;
         }
 
         &-title {
+            font-family: $font-family-body;
             font-size: 1.25rem;
-            font-weight: 700;
-            margin: 0 0 $space-xs;
-
-            a {
-                color: inherit;
-                text-decoration: none;
-
-                // Stretched link: el anchor cubre toda la card para hacerla clickable.
-                &::before {
-                    content: '';
-                    position: absolute;
-                    inset: 0;
-                    z-index: 1;
-                }
-
-                &:hover {
-                    color: $brand-accent;
-                }
-            }
+            font-weight: 500;
+            line-height: 1.2;
+            margin: 0;
+            color: #fff;
         }
 
-        &-excerpt {
-            color: rgba(255, 255, 255, 0.75);
-            font-size: 0.9375rem;
-            margin: 0;
+        &-cta {
+            position: absolute;
+            top: $space-md;
+            right: $space-md;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            border-radius: 9999px;
+            border: 1px solid $gray-medium;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: background-color $transition-base, color $transition-base, border-color $transition-base;
+        }
+
+        &-link:hover &-cta,
+        &-link:focus-visible &-cta {
+            background: #fff;
+            color: $brand-blue;
+            border-color: #fff;
         }
     }
 }

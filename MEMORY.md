@@ -2110,3 +2110,92 @@ Rama **`feature/mobile`** (engloba todo el mobile). Continuación de la sesión 
 - Mobile header completamente implementado: top bar móvil simplificado (logo + lupa), barra inferior fija con hamburger → × blanco al abrir menú, animación rotate, transición de fondo, cierre instantáneo.
 - Rama activa: `elsa`. Build limpio (101.83 kB main.js, 712ms).
 - **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish (SVGs sociales reales, eyebrow color por término); F11 switch tema activo.
+
+### 2026-06-15 — Single Evento mobile alineado a Figma 4041-42533 _(Cacho)_
+
+**Contexto**: El single-evento mobile ya estaba maquetado (commits ~12-jun) y casi calzaba con el Figma. Pase pixel-perfect contra el frame `4041-42533`: el header, meta (Día/Hora/Dirección/Entrada/Unidad), imagen, subtítulo "Presenta:" y cuerpo ya coincidían. Quedaban **dos divergencias deliberadas** del commit `c78e297` (12-jun) que contradecían este Figma — el usuario confirmó "match Figma" en ambas.
+
+**Cambios (todos scoped `<md`; desktop ≥md intacto)**:
+
+- **Related "Te podría interesar" → oscuro + carrusel** (revierte la decisión "light" de `c78e297`): sección `$dark-1`, título blanco, cards oscuras (card-evento default dark, sin `--light`), **carrusel Swiper con dots** (1 card/vista). Mismo patrón que single-noticia. `event-related.php` ahora envuelve la lista en `__related-viewport` + añade `__related-dots` + `data-udp-event-related-carousel`. Nuevo módulo JS `single-event-mobile.js` (espejo de `single-post-mobile.js`, init/destroy por `matchMedia`, lazy-import Swiper+Pagination) wired en `main.js`. SCSS dark+dots añadido al final de `_eventos-single.scss`.
+- **CTAs (Agregar al calendario / Inscríbete aquí) → ancho fijo 243px izquierda** (revierte `width:100%` de `c78e297`, solo en `<md`): `&__actions { align-items:flex-start }` + `&__btn { width:243px; max-width:100% }` en `media-down(md)`. Desktop conserva full-width en el sidebar.
+- **Icono lápiz** añadido al botón primario "Inscríbete aquí" (`event-meta.php`), por Figma. Es condicional a que exista URL `inscripciones`.
+
+**Decisión clave**: La sección related quedó oscura+carrusel SOLO en `<md`. En desktop (≥md) se conserva el grid claro 3-col existente (fuera de alcance de este Figma mobile). Nota: el related desktop de eventos arrastra texto de card claro/oscuro pre-existente sin validar — no tocado.
+
+**Verificación E2E** (evento `conversacion-unidad-minima-...`, `?theme=new`): HTTP 200, build limpio (836ms, main.js 106.98 kB), PHP lint OK (event-related + event-meta), `single-event-mobile.js` en bundle, CSS con `__related-dots` + `243px`, markup `data-udp-event-related-carousel`/`__related-viewport`/`__related-dots` presente.
+
+**Fix tras feedback del usuario (mismo día)**:
+- **Título de card related en negro** → ahora blanco. La card `card-evento__title` es `color:inherit` y heredaba el negro de `.udp-single-event`. Añadida regla `.udp-single-event__related .udp-card-evento__title { color:$white }` dentro del `media-down(md)`.
+- **Fecha no aparecía** en el related. Causa: `event-related.php` ordenaba por `fecha ASC` sin filtro, así que los eventos con `fecha` vacía (los 13 legacy) ordenan al inicio (string vacío < cualquier Ymd) y la card salía como `", 09:00 hrs"`.
+  - **Primer intento (descartado)**: `meta_query fecha >= hoy`. ERROR: el catálogo es casi todo histórico. Conteo real: 3626 eventos, **3613 con fecha**, **solo 1 futuro** (>= 20260615). El filtro `>= hoy` dejó el related con 1 card → "perdimos related".
+  - **Fix definitivo**: `event-related.php` reescrito con closure `$fetch_related($facultad, $limit, $exclude)` que excluye solo `fecha != ''` y ordena **`fecha DESC`** (Ymd DESC ⇒ próximos primero, luego pasados recientes; nunca vacía la sección). Cascada: misma facultad → relleno global hasta 3. E2E: 3 cards con fechas reales (13-Jul-2026, 21-Abr-2026, 14-Abr-2026).
+  - **Regla**: para "te podría interesar" de agenda NO filtrar `>= hoy` (vacía la sección con datos históricos); excluir `fecha vacía` + ordenar DESC.
+
+**Fix carrusel related — flash de pre-init (mismo día)**:
+- Síntoma del usuario: "los elementos no quedan centrados y un solo elemento" en el slider de Te podría interesar.
+- Diagnóstico con Chrome headless + **CDP (DevTools Protocol vía node 22, `WebSocket` global)** forzando 393px (`Emulation.setDeviceMetricsOverride`): el layout POST-init siempre fue correcto (viewport/slide/card = 361px, x=16, slidesGrid [361,361,361], 3 bullets). El problema era el estado PRE-init: mientras Swiper hace `import('swiper')` async, la lista `flex` con items `width:100%` se desbordaba SIN recortar ni centrar (cards saliéndose a la derecha, solo la 1ª visible) — visible en móvil real durante el lazy-load. (El `--screenshot` de una sola pasada captura ese estado roto; CDP con espera captura el correcto.)
+- Fix (`_eventos-single.scss`, bloque `<md>`): `overflow:hidden` en `.udp-single-event__related-viewport` (recorta a 1 card centrada hasta que Swiper aplica el suyo).
+- **Herramienta reusable**: `/tmp/cdp*.mjs` — driver CDP con node 22 (`WebSocket` global) para leer `getBoundingClientRect`/computed styles + `Emulation.setDeviceMetricsOverride` (ancho forzado) + `Page.captureScreenshot`. Útil para depurar mobile sin adivinar. `swiper.slideTo(n,0)` vía `Runtime.evaluate` para medir cada slide.
+
+**Fix 2 — slides 2º/3º descentrados (bug real, confirmado por usuario)**:
+- Síntoma: "el primer slide sale centrado pero los siguientes no".
+- CAUSA RAÍZ (el probe CDP la cazó): el `.swiper-wrapper` tenía `gap: 32px` heredado de la regla BASE del grid desktop (`.udp-single-event__related-list { gap: $space-2xl }`). Al quitar yo el `gap` del override `<md>` (Fix 1) quedó filtrándose ese 32px. Swiper además aplica `margin-right:16px` (su `spaceBetween`), así que separación real = 48px pero `slidesGrid` solo cuenta 16 → slide 1 corrido +32px, slide 2 +64px (error ACUMULATIVO). El slide 0 caía bien por translate 0.
+- FIX: `gap: 0` EXPLÍCITO en `.udp-single-event__related-list` dentro de `<md>` (anula el 32px base). Swiper es el único que separa (spaceBetween). Verificado CDP: tras `slideTo(1)` y `slideTo(2)` la card activa cae en x=16 (antes x=48 y x=80).
+- **Regla**: en un Swiper cuyo wrapper reusa una clase con `gap` de grid desktop, SIEMPRE poner `gap:0` en el override mobile; el espaciado lo maneja `spaceBetween`, nunca ambos. (El single-noticia tiene `gap:$space-md`(16px)+spaceBetween:16 → mismo bug latente, 16px/slide; pendiente aplicar `gap:0` ahí también.)
+
+**Pendientes**:
+- Validación visual en dispositivo real (el headless ya confirma @393px: carrusel centrado, dots azules, CTAs 243px). Falta ver el icono lápiz con un evento que tenga `inscripciones`.
+- **Section Landing mobile** (Figma `4041-44920`): en mobile SIEMPRE slider (tanto modo grid como slider). Pendiente de empezar (interrumpido por estos fixes).
+- No commit (a la espera de validación visual).
+- Otras páginas single/archive mobile.
+
+### 2026-06-15 — Single Noticia slider gap + Single Evento DESKTOP (Figma 3706-21402) _(Cacho)_
+
+- **Single Noticia — mismo bug de slider que evento**: `.udp-single-post__related-list` tenía `gap: $space-md` (16px) en `<md>` que se sumaba al `spaceBetween:16` de Swiper → slides 2º+ descentrados 16px/slide. Fix: `gap: 0` en `_noticias-single.scss`. Verificado CDP: slide 0 y slide 1 caen en x=16, `wrapperGap:0px`.
+- **Single Evento DESKTOP** alineado al Figma `3706-21402` (1440). Cambios en `_eventos-single.scss` (solo afecta `≥lg`/`≥md`, mobile intacto):
+  - `&__body`: `grid-template-columns: 320px 1fr; gap:60px` → `317px minmax(0,662px); gap:150px`. Verificado: sidebar 317 (x=40), contenido 662 (x=507), gap 150.
+  - `&__related-list` desktop: `repeat(3,1fr); gap:$space-2xl` → `repeat(2,1fr); gap:30px` (Figma: 2 cards horizontales de 665, gap 30).
+  - Nuevo bloque `@include media-up(md)`: oculta la 3ª related card (`:nth-child(3){display:none}` — sigue alimentando el carrusel mobile que muestra 3) y ajusta la imagen de la card related a 232×250 (vs 228×275 del archive) + body min-height 250. Verificado CDP: 2 cards de 665 (gap 30), imagen 232×250, 3ª oculta.
+  - **Related oscuro en TODOS los anchos** (feedback usuario): el Figma desktop `3706-21474` muestra el "Te podría interesar" OSCURO (igual que mobile), pero el código lo tenía claro (`rgba($dark-1,0.04)` de un commit viejo) con fecha/lugar de la card en blanco → ilegibles sobre claro. Fix: `&__related { background:$dark-1; color:$white }` y `&__related-title { color:$white }` en la BASE (no solo `<md>`); el título de la card hereda el blanco vía `color:inherit`. Quitadas las 3 reglas redundantes del bloque `<md>` (bg, title, card-title). Verificado CDP: section_bg rgb(28,28,28), todos los textos blancos/legibles.
+- Build OK (`main.CNcTOOSQ.js`). Pendiente validación visual + commit.
+
+**Nota de tooling (CDP)**: `Page.captureScreenshot` con `captureBeyondViewport:true` puede RE-MAQUETAR a un ancho distinto del emulado (mostró el título del related a ~990px cuando en realidad es 355px). Para visual fiable: scroll al elemento + captura del **viewport** (sin captureBeyondViewport). Para medidas, `getBoundingClientRect` es la verdad.
+
+### 2026-06-15 — Section Landing mobile: SIEMPRE slider (Figma 4041-44920) _(Cacho)_
+
+**Requerimiento**: en mobile el Section Landing debe ser slider en AMBOS modos (`cards_display` grid o swiper). El Figma `4041-44920` (página "Universidad", modo swiper) es la referencia: cards 266×365 con peek de la siguiente.
+
+**Estado previo**: modo swiper ya era Swiper en todos los anchos (card 314=80% mobile); modo grid usaba scroll-snap CSS en mobile (card 289) → distinto motor y tamaño.
+
+**Cambios** (ambos modos quedan idénticos en mobile: Swiper, card 266×365):
+- `section-landing-cards.php`: el modo grid ahora envuelve la lista en `.udp-section-cards__viewport` (para que Swiper pueda tomarla).
+- `section-landing-swiper.js`: reescrito. Config Swiper extraída a `SWIPER_CONFIG`. Modo swiper → init en todos los anchos (igual que antes). Modo grid → init/destroy por `matchMedia('(max-width:767.98px)')` (añade/quita clases `swiper`/`swiper-wrapper`/`swiper-slide`), mismo patrón que el carrusel de relacionados. En desktop el grid vuelve a ser grid nativo.
+- `_section-landing.scss`:
+  - `--grid .udp-section-cards__list` `<md>`: reemplazado el bloque scroll-snap por reset (`display:flex; gap:0; padding-inline:0; max-width:none; margin:0`) — Swiper gestiona el spaceBetween; `gap:0` evita el bug de gap acumulativo.
+  - `--grid .udp-section-cards__viewport { overflow:visible }` para el peek (2 clases → supera a `.swiper{overflow:hidden}`).
+  - Quitado el override mobile `flex:0 0 80%` del modo swiper.
+  - Bloque unificado al final `@include media-down(md)`: `.udp-section-cards .udp-section-cards__item.swiper-slide { flex:0 0 266px }` + `.udp-section-cards .udp-section-card { aspect-ratio:266/365 }` (2 clases + orden final → ganan a las reglas por-modo 285px/aspect).
+
+**Verificación CDP** (393px): Universidad (swiper) y Servicios (grid) → ambos card 266×365, x=16, 2ª card a x=298 (peek). Servicios desktop (1440): `display:grid`, 5 cols, Swiper NO activo, cards en 2 filas, card 248 → grid intacto.
+
+**Tooling**: build falló con EACCES en `dist/.vite/manifest.json` (dist root-owned, bug ambiental conocido). Workaround aplicado: `mv dist .dist-root-bak-<ts> && npm run build`. Queda otro `.dist-root-bak-*` root-owned por borrar con sudo.
+
+**Pendiente**: validación visual en dispositivo; commit; limpiar `.dist-root-bak-*`.
+
+### 2026-06-15 — Institucional mobile: pase contra Figma 4041-41179/4041-40548 (LOTE 1) _(Cacho)_
+
+Páginas tipo `templates/page-institucional.php` (Forma de Gobierno ID62, Consejo Académico ID558, etc.). El template YA era responsive; es un pase de ajuste contra el Figma mobile. Usuario pidió pase completo sección por sección + header estilo Figma.
+
+**Hallazgo**: página 62 = 5× `rich_text_sidebar` + 1× `cards_dark_row` (la sección "autoridades"). Justify viene del contenido WYSIWYG (inline), no del SCSS. Clases con nesting: hero=`.udp-inst-hero` (`&-hero` bajo `.udp-inst`), dark-cards=`.udp-inst-dark`, rich-text=`.udp-inst-rts`.
+
+**LOTE 1 (hecho + verificado CDP @393)**:
+- **Header back+eyebrow** (decisión usuario): `header.php` añade `<a class="udp-inst-hero__back">` con flecha + título de la página PADRE (`wp_get_post_parent_id`). SCSS: breadcrumb `display:none` en `<md`, `__back` visible solo `<md`. Desktop conserva breadcrumb.
+- **Rich-text a la izquierda**: `.udp-inst-rts__body p,li { text-align:left !important }` en `<md` (anula el justify inline del WYSIWYG).
+- **`cards_dark_row` → carrusel mobile**: `.udp-inst-dark__cards` en `<md` pasa a `display:flex; overflow-x:auto; scroll-snap` con card `flex:0 0 80%` + peek. `__inner` padding mobile reducido a `$space-sm`. Verificado: 3 cards x=16/323/630.
+
+**PENDIENTE (lotes siguientes)**:
+- Página 2 "Consejo Académico" (Figma `4041-40548`) — aún sin revisar; puede tener layouts distintos (fichas de personas `people_carousel`, etc.).
+- Revisar resto de layouts institucionales en mobile: `rich_text_sidebar` (sidebar cards/buttons), `link_cards`, `people_carousel`, `featured_carousel`, `stats`, `gallery`, `accordion`, `premio_block`, `related`, `buttons`, `video`.
+- HECHO: card del dark-row redibujado a estilo Figma/Section-Landing (fondo $dark-2, sin imagen, título abajo + flecha circular arriba-derecha, hover lila). `layout-cards-dark-row.php` markup nuevo (link>cta+content>title, sin image/excerpt); SCSS `.udp-inst-dark__card-*` reescrito; card mobile 266px. Verificado @393. Aplica desktop+mobile.
+- Build con workaround `mv dist` (dist root-owned recurrente). Sin commit.

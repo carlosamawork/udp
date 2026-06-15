@@ -6,7 +6,6 @@
 .udp-single-event {
     background-color: $white;
     color: $dark-1;
-    padding-bottom: $space-3xl;
     position: relative;
 
     &__header {
@@ -62,8 +61,10 @@
         margin: $space-2xl auto 0;
         padding: 0 $space-3xl;
         display: grid;
-        grid-template-columns: 320px 1fr;
-        gap: 60px;
+        // Figma 3706-21402: sidebar 317 + gap 150 + contenido 662 (alineados a la
+        // izquierda; el espacio sobrante a la derecha lo ocupa el share flotante).
+        grid-template-columns: 317px minmax(0, 662px);
+        gap: 150px;
 
         @include media-down(lg) {
             grid-template-columns: 1fr;
@@ -121,7 +122,9 @@
     }
 
     &__related {
-        background-color: rgba($dark-1, 0.04);
+        // Oscuro en TODOS los anchos (Figma 3706-21402 desktop + 4041-42533 mobile).
+        background-color: $dark-1;
+        color: $white;
         margin-top: $space-3xl;
         padding: $space-3xl 0;
     }
@@ -141,7 +144,7 @@
         font-family: $font-family-body;
         font-weight: 500;
         font-size: 24px;
-        color: $dark-1;
+        color: $white;
     }
 
     &__related-list {
@@ -149,11 +152,35 @@
         margin: 0;
         padding: 0;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: $space-2xl;
+        // Figma 3706-21402: 2 cards horizontales (665px c/u, gap 30) en desktop.
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 30px;
 
         @include media-down(lg) {
             grid-template-columns: 1fr;
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// SINGLE EVENT — Related desktop/tablet (≥md): 2 cards (Figma 3706-21402).
+// El 3er evento (que sí alimenta el carrusel mobile) se oculta aquí.
+// Card horizontal con imagen 232×250 (en lugar de 228×275 del archive).
+// --------------------------------------------------------------------------
+@include media-up(md) {
+    .udp-single-event__related-item:nth-child(3) {
+        display: none;
+    }
+
+    .udp-single-event__related .udp-card-evento--grid {
+        .udp-card-evento__media {
+            flex: 0 0 232px;
+            width: 232px;
+            height: 250px;
+        }
+
+        .udp-card-evento__body {
+            min-height: 250px;
         }
     }
 }
@@ -192,6 +219,10 @@
         flex-direction: column;
         gap: $space-2xs;
         margin-top: $space-md;
+
+        @include media-down(md) {
+            align-items: flex-start; // CTAs de ancho fijo alineados a la izquierda (Figma)
+        }
     }
 
     &__btn {
@@ -213,6 +244,11 @@
             background-color $transition-base,
             color $transition-base,
             border-color $transition-base;
+
+        @include media-down(md) {
+            width: 243px; // ancho fijo Figma (no full-width en mobile)
+            max-width: 100%;
+        }
 
         &--outline {
             color: $dark-1;
@@ -236,6 +272,56 @@
                 border-color: $brand-blue;
                 outline: none;
             }
+        }
+    }
+}
+
+// --------------------------------------------------------------------------
+// SINGLE EVENT — Relacionados: oscuro + carrusel horizontal (solo <md)
+// Mismo patrón que single-post. Desktop (≥md) conserva el grid claro.
+// --------------------------------------------------------------------------
+@include media-down(md) {
+    // Clip del viewport ANTES de que Swiper inicialice: evita que la fila de
+    // cards (flex, items a 100%) se desborde sin centrar durante el lazy-load
+    // de Swiper. Swiper aplica su propio overflow:hidden al inicializar.
+    .udp-single-event__related-viewport {
+        overflow: hidden;
+    }
+
+    // El grid pasa a fila. El espaciado entre slides lo gestiona Swiper
+    // (spaceBetween vía margin). `gap: 0` ANULA el `gap: $space-2xl` (32px) de
+    // la regla base del grid desktop, que si no se hereda en el flex y suma
+    // 32px extra entre slides → Swiper solo compensa spaceBetween (16px) y los
+    // slides 2º, 3º… se descentran de forma acumulativa.
+    .udp-single-event__related-list {
+        display: flex;
+        gap: 0;
+    }
+
+    .udp-single-event__related-item {
+        width: 100%;
+        flex-shrink: 0;
+    }
+
+    // Dots de paginación (Swiper bullets)
+    .udp-single-event__related-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: $space-lg;
+
+        .swiper-pagination-bullet {
+            width: 8px;
+            height: 8px;
+            border-radius: 9999px;
+            background-color: rgba($white, 0.35);
+            opacity: 1;
+            transition: background-color $transition-base, width $transition-base;
+        }
+
+        .swiper-pagination-bullet-active {
+            width: 22px;
+            background-color: $brand-blue;
         }
     }
 }

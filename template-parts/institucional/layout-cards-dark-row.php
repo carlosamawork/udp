@@ -33,35 +33,29 @@ if ( empty( $cards ) ) return;
 
         <ul class="udp-inst-dark__cards">
             <?php foreach ( $cards as $card ) :
-                $img     = is_array( $card['image'] ?? null ) ? $card['image'] : array();
                 $c_title = $card['title']   ?? '';
-                $c_exc   = $card['excerpt'] ?? '';
                 $c_link  = is_array( $card['link'] ?? null ) ? $card['link'] : array();
                 $c_url   = $c_link['url']    ?? '';
                 $c_tgt   = $c_link['target'] ?? '';
+                if ( ! $c_title ) {
+                    continue;
+                }
+                // Card estilo Figma (4041-41179 "autoridades"): fondo oscuro, sin
+                // imagen, título abajo-izquierda + flecha circular arriba-derecha.
+                $tag      = $c_url ? 'a' : 'div';
+                $tag_attrs = $c_url ? ' href="' . esc_url( $c_url ) . '"' . ( $c_tgt ? ' target="' . esc_attr( $c_tgt ) . '" rel="noopener noreferrer"' : '' ) : '';
             ?>
                 <li class="udp-inst-dark__card">
-                    <?php if ( ! empty( $img['url'] ) ) : ?>
-                        <div class="udp-inst-dark__card-image">
-                            <img src="<?php echo esc_url( $img['url'] ); ?>" alt="<?php echo esc_attr( $img['alt'] ?? '' ); ?>" loading="lazy">
+                    <<?php echo $tag; ?> class="udp-inst-dark__card-link"<?php echo $tag_attrs; ?>>
+                        <span class="udp-inst-dark__card-cta" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M5 3h8v8M13 3 3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <div class="udp-inst-dark__card-content">
+                            <h3 class="udp-inst-dark__card-title"><?php echo esc_html( $c_title ); ?></h3>
                         </div>
-                    <?php endif; ?>
-                    <div class="udp-inst-dark__card-body">
-                        <?php if ( $c_title ) : ?>
-                            <?php if ( $c_url ) : ?>
-                                <h3 class="udp-inst-dark__card-title">
-                                    <a href="<?php echo esc_url( $c_url ); ?>"<?php echo $c_tgt ? ' target="' . esc_attr( $c_tgt ) . '" rel="noopener noreferrer"' : ''; ?>>
-                                        <?php echo esc_html( $c_title ); ?>
-                                    </a>
-                                </h3>
-                            <?php else : ?>
-                                <h3 class="udp-inst-dark__card-title"><?php echo esc_html( $c_title ); ?></h3>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <?php if ( $c_exc ) : ?>
-                            <p class="udp-inst-dark__card-excerpt"><?php echo esc_html( $c_exc ); ?></p>
-                        <?php endif; ?>
-                    </div>
+                    </<?php echo $tag; ?>>
                 </li>
             <?php endforeach; ?>
         </ul>
