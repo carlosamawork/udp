@@ -2033,3 +2033,41 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 - Mobile header completamente implementado: top bar móvil simplificado (logo + lupa), barra inferior fija con hamburger → × blanco al abrir menú, animación rotate, transición de fondo, cierre instantáneo.
 - Rama activa: `elsa`. Build limpio (101.83 kB main.js, 712ms).
 - **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish (SVGs sociales reales, eyebrow color por término); F11 switch tema activo.
+
+---
+
+### 2026-06-15 — Home mobile completada _(Elsa)_
+
+**S3 Noticias — card destacada mobile**
+- PHP: añadidos `__featured-mobile-meta` (badge + fecha) y `__featured-mobile-title` (h3 serif) como elementos ocultos en desktop, visibles en `< md`.
+- SCSS: `__featured` pasa a `flex-column` en mobile; `__featured-img` 260px; overlay y `__featured-body` ocultos; meta/title con `background: $white`, colores `$dark-1`, `padding-inline: 16px`; badge con `position: static` dentro del meta flex. Swiper: `height: auto` en mobile, ambos slides (`--featured` y `--pair`) forzados a `width: 100% !important` para que `spaceBetween` funcione sin descuadre.
+- Hover desktop: `scale(1.03)` en imagen del featured (igual que cards regulares).
+
+**S6 Destacado azul — mobile**
+- Orden invertido: `flex-direction: column-reverse` en `< md` → imagen arriba, panel azul abajo.
+- Imagen: `height: 393px` en mobile (sustituye `aspect-ratio: 16/9` que daba ~193px).
+- Título: `36px / 38px` fijo (el clamp resolvía a 32px en mobile).
+- Padding panel: `24px` (era `2rem`).
+
+**S8 Cultura UDP — mobile**
+- Imagen: `height: 393px` en `< md` (era 620px fijo).
+- JS: añadido listener `click` junto a `mouseenter` para activar items en touch.
+
+**S10 Innovación — siglas de facultad**
+- Bug: campo ACF `siglas` vacío en los 14 términos de `facultad` → chips invisibles (`:empty` → `background: transparent`).
+- Fix: script `scripts/fill-siglas.php` ejecutado vía WP-CLI — rellena siglas automáticas (iniciales de palabras no-stopword) solo para términos sin valor. 14 términos actualizados.
+- Script guardado en `scripts/fill-siglas.php` para usos futuros.
+
+**Fix caché**
+- WP Fastest Cache guardaba HTML con hash antiguo del JS. Solución: borrar `wp-content/cache/all/udp/` después de cada build.
+
+### 2026-06-15 — Ajustes mobile Home + Anuarios _(Elsa)_
+
+- `_home.scss` — S10 Innovación: padding del panel `3rem 2.5rem` → `30px 24px` en `< lg`; gap lista `30px` → `16px` en `< lg`; item flex pasa a `grid 1fr` en `< lg` (y vuelve a flex en `< md`); `font-size` clamp mínimo `30px` (antes `1.75rem`).
+- `_anuarios.scss` — `padding-block: 80px` → `50px` en `< md`; añadido newline final.
+
+### 2026-06-15 — Cierre de sesión _(Elsa)_
+
+- Home y Anuarios con ajustes mobile aplicados.
+- Rama activa: `elsa`. Build limpio.
+- **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish; F11 switch tema activo.

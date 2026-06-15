@@ -68,6 +68,23 @@ $pares    = array_chunk( $cards, 2 );
                                     </h3>
                                 </div>
                             </div>
+                            <?php /* Mobile-only: badge + fecha debajo de la imagen */ ?>
+                            <div class="udp-home-noticias__featured-mobile-meta">
+                                <span class="udp-home-noticias__badge">Destacado</span>
+                                <?php if ( ! empty( $featured['fecha'] ) ) : ?>
+                                    <time datetime="<?php echo esc_attr( $featured['fecha'] ); ?>">
+                                        <?php echo esc_html( date_i18n( 'd / m / Y', strtotime( $featured['fecha'] ) ) ); ?>
+                                    </time>
+                                <?php endif; ?>
+                            </div>
+
+                            <?php /* Mobile-only: título serif debajo de la meta */ ?>
+                            <h3 class="udp-home-noticias__featured-mobile-title">
+                                <a href="<?php echo esc_url( $featured['href'] ); ?>">
+                                    <?php echo esc_html( $featured['titulo'] ); ?>
+                                </a>
+                            </h3>
+
                             <div class="udp-home-noticias__featured-body">
                                 <p class="udp-home-noticias__featured-text"><?php echo esc_html( $featured['titulo'] ); ?></p>
                                 <a href="<?php echo esc_url( $featured['href'] ); ?>" class="udp-home-noticias__leer-mas">
@@ -119,7 +136,7 @@ $pares    = array_chunk( $cards, 2 );
             </div>
         </div>
 
-        <div class="udp-home-noticias__ver-todas container">
+        <div class="udp-home-noticias__ver-todas">
             <a href="<?php echo esc_url( $noticias_url ); ?>" class="udp-home-noticias__ver-todas-btn">
                 Ver todas las noticias
             </a>

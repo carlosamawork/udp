@@ -36,7 +36,7 @@ $arrow_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" vie
 
 		<header class="udp-home-eventos__header">
 			<h2 class="udp-home-eventos__titulo udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
-			<a href="<?php echo esc_url( $agenda_url ); ?>" class="udp-home-eventos__ver-mas">
+			<a href="<?php echo esc_url( $agenda_url ); ?>" class="udp-home-eventos__ver-mas udp-home-eventos__ver-mas--desktop">
 				Ver todos los eventos
 			</a>
 		</header>
@@ -111,6 +111,8 @@ $arrow_svg = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" vie
 			<?php endforeach; ?>
 		</div>
 		<?php endif; ?>
-
+		<a href="<?php echo esc_url( $agenda_url ); ?>" class="udp-home-eventos__ver-mas udp-home-eventos__ver-mas--mobile">
+			Ver todos los eventos
+		</a>
 	</div>
 </section>
