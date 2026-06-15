@@ -1,7 +1,23 @@
 import { defineConfig, loadEnv } from 'vite';
 import path from 'path';
+import fs from 'fs';
 import liveReload from 'vite-plugin-live-reload';
 import { glob } from 'glob';
+
+// Copia dist/.vite/manifest.json → dist/manifest.json (no-oculto) tras el build.
+// Motivo: muchos clientes FTP NO suben carpetas ocultas (.vite/), dejando a WP
+// sin manifest → no encola JS/CSS en producción. PHP lee dist/manifest.json
+// como fallback, así que esta copia hace el deploy por FTP a prueba de balas.
+const copyManifestPlugin = {
+    name: 'copy-manifest-to-dist-root',
+    closeBundle() {
+        const src = path.resolve(__dirname, 'dist/.vite/manifest.json');
+        const dest = path.resolve(__dirname, 'dist/manifest.json');
+        if (fs.existsSync(src)) {
+            fs.copyFileSync(src, dest);
+        }
+    },
+};
 
 // Detecta todos los entry points JS en src/js/
 // Así puedes crear archivos como src/js/page-home.js, src/js/page-contact.js
@@ -29,6 +45,7 @@ export default defineConfig(({ command, mode }) => {
             liveReload([
                 path.resolve(__dirname, './**/*.php'),
             ]),
+            copyManifestPlugin,
         ],
 
         // Directorios fuente

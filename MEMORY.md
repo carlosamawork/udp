@@ -2391,3 +2391,14 @@ Build OK. Sin commit.
 ### 2026-06-15 — Innovación categoría: ENCIMA de la imagen (final) _(Cacho)_
 
 Distinción usuario: "encima" (arriba, fuera) ≠ "sobre" (superpuesto). Estado FINAL: el chip de categoría va ENCIMA de la imagen (en el flujo, antes de `__card-media`) = el `__chip` existente, que ahora muestra la CATEGORÍA (no las siglas) con fondo = color ACF del término (inline) + texto negro. Default #FF7064 (= bg del `__chip`). Quitado el `__cat` superpuesto + su SCSS + `position:relative`; quitada la computación de siglas. Verificado @/udp/.
+
+### 2026-06-15 — Fix deploy FTP: manifest no-oculto + build:prod _(Cacho)_
+
+**Síntoma**: subido a prod por FTP, "no me coge el js".
+**Causa**: el manifest de Vite está en `dist/.vite/manifest.json` (carpeta OCULTA). Los clientes FTP no suben dotfolders → WP (`class-vite.php` `loadManifest`) no encuentra el manifest → no encola JS/CSS. (El JS NO depende del base: los chunks se importan relativos `./chunks/` y main.js/CSS se encolan vía `STARTER_BS5_URI`; el base solo afecta `url()` de fuentes en CSS.)
+**Fix**: plugin `copyManifestPlugin` en `vite.config.js` (`closeBundle`) copia `.vite/manifest.json` → `dist/manifest.json` (no-oculto). PHP ya lo lee como fallback. Aplica a `build` y `build:prod`.
+**Deploy FTP correcto**:
+1. `npm run build:prod` (NO `npm run build`) → base `/cms/wp-content/themes/starter-theme/dist/` (prod vive en `/cms/`) + manifest no-oculto.
+2. Subir TODO `dist/` por FTP (ahora incluye `dist/manifest.json` no-oculto).
+3. `wp-config.php` de prod NO debe tener `define('VITE_DEV_SERVER', true)`.
+4. Purgar WP Fastest Cache.
