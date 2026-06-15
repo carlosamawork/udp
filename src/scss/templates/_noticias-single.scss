@@ -314,6 +314,13 @@
     &__related-item {
         display: block;
     }
+
+    // Related en desktop = sección clara: la fecha del card va oscura (la base
+    // de card-noticia__date es $white-70, pensada para fondos oscuros). En <md
+    // el related es oscuro (carrusel) y la regla de más abajo la vuelve blanca.
+    &__related .udp-card-noticia__date {
+        color: rgba($dark-1, 0.6);
+    }
 }
 
 // --------------------------------------------------------------------------
