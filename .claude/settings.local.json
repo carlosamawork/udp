@@ -25,7 +25,10 @@
       "Bash(curl -s \"http://localhost:8888/udp/?theme=new\")",
       "Bash(git -C /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme log --oneline -5)",
       "Bash(curl -s \"http://localhost:8888/udp/\")",
-      "Bash(cat /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/.claude/settings.local.json 2>/dev/null || cat ~/.claude/settings.local.json 2>/dev/null)"
+      "Bash(cat /Applications/MAMP/htdocs/udp/cms/wp-content/themes/starter-theme/.claude/settings.local.json 2>/dev/null || cat ~/.claude/settings.local.json 2>/dev/null)",
+      "Bash(wp --path=/Applications/MAMP/htdocs/udp/cms cache flush)",
+      "Bash(ls /Applications/MAMP/htdocs/udp/cms/wp-content/plugins/ | grep -i \"cache\\\\|rocket\\\\|litespeed\\\\|w3\\\\|swift\\\\|super\")",
+      "Bash(ls /Applications/MAMP/htdocs/udp/cms/wp-content/cache/ 2>/dev/null)"
     ],
     "deny": [
       "Bash(rm -rf *)",
