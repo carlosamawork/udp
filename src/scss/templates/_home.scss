@@ -1111,6 +1111,10 @@
         display: flex;
         align-items: center;
         padding: 3rem 2.5rem;
+
+        @include media-breakpoint-down(lg) {
+            padding: 30px 24px;
+        }
     }
 
     &__lista {
@@ -1119,6 +1123,10 @@
         grid-template-columns: 1fr;
         gap: 30px;
         margin-bottom: 0;
+
+        @include media-breakpoint-down(lg) {
+            gap: 16px;
+        }
     }
 
     &__item {
@@ -1137,13 +1145,23 @@
         align-items: flex-end;
         justify-content: space-start;
         gap: 18px;
+
+        @include media-breakpoint-down(lg) {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        @include media-breakpoint-down(md) {
+            display: flex;
+        }
     }
 
     &__nombre {
         transition: color 0.25s ease;
 
         font-family: $font-family-display;
-        font-size: clamp(1.75rem, 3.5vw, 3rem);
+        font-size: clamp(30px, 3.5vw, 3rem);
         line-height: 1.1;
     }
 

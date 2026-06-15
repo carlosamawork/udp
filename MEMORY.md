@@ -2061,8 +2061,13 @@ Arquitectura 3 niveles del mega-menú: mapeo de contenido de las 8 secciones (UR
 **Fix caché**
 - WP Fastest Cache guardaba HTML con hash antiguo del JS. Solución: borrar `wp-content/cache/all/udp/` después de cada build.
 
+### 2026-06-15 — Ajustes mobile Home + Anuarios _(Elsa)_
+
+- `_home.scss` — S10 Innovación: padding del panel `3rem 2.5rem` → `30px 24px` en `< lg`; gap lista `30px` → `16px` en `< lg`; item flex pasa a `grid 1fr` en `< lg` (y vuelve a flex en `< md`); `font-size` clamp mínimo `30px` (antes `1.75rem`).
+- `_anuarios.scss` — `padding-block: 80px` → `50px` en `< md`; añadido newline final.
+
 ### 2026-06-15 — Cierre de sesión _(Elsa)_
 
-- Home completada: todas las secciones con versión mobile funcional.
-- Rama activa: `elsa`. Build limpio (103.5 kB main.js).
+- Home y Anuarios con ajustes mobile aplicados.
+- Rama activa: `elsa`. Build limpio.
 - **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish; F11 switch tema activo.
