@@ -6,6 +6,10 @@
     background: #fff;
     padding-block: 80px;
 
+    @include media-breakpoint-down(md) {
+        padding-block: 50px;
+    }
+
     &__empty {
         color: $gray-medium;
         font-style: italic;

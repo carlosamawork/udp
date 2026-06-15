@@ -14,12 +14,14 @@ export function initHomeCulturaUdp() {
 
     if ( ! items.length || ! images.length ) return;
 
-    items.forEach( ( item ) => {
-        item.addEventListener( 'mouseenter', () => {
-            const idx = item.dataset.index;
+    const activate = ( item ) => {
+        const idx = item.dataset.index;
+        items.forEach(  ( el ) => el.classList.toggle( 'is-active', el.dataset.index === idx ) );
+        images.forEach( ( el ) => el.classList.toggle( 'is-active', el.dataset.index === idx ) );
+    };
 
-            items.forEach(  ( el ) => el.classList.toggle( 'is-active', el.dataset.index === idx ) );
-            images.forEach( ( el ) => el.classList.toggle( 'is-active', el.dataset.index === idx ) );
-        } );
+    items.forEach( ( item ) => {
+        item.addEventListener( 'mouseenter', () => activate( item ) );
+        item.addEventListener( 'click',      () => activate( item ) );
     } );
 }

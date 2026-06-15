@@ -70,7 +70,7 @@ $ver_todo_url = ! empty( $ver_todo_ids )
         <div class="udp-home-innovacion__wrap">
             <div class="udp-home-innovacion__header">
                 <h2 class="udp-home-innovacion__titulo udp-home__titulo"><?php echo esc_html( $titulo_seccion ); ?></h2>
-                <a href="<?php echo esc_url( $ver_todo_url ); ?>" class="udp-home-innovacion__ver-todo">
+                <a href="<?php echo esc_url( $ver_todo_url ); ?>" class="udp-home-innovacion__ver-todo udp-home-innovacion__ver-todo--desktop">
                     Ver todo
                 </a>
             </div>
@@ -120,5 +120,8 @@ $ver_todo_url = ! empty( $ver_todo_ids )
                 </div>
             </div>
         </div>
+        <a href="<?php echo esc_url( $ver_todo_url ); ?>" class="udp-home-innovacion__ver-todo udp-home-innovacion__ver-todo--mobile">
+            Ver todo
+        </a>
     </div>
 </section>

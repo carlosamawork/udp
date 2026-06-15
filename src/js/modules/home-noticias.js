@@ -16,13 +16,21 @@ export async function initHomeNoticias() {
 
     new Swiper(el, {
         modules: [Navigation, Keyboard],
-        slidesPerView: 'auto',
-        spaceBetween: 30,
         keyboard: { enabled: true },
         grabCursor: true,
         navigation: {
             nextEl: section ? section.querySelector('.js-noticias-next') : null,
             prevEl: section ? section.querySelector('.js-noticias-prev') : null,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 'auto',
+                spaceBetween: 30,
+            },
+            0: {
+                slidesPerView: 1,
+                spaceBetween: 8,
+            },
         },
     });
 }
