@@ -2237,3 +2237,157 @@ Páginas tipo `templates/page-institucional.php` (Forma de Gobierno ID62, Consej
 - Home y Anuarios con ajustes mobile aplicados.
 - Rama activa: `elsa`. Build limpio.
 - **Próximos pasos sugeridos**: merge `elsa` → `main`; F10 polish; F11 switch tema activo.
+
+### 2026-06-15 — Institucional mobile LOTE 2: Consejo Académico (Figma 4041-40548) _(Cacho)_
+
+Página 558 = 3× `rich_text_sidebar` + 3× `people_carousel` + `back_link`. El `people_carousel` ya usaba Swiper (FreeMode); pase de ajuste contra Figma.
+
+**Cambios (verificado CDP @393, todo alineado a x=16)**:
+- **People card → 266×365** (era 289). `.udp-inst-people__card { width:266px!important; aspect-ratio:266/365 }`.
+- **Deslizador añadido** (Figma): `layout-people-carousel.php` añade `<div class="swiper-scrollbar udp-inst-people__slider">` dentro del `.swiper`. `institucional-people.js`: módulo `Scrollbar` + `import swiper/css/scrollbar` + `scrollbar:{el,draggable:true}` (el scoped por carrusel). SCSS `&__slider.swiper-scrollbar` (2 clases, gana a Swiper): track 340px centrado, thumb $dark-1. Verificado: thumb 72px ≈ Figma 71.
+- **Alineación x=16** (gap encontrado con probe CDP): (a) `.udp-inst-rts__inner` tenía `padding 0 $space-3xl` (40px) sin override mobile → añadido `media-down(md){ padding:0 $space-sm }`. (b) `.udp-inst-people .swiper-wrapper` (un `<ul>`) tenía `padding-left:32px` de UA sin resetear → card caía en x=48 (32+16 offset). Fix: `.udp-inst-people .swiper-wrapper { margin:0; padding:0 }`. (c) people config Swiper: base→mobile (offset 16) + breakpoint 768→desktop (40), en vez del breakpoint `0`. (d) `__header` mobile `$space-md`→`$space-sm`.
+- **Regla**: si el `.swiper-wrapper` es un `<ul>`, resetear su padding/margin de UA o el slidesOffsetBefore se descuadra.
+
+**PENDIENTE**: layouts institucionales no presentes en estas 2 páginas (link_cards, featured_carousel, stats, gallery, accordion, premio_block, buttons, video) — revisar si aparecen en otras páginas. Validación visual en dispositivo + commit.
+
+### 2026-06-15 — Institucional: fix overflow 1024–1330px + Premios/Reglamentos _(Cacho)_
+
+- **BUG overflow (1024–1330px)** reportado: contenido cortado a la derecha. CAUSA: `rich_text_sidebar` y `text_accordion` usaban `grid-template-columns: 318px 664px 318px` (FIJO = 1300px + 80 gap = 1380 > contenedor 1360 incluso a 1440). Entre 992–1460 desbordaba y cortaba la 3ª columna (sidebar derecho). FIX: `minmax(0, 318px) minmax(0, 664px) minmax(0, 318px)` en ambos (`_institucional.scss`) → las columnas se encogen y nunca desbordan. Verificado CDP: sin scroll horizontal a 1024/1200/1330/1440; 3ª columna visible. (Premio ya usaba `318px minmax(0,664px)`; dark-row usa `318px 1fr` — ambos OK.)
+- **REGLA**: en grids desktop con columnas fijas anchas, usar `minmax(0, X)` para que encojan; columnas px fijas que sumen > (max-width − padding) desbordan entre el breakpoint y el ancho de diseño.
+- **Páginas revisadas** (cubren layouts restantes): Reglamentos y Políticas (ID66, `page.php` legacy → `text_accordion` + news widget + related) y Premios Nacionales (ID828, `premio_block` ×5). Ambas ya responsive en mobile (heredan header back+eyebrow + rich-text izquierda del Lote 1). Unificado padding mobile de `premio` y `accordion` a `$space-sm` (16px) para alinear con el resto (estaban a 18px).
+- Build OK. Sin commit.
+
+### 2026-06-15 — Barrido responsive global + embeds + hover noticias _(Cacho)_
+
+**Auditoría overflow @393px** (CDP, una URL por template/CPT): TODOS los templates sin overflow horizontal real (`docW==innerWidth`). Los "culpables" que reporta el probe son `pojo-a11y-toolbar-*` (panel del plugin de accesibilidad, off-canvas, ajeno al tema). Visual OK en carreras/facultades/anuarios archives (card-mosaic fluido; `_anuarios.scss` sin media-down pero fluido por diseño).
+
+**BUG real encontrado — single-carrera forzaba 576px**: un `<iframe>` de video (width fijo 560 de YouTube) en `__entry-content` expandía el layout viewport a 576 → zoom-out/scroll en mobile. FIX GLOBAL en `_base.scss`:
+- `iframe,embed,object,video { max-width:100% }` (evita desborde en todo el sitio).
+- `:where([class*="entry-content"], .udp-inst-rts__body) iframe { width:100%; aspect-ratio:16/9; height:auto }` (video embeds fluidos 16:9 en contenido WYSIWYG). Verificado: single-carrera innerWidth 576→393.
+- **REGLA**: iframes de oEmbed traen width/height fijos → siempre `max-width:100%` global; para video en contenido, `aspect-ratio:16/9 + height:auto`.
+
+**Hover noticias (feedback usuario)**: la sección noticias del HOME (`udp-home-noticias__*`, markup propio, NO card-noticia) no tenía subrayado en hover. FIX en `_home.scss`: `&__leer-mas:hover/:focus-visible { text-decoration:underline }` (antes era `opacity:0.5`); `&__card:hover &__card-titulo`, `&__featured:hover &__featured-overlay-title`, `&__featured:hover &__featured-mobile-title a { text-decoration:underline }`. CSS compilado + selectores coinciden con el markup. NOTA: el front-page (page_on_front=55394) NO se previsualiza vía `?theme=new` (el switcher no cubre la portada) → verificación visual del hover pendiente con tema activo / dispositivo.
+
+Build OK. Sin commit.
+
+### 2026-06-15 — Home noticia destacada: título al costado (no sobre imagen) _(Cacho)_
+
+Feedback usuario: el título de la noticia destacada (home S3) iba SUPERPUESTO/centrado sobre la imagen; debe ir AL COSTADO.
+- `section-noticias.php`: eliminado el bloque `__featured-overlay` (título overlay sobre la imagen). El título queda en `__featured-text` (panel derecho del grid `6fr 4fr`).
+- `_home.scss`: eliminadas reglas `__featured-overlay`/`__featured-overlay-title`; quitado el velo blanco `__featured-img::after` (opacity .6, existía para legibilidad del overlay); `__featured-body` padding `82px 0 0` → `0` (título arriba, pedido del usuario); hover-underline reapuntado de `__featured-overlay-title` a `__featured-text`; limpiadas refs muertas en bloque mobile.
+- **LIMITACIÓN VERIFICACIÓN**: el front-page (page_on_front=55394) NO se sirve con el tema nuevo vía `?theme=new` (el theme-switcher mu-plugin no cubre la portada) → no se puede previsualizar el home en headless. Cambios verificados a nivel build/compilación; validación visual pendiente con tema activo / dispositivo.
+
+Build OK. Sin commit.
+
+### 2026-06-15 — Home review (lista usuario): LOTE 1 botones/hover _(Cacho)_
+
+Usuario pasó lista completa de comentarios de la home (~15 ítems). Regla general: botones CON BORDE → hover fondo azul ($brand-blue) + texto blanco. Excepciones: Facultades = solo subrayado; flechas circulares de cards = mantener Figma (blanco+flecha).
+
+**LOTE 1 hecho (CSS, compilado)**:
+- `_button.scss`: `.btn-udp-outline-light` y `.btn-icon-circle` → hover azul+blanco (eran blanco+dark).
+- `_eventos-single.scss` / `_concursos-single.scss` / `_carreras-single.scss`: `&__btn--outline` hover `$dark-1`→`$brand-blue`+blanco.
+- `_card-evento.scss`: card hover → `__body` fondo `$brand-blue` + `__title` subrayado; CTA arrow color→$brand-blue sobre blanco (ítem 5 / "eventos hover azul+subrayado").
+
+**PENDIENTE home (CSS)**: (2) hover botón Accesibilidad; (3) "ver todas las noticias" hover azul; (4) Facultades hover SOLO subrayado; (5) "ver todos los eventos" hover azul; (9) Cultura Digital cards hover azul; (9b) Innovación hover subrayado texto + "ver todo" azul; (7) Vida Universitaria alto img/video 450 o 16:9; (8) Cultura UDP banner 560px + juntar/centrar palabras.
+**PENDIENTE home (backend/ACF/feature)**: (1) Facultades home administrable (lista+reorden); (4b) reorden carreras admin; (5b) VISTA LISTA de eventos (ref cultura.udp.cl); (3b) opciones gráficas destacado en admin; (9b) etiqueta categoría sobre imagen Innovación; (10) Cifras módulos cortos + admin.
+
+**BLOQUEADOR VERIFICACIÓN**: el front-page (page_on_front=55394) NO se sirve con tema nuevo vía `?theme=new` → NO puedo previsualizar el home en headless. Todo el trabajo de home se hace "a ciegas" (verificado solo a nivel build/selector). Validación visual requiere tema activo / dispositivo.
+
+### 2026-06-15 — Home review LOTE 2: CSS hovers/tamaños (cerrado) _(Cacho)_
+
+Preview RESUELTO: el home está en **`/udp/?theme=new`** (no `/`). Verificable.
+Secciones del home usan clases propias `udp-home-*` (no los primitivos card-evento/btn-udp), por eso se editan ahí.
+
+**Hecho (`_home.scss`)**:
+- (3) `__ver-todas-btn` (noticias) hover → azul+blanco+border azul.
+- (4) `.udp-home-facultades__link` hover → SOLO subrayado (antes cambiaba color a primary).
+- (5) `.udp-home-eventos__ver-mas` hover → azul; `.udp-home-eventos__card` hover → `__card-body` fondo azul + `__card-titulo` subrayado.
+- (9) `.udp-home-cultura-digital__card` hover → `__card-footer` azul + `__card-titulo` subrayado.
+- (9b) `.udp-home-innovacion__ver-todo` hover → azul; `__card-titulo` hover → subrayado (antes opacity).
+- (7) Vida Universitaria: `.udp-home-vida__media { height:450px }` (mobile 260) — antes sin alto (imagen enorme).
+- (8) Cultura UDP: `__media` height 620→**560px**; `__lista` gap 30→16 (desktop) / 12 (lg) — palabras más juntas.
+- Verificado visual: featured noticia título al costado ✓, banner S6 ok, Vida media acotada.
+
+**Caveats a validar por usuario (ya puede ver el home)**:
+- (2) Botón Accesibilidad = trigger del plugin **pojo-a11y** (no es elemento del theme); el hover depende de clases del plugin + licencia → PENDIENTE confirmar enfoque.
+- (8) "centrar" las palabras: interpreté = reducir gap (las palabras ya van centradas verticalmente en el panel). Confirmar si quería centrado horizontal.
+- Hovers no verificados con `:hover` forzado (CSS compilado + selectores correctos).
+
+**SIGUE (backend, en este orden)**: (5b) vista LISTA de eventos [AHORA]; (1) facultades home administrable = **relationship desde taxonomía/CPT** (elegir+ordenar); (4b) reorden carreras; (9b) etiqueta categoría sobre imagen Innovación; (3b) opciones gráficas destacado admin; (10) cifras admin.
+
+### 2026-06-15 — Home eventos: vista LISTA ya implementada (5b) _(Cacho)_
+
+El usuario sospechó que la lista ya existía pero no se ve por falta de datos. CONFIRMADO:
+- `section-eventos.php`: query `udp_query_agenda(fecha_desde=hoy, limit=7)` → primeros 2 = cards destacadas, `array_slice(2,5)` = `__lista` (filas eyebrow/título/fecha).
+- SCSS `.udp-home-eventos__lista*` SÍ existe (grid 200/1fr/200, separadores #3d3d3d, hover opacity .7).
+- En local solo hay **1 evento próximo** (>= hoy 20260615 → el del 13-Jul-2026), por eso destacados=1, lista=0 → no se ve.
+- Verificado quitando temporalmente `fecha_desde`: la lista renderiza bien (5 filas con separadores) debajo de las 2 cards. Revertido.
+- **5b = NO requiere trabajo** (ya implementado). Solo necesita datos (eventos próximos) en producción.
+- Observación menor: si los eventos no tienen eyebrow (term tipo-evento), la 1ª columna (200px) queda vacía y el título arranca con hueco. En prod con eyebrows se llena. (Opcional: colapsar columna si eyebrow vacío.)
+- Nota: hover de filas de lista = opacity .7 (el hover azul+subrayado del ítem 5 era para las CARDS destacadas, no las filas).
+
+SIGUE: (1) facultades home administrable (relationship taxonomía/CPT).
+
+### 2026-06-15 — Home: Facultades administrable + hovers (convención global) _(Cacho)_
+
+**Convención global de hover (definida por usuario)**: en toda la web — TEXTO → subrayado; BOTÓN/card-acción → fondo azul ($brand-blue) + elementos blancos. Excepción confirmada: archive de eventos = solo subrayado + cambio de color (no relleno azul).
+
+**Cambios CSS**:
+- `.udp-home-eventos__lista-row` hover: `opacity .7` → fondo azul + texto blanco (filas de la lista de eventos).
+- `_card-evento.scss`: REVERTIDO el fondo azul del body en hover (lo había puesto antes). Archive/related ahora = solo título subrayado + inversión de color del CTA (feedback: "en archive de eventos solo subrayado y cambio de color").
+
+**(1) Facultades del home ADMINISTRABLE** (decisión: relationship desde taxonomía):
+- ACF: añadido repeater `facultades_items` (key `field_home_facultades_items`) al grupo `group_template_home.json`, bajo el tab Facultades, con sub-campo taxonomía `facultad` (key `field_home_facultad_term`, field_type=select, return=id, save/load_terms=0). Cada fila = una facultad; orden = orden de filas (arrastrable).
+- ACF lo lee `local=json` (funciona admin + frontend sin import DB). **OJO**: `acf_import_field_group()` DUPLICA la fila DB (bug conocido) — borré ambas filas DB de `group_template_home`; ACF usa solo el JSON local (verificado en request limpio: grupo OK, 41 fields, repeater OK). Regla: NO usar acf_import para actualizar; basta editar el JSON (load_json lo registra).
+- `section-facultades.php`: usa `get_field('facultades_items')` (resuelve cada term_id → término en orden); si vacío, fallback a `get_terms` todas por nombre.
+- Verificado: sembrando 3 facultades en orden Z→A, el render respetó ese orden exacto; al limpiar, fallback muestra las 14 por nombre. Seed de prueba limpiado.
+
+**SIGUE (backend)**: (4b) reorden carreras admin; (9b) etiqueta categoría sobre imagen Innovación; (3b) opciones gráficas destacado admin; (10) cifras admin.
+
+### 2026-06-15 — (4b) Reorden de carreras administrable _(Cacho)_
+
+- CPT `carrera-udp` NO soportaba `page-attributes` (sin campo "Orden", todos menu_order=0, archive ordenaba por título).
+- `functions.php`: `add_action('init', fn() => add_post_type_support('carrera-udp','page-attributes'), 100)` (prio 100 para correr tras el registro del CPT en el mu-plugin udp-core, init prio 99). Soporte añadido DESDE el theme (no se toca el mu-plugin).
+- `inc/udp-cards.php` `udp_query_carreras`: orderby `title` → `['menu_order'=>'ASC','title'=>'ASC']` (orden admin + fallback alfabético).
+- Verificado: menu_order=9 en la 1ª alfabética → saltó a índice 41/42; resto alfabético. Revertido.
+- **UX**: administrable vía campo "Orden" / Quick Edit por carrera. Para arrastrar, recomendar plugin **Simple Page Ordering** (no instalado). Solo PHP, sin build.
+
+SIGUE (backend): (9b) etiqueta categoría sobre imagen Innovación; (3b) opciones gráficas destacado admin; (10) cifras admin.
+
+### 2026-06-15 — (9b) Innovación: etiqueta de categoría sobre la imagen _(Cacho)_
+
+- `section-innovacion.php`: calcula `$cat_label` = nombre de la categoría del post que coincide con las de la sección (investigacion/innovacion; fallback a la 1ª). Markup: `<span class="udp-home-innovacion__cat">` dentro de `__card-img`.
+- `_home.scss`: `__card-img { position:relative }`; `&__cat` absolute top:12 left:12, bg blanco + texto $dark-1, mono uppercase 0.75rem.
+- Verificado (con scroll para disparar lazy-load): tag "INVESTIGACIÓN"/"INNOVACIÓN" sobre la esquina superior izq de cada imagen. (Hover subrayado texto + Ver todo azul = lote anterior.)
+- Se mantiene el `__chip` de siglas de facultad (eyebrow, distinto propósito).
+
+SIGUE (review/admin, no-CSS): (3b) opciones gráficas del destacado de noticias en admin; (10) cifras con módulos cortos + admin.
+
+### 2026-06-15 — Single Noticia desktop (Figma 3706-21278) + Innovación categoría _(Cacho)_
+
+Preview home/single en `/udp/?theme=new` (no `/`).
+
+**Single Noticia (single-post.php / _noticias-single.scss / card-noticia.php)**:
+- (1) Título a ancho completo: ya estaba (verificado).
+- (2) Meta (fecha+etiqueta) IZQUIERDA + contenido CENTRADO y angosto: `__body-grid` → `repeat(12,1fr)`; `__aside { grid-column: 1/4 }`, `__main { grid-column: 4/10 }` (6 cols centradas). Coincide con Figma (contenido x≈388-1050 = centrado en página 1440).
+- (3) Botones < / > de galería: `_noticias-single.scss` desktop `&-prev/&-next` → fondo `$dark-1` (negro) + flecha `$white` (antes transparente+flecha negra); hover azul. Mobile ya era píldora oscura + flecha blanca.
+- (4) Related cards: imagen `aspect-ratio: 430/270` (antes 4/3), quitado `height:100%` (+`flex-shrink:0`) que hacía que la imagen llenara la card y tapara el body → por eso "faltaba la fecha". `card-noticia.php`: fecha MOVIDA de `__meta` (arriba) a DEBAJO del título (orden Figma: eyebrow → título → fecha → Leer más). Verificado CDP: media 238px, date top 447 > title 394 (fecha bajo título, visible). Afecta también archive de noticias (consistente).
+
+**Innovación (section-innovacion.php / _home.scss)**:
+- (9b) Etiqueta de categoría: MOVIDA de sobre-la-imagen a FUERA (entre imagen y título) + color ROJO ($brand-red), eyebrow mono uppercase. Quitado el `position:relative` del `__card-img`. Se mantiene el chip de siglas.
+
+Build OK. Sin commit.
+
+### 2026-06-15 — Innovación: categoría SOBRE imagen + color de categoría (corrección) _(Cacho)_
+
+Corrige la iteración previa (fuera+rojo). Estado FINAL del indicador de categoría en Innovación:
+- SOBRE la imagen (absolute top:12 left:12), dentro de `__card-img` (con `position:relative`).
+- Fondo = **color ACF del término** `category` (`get_field('color','category_'.$id)`) vía `style` inline. Los términos investigacion/innovacion = `#758faf`.
+- Texto NEGRO ($dark-1).
+- Default si la categoría no tiene color: **#FF7064** (= `$brand-accent`, ya el fallback del SCSS).
+- Se mantiene el chip de siglas de facultad aparte.
+Build OK. Sin commit.
+
+### 2026-06-15 — Innovación categoría: ENCIMA de la imagen (final) _(Cacho)_
+
+Distinción usuario: "encima" (arriba, fuera) ≠ "sobre" (superpuesto). Estado FINAL: el chip de categoría va ENCIMA de la imagen (en el flujo, antes de `__card-media`) = el `__chip` existente, que ahora muestra la CATEGORÍA (no las siglas) con fondo = color ACF del término (inline) + texto negro. Default #FF7064 (= bg del `__chip`). Quitado el `__cat` superpuesto + su SCSS + `position:relative`; quitada la computación de siglas. Verificado @/udp/.

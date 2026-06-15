@@ -774,8 +774,9 @@ function udp_query_carreras( array $filters ): array {
         'post_type'      => 'carrera-udp',
         'post_status'    => 'publish',
         'posts_per_page' => -1,
-        'orderby'        => 'title',
-        'order'          => 'ASC',
+        // Orden administrable vía "Orden" (menu_order) de cada carrera; las que
+        // comparten orden (o 0) caen alfabéticamente por título.
+        'orderby'        => array( 'menu_order' => 'ASC', 'title' => 'ASC' ),
         'no_found_rows'  => true,
     );
 

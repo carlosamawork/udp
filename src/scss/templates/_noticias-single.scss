@@ -7,7 +7,6 @@
     background-color: $white;
     color: $dark-1;
     position: relative;
-    padding-bottom: $space-3xl;
 
     @include media-down(md) {
         padding-bottom: 0;
@@ -126,19 +125,29 @@
         }
     }
 
-    // Dos columnas en desktop: meta (izq, 317) + contenido (der, ~662, legible).
-    // En <lg se apila (meta → imagen → texto), igual que el mobile aprobado.
+    // Desktop: grilla de 12. Meta (fecha+etiqueta) a la izquierda (cols 1-3),
+    // contenido centrado y angosto (cols 4-9 = 6 de 12). En <lg se apila.
     &__body-grid {
         @include media-up(lg) {
             display: grid;
-            grid-template-columns: 317px minmax(0, 662px);
-            gap: 30px;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: 30px;
             align-items: start;
+        }
+    }
+
+    &__aside {
+        @include media-up(lg) {
+            grid-column: 1 / 4;
         }
     }
 
     &__main {
         min-width: 0;
+
+        @include media-up(lg) {
+            grid-column: 4 / 10; // 6 columnas centradas
+        }
     }
 
     &__content {
@@ -355,9 +364,9 @@
         width: 40px;
         height: 40px;
         border-radius: 9999px;
-        border: 1px solid rgba($dark-1, 0.3);
-        background: transparent;
-        color: $dark-1;
+        border: 0;
+        background: $dark-1; // fondo negro + flecha blanca (feedback usuario)
+        color: $white;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
@@ -369,7 +378,7 @@
 
         &:hover,
         &:focus-visible {
-            background-color: $dark-1;
+            background-color: $brand-blue; // hover azul (convención de botones)
             color: $white;
             outline: none;
         }

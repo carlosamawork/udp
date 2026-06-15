@@ -243,15 +243,6 @@
         &:hover img {
             transform: scale(1.03);
         }
-
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: $white;
-            opacity: 0.6;
-            pointer-events: none;
-        }
     }
 
     &__badge {
@@ -281,34 +272,13 @@
         line-height: 20px;
     }
 
-    &__featured-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 56px;
-        text-align: center;
-        pointer-events: none;
-    }
-
-    &__featured-overlay-title {
-        font-family: $font-family-display;
-        font-size: 48px;
-        font-weight: 500;
-        line-height: 48px;
-        color: $dark-1;
-        margin: 0;
-    }
-
     &__featured-body {
         height: $swiper-h;
         flex-shrink: 0;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 82px 0 0;
+        padding: 0;
     }
 
     &__featured-text {
@@ -331,10 +301,12 @@
         color: $white;
         text-decoration: none;
         line-height: 24px;
-        transition: opacity $transition-base;
+        transition: opacity $transition-base, text-decoration-color $transition-base;
 
-        &:hover {
-            opacity: 0.5;
+        &:hover,
+        &:focus-visible {
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
     }
 
@@ -411,6 +383,15 @@
         line-height: 20px;
     }
 
+    // Hover: subrayado en titulares (feedback usuario). Los títulos no son
+    // enlaces directos, así que se activan al hacer hover sobre la card/featured.
+    &__card:hover &__card-titulo,
+    &__featured:hover &__featured-text,
+    &__featured:hover &__featured-mobile-title a {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
     // --- "Ver todas" button ---
     &__ver-todas {
         margin-top: 20px;
@@ -439,11 +420,12 @@
         color: $white;
         text-decoration: none;
         white-space: nowrap;
-        transition: background 0.2s, border-color 0.2s;
+        transition: background 0.2s, border-color 0.2s, color 0.2s;
 
         &:hover {
-            background: rgba($white, 0.1);
-            border-color: $white;
+            background: $brand-blue;
+            border-color: $brand-blue;
+            color: $white;
         }
     }
 
@@ -479,13 +461,8 @@
         &__featured-img {
             height: 260px;
 
-            &::after {
-                display: none;
-            }
-
             .udp-home-noticias__badge,
-            .udp-home-noticias__featured-date,
-            .udp-home-noticias__featured-overlay {
+            .udp-home-noticias__featured-date {
                 display: none;
             }
         }
@@ -569,8 +546,10 @@
         text-overflow: ellipsis;
         white-space: wrap;
 
+        // Hover: solo subrayado, sin cambio de color (feedback usuario).
         &:hover {
-            color: var(--udp-color-primary, #0033a0) !important;
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
     }
 }
@@ -616,11 +595,12 @@
         font-weight: 600;
         text-decoration: none;
         white-space: nowrap;
-        transition: background-color 0.2s, color 0.2s;
+        transition: background-color 0.2s, color 0.2s, border-color 0.2s;
 
         &:hover {
-            background-color: $white;
-            color: $dark-1;
+            background-color: $brand-blue;
+            border-color: $brand-blue;
+            color: $white;
         }
 
         &--desktop {
@@ -666,6 +646,16 @@
 
         &:hover &-btn {
             border-color: $white;
+        }
+
+        // Hover card: fondo azul + título subrayado (feedback usuario).
+        &:hover &-body {
+            background-color: $brand-blue;
+        }
+
+        &:hover &-titulo {
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
         @include media-breakpoint-down(md) {
@@ -809,8 +799,10 @@
             border-bottom: 1px solid #3d3d3d;
         }
 
+        // Hover: fondo azul + texto blanco (regla botón/fila; feedback usuario).
         &:hover {
-            opacity: 0.7;
+            background-color: $brand-blue;
+            color: $white;
         }
 
         @include media-breakpoint-down(lg) {
@@ -1032,6 +1024,15 @@
         }
     }
 
+    // Alto fijo del media (feedback usuario: 450px / proporción 16:9).
+    &__media {
+        height: 450px;
+
+        @include media-breakpoint-down(md) {
+            height: 260px;
+        }
+    }
+
     &__video,
     &__imagen {
         display: block;
@@ -1079,7 +1080,7 @@
     &__media {
         position: relative;
         overflow: hidden;
-        height: 620px;
+        height: 560px; // banner Cultura UDP (feedback usuario)
         background: $gray-200;
     }
 
@@ -1121,11 +1122,11 @@
         width: 100%;
         display: grid;
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 16px; // palabras-botón más juntas (feedback usuario)
         margin-bottom: 0;
 
         @include media-breakpoint-down(lg) {
-            gap: 16px;
+            gap: 12px;
         }
     }
 
@@ -1250,6 +1251,16 @@
         transform: scale(1.03);
     }
 
+    // Hover: fondo azul de la card (feedback usuario).
+    &__card:hover &__card-footer {
+        background-color: $brand-blue;
+    }
+
+    &__card:hover &__card-titulo {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
     &__card-footer {
         background-color: #232323;
         padding: 1.5rem;
@@ -1346,9 +1357,9 @@
         }
 
         &:hover {
-            background: $white;
-            border-color: $white;
-            color: $dark-1;
+            background: $brand-blue;
+            border-color: $brand-blue;
+            color: $white;
         }
     }
 
@@ -1375,7 +1386,8 @@
     }
 
     &__card:hover &__card-titulo {
-        opacity: 0.65;
+        text-decoration: underline;
+        text-underline-offset: 4px;
     }
 
     // Chip de siglas: siempre presente, vacío cuando no hay siglas.

@@ -55,11 +55,12 @@
     border: 1px solid $gray-medium;
     transition: background $transition-base, color $transition-base, border-color $transition-base;
 
+    // Hover: fondo azul + texto blanco (regla general botones con borde).
     &:hover,
     &:focus {
-        background: $white;
-        color: $dark-1;
-        border-color: $white;
+        background: $brand-blue;
+        color: $white;
+        border-color: $brand-blue;
     }
 }
 
@@ -77,13 +78,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background $transition-base, color $transition-base;
+    transition: background $transition-base, color $transition-base, border-color $transition-base;
     padding: 0;
 
     &:hover,
     &:focus {
-        background: $white;
-        color: $dark-1;
+        background: $brand-blue;
+        color: $white;
+        border-color: $brand-blue;
     }
 
     &.btn-icon-circle--md {

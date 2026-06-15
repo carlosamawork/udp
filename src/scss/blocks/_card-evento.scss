@@ -111,8 +111,16 @@
         &:hover .udp-card-evento__cta,
         &:focus-visible .udp-card-evento__cta {
             background-color: $white;
-            color: $dark-1;
+            color: $brand-blue;
             border-color: $white;
+        }
+
+        // Hover de la card (archive/related): solo subrayado del título + la
+        // inversión de color del CTA (arriba). Sin relleno azul (feedback usuario).
+        &:hover .udp-card-evento__title,
+        &:focus-visible .udp-card-evento__title {
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
         @include media-down(md) {

@@ -113,8 +113,8 @@
         margin: 0;
         overflow: hidden;
         background: $dark-2;
-        aspect-ratio: 4 / 3;
-        height: 100%;
+        aspect-ratio: 430 / 270; // Figma: cards 430×270 (más bajas que el 4/3 previo)
+        flex-shrink: 0; // mantiene el ratio aunque la card se estire en el grid
 
         img {
             width: 100%;

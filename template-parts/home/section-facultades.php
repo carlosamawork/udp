@@ -12,12 +12,32 @@
 
 $post_id = $args['post_id'] ?? (int) get_option( 'page_on_front' );
 
-$facultades = get_terms( [
-    'taxonomy'   => 'facultad',
-    'hide_empty' => false,
-    'orderby'    => 'name',
-    'order'      => 'ASC',
-] );
+// Selección + orden administrable (repeater ACF `facultades_items`, cada fila
+// referencia un término de la taxonomía `facultad`). Si está vacío, fallback a
+// todas las facultades ordenadas por nombre (comportamiento previo).
+$facultades = [];
+$items      = function_exists( 'get_field' ) ? get_field( 'facultades_items', $post_id ) : null;
+if ( ! empty( $items ) && is_array( $items ) ) {
+    foreach ( $items as $row ) {
+        $tid = (int) ( is_array( $row ) ? ( $row['facultad'] ?? 0 ) : $row );
+        if ( ! $tid ) {
+            continue;
+        }
+        $term = get_term( $tid, 'facultad' );
+        if ( $term && ! is_wp_error( $term ) ) {
+            $facultades[] = $term;
+        }
+    }
+}
+
+if ( empty( $facultades ) ) {
+    $facultades = get_terms( [
+        'taxonomy'   => 'facultad',
+        'hide_empty' => false,
+        'orderby'    => 'name',
+        'order'      => 'ASC',
+    ] );
+}
 
 if ( is_wp_error( $facultades ) || empty( $facultades ) ) {
     return;

@@ -144,8 +144,12 @@
         grid-template-columns: 1fr;
         gap: $space-xl;
 
+        @include media-down(md) {
+            padding: 0 $space-sm; // alinea con header/carruseles en mobile (16px)
+        }
+
         @include media-up(lg) {
-            grid-template-columns: 318px 664px 318px;
+            grid-template-columns: minmax(0, 318px) minmax(0, 664px) minmax(0, 318px);
             gap: $space-3xl;
             justify-content: space-between;
         }
@@ -382,7 +386,7 @@
         margin-bottom: $space-xl;
 
         @include media-down(md) {
-            padding: 0 $space-md;
+            padding: 0 $space-sm; // 16px, alinea con rich-text y cards
         }
     }
 
@@ -402,6 +406,13 @@
         overflow: hidden;
     }
 
+    // El wrapper es un <ul>: resetear su padding/margin de UA (si no, suma
+    // ~32px y descuadra el slidesOffsetBefore → primer card a x=48 en vez de 16).
+    .swiper-wrapper {
+        margin: 0;
+        padding: 0;
+    }
+
     // Card full-bleed: foto a sangre + degradado oscuro + nombre/cargo en blanco
     // abajo (Figma 3904:54293). Sin foto: fondo gris (placeholder que se
     // sustituye al subir la imagen); el degradado deja el texto legible.
@@ -411,9 +422,9 @@
         // de Swiper (CSS inyectado en runtime) — si no, la card se va al 100%
         // del ancho y con el aspect-ratio la altura se dispara.
         flex-shrink: 0;
-        width: 289px !important;
+        width: 266px !important; // Tarjeta Figma 266×365
         max-width: 80vw;
-        aspect-ratio: 289 / 365;
+        aspect-ratio: 266 / 365;
         background: #cfcfcf;
         overflow: hidden;
         list-style: none;
@@ -463,6 +474,28 @@
         font-size: 1rem;
         color: #fff;
         margin: $space-2xs 0 0;
+    }
+
+    // Deslizador (Figma): scrollbar arrastrable centrado debajo del carrusel.
+    // 2 clases para superar el CSS de Swiper (.swiper-scrollbar, runtime).
+    &__slider {
+        &.swiper-scrollbar {
+            position: relative;
+            left: auto;
+            top: auto;
+            bottom: auto;
+            width: 340px;
+            max-width: calc(100% - #{$space-md} * 2);
+            height: 6px;
+            margin: $space-lg auto 0;
+            background: rgba($dark-1, 0.12);
+            border-radius: 9999px;
+        }
+
+        .swiper-scrollbar-drag {
+            background: $dark-1;
+            border-radius: 9999px;
+        }
     }
 }
 
@@ -963,7 +996,7 @@
         gap: $space-xl;
 
         @include media-down(md) {
-            padding: 0 $space-md;
+            padding: 0 $space-sm; // 16px, alinea con el resto del institucional mobile
         }
 
         @include media-up(lg) {
@@ -1081,11 +1114,11 @@
         gap: $space-xl;
 
         @include media-down(md) {
-            padding: 0 $space-md;
+            padding: 0 $space-sm; // 16px, alinea con el resto del institucional mobile
         }
 
         @include media-up(lg) {
-            grid-template-columns: 318px 664px 318px;
+            grid-template-columns: minmax(0, 318px) minmax(0, 664px) minmax(0, 318px);
             gap: $space-3xl;
             justify-content: space-between;
         }

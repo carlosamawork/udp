@@ -57,6 +57,7 @@ if ( empty( $personas ) ) return;
                         </li>
                     <?php endforeach; ?>
                 </ul>
+                <div class="swiper-scrollbar udp-inst-people__slider"></div>
             </div>
         </div>
     </div>

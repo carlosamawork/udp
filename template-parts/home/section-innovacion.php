@@ -79,13 +79,28 @@ $ver_todo_url = ! empty( $ver_todo_ids )
                 <div class="swiper-wrapper">
                     <?php foreach ( $posts as $post ) : ?>
                         <?php
-                        $facs   = get_the_terms( $post->ID, 'facultad' );
-                        $siglas = '';
-                        if ( ! is_wp_error( $facs ) && ! empty( $facs ) ) {
-                            $siglas = (string) get_field( 'siglas', 'facultad_' . $facs[0]->term_id );
-                        }
-
                         $thumb_url = get_the_post_thumbnail_url( $post->ID, 'medium_large' );
+
+                        // Etiqueta de categoría sobre la imagen: categoría de la
+                        // sección (investigación/innovación); fallback a la 1ª.
+                        // Fondo = color ACF del término; texto negro.
+                        $cat_label = '';
+                        $cat_color = '';
+                        $post_cats = get_the_terms( $post->ID, 'category' );
+                        if ( ! is_wp_error( $post_cats ) && ! empty( $post_cats ) ) {
+                            $chosen = null;
+                            foreach ( $post_cats as $pc ) {
+                                if ( in_array( $pc->term_id, $cat_ids, true ) ) {
+                                    $chosen = $pc;
+                                    break;
+                                }
+                            }
+                            if ( ! $chosen ) {
+                                $chosen = $post_cats[0];
+                            }
+                            $cat_label = $chosen->name;
+                            $cat_color = function_exists( 'get_field' ) ? (string) get_field( 'color', 'category_' . $chosen->term_id ) : '';
+                        }
                         ?>
                         <div class="swiper-slide udp-home-innovacion__slide">
                             <a
@@ -93,8 +108,9 @@ $ver_todo_url = ! empty( $ver_todo_ids )
                                 class="udp-home-innovacion__card"
                                 aria-label="<?php echo esc_attr( get_the_title( $post ) ); ?>"
                             >
-                                <?php /* Chip siempre presente — vacío reserva el espacio */ ?>
-                                <span class="udp-home-innovacion__chip"><?php echo esc_html( $siglas ); ?></span>
+                                <?php /* Indicador de categoría ENCIMA de la imagen: fondo = color de
+                                         la categoría (default #FF7064), texto negro. Vacío reserva el espacio. */ ?>
+                                <span class="udp-home-innovacion__chip"<?php echo $cat_color ? ' style="background-color:' . esc_attr( $cat_color ) . '"' : ''; ?>><?php echo esc_html( $cat_label ); ?></span>
 
                                 <div class="udp-home-innovacion__card-media">
                                     <div class="udp-home-innovacion__card-img">

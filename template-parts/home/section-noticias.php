@@ -62,11 +62,6 @@ $pares    = array_chunk( $cards, 2 );
                                         decoding="async"
                                     >
                                 </a>
-                                <div class="udp-home-noticias__featured-overlay">
-                                    <h3 class="udp-home-noticias__featured-overlay-title">
-                                        <?php echo esc_html( $featured['titulo'] ); ?>
-                                    </h3>
-                                </div>
                             </div>
                             <?php /* Mobile-only: badge + fecha debajo de la imagen */ ?>
                             <div class="udp-home-noticias__featured-mobile-meta">

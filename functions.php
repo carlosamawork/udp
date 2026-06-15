@@ -169,6 +169,13 @@ add_action('init', function () {
     remove_action('wp_print_styles', 'print_emoji_styles');
 });
 
+// Orden administrable de carreras: habilita el campo "Orden" (menu_order) en el
+// CPT carrera-udp. Prioridad 100 para correr tras el registro del CPT (mu-plugin
+// udp-core lo registra en init priority 99). El archive ordena por menu_order.
+add_action('init', function () {
+    add_post_type_support('carrera-udp', 'page-attributes');
+}, 100);
+
 
 // =============================================================================
 // 8. GUTENBERG: ESTILOS DEL EDITOR (compilados por Vite)

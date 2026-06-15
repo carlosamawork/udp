@@ -17,6 +17,23 @@ img {
     height: auto;
 }
 
+// Embeds responsivos: iframes/video con width fijo (YouTube 560px, mapas, etc.)
+// no deben desbordar en mobile.
+iframe,
+embed,
+object,
+video {
+    max-width: 100%;
+}
+
+// Embeds de video dentro de contenido WYSIWYG: 16:9 fluido en lugar de la
+// altura fija del atributo (evita letterbox y el desborde a ~576px en mobile).
+:where([class*="entry-content"], .udp-inst-rts__body) iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+}
+
 a {
     transition: color $transition-base, opacity $transition-base;
 }

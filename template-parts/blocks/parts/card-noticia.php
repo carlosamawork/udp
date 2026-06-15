@@ -75,15 +75,15 @@ $class = 'udp-card-noticia udp-card-noticia--' . $theme . ( $variant ? ' udp-car
         />
     </figure>
     <div class="udp-card-noticia__body">
-        <header class="udp-card-noticia__meta">
-            <?php if ( $eyebrow ) : ?>
+        <?php if ( $eyebrow ) : ?>
+            <header class="udp-card-noticia__meta">
                 <span class="udp-card-noticia__eyebrow<?php echo $eyebrow_color ? ' udp-card-noticia__eyebrow--' . esc_attr( $eyebrow_color ) : ''; ?>"><?php echo esc_html( $eyebrow ); ?></span>
-            <?php endif; ?>
-            <?php if ( $fecha_iso && $fecha_display ) : ?>
-                <time class="udp-card-noticia__date" datetime="<?php echo esc_attr( $fecha_iso ); ?>"><?php echo esc_html( $fecha_display ); ?></time>
-            <?php endif; ?>
-        </header>
+            </header>
+        <?php endif; ?>
         <h3 class="udp-card-noticia__title"><?php echo esc_html( $titulo ); ?></h3>
+        <?php if ( $fecha_iso && $fecha_display ) : ?>
+            <time class="udp-card-noticia__date" datetime="<?php echo esc_attr( $fecha_iso ); ?>"><?php echo esc_html( $fecha_display ); ?></time>
+        <?php endif; ?>
         <span class="udp-card-noticia__more" aria-hidden="true">
             <?php esc_html_e( 'Leer más', 'starter-theme' ); ?>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

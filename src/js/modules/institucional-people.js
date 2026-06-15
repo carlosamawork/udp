@@ -11,21 +11,26 @@ export async function initInstitucionalPeople() {
     if (!sections.length) return;
 
     const { default: Swiper } = await import('swiper');
-    const { FreeMode, A11y } = await import('swiper/modules');
+    const { FreeMode, A11y, Scrollbar } = await import('swiper/modules');
     await import('swiper/css');
+    await import('swiper/css/scrollbar');
 
     sections.forEach((swiperEl) => {
+        // Deslizador (Figma): scrollbar arrastrable dentro de este carrusel.
+        const scrollbarEl = swiperEl.querySelector('.swiper-scrollbar');
+
         new Swiper(swiperEl, {
-            modules: [FreeMode, A11y],
+            modules: [FreeMode, A11y, Scrollbar],
             slidesPerView: 'auto',
-            spaceBetween: 24,
-            slidesOffsetBefore: 40,
-            slidesOffsetAfter: 40,
+            // Base = mobile (offset 16). El breakpoint 768 sube a desktop (40).
+            spaceBetween: 16,
+            slidesOffsetBefore: 16,
+            slidesOffsetAfter: 16,
             freeMode: { enabled: true, momentum: true },
             grabCursor: true,
             a11y: { enabled: true },
+            scrollbar: scrollbarEl ? { el: scrollbarEl, draggable: true } : false,
             breakpoints: {
-                0:   { spaceBetween: 16, slidesOffsetBefore: 16, slidesOffsetAfter: 16 },
                 768: { spaceBetween: 24, slidesOffsetBefore: 40, slidesOffsetAfter: 40 },
             },
         });
