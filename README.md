@@ -6,7 +6,7 @@ Theme starter para WordPress con **Bootstrap 5.3** (npm), **SCSS**, **Vanilla JS
 
 - WordPress 6.0+
 - PHP 8.0+
-- Node.js 18+ y npm
+- Node.js **22 LTS** y npm 10 (build final generado con **Node v22.19.0 / npm 10.9.3** — ver `.nvmrc`)
 - Plugin **Advanced Custom Fields PRO**
 
 ## Instalación
@@ -27,11 +27,76 @@ npm run build
 
 ## Comandos
 
-| Comando         | Descripción                                         |
-|-----------------|-----------------------------------------------------|
-| `npm run dev`   | Arranca Vite dev server con HMR (localhost:5173)     |
-| `npm run build` | Compila SCSS + JS para producción en `/dist`         |
-| `npm run watch` | Build en modo watch (recompila al guardar cambios)   |
+| Comando              | Descripción                                                              |
+|----------------------|--------------------------------------------------------------------------|
+| `npm run dev`        | Arranca Vite dev server con HMR (localhost:5173)                          |
+| `npm run build`      | Compila a `/dist` usando el base path de `.env.local` (entorno **local**) |
+| `npm run build:prod` | **Build final para producción** — base path `/cms/wp-content/themes/starter-theme/dist/` |
+| `npm run watch`      | Build en modo watch (recompila al guardar cambios)                        |
+| `npm run preview`    | Previsualiza el build de producción localmente                            |
+
+## Build final y deploy a producción
+
+### Versiones utilizadas en el build final
+
+| Herramienta | Versión     |
+|-------------|-------------|
+| Node.js     | **v22.19.0** (LTS) |
+| npm         | 10.9.3      |
+| Vite        | 6.x         |
+| Sass        | sass-embedded 1.80+ |
+
+La versión de Node está fijada en `.nvmrc` — con nvm basta con ejecutar `nvm use` en la raíz del tema.
+
+### Comando de build final
+
+```bash
+npm ci            # instalación limpia desde package-lock.json
+npm run build:prod
+```
+
+> ⚠️ **Usar `build:prod`, NO `build`.** Vite hornea el base path en los assets
+> en tiempo de compilación (chunks dinámicos, fonts y URLs dentro del CSS).
+> `npm run build` lee `VITE_BASE_PATH` de `.env.local` (entorno local MAMP,
+> prefijo `/udp/cms/...`), mientras que `build:prod` fuerza por CLI el path
+> de producción `/cms/wp-content/themes/starter-theme/dist/`.
+> Si el WordPress de producción viviera en otra ruta, ajustar el valor de
+> `VITE_BASE_PATH` en el script `build:prod` de `package.json`.
+
+### Pasos de build/deploy no documentados anteriormente
+
+1. **`.env.local` (gitignored) es necesario para desarrollo local.** Contiene
+   el base path del entorno local. Ejemplo para MAMP sirviendo WP en
+   `http://localhost:8888/udp/cms/`:
+   ```
+   VITE_BASE_PATH=/udp/cms/wp-content/themes/starter-theme/dist/
+   ```
+   Sin este archivo, `npm run build` usa el path de raíz y los chunks
+   dinámicos / fonts devuelven 404 en local.
+
+2. **`dist/` está en `.gitignore`** — no viaja por git. Para el deploy hay que
+   subir la carpeta `dist/` completa por FTP junto con el tema, después de
+   ejecutar `npm run build:prod`.
+
+3. **Manifest duplicado para FTP.** El build emite el manifest en dos rutas:
+   `dist/.vite/manifest.json` (nativo de Vite) y `dist/manifest.json` (copia
+   no-oculta). Motivo: algunos clientes FTP omiten carpetas ocultas (`.vite/`).
+   El loader PHP (`inc/class-vite.php`) intenta primero `.vite/manifest.json`
+   y cae a `dist/manifest.json` si no existe. Basta con que llegue uno de los
+   dos al servidor.
+
+4. **`VITE_DEV_SERVER` no debe existir en el `wp-config.php` de producción.**
+   Si está definido, el tema intenta cargar los assets desde
+   `localhost:5173` y el sitio sale sin estilos.
+
+5. **Las fuentes van dentro del build.** Arizona Flare, Necto Mono y Work Sans
+   (self-hosted) se copian con hash a `dist/fonts/` — no hay que subir fuentes
+   aparte ni depender de servicios externos.
+
+6. **Gotcha de permisos (solo entorno local/macOS):** si en algún momento se
+   ejecutó `npm` con `sudo`, los archivos de `dist/` pueden quedar owned by
+   `root` y el build falla con `EACCES: permission denied`. Solución:
+   `sudo chown -R $(id -u):$(id -g) dist` (o borrar `dist/` y recompilar).
 
 ## Modo desarrollo (HMR)
 
